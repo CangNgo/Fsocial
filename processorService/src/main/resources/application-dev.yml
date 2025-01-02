@@ -1,0 +1,49 @@
+
+spring:
+  application:
+    name: processorService
+  datasource:
+    url: jdbc:mysql://localhost:3306/?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username:
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  main:
+    allow-circular-references: true
+
+server:
+  servlet:
+    context-path: /processor
+    session:
+      timeout: 3m
+  port: 8084
+
+logging:
+  level:
+    org:
+      springframework=DEBUG:
+      springframework:
+        security: DEBUG
+        security.web.access.ExceptionTranslationFilter: DEBUG
+        security.access.intercept.AbstractSecurityInterceptor: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        engine:
+          transaction:
+            internal:
+              TransactionImpl: DEBUG
+        event:
+          internal:
+            AbstractFlushingEventListener: DEBUG

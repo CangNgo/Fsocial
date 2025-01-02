@@ -1,0 +1,52 @@
+app:
+  services:
+    profile: http://localhost:8082/profile
+spring:
+  application:
+    name: accountService
+  datasource:
+    url: jdbc:mysql://localhost:3306/account?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  main:
+    allow-circular-references: true
+
+server:
+  servlet:
+    context-path: /account
+    session:
+      timeout: 3m
+  port: 8081
+
+
+logging:
+  level:
+    org:
+      springframework=DEBUG:
+      springframework:
+        security: DEBUG
+        security.web.access.ExceptionTranslationFilter: DEBUG
+        security.access.intercept.AbstractSecurityInterceptor: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        engine:
+          transaction:
+            internal:
+              TransactionImpl: DEBUG
+        event:
+          internal:
+            AbstractFlushingEventListener: DEBUG

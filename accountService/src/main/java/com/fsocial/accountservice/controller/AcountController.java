@@ -34,7 +34,6 @@ public class AcountController {
                         .message(StatusCode.OK.getMessage())
                         .data(null)
                         .build());
-
     }
 
 

@@ -6,8 +6,6 @@ import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "account")
 @Setter
@@ -15,19 +13,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Account extends AbstractEntity<UUID> {
+public class Account extends AbstractEntity<String> {
     @Column(name = "username", unique = true)
-    private String username;
+    String username;
 
     @Column(name = "password")
-    private String password;
+    String password;
 
     @Column(name = "first_name")
-    private String firstName;
+    String firstName;
 
     @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "email", unique = true)
-    private String email;
+    String lastName;
 }

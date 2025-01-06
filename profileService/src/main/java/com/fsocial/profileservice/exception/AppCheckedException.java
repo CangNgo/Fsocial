@@ -1,6 +1,6 @@
 package com.fsocial.profileservice.exception;
 
-import com.fsocial.accountservice.exception.StatusCode;
+import lombok.Getter;
 
 /*
 AppCheckedException là một checked exception,
@@ -9,6 +9,7 @@ khai báo throws hoặc xử lý bằng khối try-catch tại các nơi sử d�
 Thường được sử dụng cho các trường hợp lỗi mà có thể được dự đoán và cần phải xử lý
 ngay khi nó xảy ra để đảm bảo tính nhất quán và bảo mật trong ứng dụng Java.
 */
+@Getter
 public class AppCheckedException extends Exception {
     private final StatusCode status;
 
@@ -17,7 +18,4 @@ public class AppCheckedException extends Exception {
         this.status = status;
     }
 
-    public StatusCode getStatus() {
-        return status;
-    }
 }

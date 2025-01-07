@@ -1,5 +1,6 @@
-package com.fsocial.profileservice.dto.request;
+package com.fsocial.profileservice.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -12,17 +13,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProfileUpdateRequest {
-    @NotBlank
-    @NotNull
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ProfileUpdateResponse {
+    String id;
     String firstName;
-
-    @NotBlank
-    @NotNull
     String lastName;
-
     LocalDate dob;
     String bio;
     String avatar;
     String address;
+    LocalDate createdAt;
+    LocalDate updatedAt;
 }

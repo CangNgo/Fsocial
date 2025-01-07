@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/profileService/pom.xml" />
         <option value="$PROJECT_DIR$/timelineService/pom.xml" />
         <option value="$PROJECT_DIR$/messageService/pom.xml" />
+        <option value="$PROJECT_DIR$/apigateway/pom.xml" />
       </list>
     </option>
   </component>

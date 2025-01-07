@@ -33,6 +33,7 @@ server:
 
 logging:
   level:
+    org.neo4j.driver: ERROR
     org:
       springframework=DEBUG:
       springframework:

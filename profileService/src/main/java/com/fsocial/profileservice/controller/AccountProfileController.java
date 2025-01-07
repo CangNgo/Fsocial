@@ -1,9 +1,12 @@
 package com.fsocial.profileservice.controller;
 
 import com.fsocial.profileservice.dto.ApiResponse;
-import com.fsocial.profileservice.dto.request.AccountProfileRequest;
-import com.fsocial.profileservice.dto.response.AccountProfileResponse;
+import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
+import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
+import com.fsocial.profileservice.dto.response.ProfileResponse;
+import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
 import com.fsocial.profileservice.services.impl.AccountProfileServiceImpl;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,18 +19,29 @@ public class AccountProfileController {
     AccountProfileServiceImpl accountProfileService;
 
     @PostMapping("/create")
-    public ApiResponse<AccountProfileResponse> createAccountProfile(@RequestBody AccountProfileRequest request) {
-        return ApiResponse.<AccountProfileResponse>builder()
+    public ApiResponse<ProfileResponse> createAccountProfile(@RequestBody @Valid ProfileRegisterRequest request) {
+        return ApiResponse.<ProfileResponse>builder()
                 .message("Create profile success.")
                 .data(accountProfileService.createAccountProfile(request))
                 .build();
     }
 
-    @GetMapping("/{id}")
-    public ApiResponse<AccountProfileResponse> getAccountProfile(@PathVariable String id) {
-        return ApiResponse.<AccountProfileResponse>builder()
+    @GetMapping("/{userId}")
+    public ApiResponse<ProfileResponse> getAccountProfile(@PathVariable String userId) {
+        return ApiResponse.<ProfileResponse>builder()
                 .message("Get profile success.")
-                .data(accountProfileService.getAccountProfile(id))
+                .data(accountProfileService.getAccountProfile(userId))
+                .build();
+    }
+
+    @PutMapping("/{profileId}")
+    public ApiResponse<ProfileUpdateResponse> updateProfile(@PathVariable String profileId,
+                                                            @RequestBody @Valid ProfileUpdateRequest request) {
+        return ApiResponse.<ProfileUpdateResponse>builder()
+                .message("Update profile success.")
+                .data(
+                        accountProfileService.updateProfile(profileId, request)
+                )
                 .build();
     }
 }

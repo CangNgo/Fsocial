@@ -1,5 +1,7 @@
 package com.fsocial.profileservice.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,12 +12,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AccountProfileRequest {
+public class ProfileRegisterRequest {
+
+    @NotNull
+    @NotBlank
     String firstName;
+
+    @NotNull
+    @NotBlank
     String lastName;
-    String bio;
-    String avatar;
+
     int gender;
-    String address;
     LocalDate dob;
 }

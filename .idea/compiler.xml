@@ -20,7 +20,16 @@
         </processorPath>
         <module name="accountService" />
       </profile>
-      <profile name="Annotation profile for timeLineService" enabled="true">
+      <profile name="Annotation profile for apigateway" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="apigateway" />
+      </profile>
+      <profile name="Annotation profile for profileService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -37,13 +46,13 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="apigateway" target="21" />
       <module name="postService" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="accountService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="apigateway" options="-parameters" />
       <module name="messageService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="profileService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="timeLineService" options="-parameters -Amapstruct.defaultComponentModel=spring" />

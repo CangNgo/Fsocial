@@ -28,7 +28,11 @@ public class AccountProfile {
 
     String firstName;
     String lastName;
+    String bio;
+    String avatar;
     int gender;
     String address;
     LocalDate dob;
+    LocalDate createdAt = LocalDate.now();
+    LocalDate updatedAt;
 }

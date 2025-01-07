@@ -1,4 +1,4 @@
-package com.fsocial.profileservice.dto.response;
+package com.fsocial.profileservice.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,10 +10,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AccountProfileResponse {
-    String id;
+public class AccountProfileRequest {
     String firstName;
     String lastName;
+    String bio;
+    String avatar;
     int gender;
     String address;
     LocalDate dob;

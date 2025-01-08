@@ -13,6 +13,9 @@ public enum StatusCode {
     OK(200, "OK", HttpStatus.OK),
     REGISTER_FAILED(101, "Register failed", HttpStatus.BAD_REQUEST),
     ACCOUNT_EXISTED(464, "Account already registered", HttpStatus.BAD_REQUEST),
+    NOT_EXIST(467, "Account not existed.", HttpStatus.BAD_REQUEST),
+    UNAUTHENTICATED(468, "Unauthenticated.", HttpStatus.BAD_REQUEST),
+    NOT_FOUND(404, "Not Found.", HttpStatus.NOT_FOUND)
     ;
     final int code;
     final String message;

@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -11,8 +12,10 @@ import lombok.experimental.FieldDefaults;
 @Data
 public class AccountLoginRequest {
     @NotNull
+    @NotBlank
     String username;
 
     @NotNull
+    @NotBlank
     String password;
 }

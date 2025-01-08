@@ -1,6 +1,6 @@
 package com.fsocial.profileservice.exception;
 
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.profileservice.exception.StatusCode;
 
 /*
 AppCheckedException là một checked exception,

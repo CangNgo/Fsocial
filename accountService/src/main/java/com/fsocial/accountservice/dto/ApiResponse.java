@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse <T>{
-    int statusCode = 200;
+    Integer statusCode = 200;
     String message;
 
     @Builder.Default

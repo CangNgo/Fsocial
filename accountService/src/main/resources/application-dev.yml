@@ -50,3 +50,6 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
+
+jwt:
+  signerKey: "R/iERv2snkyWEnD1l8zllBu9JGpBpnfO7UcOLvo0htPGU7xoDyGB3QksYid+G7"

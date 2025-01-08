@@ -5,5 +5,5 @@ import com.fsocial.accountservice.dto.response.AccountResponse;
 
 public interface AccountService {
     AccountResponse registerUser(AccountRequest request);
-
+    AccountResponse getUser(String id);
 }

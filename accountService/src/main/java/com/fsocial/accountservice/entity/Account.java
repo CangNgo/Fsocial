@@ -1,8 +1,6 @@
 package com.fsocial.accountservice.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -20,9 +18,9 @@ public class Account extends AbstractEntity<String> {
     @Column(name = "password")
     String password;
 
-    @Column(name = "first_name")
-    String firstName;
+    boolean isKOL = false;
 
-    @Column(name = "last_name")
-    String lastName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role")
+    Role role;
 }

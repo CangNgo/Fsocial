@@ -3,10 +3,12 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.AccountLoginRequest;
 import com.fsocial.accountservice.dto.request.IntrospectRequest;
+import com.fsocial.accountservice.dto.request.LogoutRequest;
 import com.fsocial.accountservice.dto.response.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.IntrospectResponse;
 import com.fsocial.accountservice.exception.StatusCode;
 import com.fsocial.accountservice.services.impl.AuthenticationServiceImpl;
+import com.nimbusds.jose.JOSEException;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -43,6 +47,16 @@ public class AuthenticateController {
                 .data(
                         authenticationService.authenticationAccount(request)
                 )
+                .build();
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(@RequestBody @Valid LogoutRequest request) throws ParseException, JOSEException {
+        authenticationService.logout(request);
+
+        return ApiResponse.<Void>builder()
+                .statusCode(StatusCode.OK.getCode())
+                .message("Logout success.")
                 .build();
     }
 }

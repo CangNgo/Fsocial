@@ -32,6 +32,7 @@ public class AccountProfile {
     String lastName;
     String bio;
     String avatar;
+    String banner;
     int gender;
     String address;
     LocalDate dob;

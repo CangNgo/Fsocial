@@ -3,14 +3,12 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.request.AccountRequest;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.response.AccountResponse;
-import com.fsocial.accountservice.exception.AppCheckedException;
 import com.fsocial.accountservice.exception.StatusCode;
 import com.fsocial.accountservice.services.impl.AccountServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor

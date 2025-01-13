@@ -10,8 +10,10 @@ public enum StatusCode {
     OK(200, "OK", HttpStatus.OK),
     HTTPMETHOD_NOT_SUPPORTED(201, "HTTP method not supported", HttpStatus.NOT_IMPLEMENTED),
     REGISTER_FAILED(101, "Register failed", HttpStatus.BAD_REQUEST),
-    CREATE_POST_SUCCESS(200,"Create post success", HttpStatus.OK),
+    CREATE_POST_SUCCESS(100,"Create post success", HttpStatus.OK),
     CREATE_POST_FAILED(211,"Create post success", HttpStatus.BAD_REQUEST),
+    FILE_NOT_FOUND(202, "File not found", HttpStatus.NOT_FOUND),
+    UPLOAD_FILE_SUCCESS(203, "Upload file success", HttpStatus.OK),
     ;
     private final int code;
     private final String message;

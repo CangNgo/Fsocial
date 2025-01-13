@@ -1,6 +1,8 @@
 package com.fsocial.accountservice.exception;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 
 /*
@@ -9,11 +11,12 @@ runtime của ứng dụng của bạn mà không yêu cầu phải khai báo th
  hoặc bắt buộc xử lý bằng khối try-catch.
 * */
 @Getter
-public class AppUnCheckedException extends RuntimeException {
-    private final HttpStatus status;
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class AppException extends RuntimeException {
+    final StatusCode statusCode;
 
-    public AppUnCheckedException(String message, HttpStatus status) {
-        super(message);
-        this.status = status;
+    public AppException(StatusCode statusCode) {
+        super(statusCode.getMessage());
+        this.statusCode = statusCode;
     }
 }

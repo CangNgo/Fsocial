@@ -6,9 +6,15 @@
       <list>
         <option value="$PROJECT_DIR$/accountService/pom.xml" />
         <option value="$PROJECT_DIR$/profileService/pom.xml" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/timelineService/pom.xml" />
         <option value="$PROJECT_DIR$/messageService/pom.xml" />
         <option value="$PROJECT_DIR$/apigateway/pom.xml" />
+=======
+        <option value="$PROJECT_DIR$/apigateway/pom.xml" />
+        <option value="$PROJECT_DIR$/timelineService/pom.xml" />
+        <option value="$PROJECT_DIR$/messageService/pom.xml" />
+>>>>>>> accountService
         <option value="$PROJECT_DIR$/postService/pom.xml" />
       </list>
     </option>

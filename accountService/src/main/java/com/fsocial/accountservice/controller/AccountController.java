@@ -1,6 +1,6 @@
 package com.fsocial.accountservice.controller;
 
-import com.fsocial.accountservice.dto.request.AccountRequest;
+import com.fsocial.accountservice.dto.request.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.exception.StatusCode;
@@ -28,7 +28,7 @@ public class AccountController {
 //    }
 
     @PostMapping("/register")
-    public ApiResponse<AccountResponse> addAccount(@RequestBody @Valid AccountRequest accountDTO) {
+    public ApiResponse<AccountResponse> addAccount(@RequestBody @Valid AccountRegisterRequest accountDTO) {
         return ApiResponse.<AccountResponse>builder()
                 .statusCode(StatusCode.OK.getCode())
                 .message("Account registration successful")

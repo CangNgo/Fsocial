@@ -1,7 +1,6 @@
 package com.fsocial.processorservice.exception;
 
-import com.fsocial.accountservice.dto.Response;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.processorservice.dto.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,7 +14,7 @@ import java.util.Objects;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    ResponseEntity<Response> handlingRuntimeException(RuntimeException exception) {
+    ResponseEntity<com.fsocial.processorservice.dto.Response> handlingRuntimeException(RuntimeException exception) {
 
         return ResponseEntity.badRequest().body(Response.builder()
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())

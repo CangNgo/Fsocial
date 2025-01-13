@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatusCode;
 public enum StatusCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     OK(200, "OK", HttpStatus.OK),
-    REGISTER_FAILED(101, "Register failed", HttpStatus.BAD_REQUEST),
+    NOT_EXISTED(476, "Profile does not exist.", HttpStatus.BAD_REQUEST),
     ;
     private final int code;
     private final String message;

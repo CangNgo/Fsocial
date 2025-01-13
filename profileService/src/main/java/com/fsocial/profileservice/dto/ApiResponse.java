@@ -13,12 +13,11 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Response {
-    int statusCode;
+public class ApiResponse<T>{
+    int statusCode = 200;
     String message;
-    Object data;
+    T data;
     @Builder.Default
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime dateTime = LocalDateTime.now();
-
 }

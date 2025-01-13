@@ -1,6 +1,6 @@
 package com.fsocial.accountservice.controller;
 
-import com.fsocial.accountservice.dto.request.AccountRegisterRequest;
+import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.exception.StatusCode;

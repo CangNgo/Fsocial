@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.dto.request;
+package com.fsocial.accountservice.dto.response.role;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,8 +10,8 @@ import java.util.Set;
 @NoArgsConstructor(force = true)
 @Builder
 @Data
-public class RoleCreationRequest {
+public class RoleResponse {
     String name;
     String description;
-    Set<String> permissions;
+    Set<PermissionResponse> permissions;
 }

@@ -1,7 +1,7 @@
 package com.fsocial.accountservice.services.impl;
 
-import com.fsocial.accountservice.dto.request.RoleCreationRequest;
-import com.fsocial.accountservice.dto.response.RoleResponse;
+import com.fsocial.accountservice.dto.request.role.RoleCreationRequest;
+import com.fsocial.accountservice.dto.response.role.RoleResponse;
 import com.fsocial.accountservice.entity.Permission;
 import com.fsocial.accountservice.entity.Role;
 import com.fsocial.accountservice.exception.AppException;

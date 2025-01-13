@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.dto.request;
+package com.fsocial.accountservice.dto.request.auth;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

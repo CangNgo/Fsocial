@@ -1,8 +1,8 @@
 package com.fsocial.accountservice.services.impl;
 
-import com.fsocial.accountservice.dto.request.AccountLoginRequest;
-import com.fsocial.accountservice.dto.request.IntrospectRequest;
-import com.fsocial.accountservice.dto.request.LogoutRequest;
+import com.fsocial.accountservice.dto.request.account.AccountLoginRequest;
+import com.fsocial.accountservice.dto.request.auth.IntrospectRequest;
+import com.fsocial.accountservice.dto.request.auth.LogoutRequest;
 import com.fsocial.accountservice.dto.response.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.IntrospectResponse;
 import com.fsocial.accountservice.entity.Account;
@@ -42,7 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @NonFinal
     @Value("${jwt.signerKey}")
-    protected String SIGNER_KEY;
+    String signerKey;
 
     @Override
     public AuthenticationResponse authenticationAccount(AccountLoginRequest request) {
@@ -78,12 +78,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             SignedJWT signedJWT = verifyToken(request.getToken());
             JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
 
-            InvalidToken invalidToken = InvalidToken.builder()
+            invalidTokenRepository.save(InvalidToken.builder()
                     .id(claimsSet.getJWTID())
                     .expiryTime(claimsSet.getExpirationTime())
-                    .build();
-
-            invalidTokenRepository.save(invalidToken);
+                    .build());
         } catch (JOSEException | ParseException e) {
             throw new AppException(StatusCode.UNAUTHENTICATED);
         }
@@ -128,8 +126,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private boolean isTokenInvalidated(SignedJWT signedJWT) throws ParseException {
-        String jwtId = signedJWT.getJWTClaimsSet().getJWTID();
-        return invalidTokenRepository.existsById(jwtId);
+        return invalidTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID());
     }
 
     private String buildScope(Account account) {
@@ -139,7 +136,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private byte[] getSignerKey() {
-        if (SIGNER_KEY == null || SIGNER_KEY.isEmpty()) throw new AppException(StatusCode.UNCATEGORIZED_EXCEPTION);
-        return SIGNER_KEY.getBytes();
+        if (signerKey == null || signerKey.isEmpty()) {
+            throw new AppException(StatusCode.UNCATEGORIZED_EXCEPTION);
+        }
+        return signerKey.getBytes();
     }
 }

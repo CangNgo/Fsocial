@@ -1,7 +1,6 @@
 package com.fsocial.profileservice.exception;
 
-//import com.fsocial.accountservice.dto.Response;
-//import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.profileservice.dto.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,17 +23,16 @@ public class GlobalExceptionHandler {
                 .build());
     }
 
-<<<<<<< HEAD
-    @ExceptionHandler(value = Exception.class)
-    ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
-
-        return ResponseEntity.badRequest().body(ApiResponse.builder()
-                .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
-                .message(StatusCode.UNCATEGORIZED_EXCEPTION.getMessage())
-                .dateTime(LocalDateTime.now())
-                .data(null)
-                .build());
-    }
+//    @ExceptionHandler(value = Exception.class)
+//    ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
+//
+//        return ResponseEntity.badRequest().body(ApiResponse.builder()
+//                .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
+//                .message(StatusCode.UNCATEGORIZED_EXCEPTION.getMessage())
+//                .dateTime(LocalDateTime.now())
+//                .data(null)
+//                .build());
+//    }
 
     @ExceptionHandler(value = AppCheckedException.class)
     ResponseEntity<ApiResponse> handlingAppCheckedException(AppCheckedException exception) {

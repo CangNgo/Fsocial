@@ -1,7 +1,8 @@
 package com.fsocial.accountservice.services.impl;
 
-import com.fsocial.accountservice.dto.request.AccountRegisterRequest;
+import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
+import com.fsocial.accountservice.dto.response.ProfileRegisterResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.Role;
 import com.fsocial.accountservice.exception.AppException;
@@ -33,40 +34,54 @@ public class AccountServiceImpl implements AccountService {
     ProfileClient profileClient;
 
     @Override
-    public AccountResponse registerUser(AccountRegisterRequest request){
+    public AccountResponse registerUser(AccountRegisterRequest request) {
+        validateAccountExistence(request.getUsername());
 
-        if (accountRepository.existsByUsername(request.getUsername()))
-            throw new AppException(StatusCode.ACCOUNT_EXISTED);
+        Account account = accountRepository.save(createAccount(request));
 
-        Account account = accountRepository.save(handleAccountAfterSave(request));
+        ProfileRegisterResponse profileResponse = createProfile(account, request);
 
-        var profileRequest = profileMapper.toProfileRegister(request);
-        profileRequest.setUserId(account.getId());
-
-        profileClient.createProfile(profileRequest);
-
-        return accountMapper.toAccountResponse(account);
+        return buildAccountResponse(account, profileResponse);
     }
 
     @Override
     public AccountResponse getUser(String id) {
-        Account account = accountRepository.findById(id).orElseThrow(
-                () -> new AppException(StatusCode.NOT_EXIST)
-        );
+        Account account = accountRepository.findById(id).orElseThrow(() ->
+                new AppException(StatusCode.NOT_EXIST));
 
         return accountMapper.toAccountResponse(account);
     }
 
-    private Account handleAccountAfterSave(AccountRegisterRequest request) {
+    private void validateAccountExistence(String username) {
+        if (accountRepository.existsByUsername(username)) {
+            throw new AppException(StatusCode.ACCOUNT_EXISTED);
+        }
+    }
+
+    private Account createAccount(AccountRegisterRequest request) {
         Account account = accountMapper.toEntity(request);
         account.setCreatedAt(LocalDateTime.now());
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         account.setRole(getDefaultRole());
-
         return account;
     }
 
+    private ProfileRegisterResponse createProfile(Account account, AccountRegisterRequest request) {
+        var profileRequest = profileMapper.toProfileRegister(request);
+        profileRequest.setUserId(account.getId());
+        return profileClient.createProfile(profileRequest);
+    }
+
+    private AccountResponse buildAccountResponse(Account account, ProfileRegisterResponse profileResponse) {
+        AccountResponse response = accountMapper.toAccountResponse(account);
+        response.setFirstName(profileResponse.getFirstName());
+        response.setLastName(profileResponse.getLastName());
+        response.setAvatar(profileResponse.getAvatar());
+        return response;
+    }
+
     private Role getDefaultRole() {
-        return roleRepository.findById("USER").orElseThrow();
+        return roleRepository.findById("USER").orElseThrow(() ->
+                new AppException(StatusCode.NOT_EXIST));
     }
 }

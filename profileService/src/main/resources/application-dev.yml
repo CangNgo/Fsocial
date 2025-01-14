@@ -4,13 +4,9 @@ spring:
     uri: bolt://localhost:7687
     authentication:
       username: neo4j
-      password: 12345678
+      password: root
   application:
     name: profileService
-  datasource:
-    url: jdbc:mysql://localhost:3306/?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username:
-    password:
   jpa:
     hibernate:
       ddl-auto: update

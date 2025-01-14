@@ -1,6 +1,7 @@
 package com.fsocial.profileservice.exception;
 
-import com.fsocial.accountservice.exception.StatusCode;
+import lombok.Getter;
+import com.fsocial.profileservice.exception.StatusCode;
 
 /*
 AppCheckedException là một checked exception,
@@ -17,7 +18,4 @@ public class AppCheckedException extends Exception {
         this.status = status;
     }
 
-    public StatusCode getStatus() {
-        return status;
-    }
 }

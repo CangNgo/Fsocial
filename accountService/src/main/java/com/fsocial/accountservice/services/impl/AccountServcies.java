@@ -33,13 +33,9 @@ public class AccountServcies implements AccountServices {
         try {
 
             Account result = accountMapper.toEntity(accountDTO);
-
-
             result.setCreatedAt(LocalDateTime.now());
             result.setCreatedBy(UUID.randomUUID());
-
             result = accountRepository.save(result);
-
             return accountMapper.toAccountDTO(result);
         } catch (DataIntegrityViolationException e) {
             throw new AppCheckedException("Thêm tài khoản mới thất bại", StatusCode.REGISTER_FAILED);

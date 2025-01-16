@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDTO {
-    String id;
-    String userId;
-    ContentDTO content;
-    Integer countLikes = 0;
+public class ContentDTO {
+    String text;
+    String[] media;
 }

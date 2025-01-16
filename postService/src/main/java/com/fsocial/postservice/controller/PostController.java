@@ -1,6 +1,7 @@
 package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.PostDTO;
+import com.fsocial.postservice.dto.PostDTORequest;
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -8,23 +9,27 @@ import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.PostService;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PostController {
     PostService postService;
+    String userId = "ljljgjdfje23423lkjdasf";
 
-    @PostMapping("/")
-    public ResponseEntity<Response> createPost(@RequestBody PostDTO postDTO) {
-
+    @PostMapping()
+    public ResponseEntity<Response> createPost(@RequestParam("text") String text,
+                                               @RequestParam("media") MultipartFile[] media) {
+            PostDTORequest postDTO = PostDTORequest.builder()
+                    .text(text)
+                    .media(media)
+                    .build();
         try {
-            PostDTO post = postService.createPost(postDTO);
+            PostDTO post = postService.createPost(postDTO, userId);
 
             return ResponseEntity.ok().body(Response.builder()
                     .data(post)

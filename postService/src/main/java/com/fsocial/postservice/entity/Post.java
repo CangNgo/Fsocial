@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = "post")
-public class Post extends AbstractEntity<UUID> {
+public class Post extends AbstractEntity<String> {
     @Field("user_id")
     String userId;
     @Field("content")

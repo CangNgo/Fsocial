@@ -8,6 +8,11 @@ spring:
        auto-index-creation: true
   main:
     allow-circular-references: true
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 100MB
+      max-file-size: 100MB
 
 server:
   servlet:

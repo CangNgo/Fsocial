@@ -4,14 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDTO {
-    String id;
-    String userId;
-    ContentDTO content;
-    Integer countLikes = 0;
+public class ContentDTORequest {
+    String text;
+    MultipartFile[] media;
 }

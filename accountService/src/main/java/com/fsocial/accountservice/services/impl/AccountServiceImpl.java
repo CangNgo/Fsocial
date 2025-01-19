@@ -74,6 +74,7 @@ public class AccountServiceImpl implements AccountService {
 
     private AccountResponse buildAccountResponse(Account account, ProfileRegisterResponse profileResponse) {
         AccountResponse response = accountMapper.toAccountResponse(account);
+
         response.setFirstName(profileResponse.getFirstName());
         response.setLastName(profileResponse.getLastName());
         response.setAvatar(profileResponse.getAvatar());

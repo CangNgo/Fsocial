@@ -17,24 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     AccountServiceImpl accountServices;
 
-//    @GetMapping
-//    public ResponseEntity<ApiResponse> login() {
-//        return ResponseEntity.ok().body(
-//                ApiResponse.builder()
-//                        .statusCode(StatusCode.OK.getCode())
-//                        .message(StatusCode.OK.getMessage())
-//                        .data(null)
-//                        .build());
-//    }
-
-    @PostMapping("/register")
+    @PostMapping("/public/register")
     public ApiResponse<AccountResponse> addAccount(@RequestBody @Valid AccountRegisterRequest accountDTO) {
         return ApiResponse.<AccountResponse>builder()
                 .statusCode(StatusCode.OK.getCode())
                 .message("Account registration successful")
                 .data(accountServices.registerUser(accountDTO))
                 .build();
-
     }
 
     @GetMapping("/{userId}")

@@ -39,7 +39,7 @@ public class AuthenticateController {
                 .build();
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public ApiResponse<AuthenticationResponse> handleLogin(@RequestBody @Valid AccountLoginRequest request) {
         return ApiResponse.<AuthenticationResponse>builder()
                 .statusCode(StatusCode.OK.getCode())

@@ -18,20 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class AccountProfileController {
     AccountProfileServiceImpl accountProfileService;
 
-    @PostMapping("/create")
-    public ApiResponse<ProfileResponse> createAccountProfile(@RequestBody @Valid ProfileRegisterRequest request) {
-        return ApiResponse.<ProfileResponse>builder()
-                .message("Create profile success.")
-                .data(accountProfileService.createAccountProfile(request))
-                .build();
+    @PostMapping("/internal/create")
+    public ProfileResponse createAccountProfile(@RequestBody @Valid ProfileRegisterRequest request) {
+        return accountProfileService.createAccountProfile(request);
     }
 
     @GetMapping("/{userId}")
-    public ApiResponse<ProfileResponse> getAccountProfile(@PathVariable String userId) {
-        return ApiResponse.<ProfileResponse>builder()
-                .message("Get profile success.")
-                .data(accountProfileService.getAccountProfile(userId))
-                .build();
+    public ProfileResponse getAccountProfile(@PathVariable String userId) {
+        return accountProfileService.getAccountProfile(userId);
     }
 
     @PutMapping("/{profileId}")

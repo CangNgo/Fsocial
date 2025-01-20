@@ -23,7 +23,7 @@ public class AccountProfileController {
         return accountProfileService.createAccountProfile(request);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/internal/{userId}")
     public ProfileResponse getAccountProfile(@PathVariable String userId) {
         return accountProfileService.getAccountProfile(userId);
     }

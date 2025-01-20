@@ -5,6 +5,7 @@ import com.fsocial.accountservice.dto.request.auth.IntrospectRequest;
 import com.fsocial.accountservice.dto.request.auth.LogoutRequest;
 import com.fsocial.accountservice.dto.response.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.IntrospectResponse;
+import com.fsocial.accountservice.dto.response.ProfileResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.InvalidToken;
 import com.fsocial.accountservice.entity.Role;
@@ -12,6 +13,7 @@ import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.exception.StatusCode;
 import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.repository.InvalidTokenRepository;
+import com.fsocial.accountservice.repository.httpclient.ProfileClient;
 import com.fsocial.accountservice.services.AuthenticationService;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -39,6 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     AccountRepository accountRepository;
     PasswordEncoder passwordEncoder;
     InvalidTokenRepository invalidTokenRepository;
+    ProfileClient profileClient;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -49,12 +52,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Account account = accountRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(StatusCode.NOT_EXIST));
 
-        if (!passwordEncoder.matches(request.getPassword(), account.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), account.getPassword()))
             throw new AppException(StatusCode.UNAUTHENTICATED);
-        }
 
+        ProfileResponse profileResponse = profileClient.getProfileByUserId(account.getId());
         String token = generateToken(account);
-        return AuthenticationResponse.builder().token(token).build();
+
+        return AuthenticationResponse.builder()
+                .token(token)
+                .firstName(profileResponse.getFirstName())
+                .lastName(profileResponse.getLastName())
+                .avatar(profileResponse.getAvatar())
+                .build();
     }
 
     @Override
@@ -99,7 +108,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .build();
 
             JWSObject jwsObject = new JWSObject(
-                    new JWSHeader(JWSAlgorithm.HS512),
+                    new JWSHeader(JWSAlgorithm.HS256),
                     new Payload(claimsSet.toJSONObject())
             );
 
@@ -114,9 +123,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         SignedJWT signedJWT = SignedJWT.parse(token);
         JWSVerifier verifier = new MACVerifier(getSignerKey());
 
-        if (!signedJWT.verify(verifier) || isTokenExpired(signedJWT) || isTokenInvalidated(signedJWT)) {
+        if (!signedJWT.verify(verifier) || isTokenExpired(signedJWT) || isTokenInvalidated(signedJWT))
             throw new AppException(StatusCode.UNAUTHENTICATED);
-        }
 
         return signedJWT;
     }
@@ -136,9 +144,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private byte[] getSignerKey() {
-        if (signerKey == null || signerKey.isEmpty()) {
-            throw new AppException(StatusCode.UNCATEGORIZED_EXCEPTION);
-        }
+        if (signerKey == null || signerKey.isEmpty()) throw new AppException(StatusCode.UNCATEGORIZED_EXCEPTION);
         return signerKey.getBytes();
     }
 }

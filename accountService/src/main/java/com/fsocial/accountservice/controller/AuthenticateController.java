@@ -23,12 +23,11 @@ import java.text.ParseException;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
-@RequestMapping("/auth")
 public class AuthenticateController {
 
     AuthenticationServiceImpl authenticationService;
 
-    @PostMapping("/introspect")
+    @PostMapping("/public/introspect")
     public ApiResponse<IntrospectResponse> introspectValid(@RequestBody IntrospectRequest request) {
         return ApiResponse.<IntrospectResponse>builder()
                 .statusCode(StatusCode.OK.getCode())
@@ -39,7 +38,7 @@ public class AuthenticateController {
                 .build();
     }
 
-    @PostMapping("/login")
+    @PostMapping("/public/login")
     public ApiResponse<AuthenticationResponse> handleLogin(@RequestBody @Valid AccountLoginRequest request) {
         return ApiResponse.<AuthenticationResponse>builder()
                 .statusCode(StatusCode.OK.getCode())
@@ -50,7 +49,7 @@ public class AuthenticateController {
                 .build();
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/public/logout")
     public ApiResponse<Void> logout(@RequestBody @Valid LogoutRequest request) throws ParseException, JOSEException {
         authenticationService.logout(request);
 

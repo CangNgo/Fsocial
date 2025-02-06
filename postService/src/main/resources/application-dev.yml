@@ -4,15 +4,11 @@ spring:
     name: postService
   data:
     mongodb:
-       uri: mongodb://root:root@localhost:27017/post-service?authSource=admin
+       uri: mongodb://root:root@localhost:27002/primary_database?authSource=admin
        auto-index-creation: true
-  main:
-    allow-circular-references: true
-  servlet:
-    multipart:
-      enabled: true
-      max-request-size: 100MB
-      max-file-size: 100MB
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 server:
   servlet:

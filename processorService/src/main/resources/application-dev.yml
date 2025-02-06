@@ -2,10 +2,13 @@
 spring:
   application:
     name: processorService
-  datasource:
-    url: jdbc:mysql://localhost:3306/?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username:
-    password:
+  data:
+    mongodb:
+      primary:
+        uri: mongodb://root:root@localhost:27017,localhost:27018,localhost:27019/primary_database?replicaSet=rs0&authSource=admin
+      secondary:
+        uri: mongodb://root:root@localhost:27017,localhost:27018,localhost:27019/second_database?replicaSet=rs0&authSource=admin
+      auto-index-creation: true
   jpa:
     hibernate:
       ddl-auto: update

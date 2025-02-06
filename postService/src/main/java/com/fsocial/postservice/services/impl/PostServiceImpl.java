@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,9 +49,15 @@ public class PostServiceImpl implements PostService {
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
             throw new AppCheckedException("Không thể thêm bài post vào database", StatusCode.CREATE_POST_FAILED);
         } catch (IOException e) {
             throw new AppCheckedException("Không thể upload ảnh lên cloud", StatusCode.UPLOAD_FILE_FAILED);
         }
+    }
+
+    @Override
+    public List<Post> getPosts() {
+        return postRepository.findAll();
     }
 }

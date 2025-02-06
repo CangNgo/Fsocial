@@ -15,6 +15,9 @@ public enum StatusCode {
     FILE_NOT_FOUND(202, "File not found", HttpStatus.NOT_FOUND),
     UPLOAD_FILE_SUCCESS(203, "Upload file success", HttpStatus.OK),
     UPLOAD_FILE_FAILED(204, "Upload file failed", HttpStatus.BAD_REQUEST),
+    CREATE_COMMENT_SUCCESS(205, "Create comment success", HttpStatus.OK),
+    CREATE_COMMENT_FAILED(206, "Create comment failed", HttpStatus.BAD_REQUEST),
+    GET_COMMENT_SUCCESS(207, "Get comment success", HttpStatus.OK),
     ;
     private final int code;
     private final String message;

@@ -1,7 +1,10 @@
-package com.fsocial.postservice.entity;
+package com.fsocial.processorservice.entity.secondDatabase;
 
+import com.fsocial.processorservice.entity.AbstractEntity;
+import com.fsocial.processorservice.entity.Content;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -11,17 +14,12 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = "post")
-public class Post extends AbstractEntity<String> {
+@TypeAlias("read")
+public class PostRead extends AbstractEntity<String> {
     @Field("user_id")
     String userId;
     @Field("content")
     Content content;
     @Field("count_likes")
     Integer countLikes = 0;
-
-    public Post(String userId, Content content) {
-        this.userId = userId;
-        this.content = content;
-        this.countLikes = 0;
-    }
 }

@@ -1,7 +1,6 @@
 package com.fsocial.processorservice.exception;
 
-import com.fsocial.accountservice.dto.Response;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.processorservice.dto.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

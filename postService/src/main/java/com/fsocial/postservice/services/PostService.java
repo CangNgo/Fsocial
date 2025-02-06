@@ -7,6 +7,10 @@ import com.fsocial.postservice.exception.AppCheckedException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public interface PostService {
     PostDTO createPost(PostDTORequest post, String userId) throws AppCheckedException;
+
+    List<Post> getPosts() ;
 }

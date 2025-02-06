@@ -10,18 +10,19 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Document(collection = "post")
-public class Post extends AbstractEntity<String> {
-    @Field("user_id")
+@Document(collection = "comment")
+@Builder
+public class Comment extends AbstractEntity<String>{
+    @Field("postId")
+    String postId;
+    @Field("userId")
     String userId;
     @Field("content")
     Content content;
-    @Field("count_likes")
-    Integer countLikes = 0;
-
-    public Post(String userId, Content content) {
-        this.userId = userId;
-        this.content = content;
-        this.countLikes = 0;
-    }
+    @Field("countLikes")
+    int countLikes;
+    @Field("countReplyComment")
+    int countReplyComment;
+    @Field("reply")
+    boolean reply;
 }

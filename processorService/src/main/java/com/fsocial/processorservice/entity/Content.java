@@ -1,4 +1,4 @@
-package com.fsocial.postservice.entity;
+package com.fsocial.processorservice.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Builder
 public class Content {
     @Field("text")
     String text;

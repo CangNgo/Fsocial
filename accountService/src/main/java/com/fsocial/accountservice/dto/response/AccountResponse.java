@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.dto.response;
 
+import com.fsocial.accountservice.dto.response.role.RoleResponse;
 import com.fsocial.accountservice.entity.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,12 +17,8 @@ public class AccountResponse {
     String id;
     String username;
     boolean isKOL;
-<<<<<<< HEAD
     RoleResponse role;
-=======
-    Role role;
     String firstName;
     String lastName;
     String avatar;
->>>>>>> c865938a7cd9ca1c50772e3e22c0b2e435a40bf2
 }

@@ -12,7 +12,7 @@
         </processorPath>
         <module name="apigateway" />
       </profile>
-      <profile name="Annotation profile for profileService" enabled="true">
+      <profile name="Annotation profile for accountService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -37,6 +37,7 @@
       <module name="apigateway" options="-parameters" />
       <module name="messageService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="postService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="processorService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="profileService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="timeLineService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
     </option>

@@ -10,7 +10,8 @@ public enum ResponseStatus {
     ACCOUNT_REGISTERED("Account registered successfully."),
     OTP_SENT("OTP has been sent to your email."),
     OTP_VALID("OTP is valid."),
-    PASSWORD_RESET_SUCCESS("Password has been reset successfully.")
+    PASSWORD_RESET_SUCCESS("Password has been reset successfully."),
+    VALID("Information valid.")
     ;
 
     private final int CODE = 200;

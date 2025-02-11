@@ -1,10 +1,7 @@
 package com.fsocial.accountservice.controller;
 
 import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
-import com.fsocial.accountservice.dto.request.account.EmailRequest;
-import com.fsocial.accountservice.dto.request.account.OtpRequest;
-import com.fsocial.accountservice.dto.request.account.ResetPasswordRequest;
+import com.fsocial.accountservice.dto.request.account.*;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.services.impl.AccountServiceImpl;
@@ -59,6 +56,15 @@ public class AccountController {
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.OTP_VALID.getCODE())
                 .message(ResponseStatus.OTP_VALID.getMessage())
+                .build();
+    }
+
+    @PostMapping("/check-duplication")
+    public ApiResponse<Void> checkDuplication(@RequestBody DuplicationRequest request) {
+        accountServices.checkDuplication(request);
+        return ApiResponse.<Void>builder()
+                .statusCode(ResponseStatus.VALID.getCODE())
+                .message(ResponseStatus.VALID.getMessage())
                 .build();
     }
 

@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  mongo1:
+    image: mongo
+    container_name: fsocial_primary
+    restart: always
+    environment:
+      - MONGO_INITDB_REPLICASET=rs0
+    command: mongod --replSet "rs0"
+    ports:
+      - "27001:27017"
+    volumes:
+      - fsocial_primary:/data/db
+    networks:
+      - mongo_replica
+
+  mongo2:
+    image: mongo
+    container_name: fsocial_secondary_1
+    restart: always
+    environment:
+      - MONGO_INITDB_REPLICASET=rs0
+    command: mongod --replSet "rs0"
+    ports:
+      - "27002:27017"
+    volumes:
+      - fsocial_secondary_1:/data/db
+    networks:
+      - mongo_replica
+
+  mongo3:
+    image: mongo
+    container_name: fsocial_secondary_2
+    restart: always
+    environment:
+      - MONGO_INITDB_REPLICASET=rs0
+    command: mongod --replSet "rs0"
+    ports:
+      - "27003:27017"
+    volumes:
+      - fsocial_secondary_2:/data/db
+    networks:
+      - mongo_replica
+
+networks:
+  mongo_replica:
+    driver: bridge
+
+volumes:
+  fsocial_primary:
+  fsocial_secondary_1:
+  fsocial_secondary_2:

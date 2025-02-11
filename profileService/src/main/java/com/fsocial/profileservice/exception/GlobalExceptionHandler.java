@@ -1,7 +1,6 @@
 package com.fsocial.profileservice.exception;
 
 import com.fsocial.profileservice.dto.ApiResponse;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,8 +12,10 @@ import java.util.Objects;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
+
 
         return ResponseEntity.badRequest().body(ApiResponse.builder()
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())

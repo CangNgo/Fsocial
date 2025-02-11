@@ -2,7 +2,7 @@ package com.fsocial.accountservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.accountservice.enums.StatusCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

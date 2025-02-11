@@ -1,7 +1,7 @@
 package com.fsocial.accountservice.services;
 
-import com.fsocial.accountservice.dto.request.RoleCreationRequest;
-import com.fsocial.accountservice.dto.response.RoleResponse;
+import com.fsocial.accountservice.dto.request.role.RoleCreationRequest;
+import com.fsocial.accountservice.dto.response.role.RoleResponse;
 
 import java.util.List;
 import java.util.Set;

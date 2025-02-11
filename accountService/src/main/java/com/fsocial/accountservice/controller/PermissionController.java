@@ -1,8 +1,8 @@
 package com.fsocial.accountservice.controller;
 
 import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.dto.request.PermissionRequest;
-import com.fsocial.accountservice.dto.response.PermissionResponse;
+import com.fsocial.accountservice.dto.request.role.PermissionRequest;
+import com.fsocial.accountservice.dto.response.role.PermissionResponse;
 import com.fsocial.accountservice.services.impl.PermissionServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

@@ -1,12 +1,13 @@
 package com.fsocial.accountservice.controller;
 
 import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.dto.request.AccountLoginRequest;
-import com.fsocial.accountservice.dto.request.IntrospectRequest;
-import com.fsocial.accountservice.dto.request.LogoutRequest;
+import com.fsocial.accountservice.dto.request.account.AccountLoginRequest;
+import com.fsocial.accountservice.dto.request.auth.IntrospectRequest;
+import com.fsocial.accountservice.dto.request.auth.LogoutRequest;
 import com.fsocial.accountservice.dto.response.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.IntrospectResponse;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.accountservice.enums.ResponseStatus;
+import com.fsocial.accountservice.enums.StatusCode;
 import com.fsocial.accountservice.services.impl.AuthenticationServiceImpl;
 import com.nimbusds.jose.JOSEException;
 import jakarta.validation.Valid;
@@ -15,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
@@ -23,7 +23,6 @@ import java.text.ParseException;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
-@RequestMapping("/auth")
 public class AuthenticateController {
 
     AuthenticationServiceImpl authenticationService;
@@ -31,19 +30,19 @@ public class AuthenticateController {
     @PostMapping("/introspect")
     public ApiResponse<IntrospectResponse> introspectValid(@RequestBody IntrospectRequest request) {
         return ApiResponse.<IntrospectResponse>builder()
-                .statusCode(StatusCode.OK.getCode())
-                .message("Verify token success.")
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
                 .data(
                         authenticationService.introspectValid(request)
                 )
                 .build();
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public ApiResponse<AuthenticationResponse> handleLogin(@RequestBody @Valid AccountLoginRequest request) {
         return ApiResponse.<AuthenticationResponse>builder()
-                .statusCode(StatusCode.OK.getCode())
-                .message("Login success.")
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
                 .data(
                         authenticationService.authenticationAccount(request)
                 )

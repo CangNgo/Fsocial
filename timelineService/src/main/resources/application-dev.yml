@@ -2,10 +2,10 @@
 spring:
   application:
     name: timelineService
-  datasource:
-    url: jdbc:mysql://localhost:3306/?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username:
-    password:
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27002/primary_database?authSource=admin
+      auto-index-creation: true
   jpa:
     hibernate:
       ddl-auto: update

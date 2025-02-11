@@ -1,7 +1,7 @@
 package com.fsocial.accountservice.services.impl;
 
-import com.fsocial.accountservice.dto.request.PermissionRequest;
-import com.fsocial.accountservice.dto.response.PermissionResponse;
+import com.fsocial.accountservice.dto.request.role.PermissionRequest;
+import com.fsocial.accountservice.dto.response.role.PermissionResponse;
 import com.fsocial.accountservice.entity.Permission;
 import com.fsocial.accountservice.mapper.PermissionMapper;
 import com.fsocial.accountservice.repository.PermissionRepository;

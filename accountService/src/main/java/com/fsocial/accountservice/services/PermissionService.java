@@ -1,7 +1,7 @@
 package com.fsocial.accountservice.services;
 
-import com.fsocial.accountservice.dto.request.PermissionRequest;
-import com.fsocial.accountservice.dto.response.PermissionResponse;
+import com.fsocial.accountservice.dto.request.role.PermissionRequest;
+import com.fsocial.accountservice.dto.response.role.PermissionResponse;
 
 import java.util.List;
 

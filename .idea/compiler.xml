@@ -2,7 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
       <profile name="Annotation profile for apigateway" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -12,7 +11,7 @@
         </processorPath>
         <module name="apigateway" />
       </profile>
-      <profile name="Annotation profile for profileService" enabled="true">
+      <profile name="Annotation profile for postService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -29,10 +28,6 @@
         <module name="accountService" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="messageService" target="21" />
-      <module name="timeLineService" target="21" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

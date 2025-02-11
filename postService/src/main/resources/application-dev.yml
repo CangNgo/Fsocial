@@ -1,13 +1,16 @@
-
+app:
+  services:
+    profile: http://localhost:8085/profile
 spring:
   application:
     name: postService
   data:
     mongodb:
-       uri: mongodb://root:root@localhost:27017/post-service?authSource=admin
+       uri: mongodb://root:root@localhost:27001/primary_database?authSource=admin
        auto-index-creation: true
-  main:
-    allow-circular-references: true
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 server:
   servlet:

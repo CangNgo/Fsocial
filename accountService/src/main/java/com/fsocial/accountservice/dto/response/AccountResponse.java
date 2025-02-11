@@ -15,5 +15,5 @@ public class AccountResponse {
     String id;
     String username;
     boolean isKOL;
-    Role role;
+    RoleResponse role;
 }

@@ -3,6 +3,7 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.request.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.response.AccountResponse;
+import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.exception.StatusCode;
 import com.fsocial.accountservice.services.impl.AccountServiceImpl;
 import jakarta.validation.Valid;
@@ -38,12 +39,13 @@ public class AccountController {
     }
 
     @GetMapping("/{userId}")
-    public ApiResponse<AccountResponse> getAccount(@PathVariable String userId) {
+    public ApiResponse<AccountResponse> gacetAccount(@PathVariable String userId) {
+        AccountResponse account = accountServices.getUser(userId);
         return ApiResponse.<AccountResponse>builder()
                 .statusCode(StatusCode.OK.getCode())
                 .message("Get account success.")
                 .data(
-                        accountServices.getUser(userId)
+                       account
                 )
                 .build();
     }

@@ -31,11 +31,10 @@ public class AccountProfileServiceImpl implements AccountProfileService {
 
     @Override
     public ProfileResponse getAccountProfile(String userId) {
-        var accountProfile = accountProfileRepository.findByUserId(userId).orElseThrow(
+
+        return accountProfileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(StatusCode.UNCATEGORIZED_EXCEPTION)
         );
-
-        return accountProfileMapper.toProfileResponse(accountProfile);
     }
 
     @Override

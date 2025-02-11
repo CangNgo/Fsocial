@@ -22,6 +22,8 @@ public class ProfileRegisterRequest {
     @NotBlank
     String lastName;
 
+    String userId;
+
     int gender;
     LocalDate dob;
 }

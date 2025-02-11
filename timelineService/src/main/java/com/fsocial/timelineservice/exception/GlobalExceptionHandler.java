@@ -1,7 +1,6 @@
 package com.fsocial.timelineservice.exception;
 
-import com.fsocial.accountservice.dto.Response;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.timelineservice.dto.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

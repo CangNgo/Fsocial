@@ -1,9 +1,11 @@
 package com.fsocial.postservice.services.impl;
 
 import com.fsocial.postservice.Repository.PostRepository;
+import com.fsocial.postservice.Repository.httpClient.ProfileClient;
 import com.fsocial.postservice.dto.ContentDTO;
 import com.fsocial.postservice.dto.PostDTO;
 import com.fsocial.postservice.dto.PostDTORequest;
+import com.fsocial.postservice.dto.profile.ProfileDTO;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +30,14 @@ public class PostServiceImpl implements PostService {
     UploadImageImpl uploadImage;
     PostMapper postMapper;
     ContentMapper contentMapper;
+    ProfileClient profileClient;
     @Override
     public PostDTO createPost(PostDTORequest postRequest, String userId) throws AppCheckedException {
         try {
+
+            //Lấy thông tin profile
+            Optional<ProfileDTO> profile = profileClient.getProfile(userId);
+
             //upload ảnh
             String[] uripostImage = uploadImage.uploadImage(postRequest.getMedia());
             Post post = postMapper.toPost(postRequest);
@@ -40,10 +48,7 @@ public class PostServiceImpl implements PostService {
                     .text(postRequest.getText())
                     .media(uripostImage)
             .build();
-
-            post.setCountLikes(0);
             post.setContent(contentMapper.toContent(content));
-
             post.setCreatedAt(LocalDateTime.now());
             post.setCreatedBy(userId);
             //kết quả trả về

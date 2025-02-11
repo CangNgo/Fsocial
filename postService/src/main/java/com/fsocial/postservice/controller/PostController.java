@@ -34,7 +34,6 @@ public class PostController {
         PostDTORequest postDTO = PostDTORequest.builder()
                 .text(text)
                 .media(media)
-
                 .build();
         try {
             PostDTO post = postService.createPost(postDTO, userId);

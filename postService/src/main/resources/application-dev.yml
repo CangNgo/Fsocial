@@ -1,10 +1,12 @@
-
+app:
+  services:
+    profile: http://localhost:8085/profile
 spring:
   application:
     name: postService
   data:
     mongodb:
-       uri: mongodb://root:root@localhost:27002/primary_database?authSource=admin
+       uri: mongodb://root:root@localhost:27001/primary_database?authSource=admin
        auto-index-creation: true
   jpa:
     hibernate:

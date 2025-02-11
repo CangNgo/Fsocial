@@ -5,7 +5,7 @@ import com.fsocial.accountservice.dto.response.role.RoleResponse;
 import com.fsocial.accountservice.entity.Permission;
 import com.fsocial.accountservice.entity.Role;
 import com.fsocial.accountservice.exception.AppException;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.accountservice.enums.StatusCode;
 import com.fsocial.accountservice.mapper.RoleMapper;
 import com.fsocial.accountservice.repository.PermissionRepository;
 import com.fsocial.accountservice.repository.RoleRepository;

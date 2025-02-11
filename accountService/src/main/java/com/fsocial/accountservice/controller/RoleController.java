@@ -3,7 +3,7 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.role.RoleCreationRequest;
 import com.fsocial.accountservice.dto.response.role.RoleResponse;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.accountservice.enums.StatusCode;
 import com.fsocial.accountservice.services.impl.RoleServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

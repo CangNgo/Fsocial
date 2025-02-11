@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.exception;
 
+import com.fsocial.accountservice.enums.StatusCode;
 import lombok.Getter;
 
 /*

@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.dto.request.account;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -21,9 +22,12 @@ public class AccountRegisterRequest {
     @NotNull
     String password;
 
-    String mail;
+    String email;
     String firstName;
     String lastName;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate dob;
+
     int gender;
 }

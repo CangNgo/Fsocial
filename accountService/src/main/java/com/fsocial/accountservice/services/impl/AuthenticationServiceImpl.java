@@ -10,7 +10,7 @@ import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.InvalidToken;
 import com.fsocial.accountservice.entity.Role;
 import com.fsocial.accountservice.exception.AppException;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.accountservice.enums.StatusCode;
 import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.repository.InvalidTokenRepository;
 import com.fsocial.accountservice.repository.httpclient.ProfileClient;
@@ -56,10 +56,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new AppException(StatusCode.UNAUTHENTICATED);
 
         ProfileResponse profileResponse = profileClient.getProfileByUserId(account.getId());
-        String token = generateToken(account);
 
         return AuthenticationResponse.builder()
-                .token(token)
+                .token(generateToken(account))
                 .firstName(profileResponse.getFirstName())
                 .lastName(profileResponse.getLastName())
                 .avatar(profileResponse.getAvatar())
@@ -70,11 +69,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public IntrospectResponse introspectValid(IntrospectRequest request) {
         try {
             SignedJWT signedJWT = SignedJWT.parse(request.getToken());
-            JWSVerifier verifier = new MACVerifier(getSignerKey());
-
-            boolean isValid = signedJWT.verify(verifier);
             return IntrospectResponse.builder()
-                    .valid(isValid)
+                    .valid(signedJWT.verify(new MACVerifier(getSignerKey())))
                     .build();
         } catch (JOSEException | ParseException e) {
             throw new AppException(StatusCode.UNCATEGORIZED_EXCEPTION);
@@ -85,11 +81,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void logout(LogoutRequest request) {
         try {
             SignedJWT signedJWT = verifyToken(request.getToken());
-            JWTClaimsSet claimsSet = signedJWT.getJWTClaimsSet();
-
             invalidTokenRepository.save(InvalidToken.builder()
-                    .id(claimsSet.getJWTID())
-                    .expiryTime(claimsSet.getExpirationTime())
+                    .id(signedJWT.getJWTClaimsSet().getJWTID())
+                    .expiryTime(signedJWT.getJWTClaimsSet().getExpirationTime())
                     .build());
         } catch (JOSEException | ParseException e) {
             throw new AppException(StatusCode.UNAUTHENTICATED);
@@ -102,16 +96,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .subject(account.getUsername())
                     .issuer("FSOCIAL - FCODER")
                     .issueTime(new Date())
-                    .expirationTime(Date.from(Instant.now().plus(2, ChronoUnit.HOURS)))
+                    .expirationTime(Date.from(Instant.now().plus(15, ChronoUnit.MINUTES)))
                     .jwtID(UUID.randomUUID().toString())
-                    .claim("scope", buildScope(account))
+                    .claim(
+                            "scope",
+                            Optional.ofNullable(account.getRole()).map(Role::getName).orElse(" "))
                     .build();
 
             JWSObject jwsObject = new JWSObject(
                     new JWSHeader(JWSAlgorithm.HS256),
                     new Payload(claimsSet.toJSONObject())
             );
-
             jwsObject.sign(new MACSigner(getSignerKey()));
             return jwsObject.serialize();
         } catch (JOSEException e) {
@@ -135,12 +130,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private boolean isTokenInvalidated(SignedJWT signedJWT) throws ParseException {
         return invalidTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID());
-    }
-
-    private String buildScope(Account account) {
-        return Optional.ofNullable(account.getRole())
-                .map(Role::getName)
-                .orElse(" ");
     }
 
     private byte[] getSignerKey() {

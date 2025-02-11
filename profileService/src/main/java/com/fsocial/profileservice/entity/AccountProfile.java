@@ -1,5 +1,6 @@
 package com.fsocial.profileservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,8 +35,10 @@ public class AccountProfile {
     String avatar;
     String banner;
     int gender;
-    String address;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate dob;
+
     LocalDate createdAt = LocalDate.now();
     LocalDate updatedAt;
 }

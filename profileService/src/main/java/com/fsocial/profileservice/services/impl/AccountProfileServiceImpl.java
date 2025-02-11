@@ -54,12 +54,4 @@ public class AccountProfileServiceImpl implements AccountProfileService {
         );
     }
 
-//    void toAccountProfile(ProfileUpdateRequest request, AccountProfile entity) {
-//        if (!request.getFirstName().isEmpty()) entity.setFirstName(request.getFirstName());
-//        if (!request.getLastName().isEmpty()) entity.setLastName(request.getLastName());
-//        if (request.getDob() != null) entity.setDob(request.getDob());
-//        if (!request.getBio().isEmpty()) entity.setBio(request.getBio());
-//        if (!request.getAddress().isEmpty()) entity.setAddress(request.getAddress());
-//        if (!request.getAvatar().isEmpty()) entity.setAvatar(request.getAvatar());
-//    }
 }

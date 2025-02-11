@@ -1,9 +1,9 @@
 package com.fsocial.accountservice.exception;
 
+import com.fsocial.accountservice.enums.StatusCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.HttpStatus;
 
 /*
 AppUnCheckedException là một unchecked exception, được sử dụng để xử lý các lỗi trong

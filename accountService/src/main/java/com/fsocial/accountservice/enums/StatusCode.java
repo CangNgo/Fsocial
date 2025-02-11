@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.exception;
+package com.fsocial.accountservice.enums;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,10 +12,12 @@ public enum StatusCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     OK(200, "OK", HttpStatus.OK),
     REGISTER_FAILED(101, "Register failed", HttpStatus.BAD_REQUEST),
-    ACCOUNT_EXISTED(464, "Account already registered", HttpStatus.BAD_REQUEST),
+    ACCOUNT_EXISTED(464, "Account already exists", HttpStatus.BAD_REQUEST),
+    EMAIL_EXISTED(464, "Email already exists", HttpStatus.BAD_REQUEST),
     NOT_EXIST(467, "Account not existed.", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(468, "Unauthenticated.", HttpStatus.BAD_REQUEST),
-    NOT_FOUND(404, "Not Found.", HttpStatus.NOT_FOUND)
+    NOT_FOUND(404, "Not Found.", HttpStatus.NOT_FOUND),
+    OTP_INVALID(463, "Invalid OTP code", HttpStatus.BAD_REQUEST)
     ;
     final int code;
     final String message;

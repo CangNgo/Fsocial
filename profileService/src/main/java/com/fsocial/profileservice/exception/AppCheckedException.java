@@ -1,7 +1,6 @@
 package com.fsocial.profileservice.exception;
 
 import lombok.Getter;
-import com.fsocial.profileservice.exception.StatusCode;
 
 /*
 AppCheckedException là một checked exception,

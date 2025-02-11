@@ -20,6 +20,26 @@ spring:
       matching-strategy: ant_path_matcher
   main:
     allow-circular-references: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: khaildps37419@fpt.edu.vn
+    password: mxzx aacu asud keyh
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  redis:
+    host: localhost   # Địa chỉ Redis server
+    port: 6379        # Cổng mặc định Redis
+    lettuce:
+      pool:
+        max-active: 10   # Số lượng kết nối tối đa
+        max-idle: 5      # Số kết nối tối đa có thể rỗng
+        min-idle: 1      # Số kết nối tối thiểu có thể rỗng
+    timeout: 2000ms     # Thời gian chờ kết nối Redis
 
 server:
   servlet:

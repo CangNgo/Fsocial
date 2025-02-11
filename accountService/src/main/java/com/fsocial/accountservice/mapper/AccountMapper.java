@@ -1,6 +1,6 @@
 package com.fsocial.accountservice.mapper;
 
-import com.fsocial.accountservice.dto.request.AccountRegisterRequest;
+import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.entity.Account;
 import org.mapstruct.Mapper;

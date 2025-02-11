@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.dto.response;
+package com.fsocial.accountservice.dto.request.role;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class PermissionResponse {
+public class PermissionRequest {
     String name;
     String description;
 }

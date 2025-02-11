@@ -13,9 +13,12 @@ import java.util.Objects;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+<<<<<<< HEAD
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
 
+=======
+>>>>>>> c865938a7cd9ca1c50772e3e22c0b2e435a40bf2
         return ResponseEntity.badRequest().body(ApiResponse.builder()
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
                 .message(StatusCode.UNCATEGORIZED_EXCEPTION.getMessage())
@@ -23,6 +26,20 @@ public class GlobalExceptionHandler {
                 .data(null)
                 .build());
     }
+<<<<<<< HEAD
+=======
+
+//    @ExceptionHandler(value = Exception.class)
+//    ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
+//
+//        return ResponseEntity.badRequest().body(ApiResponse.builder()
+//                .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
+//                .message(StatusCode.UNCATEGORIZED_EXCEPTION.getMessage())
+//                .dateTime(LocalDateTime.now())
+//                .data(null)
+//                .build());
+//    }
+>>>>>>> c865938a7cd9ca1c50772e3e22c0b2e435a40bf2
 
     @ExceptionHandler(value = AppCheckedException.class)
     ResponseEntity<ApiResponse> handlingAppCheckedException(AppCheckedException exception) {

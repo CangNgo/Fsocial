@@ -1,6 +1,14 @@
 package com.fsocial.profileservice.entity;
 
+<<<<<<< HEAD
 import lombok.*;
+=======
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+>>>>>>> c865938a7cd9ca1c50772e3e22c0b2e435a40bf2
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
@@ -44,6 +52,7 @@ public class AccountProfile {
     @Property
     int gender;
 
+<<<<<<< HEAD
     @Property
     String address;
 
@@ -51,6 +60,11 @@ public class AccountProfile {
     LocalDate dob;
 
     @Property("created_at")
+=======
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    LocalDate dob;
+
+>>>>>>> c865938a7cd9ca1c50772e3e22c0b2e435a40bf2
     LocalDate createdAt = LocalDate.now();
 
     @Property("updated_at")

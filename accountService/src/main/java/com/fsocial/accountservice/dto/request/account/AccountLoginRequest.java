@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.dto.request;
+package com.fsocial.accountservice.dto.request.account;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,8 +10,12 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor(force = true)
 @Builder
 @Data
-public class LogoutRequest {
+public class AccountLoginRequest {
     @NotNull
     @NotBlank
-    String token;
+    String username;
+
+    @NotNull
+    @NotBlank
+    String password;
 }

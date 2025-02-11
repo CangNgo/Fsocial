@@ -23,7 +23,6 @@ public class ProfileRegisterRequest {
     String lastName;
 
     String userId;
-
     int gender;
     LocalDate dob;
 }

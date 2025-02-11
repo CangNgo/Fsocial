@@ -14,7 +14,7 @@ import java.util.Objects;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    ResponseEntity<Response> handlingRuntimeException(RuntimeException exception) {
+    ResponseEntity<com.fsocial.processorservice.dto.Response> handlingRuntimeException(RuntimeException exception) {
 
         return ResponseEntity.badRequest().body(Response.builder()
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())

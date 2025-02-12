@@ -17,7 +17,8 @@ public enum StatusCode {
     NOT_EXIST(467, "Account not existed.", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(468, "Unauthenticated.", HttpStatus.BAD_REQUEST),
     NOT_FOUND(404, "Not Found.", HttpStatus.NOT_FOUND),
-    OTP_INVALID(463, "Invalid OTP code", HttpStatus.BAD_REQUEST)
+    OTP_INVALID(463, "Invalid OTP code", HttpStatus.BAD_REQUEST),
+    USERNAME_EXISTED(470, "Username already exists", HttpStatus.BAD_REQUEST)
     ;
     final int code;
     final String message;

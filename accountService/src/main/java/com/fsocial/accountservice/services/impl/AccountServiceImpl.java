@@ -1,6 +1,7 @@
 package com.fsocial.accountservice.services.impl;
 
 import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
+import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.ProfileRegisterResponse;
 import com.fsocial.accountservice.entity.Account;
@@ -59,6 +60,15 @@ public class AccountServiceImpl implements AccountService {
 
         account.setPassword(passwordEncoder.encode(newPassword));
         accountRepository.save(account);
+    }
+
+    @Override
+    public void checkDuplication(DuplicationRequest request) {
+        if (accountRepository.existsByUsername(request.getUsername()))
+            throw new AppException(StatusCode.USERNAME_EXISTED);
+
+        if (accountRepository.existsByEmail(request.getEmail()))
+            throw new AppException(StatusCode.EMAIL_EXISTED);
     }
 
     private void validateAccountExistence(String username, String email) {

@@ -4,10 +4,14 @@ spring:
     authentication:
       username: neo4j
 <<<<<<< HEAD
+<<<<<<< HEAD
       password: root
 =======
       password: root1234
 >>>>>>> develop
+=======
+      password: root
+>>>>>>> 72b96a15630d1b0be416e96206863408cef345db
   application:
     name: profileService
   jpa:

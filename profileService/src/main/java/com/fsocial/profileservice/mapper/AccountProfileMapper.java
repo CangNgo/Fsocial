@@ -17,4 +17,5 @@ public interface AccountProfileMapper {
     void toAccountProfile(ProfileUpdateRequest request, @MappingTarget AccountProfile accountProfile);
 
     ProfileUpdateResponse toProfileUpdateResponse(AccountProfile accountProfile);
+
 }

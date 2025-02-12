@@ -1,6 +1,7 @@
 package com.fsocial.timelineservice.exception;
 
-import com.fsocial.accountservice.exception.StatusCode;
+
+import lombok.Getter;
 
 /*
 AppCheckedException là một checked exception,

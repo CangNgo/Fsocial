@@ -14,9 +14,11 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T>{
+    @Builder.Default
     int statusCode = 200;
     String message;
     T data;
+
     @Builder.Default
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime dateTime = LocalDateTime.now();

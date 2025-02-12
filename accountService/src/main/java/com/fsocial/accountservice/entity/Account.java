@@ -23,4 +23,6 @@ public class Account extends AbstractEntity<String> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role")
     Role role;
+
+    String email;
 }

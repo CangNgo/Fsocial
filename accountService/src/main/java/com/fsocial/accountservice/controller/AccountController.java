@@ -1,49 +1,91 @@
 package com.fsocial.accountservice.controller;
 
-import com.fsocial.accountservice.dto.request.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.ApiResponse;
+import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
+import com.fsocial.accountservice.dto.request.account.EmailRequest;
+import com.fsocial.accountservice.dto.request.account.OtpRequest;
+import com.fsocial.accountservice.dto.request.account.ResetPasswordRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.services.impl.AccountServiceImpl;
+import com.fsocial.accountservice.services.impl.OtpServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
+@Slf4j
 public class AccountController {
     AccountServiceImpl accountServices;
+    OtpServiceImpl otpService;
 
-//    @GetMapping
-//    public ResponseEntity<ApiResponse> login() {
-//        return ResponseEntity.ok().body(
-//                ApiResponse.builder()
-//                        .statusCode(StatusCode.OK.getCode())
-//                        .message(StatusCode.OK.getMessage())
-//                        .data(null)
-//                        .build());
-//    }
+    String KEY_PREFIX_REGIS = "REGIS_";
+    String KEY_PREFIX_RESET = "RESET_";
 
     @PostMapping("/register")
-    public ApiResponse<AccountResponse> addAccount(@RequestBody @Valid AccountRegisterRequest accountDTO) {
-        return ApiResponse.<AccountResponse>builder()
-                .statusCode(StatusCode.OK.getCode())
-                .message("Account registration successful")
-                .data(accountServices.registerUser(accountDTO))
+    public ApiResponse<Void> persistAccount(@RequestBody @Valid AccountRegisterRequest request) {
+        accountServices.persistAccount(request);
+        return ApiResponse.<Void>builder()
+                .statusCode(ResponseStatus.ACCOUNT_REGISTERED.getCODE())
+                .message(ResponseStatus.ACCOUNT_REGISTERED.getMessage())
                 .build();
+    }
 
+    @PostMapping("/send-otp")
+    public ApiResponse<Void> sendOtp(@RequestBody EmailRequest request) {
+        if ("REGISTER".equals(request.getType())) {
+            otpService.sendOtp(request.getEmail(), KEY_PREFIX_REGIS);
+        } else {
+            otpService.sendOtp(request.getEmail(), KEY_PREFIX_RESET);
+        }
+        return ApiResponse.<Void>builder()
+                .statusCode(ResponseStatus.OTP_SENT.getCODE())
+                .message(ResponseStatus.OTP_SENT.getMessage())
+                .build();
+    }
+
+    @PostMapping("/verify-otp")
+    public ApiResponse<Void> verifyOtp(@RequestBody OtpRequest request) {
+        if ("REGISTER".equals(request.getType())) {
+            otpService.validateOtp(request.getEmail(), request.getOtp(), KEY_PREFIX_REGIS);
+        } else {
+            otpService.validateOtp(request.getEmail(), request.getOtp(), KEY_PREFIX_RESET);
+        }
+        return ApiResponse.<Void>builder()
+                .statusCode(ResponseStatus.OTP_VALID.getCODE())
+                .message(ResponseStatus.OTP_VALID.getMessage())
+                .build();
+    }
+
+    @PutMapping("/reset-password")
+    public ApiResponse<Void> resetPassword(
+            @RequestBody ResetPasswordRequest request) {
+
+        accountServices.resetPassword(
+                request.getEmail(),
+                request.getOtp(),
+                request.getNewPassword()
+        );
+
+        return ApiResponse.<Void>builder()
+                .statusCode(ResponseStatus.PASSWORD_RESET_SUCCESS.getCODE())
+                .message(ResponseStatus.PASSWORD_RESET_SUCCESS.getMessage())
+                .build();
     }
 
     @GetMapping("/{userId}")
-    public ApiResponse<AccountResponse> getAccount(@PathVariable String userId) {
+    public ApiResponse<AccountResponse> gacetAccount(@PathVariable String userId) {
+        AccountResponse account = accountServices.getUser(userId);
         return ApiResponse.<AccountResponse>builder()
-                .statusCode(StatusCode.OK.getCode())
-                .message("Get account success.")
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
                 .data(
-                        accountServices.getUser(userId)
+                       account
                 )
                 .build();
     }

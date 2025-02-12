@@ -1,8 +1,8 @@
 package com.fsocial.postservice.exception;
 
-import com.fsocial.accountservice.dto.Response;
-import com.fsocial.accountservice.exception.StatusCode;
+import com.fsocial.postservice.dto.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,6 +47,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(Response.builder()
                 .statusCode(exception.getStatusCode().value())
                 .message(Objects.requireNonNull(exception.getFieldError()).getDefaultMessage())
+                .build());
+    }
+
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    ResponseEntity<Response> handlingHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
+        return ResponseEntity.badRequest().body(Response.builder()
+                .statusCode(exception.getStatusCode().value())
+                .message(exception.getMethod()+ " " + StatusCode.HTTPMETHOD_NOT_SUPPORTED.getMessage())
                 .build());
     }
 }

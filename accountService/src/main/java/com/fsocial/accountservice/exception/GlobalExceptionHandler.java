@@ -1,6 +1,7 @@
 package com.fsocial.accountservice.exception;
 
 import com.fsocial.accountservice.dto.ApiResponse;
+import com.fsocial.accountservice.enums.StatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

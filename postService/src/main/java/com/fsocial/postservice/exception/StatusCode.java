@@ -8,7 +8,16 @@ import org.springframework.http.HttpStatusCode;
 public enum StatusCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     OK(200, "OK", HttpStatus.OK),
+    HTTPMETHOD_NOT_SUPPORTED(201, "HTTP method not supported", HttpStatus.NOT_IMPLEMENTED),
     REGISTER_FAILED(101, "Register failed", HttpStatus.BAD_REQUEST),
+    CREATE_POST_SUCCESS(100,"Create post success", HttpStatus.OK),
+    CREATE_POST_FAILED(211,"Create post success", HttpStatus.BAD_REQUEST),
+    FILE_NOT_FOUND(202, "File not found", HttpStatus.NOT_FOUND),
+    UPLOAD_FILE_SUCCESS(203, "Upload file success", HttpStatus.OK),
+    UPLOAD_FILE_FAILED(204, "Upload file failed", HttpStatus.BAD_REQUEST),
+    CREATE_COMMENT_SUCCESS(205, "Create comment success", HttpStatus.OK),
+    CREATE_COMMENT_FAILED(206, "Create comment failed", HttpStatus.BAD_REQUEST),
+    GET_COMMENT_SUCCESS(207, "Get comment success", HttpStatus.OK),
     ;
     private final int code;
     private final String message;

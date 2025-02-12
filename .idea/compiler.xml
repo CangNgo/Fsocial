@@ -12,7 +12,7 @@
         </processorPath>
         <module name="apigateway" />
       </profile>
-      <profile name="Annotation profile for timeLineService" enabled="true">
+      <profile name="Annotation profile for profileService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -30,9 +30,6 @@
         <module name="messageService" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="processorService" target="21" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

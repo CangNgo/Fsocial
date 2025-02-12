@@ -1,9 +1,7 @@
 package com.fsocial.profileservice.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
@@ -15,7 +13,8 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import java.time.LocalDate;
 
 @Node("account_profile")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -25,17 +24,36 @@ public class AccountProfile {
     @GeneratedValue(generatorClass = UUIDStringGenerator.class)
     String id;
 
-    @Property("userId")
+    @Property("user_id")  // Using snake_case for Neo4j property names
     String userId;
 
+    @Property("first_name")
     String firstName;
+
+    @Property("last_name")
     String lastName;
+
+    @Property
     String bio;
+
+    @Property
     String avatar;
+
+    @Property
     String banner;
+
+    @Property
     int gender;
+
+    @Property
     String address;
+
+    @Property("created_at")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate dob;
+
     LocalDate createdAt = LocalDate.now();
+
+    @Property("updated_at")
     LocalDate updatedAt;
 }

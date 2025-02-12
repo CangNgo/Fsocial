@@ -1,6 +1,10 @@
 package com.fsocial.profileservice.exception;
 
 import lombok.Getter;
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 /*
 AppCheckedException là một checked exception,
 được sử dụng để xử lý các lỗi trong ứng dụng mà yêu cầu phải bắt buộc

@@ -57,7 +57,7 @@ public class AppConfig {
     }
 
     private JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKey = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS512");
+        SecretKeySpec secretKey = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS256");
 
         return NimbusJwtDecoder
                 .withSecretKey(secretKey)

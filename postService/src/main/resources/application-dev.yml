@@ -1,23 +1,16 @@
-
+app:
+  services:
+    profile: http://localhost:8085/profile
 spring:
   application:
     name: postService
-  datasource:
-    url: jdbc:mysql://localhost:3306/?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username:
-    password:
+  data:
+    mongodb:
+       uri: mongodb://root:root@localhost:27001/primary_database?authSource=admin
+       auto-index-creation: true
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-  main:
-    allow-circular-references: true
 
 server:
   servlet:

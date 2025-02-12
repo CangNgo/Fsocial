@@ -1,10 +1,13 @@
-
 spring:
   neo4j:
     uri: bolt://localhost:7687
     authentication:
       username: neo4j
+<<<<<<< HEAD
       password: root
+=======
+      password: root1234
+>>>>>>> develop
   application:
     name: profileService
   jpa:

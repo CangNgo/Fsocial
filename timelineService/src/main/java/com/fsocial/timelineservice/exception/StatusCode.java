@@ -9,6 +9,7 @@ public enum StatusCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     OK(200, "OK", HttpStatus.OK),
     REGISTER_FAILED(101, "Register failed", HttpStatus.BAD_REQUEST),
+    POST_INVALID(222, "POST invalid", HttpStatus.BAD_REQUEST),
     ;
     private final int code;
     private final String message;

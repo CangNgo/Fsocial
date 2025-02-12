@@ -10,4 +10,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class AuthenticationResponse {
     String token;
+    String firstName;
+    String lastName;
+    String avatar;
 }

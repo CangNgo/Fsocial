@@ -1,9 +1,11 @@
 package com.fsocial.accountservice.dto.response;
 
+import com.fsocial.accountservice.dto.response.role.RoleResponse;
 import com.fsocial.accountservice.entity.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -15,5 +17,8 @@ public class AccountResponse {
     String id;
     String username;
     boolean isKOL;
-    Role role;
+    RoleResponse role;
+    String firstName;
+    String lastName;
+    String avatar;
 }

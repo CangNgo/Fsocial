@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Annotation profile for apigateway" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -33,9 +34,11 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="accountService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="apigateway" options="-parameters" />
+      <module name="messageService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="postService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="processorService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="profileService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="timeLineService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
     </option>
   </component>
 </project>

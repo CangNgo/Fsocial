@@ -1,6 +1,6 @@
 app:
   services:
-    profile: http://localhost:8085/profile
+    profile: http://localhost:8085/profile/internal
 
 spring:
   application:

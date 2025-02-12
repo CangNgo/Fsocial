@@ -1,17 +1,17 @@
 package com.fsocial.postservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PostDTO {
     String id;
     String userId;
     ContentDTO content;
     Integer countLikes = 0;
+    Integer countComments = 0;
 }

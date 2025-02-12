@@ -17,10 +17,12 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -45,9 +47,10 @@ public class PostServiceImpl implements PostService {
                     .HTMLText(postRequest.getHTMLText())
                     .media(uripostImage)
             .build();
+
+            post.setCountComments(0);
             post.setCountLikes(0);
             post.setContent(contentMapper.toContent(content));
-            post.setCreatedAt(LocalDateTime.now());
             post.setCreatedBy(userId);
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
@@ -63,4 +66,5 @@ public class PostServiceImpl implements PostService {
     public List<Post> getPosts() {
         return postRepository.findAll();
     }
+
 }

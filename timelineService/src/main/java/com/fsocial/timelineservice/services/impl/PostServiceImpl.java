@@ -1,5 +1,6 @@
 package com.fsocial.timelineservice.services.impl;
 
+import com.fsocial.timelineservice.Repository.CommentRepository;
 import com.fsocial.timelineservice.Repository.PostRepository;
 import com.fsocial.timelineservice.Repository.httpClient.ProfileClient;
 import com.fsocial.timelineservice.dto.ApiResponse;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,40 +31,39 @@ public class PostServiceImpl implements PostService {
 
     PostRepository postRepository;
 
-    PostMapper postMapper;
-
     ProfileClient profileClient;
 
+    CommentRepository commentRepository;
 
     @Override
     public List<PostResponse> getPosts() throws AppCheckedException {
-
-        List<PostResponse> result = new ArrayList<>();
-
-        List<Post> posts = postRepository.findAll();
-
-        for (Post post : posts) {
-
-            ProfileResponse profileResponse = getProfile(post.getUserId());
-            String userName = profileResponse.getFirstName()+ " " + profileResponse.getLastName();
-            result.add(PostResponse.builder()
+        return postRepository.findAll().stream()
+                .map(post -> {
+                    ProfileResponse profile = null;
+                    Integer countComment = null;
+                    try {
+                        profile = getProfile(post.getUserId());
+                        countComment = commentRepository.countCommentsByPostId(post.getId());
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return PostResponse.builder()
                             .id(post.getId())
                             .content(post.getContent())
                             .countLikes(post.getCountLikes())
+                            .countComments(countComment)
                             .userId(post.getUserId())
-                            .userName(userName)
-                            .avatar(profileResponse.getAvatar())
-                    .build());
-        }
-
-        return result;
+                            .userName(profile.getFirstName() + " " + profile.getLastName())
+                            .avatar(profile.getAvatar())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
     public ProfileResponse getProfile(String userId) throws AppCheckedException {
         try {
-            ApiResponse<ProfileResponse> profileResponse = profileClient.getProfile(userId);
-            return profileResponse.getData();
+            return profileClient.getProfile(userId);
         } catch (Exception e) {
             throw new AppCheckedException(e.getMessage(), StatusCode.USER_NOT_FOUND);
         }

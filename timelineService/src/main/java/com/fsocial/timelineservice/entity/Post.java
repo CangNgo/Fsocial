@@ -18,5 +18,7 @@ public class Post extends AbstractEntity<String> {
     Content content;
     @Field("count_likes")
     Integer countLikes = 0;
+    @Field("count_comments")
+    Integer countComments = 0;
 
 }

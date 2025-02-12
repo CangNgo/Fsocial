@@ -54,8 +54,8 @@ public class AuthenticateController {
         authenticationService.logout(request);
 
         return ApiResponse.<Void>builder()
-                .statusCode(StatusCode.OK.getCode())
-                .message("Logout success.")
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
                 .build();
     }
 }

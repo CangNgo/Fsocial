@@ -1,3 +1,6 @@
+app:
+  services:
+    profile: http://localhost:8085/profile
 
 spring:
   application:

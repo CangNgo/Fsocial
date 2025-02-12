@@ -18,6 +18,7 @@ public enum StatusCode {
     CREATE_COMMENT_SUCCESS(205, "Create comment success", HttpStatus.OK),
     CREATE_COMMENT_FAILED(206, "Create comment failed", HttpStatus.BAD_REQUEST),
     GET_COMMENT_SUCCESS(207, "Get comment success", HttpStatus.OK),
+    USER_NOT_FOUND(208, "Client not found", HttpStatus.NOT_FOUND),
     ;
     private final int code;
     private final String message;

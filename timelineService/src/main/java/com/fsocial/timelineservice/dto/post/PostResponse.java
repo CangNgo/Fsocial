@@ -5,16 +5,15 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PostDTO {
+public class PostResponse {
     String id;
     String userId;
     Content content;
     Integer countLikes;
-
+    String userName;
+    String avatar;
 }

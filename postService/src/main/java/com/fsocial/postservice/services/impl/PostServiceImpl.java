@@ -34,10 +34,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDTO createPost(PostDTORequest postRequest, String userId) throws AppCheckedException {
         try {
-
-            //Lấy thông tin profile
-            Optional<ProfileDTO> profile = profileClient.getProfile(userId);
-
             //upload ảnh
             String[] uripostImage = uploadImage.uploadImage(postRequest.getMedia());
             Post post = postMapper.toPost(postRequest);
@@ -46,8 +42,10 @@ public class PostServiceImpl implements PostService {
             //thêm content
             ContentDTO content = ContentDTO.builder()
                     .text(postRequest.getText())
+                    .HTMLText(postRequest.getHTMLText())
                     .media(uripostImage)
             .build();
+            post.setCountLikes(0);
             post.setContent(contentMapper.toContent(content));
             post.setCreatedAt(LocalDateTime.now());
             post.setCreatedBy(userId);

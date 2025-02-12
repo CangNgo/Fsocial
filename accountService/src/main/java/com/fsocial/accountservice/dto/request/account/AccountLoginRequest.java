@@ -11,8 +11,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 public class AccountLoginRequest {
-    @NotNull
-    @NotBlank
+
     String username;
 
     @NotNull

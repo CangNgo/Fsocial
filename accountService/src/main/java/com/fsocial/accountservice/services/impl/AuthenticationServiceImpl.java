@@ -50,6 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse authenticationAccount(AccountLoginRequest request) {
         Account account = accountRepository.findByUsername(request.getUsername())
+                .or(() -> accountRepository.findByEmail(request.getUsername()))
                 .orElseThrow(() -> new AppException(StatusCode.NOT_EXIST));
 
         if (!passwordEncoder.matches(request.getPassword(), account.getPassword()))

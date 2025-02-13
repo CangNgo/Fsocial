@@ -5,10 +5,27 @@ app:
   api-prefix: /api/v1
 
 spring:
+  security:
+    user:
+      name: admin
+      password: 12345
   application:
     name: apigateway
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
       routes:
         - id: account_service
           uri: http://localhost:8081

@@ -18,7 +18,6 @@ public class ApiResponse <T>{
     Integer statusCode = 200;
     String message;
 
-    @Builder.Default
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime dateTime = LocalDateTime.now();
 

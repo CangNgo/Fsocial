@@ -29,7 +29,7 @@ public class OtpServiceImpl implements OtpService {
         String redisKey = keyPrefix + email;
         redisTemplate.opsForValue().set(redisKey, otp, 5, TimeUnit.MINUTES);
         mailUtils.sendOtp(email, otp);
-        log.info("Sent OTP to {}", email);
+        log.info("OTP: {}", otp);
     }
 
     @Override

@@ -23,10 +23,11 @@ import javax.crypto.spec.SecretKeySpec;
 public class AppConfig {
 
     private final String[] PUBLIC_API = {"/account/register",
-            "/account/send-otp",
-            "/account//verify-otp",
-            "/account/check-duplication",
-            "/account/login"
+            "/send-otp",
+            "/verify-otp",
+            "/check-duplication",
+            "/login",
+            "/register"
     };
 
     @Value("${jwt.signerKey")
@@ -38,7 +39,7 @@ public class AppConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
                         author.requestMatchers(HttpMethod.POST, PUBLIC_API).permitAll()
-                                .requestMatchers(HttpMethod.PUT, "/account/reset-password").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/reset-password").permitAll()
                                 .anyRequest().authenticated()
                 );
 

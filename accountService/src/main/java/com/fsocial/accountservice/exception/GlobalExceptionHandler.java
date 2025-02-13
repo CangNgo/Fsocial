@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AppCheckedException.class)
     ResponseEntity<ApiResponse> handlingAppCheckedException(AppCheckedException exception) {
-        return ResponseEntity.badRequest().body(getStatusCode(exception.getStatus()));
+        return ResponseEntity.badRequest().body(createApiResponse(exception.getStatus()));
     }
 
     @ExceptionHandler(value = NoResourceFoundException.class)
@@ -40,10 +40,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        return ResponseEntity.badRequest().body(ApiResponse.builder()
-                .statusCode(exception.getStatusCode().value())
-                .message(Objects.requireNonNull(exception.getFieldError()).getDefaultMessage())
-                .build());
+        String enumKey = Objects.requireNonNull(exception.getFieldError()).getDefaultMessage();
+        ErrorCode errorCode = ErrorCode.valueOf(enumKey);
+        return ResponseEntity.badRequest().body(createApiResponse(errorCode));
     }
 
     @ExceptionHandler(value = AppException.class)
@@ -51,10 +50,10 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = exception.getStatusCode();
         return ResponseEntity
                 .status(errorCode.getStatusCode())
-                .body(getStatusCode(errorCode));
+                .body(createApiResponse(errorCode));
     }
 
-    private ApiResponse getStatusCode(ErrorCode statusCode) {
+    private ApiResponse createApiResponse(ErrorCode statusCode) {
         return ApiResponse.builder()
                 .statusCode(statusCode.getCode())
                 .message(statusCode.getMessage())

@@ -11,6 +11,8 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class AccountController {
     }
 
     @PostMapping("/send-otp")
-    public ApiResponse<Void> sendOtp(@RequestBody EmailRequest request) {
+    public ApiResponse<Void> sendOtp(@RequestBody @Valid EmailRequest request) {
         if ("REGISTER".equals(request.getType())) {
             otpService.sendOtp(request.getEmail(), KEY_PREFIX_REGIS);
         } else {
@@ -46,7 +48,7 @@ public class AccountController {
     }
 
     @PostMapping("/verify-otp")
-    public ApiResponse<Void> verifyOtp(@RequestBody OtpRequest request) {
+    public ApiResponse<Void> verifyOtp(@RequestBody @Valid OtpRequest request) {
         if ("REGISTER".equals(request.getType())) {
             otpService.validateOtp(request.getEmail(), request.getOtp(), KEY_PREFIX_REGIS);
         } else {
@@ -59,19 +61,15 @@ public class AccountController {
     }
 
     @PostMapping("/check-duplication")
-    public ApiResponse<DuplicationResponse> checkDuplication(@RequestBody DuplicationRequest request) {
-        return ApiResponse.<DuplicationResponse>builder()
-                .statusCode(ResponseStatus.VALID.getCODE())
-                .message(ResponseStatus.VALID.getMessage())
-                .data(
-                        accountServices.checkDuplication(request)
-                )
-                .build();
+    public ResponseEntity<ApiResponse<DuplicationResponse>> checkDuplication(@RequestBody @Valid DuplicationRequest request) {
+        ApiResponse<DuplicationResponse> response = accountServices.checkDuplication(request);
+        HttpStatus status = response.getStatusCode() != 200 ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
+        return ResponseEntity.status(status).body(response);
     }
 
     @PutMapping("/reset-password")
     public ApiResponse<Void> resetPassword(
-            @RequestBody ResetPasswordRequest request) {
+            @RequestBody @Valid ResetPasswordRequest request) {
 
         accountServices.resetPassword(
                 request.getEmail(),

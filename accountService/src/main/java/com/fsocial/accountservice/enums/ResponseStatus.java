@@ -11,7 +11,8 @@ public enum ResponseStatus {
     OTP_SENT("OTP đã được gửi tới email của bạn."),
     OTP_VALID("OTP là hợp lệ."),
     PASSWORD_RESET_SUCCESS("Mật khẩu đã được đặt lại thành công."),
-    VALID("Thông tin hợp lệ.")
+    VALID("Thông tin hợp lệ."),
+    INVALID("Thông tin không hợp lệ.")
     ;
 
     private final int CODE = 200;

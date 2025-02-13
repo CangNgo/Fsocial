@@ -1,8 +1,7 @@
 package com.fsocial.accountservice.services.impl;
 
 import com.fsocial.accountservice.dto.request.account.AccountLoginRequest;
-import com.fsocial.accountservice.dto.request.auth.IntrospectRequest;
-import com.fsocial.accountservice.dto.request.auth.LogoutRequest;
+import com.fsocial.accountservice.dto.request.auth.TokenRequest;
 import com.fsocial.accountservice.dto.response.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.IntrospectResponse;
 import com.fsocial.accountservice.entity.Account;
@@ -37,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse login(AccountLoginRequest request) {
         Account account = accountRepository.findByUsernameOrEmail(request.getUsername(), request.getUsername())
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_EXIST));
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
 
         if (account.getPassword() == null || !passwordEncoder.matches(request.getPassword(), account.getPassword()))
             throw new AppException(ErrorCode.UNAUTHENTICATED);
@@ -48,7 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public IntrospectResponse introspectValid(IntrospectRequest request) {
+    public IntrospectResponse introspectValid(TokenRequest request) {
         try {
             SignedJWT signedJWT = SignedJWT.parse(request.getToken());
             return IntrospectResponse.builder()
@@ -61,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void logout(LogoutRequest request) {
+    public void logout(TokenRequest request) {
         if (request == null || request.getToken() == null) throw new AppException(ErrorCode.OTP_INVALID);
         tokenService.invalidateToken(request.getToken());
     }

@@ -1,6 +1,6 @@
 package com.fsocial.accountservice.exception;
 
-import com.fsocial.accountservice.enums.StatusCode;
+import com.fsocial.accountservice.enums.ErrorCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
@@ -13,9 +13,9 @@ runtime của ứng dụng của bạn mà không yêu cầu phải khai báo th
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AppException extends RuntimeException {
-    final StatusCode statusCode;
+    final ErrorCode statusCode;
 
-    public AppException(StatusCode statusCode) {
+    public AppException(ErrorCode statusCode) {
         super(statusCode.getMessage());
         this.statusCode = statusCode;
     }

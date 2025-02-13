@@ -1,5 +1,7 @@
 package com.fsocial.accountservice.dto.request.account;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,5 +13,8 @@ import lombok.experimental.FieldDefaults;
 public class ResetPasswordRequest {
     String otp;
     String email;
+
+    @NotNull
+    @NotBlank
     String newPassword;
 }

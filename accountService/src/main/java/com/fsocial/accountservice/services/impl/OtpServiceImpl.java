@@ -1,7 +1,7 @@
 package com.fsocial.accountservice.services.impl;
 
 import com.fsocial.accountservice.exception.AppException;
-import com.fsocial.accountservice.enums.StatusCode;
+import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.services.OtpService;
 import com.fsocial.accountservice.util.MailUtils;
 import lombok.AccessLevel;
@@ -37,7 +37,7 @@ public class OtpServiceImpl implements OtpService {
         String redisKey = keyPrefix + email;
         String storedOtp = redisTemplate.opsForValue().get(redisKey);
         if (storedOtp == null || !storedOtp.equals(otp)) {
-            throw new AppException(StatusCode.OTP_INVALID);
+            throw new AppException(ErrorCode.OTP_INVALID);
         }
         redisTemplate.delete(redisKey);
     }

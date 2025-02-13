@@ -3,6 +3,7 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.*;
 import com.fsocial.accountservice.dto.response.AccountResponse;
+import com.fsocial.accountservice.dto.response.DuplicationResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.services.impl.AccountServiceImpl;
 import com.fsocial.accountservice.services.impl.OtpServiceImpl;
@@ -10,13 +11,11 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
-@Slf4j
 public class AccountController {
     AccountServiceImpl accountServices;
     OtpServiceImpl otpService;
@@ -60,11 +59,13 @@ public class AccountController {
     }
 
     @PostMapping("/check-duplication")
-    public ApiResponse<Void> checkDuplication(@RequestBody DuplicationRequest request) {
-        accountServices.checkDuplication(request);
-        return ApiResponse.<Void>builder()
+    public ApiResponse<DuplicationResponse> checkDuplication(@RequestBody DuplicationRequest request) {
+        return ApiResponse.<DuplicationResponse>builder()
                 .statusCode(ResponseStatus.VALID.getCODE())
                 .message(ResponseStatus.VALID.getMessage())
+                .data(
+                        accountServices.checkDuplication(request)
+                )
                 .build();
     }
 
@@ -85,7 +86,7 @@ public class AccountController {
     }
 
     @GetMapping("/{userId}")
-    public ApiResponse<AccountResponse> gacetAccount(@PathVariable String userId) {
+    public ApiResponse<AccountResponse> getAccount(@PathVariable String userId) {
         AccountResponse account = accountServices.getUser(userId);
         return ApiResponse.<AccountResponse>builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())

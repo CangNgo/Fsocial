@@ -28,7 +28,7 @@ public class AccountProfileController {
         return accountProfileService.getAccountProfile(userId);
     }
 
-    @PutMapping("/{profileId}")
+    @PutMapping("/internal/{profileId}")
     public ApiResponse<ProfileUpdateResponse> updateProfile(@PathVariable String profileId,
                                                             @RequestBody @Valid ProfileUpdateRequest request) {
         return ApiResponse.<ProfileUpdateResponse>builder()

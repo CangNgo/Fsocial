@@ -3,6 +3,7 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.*;
 import com.fsocial.accountservice.dto.response.AccountResponse;
+import com.fsocial.accountservice.dto.response.DuplicationResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.services.impl.AccountServiceImpl;
 import com.fsocial.accountservice.services.impl.OtpServiceImpl;
@@ -10,13 +11,13 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
-@Slf4j
 public class AccountController {
     AccountServiceImpl accountServices;
     OtpServiceImpl otpService;
@@ -34,7 +35,7 @@ public class AccountController {
     }
 
     @PostMapping("/send-otp")
-    public ApiResponse<Void> sendOtp(@RequestBody EmailRequest request) {
+    public ApiResponse<Void> sendOtp(@RequestBody @Valid EmailRequest request) {
         if ("REGISTER".equals(request.getType())) {
             otpService.sendOtp(request.getEmail(), KEY_PREFIX_REGIS);
         } else {
@@ -47,7 +48,7 @@ public class AccountController {
     }
 
     @PostMapping("/verify-otp")
-    public ApiResponse<Void> verifyOtp(@RequestBody OtpRequest request) {
+    public ApiResponse<Void> verifyOtp(@RequestBody @Valid OtpRequest request) {
         if ("REGISTER".equals(request.getType())) {
             otpService.validateOtp(request.getEmail(), request.getOtp(), KEY_PREFIX_REGIS);
         } else {
@@ -60,17 +61,15 @@ public class AccountController {
     }
 
     @PostMapping("/check-duplication")
-    public ApiResponse<Void> checkDuplication(@RequestBody DuplicationRequest request) {
-        accountServices.checkDuplication(request);
-        return ApiResponse.<Void>builder()
-                .statusCode(ResponseStatus.VALID.getCODE())
-                .message(ResponseStatus.VALID.getMessage())
-                .build();
+    public ResponseEntity<ApiResponse<DuplicationResponse>> checkDuplication(@RequestBody @Valid DuplicationRequest request) {
+        ApiResponse<DuplicationResponse> response = accountServices.checkDuplication(request);
+        HttpStatus status = response.getStatusCode() != 200 ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
+        return ResponseEntity.status(status).body(response);
     }
 
     @PutMapping("/reset-password")
     public ApiResponse<Void> resetPassword(
-            @RequestBody ResetPasswordRequest request) {
+            @RequestBody @Valid ResetPasswordRequest request) {
 
         accountServices.resetPassword(
                 request.getEmail(),
@@ -85,7 +84,7 @@ public class AccountController {
     }
 
     @GetMapping("/{userId}")
-    public ApiResponse<AccountResponse> gacetAccount(@PathVariable String userId) {
+    public ApiResponse<AccountResponse> getAccount(@PathVariable String userId) {
         AccountResponse account = accountServices.getUser(userId);
         return ApiResponse.<AccountResponse>builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())

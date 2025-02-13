@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ContentDTO {
     String text;
+    String HTMLText;
     String[] media;
 }

@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.dto.request.auth;
+package com.fsocial.accountservice.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor(force = true)
 @Builder
 @Data
-public class IntrospectRequest {
-    String token;
+public class DuplicationResponse {
+    String username;
+    String email;
 }

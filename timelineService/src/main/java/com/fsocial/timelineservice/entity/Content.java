@@ -15,4 +15,6 @@ public class Content {
     String text;
     @Field("media")
     String[] media;
+    @Field("html_text")
+    String HTMLText;
 }

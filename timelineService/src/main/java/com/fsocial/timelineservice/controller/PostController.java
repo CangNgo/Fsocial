@@ -1,7 +1,7 @@
 package com.fsocial.timelineservice.controller;
 
 import com.fsocial.timelineservice.dto.Response;
-import com.fsocial.timelineservice.entity.Post;
+import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.exception.StatusCode;
 import com.fsocial.timelineservice.services.PostService;
@@ -25,7 +25,8 @@ public class PostController {
     @GetMapping
     public ResponseEntity<Response> getPosts() throws AppCheckedException {
         try {
-            List<Post> posts = postService.getPosts();
+            List<PostResponse> posts = postService.getPosts();
+
             return ResponseEntity.ok(Response.builder()
                             .message("Lấy bài đăng thành công")
                             .statusCode(StatusCode.OK.getCode())

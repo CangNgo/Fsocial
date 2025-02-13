@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(Response.builder()
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
-                .message(StatusCode.UNCATEGORIZED_EXCEPTION.getMessage())
+                .message(exception.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(null)
                 .build());

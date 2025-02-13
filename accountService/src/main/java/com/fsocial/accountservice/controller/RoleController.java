@@ -3,7 +3,7 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.role.RoleCreationRequest;
 import com.fsocial.accountservice.dto.response.role.RoleResponse;
-import com.fsocial.accountservice.enums.StatusCode;
+import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.services.impl.RoleServiceImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class RoleController {
     @PostMapping
     public ApiResponse<RoleResponse> createRole(@RequestBody RoleCreationRequest request) {
         return ApiResponse.<RoleResponse>builder()
-                .statusCode(StatusCode.OK.getCode())
+                .statusCode(ErrorCode.OK.getCode())
                 .message("Create new Role success.")
                 .data(roleService.createRole(request))
                 .build();
@@ -33,7 +33,7 @@ public class RoleController {
     @GetMapping
     public ApiResponse<List<RoleResponse>> getAllRole() {
         return ApiResponse.<List<RoleResponse>>builder()
-                .statusCode(StatusCode.OK.getCode())
+                .statusCode(ErrorCode.OK.getCode())
                 .message("Get all Role success.")
                 .data(
                         roleService.getAllRoles()
@@ -48,7 +48,7 @@ public class RoleController {
             ) {
 
         return ApiResponse.<RoleResponse>builder()
-                .statusCode(StatusCode.OK.getCode())
+                .statusCode(ErrorCode.OK.getCode())
                 .message("Update role success.")
                 .data(
                         roleService.updateRole(roleId, permissions)
@@ -61,7 +61,7 @@ public class RoleController {
         roleService.deleteRole(roleId);
 
         return ApiResponse.<Void>builder()
-                .statusCode(StatusCode.OK.getCode())
+                .statusCode(ErrorCode.OK.getCode())
                 .message("Delete role success.")
                 .build();
     }

@@ -32,6 +32,7 @@ public class CommentController {
     public ResponseEntity<Response> createComment(@RequestParam("postId") String postId,
                                                   @RequestParam(value = "userId") String userId,
                                                   @RequestParam("text") String text,
+                                                  @RequestParam("HTMLText") String HTMLtext,
                                                   @RequestParam(value = "media", required = false) MultipartFile[] media) throws AppCheckedException {
         try {
             String[] mediaText = uploadImage.uploadImage(media);
@@ -46,11 +47,11 @@ public class CommentController {
                             Content.builder()
                                     .text(text)
                                     .media(mediaText)
+                                    .HTMLText(HTMLtext)
                                     .build()
                     )
                     .build();
             Comment comment = commentService.addComment(commentRequest);
-            new Response();
             return ResponseEntity.ok(Response.builder()
                     .statusCode(StatusCode.CREATE_COMMENT_SUCCESS.getCode())
                     .data(comment)
@@ -62,19 +63,4 @@ public class CommentController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<Response> getComment(@RequestParam("postId") String postId) {
-        try {
-            List<Comment> commentByPostId = commentService.getComments(postId);
-            new Response();
-            return ResponseEntity.ok(Response.builder()
-                    .statusCode(StatusCode.GET_COMMENT_SUCCESS.getCode())
-                    .data(commentByPostId)
-                    .dateTime(LocalDateTime.now())
-                    .message("Comment get by postId successfully")
-                    .build());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

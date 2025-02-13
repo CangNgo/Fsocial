@@ -10,8 +10,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor(force = true)
 @Builder
 @Data
-public class LogoutRequest {
-    @NotNull
-    @NotBlank
+public class TokenRequest {
+    @NotBlank(message = "REQUIRED_TOKEN")
+    @NotNull(message = "REQUIRED_TOKEN")
     String token;
 }

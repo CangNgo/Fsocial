@@ -28,7 +28,7 @@ public abstract class AbstractEntity<T extends Serializable> implements Serializ
 
     @CreatedDate
     @Field("created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @LastModifiedDate
     @Field("updated_at")

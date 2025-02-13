@@ -3,6 +3,7 @@ package com.fsocial.accountservice.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,6 +22,14 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class AppConfig {
 
+    private final String[] PUBLIC_API = {"/account/register",
+            "/send-otp",
+            "/verify-otp",
+            "/check-duplication",
+            "/login",
+            "/register"
+    };
+
     @Value("${jwt.signerKey")
     protected String SIGNER_KEY;
 
@@ -29,9 +38,9 @@ public class AppConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
-                        author.anyRequest().permitAll()
-//                        author.requestMatchers(HttpMethod.POST, PUBLIC_KEY).permitAll()
-//                                .anyRequest().authenticated()
+                        author.requestMatchers(HttpMethod.POST, PUBLIC_API).permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/reset-password").permitAll()
+                                .anyRequest().authenticated()
                 );
 
         httpSecurity.oauth2ResourceServer(oauth2 ->

@@ -10,6 +10,8 @@ public enum StatusCode {
     OK(200, "OK", HttpStatus.OK),
     REGISTER_FAILED(101, "Register failed", HttpStatus.BAD_REQUEST),
     POST_INVALID(222, "POST invalid", HttpStatus.BAD_REQUEST),
+    USER_NOT_FOUND(208, "User Not Found", HttpStatus.NOT_FOUND),
+    GET_COMMENT_SUCCESS(207, "Get comment success", HttpStatus.OK),
     ;
     private final int code;
     private final String message;

@@ -32,7 +32,7 @@ public class CommentController {
     public ResponseEntity<Response> createComment(@RequestParam("postId") String postId,
                                                   @RequestParam(value = "userId") String userId,
                                                   @RequestParam("text") String text,
-                                                  @RequestParam("html_text") String HTMLtext,
+                                                  @RequestParam("HTMLText") String HTMLtext,
                                                   @RequestParam(value = "media", required = false) MultipartFile[] media) throws AppCheckedException {
         try {
             String[] mediaText = uploadImage.uploadImage(media);

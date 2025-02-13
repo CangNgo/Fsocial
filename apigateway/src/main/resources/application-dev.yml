@@ -5,6 +5,10 @@ app:
   api-prefix: /api/v1
 
 spring:
+  security:
+    user:
+      name: admin
+      password: 12345
   application:
     name: apigateway
   cloud:

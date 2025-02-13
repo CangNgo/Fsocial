@@ -53,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(() -> new AppException(StatusCode.NOT_EXIST));
 
         if (!passwordEncoder.matches(request.getPassword(), account.getPassword()))
-            throw new AppException(StatusCode.UNAUTHENTICATED);
+            throw new AppException(StatusCode.LOGIN_FAIL);
 
         ProfileResponse profileResponse = profileClient.getProfileByUserId(account.getId());
 

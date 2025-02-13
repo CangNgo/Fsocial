@@ -48,6 +48,7 @@
     "Spring Boot.AccountServiceApplication.executor": "Run",
     "Spring Boot.ApigatewayApplication.executor": "Run",
     "Spring Boot.PostServiceApplication.executor": "Run",
+    "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
     "git-widget-placeholder": "develop",
@@ -64,6 +65,13 @@
 }]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.fsocial.processorservice.config" />
+      <recent name="com.fsocial.timelineservice.config" />
+      <recent name="com.fsocial.profileservice.config" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
@@ -149,7 +157,7 @@
       <option name="presentableId" value="Default" />
       <updated>1739420463130</updated>
       <workItem from="1739420465131" duration="3554000" />
-      <workItem from="1739428662736" duration="1566000" />
+      <workItem from="1739428662736" duration="2432000" />
     </task>
     <servers />
   </component>

@@ -5,7 +5,6 @@ import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.DuplicationResponse;
-import com.fsocial.accountservice.dto.response.ProfileRegisterResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.Role;
 import com.fsocial.accountservice.exception.AppException;
@@ -46,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
     public void persistAccount(AccountRegisterRequest request) {
         validateAccountExistence(request.getUsername(), request.getEmail());
         Account account = saveAccount(request);
-        buildAccountResponse(account, createProfile(account, request));
+        createProfile(account, request);
     }
 
     @Override
@@ -106,7 +105,9 @@ public class AccountServiceImpl implements AccountService {
 
     private void validateAccountExistence(String username, String email) {
         boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;
-        if (accountExisted) throw new AppException(ErrorCode.ACCOUNT_EXISTED);
+        if (accountExisted) {
+            throw new AppException(ErrorCode.ACCOUNT_EXISTED);
+        }
     }
 
     private Account saveAccount(AccountRegisterRequest request) {
@@ -117,20 +118,10 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.save(account);
     }
 
-    private ProfileRegisterResponse createProfile(Account account, AccountRegisterRequest request) {
+    private void createProfile(Account account, AccountRegisterRequest request) {
         var profileRequest = profileMapper.toProfileRegister(request);
         profileRequest.setUserId(account.getId());
-        return profileClient.createProfile(profileRequest);
-    }
-
-    private void buildAccountResponse(Account account, ProfileRegisterResponse profileResponse) {
-        AccountResponse.builder()
-                .id(account.getId())
-                .username(account.getUsername())
-                .firstName(profileResponse.getFirstName())
-                .lastName(profileResponse.getLastName())
-                .avatar(profileResponse.getAvatar())
-                .build();
+        profileClient.createProfile(profileRequest);
     }
 
     private Role getDefaultRole() {

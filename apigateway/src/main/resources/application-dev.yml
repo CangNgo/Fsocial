@@ -46,10 +46,10 @@ spring:
             - Path=${app.api-prefix}/timeline/**
           filters:
             - StripPrefix=2
-    globals:
-      cors-configurations:
-        '[/**]':
-          allowedOrigins: "http://localhost:3000"
-          allowedMethods: "*"
-          allowedHeaders: "*"
-          allowCredentials: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true

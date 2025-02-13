@@ -30,16 +30,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     AccountRepository accountRepository;
     PasswordEncoder passwordEncoder;
-    ProfileClient profileClient;
     TokenServiceImpl tokenService;
 
     @Override
     public AuthenticationResponse login(AccountLoginRequest request) {
         Account account = accountRepository.findByUsernameOrEmail(request.getUsername(), request.getUsername())
-                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
+                .orElseThrow(() -> new AppException(ErrorCode.LOGIN_FAILED));
 
         if (account.getPassword() == null || !passwordEncoder.matches(request.getPassword(), account.getPassword()))
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
+            throw new AppException(ErrorCode.LOGIN_FAILED);
 
         return AuthenticationResponse.builder()
                 .token(tokenService.generateToken(account))

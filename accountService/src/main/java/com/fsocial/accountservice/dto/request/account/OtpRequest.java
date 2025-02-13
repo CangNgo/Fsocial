@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 public class OtpRequest {
     @NotBlank(message = "REQUIRED_EMAIL")
+    @NotNull(message = "REQUIRED_EMAIL")
     @Email(message = "INVALID_EMAIL")
     String email;
 

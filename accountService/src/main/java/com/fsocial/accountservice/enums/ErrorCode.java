@@ -20,16 +20,8 @@ public enum ErrorCode {
     OTP_INVALID(463, "Mã OTP không hợp lệ.", HttpStatus.BAD_REQUEST),
     USERNAME_EXISTED(470, "Tên đăng nhập đã tồn tại.", HttpStatus.BAD_REQUEST),
     DUPLICATION(471, "Tên đăng nhập hoặc Email đã tồn tại.", HttpStatus.BAD_REQUEST),
-    REQUIRED_OTP(900, "OTP không được để trống.", HttpStatus.BAD_REQUEST),
-    REQUIRED_EMAIL(901, "Email không được để trống.", HttpStatus.BAD_REQUEST),
-    INVALID_PASSWORD(902, "Mật khẩu phải có ít nhất 8 ký tự, chứa ít nhất một chữ cái và một chữ số.", HttpStatus.BAD_REQUEST),
-    REQUIRED_PASSWORD(903, "Mật khẩu không được để trống.", HttpStatus.BAD_REQUEST),
-    INVALID_EMAIL(904, "Email không hợp lệ.", HttpStatus.BAD_REQUEST),
-    REQUIRED_USERNAME(905, "Tên đăng nhập không được để trống.", HttpStatus.BAD_REQUEST),
-    REQUIRED_FIRSTNAME(906, "Tên không được để trống.", HttpStatus.BAD_REQUEST),
-    REQUIRED_LASTNAME(907, "Họ không được để trống.", HttpStatus.BAD_REQUEST),
-    REQUIRED_TYPE_REQUEST(908, "Loại yêu cầu không được để trống.", HttpStatus.BAD_REQUEST),
-    REQUIRED_TOKEN(909, "Token không được để trống.", HttpStatus.BAD_REQUEST)
+    LOGIN_FAILED(471, "Sai tên đăng nhập hoặc mật khẩu.", HttpStatus.BAD_REQUEST),
+    INVALID_TYPE_REQUEST(911, "Loại yêu cầu không hợp lệ.", HttpStatus.BAD_REQUEST),
     ;
     final int code;
     final String message;

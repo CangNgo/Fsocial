@@ -1,6 +1,6 @@
 package com.fsocial.accountservice.dto.request.account;
 
-import com.fsocial.accountservice.util.PasswordUtils;
+import com.fsocial.accountservice.util.RegexdUtils;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,13 +16,13 @@ public class ResetPasswordRequest {
     String otp;
 
     @NotBlank(message = "REQUIRED_EMAIL")
+    @NotNull(message = "REQUIRED_EMAIL")
     @Email(message = "INVALID_EMAIL")
     String email;
 
     @NotNull(message = "REQUIRED_PASSWORD")
     @NotBlank(message = "REQUIRED_PASSWORD")
-    @Size(min = PasswordUtils.PASSWORD_LENGTH, message = "INVALID_PASSWORD")
-    @Pattern(regexp = PasswordUtils.PASSWORD_REGEX,
-            message = "INVALID_PASSWORD")
+    @Size(min = RegexdUtils.PASSWORD_LENGTH, message = "INVALID_PASSWORD")
+    @Pattern(regexp = RegexdUtils.PASSWORD_REGEX, message = "INVALID_PASSWORD")
     String newPassword;
 }

@@ -5,17 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/WebConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/WebConfig.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/postService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timelineService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/WebConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +84,7 @@
       <recent name="C:\workspace\Fsocial\Fsocial_be\timelineService\src\main\java\com\fsocial\timelineservice\config" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.cangngo.apigateway.config" />
       <recent name="com.fsocial.timelineservice.config" />
       <recent name="com.fsocial.processorservice.config" />
       <recent name="com.fsocial.profileservice.config" />
@@ -150,8 +151,8 @@
     <list>
       <item itemvalue="Spring Boot.PostServiceApplication" />
       <item itemvalue="Spring Boot.ProfileServiceApplication" />
-      <item itemvalue="Spring Boot.ProcessorServiceApplication" />
       <item itemvalue="Spring Boot.TimeLineServiceApplication" />
+      <item itemvalue="Spring Boot.ProcessorServiceApplication" />
       <item itemvalue="Spring Boot.AccountServiceApplication" />
       <item itemvalue="Spring Boot.ApigatewayApplication" />
     </list>
@@ -173,7 +174,7 @@
       <option name="presentableId" value="Default" />
       <updated>1739420463130</updated>
       <workItem from="1739420465131" duration="3554000" />
-      <workItem from="1739428662736" duration="6031000" />
+      <workItem from="1739428662736" duration="10002000" />
     </task>
     <servers />
   </component>

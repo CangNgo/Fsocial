@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatusCode;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public enum StatusCode {
+public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     OK(200, "OK", HttpStatus.OK),
     REGISTER_FAILED(101, "Đăng ký không thành công.", HttpStatus.BAD_REQUEST),
@@ -24,7 +24,7 @@ public enum StatusCode {
     final String message;
     final HttpStatusCode statusCode;
 
-    StatusCode(int code, String message, HttpStatusCode statusCode) {
+    ErrorCode(int code, String message, HttpStatusCode statusCode) {
         this.code = code;
         this.message = message;
         this.statusCode = statusCode;

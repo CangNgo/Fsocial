@@ -3,7 +3,7 @@ package com.fsocial.accountservice.services.impl;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.InvalidToken;
 import com.fsocial.accountservice.entity.Role;
-import com.fsocial.accountservice.enums.StatusCode;
+import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.repository.InvalidTokenRepository;
 import com.fsocial.accountservice.services.TokenService;
@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class TokenServiceImpl implements TokenService {
 
     InvalidTokenRepository invalidTokenRepository;
@@ -58,7 +60,8 @@ public class TokenServiceImpl implements TokenService {
             jwsObject.sign(new MACSigner(getSignerKey()));
             return jwsObject.serialize();
         } catch (JOSEException e) {
-            throw new AppException(StatusCode.UNCATEGORIZED_EXCEPTION);
+            log.error("Không tạo được token: {}", e.getMessage(), e);
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
     }
 
@@ -68,7 +71,7 @@ public class TokenServiceImpl implements TokenService {
         JWSVerifier verifier = new MACVerifier(getSignerKey());
 
         if (!signedJWT.verify(verifier) || isTokenExpired(signedJWT) || isTokenInvalidated(signedJWT))
-            throw new AppException(StatusCode.UNAUTHENTICATED);
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
 
         return signedJWT;
     }
@@ -82,12 +85,13 @@ public class TokenServiceImpl implements TokenService {
                     .expiryTime(signedJWT.getJWTClaimsSet().getExpirationTime())
                     .build());
         } catch (JOSEException | ParseException e) {
-            throw new AppException(StatusCode.UNAUTHENTICATED);
+            log.error("Không thể làm mất hiệu lực mã token: {}", e.getMessage(), e);
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
     }
 
     private boolean isTokenExpired(SignedJWT signedJWT) throws ParseException {
-        return signedJWT.getJWTClaimsSet().getExpirationTime().before(new Date());
+        return signedJWT.getJWTClaimsSet().getExpirationTime().toInstant().isBefore(Instant.now());
     }
 
     private boolean isTokenInvalidated(SignedJWT signedJWT) throws ParseException {
@@ -95,7 +99,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
     public byte[] getSignerKey() {
-        if (signerKey == null || signerKey.isEmpty()) throw new AppException(StatusCode.UNCATEGORIZED_EXCEPTION);
+        if (signerKey == null || signerKey.isEmpty()) throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         return signerKey.getBytes();
     }
 }

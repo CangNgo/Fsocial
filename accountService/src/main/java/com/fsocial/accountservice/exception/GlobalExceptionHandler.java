@@ -1,7 +1,7 @@
 package com.fsocial.accountservice.exception;
 
 import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.enums.StatusCode;
+import com.fsocial.accountservice.enums.ErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,8 +18,8 @@ public class GlobalExceptionHandler {
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
 
         return ResponseEntity.badRequest().body(ApiResponse.builder()
-                .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
-                .message(StatusCode.UNCATEGORIZED_EXCEPTION.getMessage())
+                .statusCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
+                .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(null)
                 .build());
@@ -33,8 +33,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NoResourceFoundException.class)
     ResponseEntity<ApiResponse> handlingNotFoundException(NoResourceFoundException exception) {
         return ResponseEntity.badRequest().body(ApiResponse.builder()
-                .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
-                .message(StatusCode.UNCATEGORIZED_EXCEPTION.getMessage())
+                .statusCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
+                .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage())
                 .build());
     }
 
@@ -48,13 +48,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AppException.class)
      ResponseEntity<ApiResponse> handleAppException(AppException exception) {
-        StatusCode errorCode = exception.getStatusCode();
+        ErrorCode errorCode = exception.getStatusCode();
         return ResponseEntity
                 .status(errorCode.getStatusCode())
                 .body(getStatusCode(errorCode));
     }
 
-    private ApiResponse getStatusCode(StatusCode statusCode) {
+    private ApiResponse getStatusCode(ErrorCode statusCode) {
         return ApiResponse.builder()
                 .statusCode(statusCode.getCode())
                 .message(statusCode.getMessage())

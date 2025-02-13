@@ -7,7 +7,6 @@ import com.fsocial.accountservice.dto.request.auth.LogoutRequest;
 import com.fsocial.accountservice.dto.response.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.IntrospectResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
-import com.fsocial.accountservice.enums.StatusCode;
 import com.fsocial.accountservice.services.impl.AuthenticationServiceImpl;
 import com.nimbusds.jose.JOSEException;
 import jakarta.validation.Valid;
@@ -44,7 +43,7 @@ public class AuthenticateController {
                 .statusCode(ResponseStatus.SUCCESS.getCODE())
                 .message(ResponseStatus.SUCCESS.getMessage())
                 .data(
-                        authenticationService.authenticationAccount(request)
+                        authenticationService.login(request)
                 )
                 .build();
     }

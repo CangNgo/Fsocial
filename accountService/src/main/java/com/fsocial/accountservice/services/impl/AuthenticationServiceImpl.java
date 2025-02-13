@@ -5,11 +5,9 @@ import com.fsocial.accountservice.dto.request.auth.IntrospectRequest;
 import com.fsocial.accountservice.dto.request.auth.LogoutRequest;
 import com.fsocial.accountservice.dto.response.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.IntrospectResponse;
-import com.fsocial.accountservice.dto.response.ProfileResponse;
 import com.fsocial.accountservice.entity.Account;
-import com.fsocial.accountservice.entity.InvalidToken;
 import com.fsocial.accountservice.exception.AppException;
-import com.fsocial.accountservice.enums.StatusCode;
+import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.repository.httpclient.ProfileClient;
 import com.fsocial.accountservice.services.AuthenticationService;
@@ -19,15 +17,16 @@ import com.nimbusds.jwt.SignedJWT;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     AccountRepository accountRepository;
@@ -36,15 +35,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     TokenServiceImpl tokenService;
 
     @Override
-    public AuthenticationResponse authenticationAccount(AccountLoginRequest request) {
-        Account account = accountRepository.findByUsername(request.getUsername())
-                .or(() -> accountRepository.findByEmail(request.getUsername()))
-                .orElseThrow(() -> new AppException(StatusCode.NOT_EXIST));
+    public AuthenticationResponse login(AccountLoginRequest request) {
+        Account account = accountRepository.findByUsernameOrEmail(request.getUsername(), request.getUsername())
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_EXIST));
 
-        if (!passwordEncoder.matches(request.getPassword(), account.getPassword()))
-            throw new AppException(StatusCode.UNAUTHENTICATED);
-
-        ProfileResponse profileResponse = profileClient.getProfileByUserId(account.getId());
+        if (account.getPassword() == null || !passwordEncoder.matches(request.getPassword(), account.getPassword()))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
 
         return AuthenticationResponse.builder()
                 .token(tokenService.generateToken(account))
@@ -59,12 +55,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .valid(signedJWT.verify(new MACVerifier(tokenService.getSignerKey())))
                     .build();
         } catch (JOSEException | ParseException e) {
-            throw new AppException(StatusCode.UNCATEGORIZED_EXCEPTION);
+            log.error("Xác minh token không thành công: {}", e.getMessage(), e);
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
     }
 
     @Override
     public void logout(LogoutRequest request) {
+        if (request == null || request.getToken() == null) throw new AppException(ErrorCode.OTP_INVALID);
         tokenService.invalidateToken(request.getToken());
     }
 

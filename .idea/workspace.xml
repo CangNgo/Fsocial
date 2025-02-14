@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/CorsConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/CustomJwtFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/WebConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/WebConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/CorsConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/WebConfig.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

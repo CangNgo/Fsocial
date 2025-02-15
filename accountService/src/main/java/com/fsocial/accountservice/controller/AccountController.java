@@ -7,6 +7,7 @@ import com.fsocial.accountservice.dto.response.DuplicationResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.services.impl.AccountServiceImpl;
 import com.fsocial.accountservice.services.impl.OtpServiceImpl;
+import com.fsocial.accountservice.util.RedisUtils;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class AccountController {
 
     @PostMapping("/send-otp")
     public ApiResponse<Void> sendOtp(@RequestBody @Valid EmailRequest request) {
-        if ("REGISTER".equals(request.getType())) {
+        if (RedisUtils.TYPE_REGISTER.equals(request.getType())) {
             otpService.sendOtp(request.getEmail(), KEY_PREFIX_REGIS);
         } else {
             otpService.sendOtp(request.getEmail(), KEY_PREFIX_RESET);
@@ -49,7 +50,7 @@ public class AccountController {
 
     @PostMapping("/verify-otp")
     public ApiResponse<Void> verifyOtp(@RequestBody @Valid OtpRequest request) {
-        if ("REGISTER".equals(request.getType())) {
+        if (RedisUtils.TYPE_REGISTER.equals(request.getType())) {
             otpService.validateOtp(request.getEmail(), request.getOtp(), KEY_PREFIX_REGIS);
         } else {
             otpService.validateOtp(request.getEmail(), request.getOtp(), KEY_PREFIX_RESET);

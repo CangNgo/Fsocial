@@ -1,6 +1,7 @@
 package com.fsocial.accountservice.exception;
 
 import com.fsocial.accountservice.enums.ErrorCode;
+import com.fsocial.accountservice.enums.ValidCode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;

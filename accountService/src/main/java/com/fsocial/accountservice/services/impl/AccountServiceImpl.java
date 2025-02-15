@@ -1,6 +1,7 @@
 package com.fsocial.accountservice.services.impl;
 
 import com.fsocial.accountservice.dto.ApiResponse;
+import com.fsocial.accountservice.dto.DuplicationCheckResult;
 import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
@@ -46,6 +47,7 @@ public class AccountServiceImpl implements AccountService {
         validateAccountExistence(request.getUsername(), request.getEmail());
         Account account = saveAccount(request);
         createProfile(account, request);
+        otpService.deleteOtp(request.getEmail());
     }
 
     @Override
@@ -72,42 +74,29 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ApiResponse<DuplicationResponse> checkDuplication(DuplicationRequest request) {
+        DuplicationCheckResult isDuplicate = accountRepository.checkDuplication(request.getUsername(), request.getEmail());
+
         DuplicationResponse response = DuplicationResponse.builder()
-                .username(accountRepository.existsByUsername(request.getUsername()) ? ErrorCode.USERNAME_EXISTED.getMessage() : ErrorCode.OK.getMessage())
-                .email(accountRepository.existsByEmail(request.getEmail()) ? ErrorCode.EMAIL_EXISTED.getMessage() : ErrorCode.OK.getMessage())
+                .username(isDuplicate.isUsernameExists() ? ErrorCode.USERNAME_EXISTED.getMessage() : null)
+                .email(isDuplicate.isEmailExists() ? ErrorCode.EMAIL_EXISTED.getMessage() : null)
                 .build();
 
-        boolean hasError = !response.getUsername().equals(ErrorCode.OK.getMessage()) ||
-                !response.getEmail().equals(ErrorCode.OK.getMessage());
+        boolean hasError = response.getUsername() != null || response.getEmail() != null;
 
-        return ApiResponse.<DuplicationResponse>builder()
+        ApiResponse.ApiResponseBuilder<DuplicationResponse> builder = ApiResponse.<DuplicationResponse>builder()
                 .statusCode(hasError ? ErrorCode.DUPLICATION.getCode() : ResponseStatus.VALID.getCODE())
-                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage())
-                .data(response)
-                .build();
-    }
+                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage());
 
-    public ApiResponse<DuplicationResponse> checkDuplications(DuplicationRequest request) {
-        DuplicationResponse response = DuplicationResponse.builder()
-                .username(accountRepository.existsByUsername(request.getUsername()) ? ErrorCode.USERNAME_EXISTED.getMessage() : ErrorCode.OK.getMessage())
-                .email(accountRepository.existsByEmail(request.getEmail()) ? ErrorCode.EMAIL_EXISTED.getMessage() : ErrorCode.OK.getMessage())
-                .build();
+        if (hasError) builder.data(response);
 
-        boolean hasError = !response.getUsername().equals(ErrorCode.OK.getMessage()) ||
-                !response.getEmail().equals(ErrorCode.OK.getMessage());
-
-        return ApiResponse.<DuplicationResponse>builder()
-                .statusCode(hasError ? ErrorCode.DUPLICATION.getCode() : ResponseStatus.VALID.getCODE())
-                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage())
-                .data(response)
-                .build();
+        return builder.build();
     }
 
     private void validateAccountExistence(String username, String email) {
         boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;
-        if (accountExisted) {
-            throw new AppException(ErrorCode.ACCOUNT_EXISTED);
-        }
+        if (accountExisted) throw new AppException(ErrorCode.ACCOUNT_EXISTED);
+
+        otpService.validEmailBeforePersist(email);
     }
 
     private Account saveAccount(AccountRegisterRequest request) {

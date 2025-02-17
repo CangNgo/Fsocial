@@ -15,6 +15,6 @@ public class PostResponse {
     Content content;
     Integer countLikes;
     Integer countComments;
-    String userName;
+    String displayName;
     String avatar;
 }

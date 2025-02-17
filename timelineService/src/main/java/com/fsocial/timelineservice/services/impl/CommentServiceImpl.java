@@ -26,7 +26,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponse> getComments(String postId) {
-        return commentRepository.findAll().stream()
+        return commentRepository.findCommentsByPostId(postId).stream()
                 .map(comment -> {
                     ProfileResponse profileResponse = null;
                     try {

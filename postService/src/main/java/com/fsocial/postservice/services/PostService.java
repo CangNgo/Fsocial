@@ -12,5 +12,7 @@ import java.util.List;
 public interface PostService {
     PostDTO createPost(PostDTORequest post, String userId) throws AppCheckedException;
 
-    List<Post> getPosts() ;
+    PostDTO updatePost(PostDTORequest post, String postId) throws AppCheckedException;
+
+    void deletePost(String postId) ;
 }

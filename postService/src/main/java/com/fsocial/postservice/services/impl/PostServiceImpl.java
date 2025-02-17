@@ -5,7 +5,7 @@ import com.fsocial.postservice.Repository.httpClient.ProfileClient;
 import com.fsocial.postservice.dto.ContentDTO;
 import com.fsocial.postservice.dto.PostDTO;
 import com.fsocial.postservice.dto.PostDTORequest;
-import com.fsocial.postservice.dto.profile.ProfileDTO;
+import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
@@ -14,15 +14,10 @@ import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.services.PostService;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +28,7 @@ public class PostServiceImpl implements PostService {
     PostMapper postMapper;
     ContentMapper contentMapper;
     ProfileClient profileClient;
+
     @Override
     public PostDTO createPost(PostDTORequest postRequest, String userId) throws AppCheckedException {
         try {
@@ -46,7 +42,7 @@ public class PostServiceImpl implements PostService {
                     .text(postRequest.getText())
                     .HTMLText(postRequest.getHTMLText())
                     .media(uripostImage)
-            .build();
+                    .build();
 
             post.setCountComments(0);
             post.setCountLikes(0);
@@ -63,8 +59,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getPosts() {
-        return postRepository.findAll();
+    public PostDTO updatePost(PostDTORequest post, String postId) throws AppCheckedException {
+
+        Post existingPost = postRepository.findById(postId)
+                .orElseThrow(() -> new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND));
+        //Nếu tìm thấy thì cập nhật thông tin
+
+        existingPost.setContent(Content.builder()
+                .text(post.getText())
+                .HTMLText(post.getHTMLText())
+                .media(existingPost.getContent().getMedia())
+                .build());
+        existingPost.setUpdatedAt(LocalDateTime.now());
+        return postMapper.toPostDTO(postRepository.save(existingPost));
     }
 
+    @Override
+    public void deletePost(String postId) {
+        postRepository.deleteById(postId);
+    }
 }

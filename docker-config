@@ -51,3 +51,7 @@
 // openssl rand -base64 756 > mongodb-keyfile
 // chmod 400 mongodb-keyfile
 // chown 999:999 mongodb-keyfile  # 999 là uid của user mongodb trong container
+
+// redis config
+//
+// docker-compose -f .\docker-compose.yml up -d redis

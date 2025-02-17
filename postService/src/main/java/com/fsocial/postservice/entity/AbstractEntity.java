@@ -1,7 +1,7 @@
 package com.fsocial.postservice.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -13,6 +13,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @Document
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class AbstractEntity<T extends Serializable> implements Serializable {
 
     @Id

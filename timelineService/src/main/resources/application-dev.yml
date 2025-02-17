@@ -27,10 +27,14 @@ server:
     context-path: /timeline
     session:
       timeout: 3m
+    register-default-servlet: false
   port: 8086
 
 logging:
   level:
+    com.cangngo: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.web.cors: TRACE
     org:
       springframework=DEBUG:
       springframework:
@@ -50,3 +54,10 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full

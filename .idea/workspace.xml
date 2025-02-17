@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/controller/ApiController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_02_2025,_22_22_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_02_2025__22_22__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/resources/application-dev.yml" afterDir="false" />
-    </list>
+    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,36 +32,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.accountService [clean].executor": "Run",
-    "Maven.apigateway [clean].executor": "Run",
-    "Maven.timeLineService [clean].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.AccountServiceApplication.executor": "Run",
-    "Spring Boot.ApigatewayApplication.executor": "Run",
-    "Spring Boot.PostServiceApplication.executor": "Run",
-    "Spring Boot.ProfileServiceApplication.executor": "Run",
-    "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/workspace/Fsocial/Fsocial_be",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.accountService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AccountServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ApigatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PostServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ProfileServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TimeLineServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/workspace/Fsocial/Fsocial_be&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.fsocial.accountservice.config" />

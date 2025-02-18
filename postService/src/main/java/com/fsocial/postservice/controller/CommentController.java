@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,8 +36,10 @@ public class CommentController {
                                                   @RequestParam("HTMLText") String HTMLtext,
                                                   @RequestParam(value = "media", required = false) MultipartFile[] media) throws AppCheckedException {
         try {
-            String[] mediaText = uploadImage.uploadImage(media);
-
+            String[] mediaText = null;
+            if (media != null) {
+                mediaText = uploadImage.uploadImage(media);
+            }
             Comment commentRequest = Comment.builder()
                     .countReplyComment(0)
                     .countLikes(0)
@@ -58,8 +61,10 @@ public class CommentController {
                     .dateTime(LocalDateTime.now())
                     .message("Comment created successfully")
                     .build());
-        } catch (Exception e) {
-            throw new AppCheckedException("Không thể thêm comment vào bài viết {}", StatusCode.CREATE_COMMENT_FAILED);
+        } catch (AppCheckedException e) {
+            throw new AppCheckedException("Không thể thêm comment vào bài viết {}" + postId , StatusCode.CREATE_COMMENT_FAILED);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

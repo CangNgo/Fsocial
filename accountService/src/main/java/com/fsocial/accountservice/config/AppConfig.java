@@ -22,7 +22,8 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class AppConfig {
 
-    private final String[] PUBLIC_API = {"/account/register",
+    private final String[] PUBLIC_API = {
+            "/register",
             "/send-otp",
             "/verify-otp",
             "/check-duplication",

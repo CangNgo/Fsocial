@@ -40,5 +40,4 @@ public class CommentController {
             throw new RuntimeException(e);
         }
     }
-
 }

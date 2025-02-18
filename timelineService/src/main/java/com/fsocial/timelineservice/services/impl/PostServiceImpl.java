@@ -68,6 +68,4 @@ public class PostServiceImpl implements PostService {
             throw new AppCheckedException(e.getMessage(), StatusCode.USER_NOT_FOUND);
         }
     }
-
-
 }

@@ -1,7 +1,6 @@
 package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
-import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -31,33 +29,25 @@ public class CommentController {
     UploadImage uploadImage;
 
     @PostMapping
-    public ResponseEntity<Response> createComment(CommentDTORequest request) throws AppCheckedException {
+    public ResponseEntity<Response> createComment(@RequestParam("postId") String postId,
+                                                  @RequestParam(value = "userId") String userId,
+                                                  @RequestParam("text") String text,
+                                                  @RequestParam("html_text") String HTMLtext,
+                                                  @RequestParam(value = "media", required = false) MultipartFile[] media) throws AppCheckedException {
         try {
-            String[] uripostImage = new String[0];
-            if(request.getMedia() != null && request.getMedia().length > 0) {
-                MultipartFile[] validMedia = Arrays.stream(request.getMedia())
-                        .filter(file -> file != null &&
-                                !file.isEmpty() &&
-                                file.getOriginalFilename() != null &&
-                                !file.getOriginalFilename().isEmpty())
-                        .toArray(MultipartFile[]::new);
-
-                if (validMedia.length > 0) {
-                    uripostImage = uploadImage.uploadImage(validMedia);
-                }
-            };
+            String[] mediaText = uploadImage.uploadImage(media);
 
             Comment commentRequest = Comment.builder()
                     .countReplyComment(0)
                     .countLikes(0)
                     .reply(false)
-                    .postId(request.getPostId())
-                    .userId(request.getUserId())
+                    .postId(postId)
+                    .userId(userId)
                     .content(
                             Content.builder()
-                                    .text(request.getText())
-                                    .media(uripostImage)
-                                    .HTMLText(request.getHTMLText())
+                                    .text(text)
+                                    .media(mediaText)
+                                    .HTMLText(HTMLtext)
                                     .build()
                     )
                     .build();

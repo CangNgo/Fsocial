@@ -1,19 +1,20 @@
-package com.fsocial.postservice.dto;
+package com.fsocial.postservice.dto.replyComment;
 
-import com.fsocial.postservice.entity.Content;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.web.multipart.MultipartFile;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDTORequest {
+public class ReplyCommentRequest {
+    String userId;
     String text;
     String HTMLText;
     MultipartFile[] media;
-    Integer countLikes = 0;
+    int countLikes = 0;
+    int countComments = 0;
 }

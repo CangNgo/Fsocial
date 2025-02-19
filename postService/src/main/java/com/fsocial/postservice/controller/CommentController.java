@@ -1,6 +1,7 @@
 package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
+import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -15,8 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -30,41 +31,44 @@ public class CommentController {
     UploadImage uploadImage;
 
     @PostMapping
-    public ResponseEntity<Response> createComment(@RequestParam("postId") String postId,
-                                                  @RequestParam(value = "userId") String userId,
-                                                  @RequestParam("text") String text,
-                                                  @RequestParam("HTMLText") String HTMLtext,
-                                                  @RequestParam(value = "media", required = false) MultipartFile[] media) throws AppCheckedException {
+    public ResponseEntity<Response> createComment(CommentDTORequest request) throws AppCheckedException {
         try {
-            String[] mediaText = null;
-            if (media != null) {
-                mediaText = uploadImage.uploadImage(media);
-            }
+            String[] uripostImage = new String[0];
+            if(request.getMedia() != null && request.getMedia().length > 0) {
+                MultipartFile[] validMedia = Arrays.stream(request.getMedia())
+                        .filter(file -> file != null &&
+                                !file.isEmpty() &&
+                                file.getOriginalFilename() != null &&
+                                !file.getOriginalFilename().isEmpty())
+                        .toArray(MultipartFile[]::new);
+
+                if (validMedia.length > 0) {
+                    uripostImage = uploadImage.uploadImage(validMedia);
+                }
+            };
+
             Comment commentRequest = Comment.builder()
                     .countReplyComment(0)
                     .countLikes(0)
                     .reply(false)
-                    .postId(postId)
-                    .userId(userId)
+                    .postId(request.getPostId())
+                    .userId(request.getUserId())
                     .content(
                             Content.builder()
-                                    .text(text)
-                                    .media(mediaText)
-                                    .HTMLText(HTMLtext)
+                                    .text(request.getText())
+                                    .media(uripostImage)
+                                    .HTMLText(request.getHTMLText())
                                     .build()
                     )
                     .build();
             Comment comment = commentService.addComment(commentRequest);
             return ResponseEntity.ok(Response.builder()
-                    .statusCode(StatusCode.CREATE_COMMENT_SUCCESS.getCode())
                     .data(comment)
                     .dateTime(LocalDateTime.now())
                     .message("Comment created successfully")
                     .build());
-        } catch (AppCheckedException e) {
-            throw new AppCheckedException("Không thể thêm comment vào bài viết {}" + postId , StatusCode.CREATE_COMMENT_FAILED);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new AppCheckedException("Không thể thêm comment vào bài viết {}", StatusCode.CREATE_COMMENT_FAILED);
         }
     }
 

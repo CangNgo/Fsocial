@@ -1,28 +1,26 @@
-package com.fsocial.postservice.entity;
+package com.fsocial.postservice.dto.replyComment;
 
+import com.fsocial.postservice.dto.ContentDTO;
+import com.fsocial.postservice.entity.Content;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = "comment")
 @Builder
-public class Comment extends AbstractEntity<String>{
-    @Field("postId")
-    String postId;
-    @Field("userId")
-    String userId;
-    @Field("content")
-    Content content;
-    @Field("count_likes")
+public class ReplyCommentDTO {
+    String commentId;
+
+    ContentDTO content;
+
+    String  userId;
+
     int countLikes;
-    @Field("count_reply_comment")
+
     int countReplyComment;
-    @Field("reply")
-    boolean reply;
 }

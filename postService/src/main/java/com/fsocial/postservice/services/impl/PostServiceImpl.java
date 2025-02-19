@@ -3,8 +3,8 @@ package com.fsocial.postservice.services.impl;
 import com.fsocial.postservice.Repository.PostRepository;
 import com.fsocial.postservice.Repository.httpClient.ProfileClient;
 import com.fsocial.postservice.dto.ContentDTO;
-import com.fsocial.postservice.dto.PostDTO;
-import com.fsocial.postservice.dto.PostDTORequest;
+import com.fsocial.postservice.dto.post.PostDTO;
+import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -15,9 +15,11 @@ import com.fsocial.postservice.services.PostService;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -30,13 +32,25 @@ public class PostServiceImpl implements PostService {
     ProfileClient profileClient;
 
     @Override
-    public PostDTO createPost(PostDTORequest postRequest, String userId) throws AppCheckedException {
+    public PostDTO createPost(PostDTORequest postRequest) throws AppCheckedException {
         try {
             //upload ảnh
-            String[] uripostImage = uploadImage.uploadImage(postRequest.getMedia());
+            String[] uripostImage = new String[0];
+            if(postRequest.getMedia() != null && postRequest.getMedia().length > 0) {
+                MultipartFile[] validMedia = Arrays.stream(postRequest.getMedia())
+                        .filter(file -> file != null &&
+                                !file.isEmpty() &&
+                                file.getOriginalFilename() != null &&
+                                !file.getOriginalFilename().isEmpty())
+                        .toArray(MultipartFile[]::new);
+
+                if (validMedia.length > 0) {
+                    uripostImage = uploadImage.uploadImage(validMedia);
+                }
+            };
             Post post = postMapper.toPost(postRequest);
             //thêm userId
-            post.setUserId(userId);
+            post.setUserId(postRequest.getUserId());
             //thêm content
             ContentDTO content = ContentDTO.builder()
                     .text(postRequest.getText())
@@ -47,7 +61,7 @@ public class PostServiceImpl implements PostService {
             post.setCountComments(0);
             post.setCountLikes(0);
             post.setContent(contentMapper.toContent(content));
-            post.setCreatedBy(userId);
+            post.setCreatedBy(postRequest.getHTMLText());
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {

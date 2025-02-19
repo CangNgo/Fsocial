@@ -55,6 +55,7 @@ public class PostServiceImpl implements PostService {
                             .userId(post.getUserId())
                             .displayName(profile.getFirstName() + " " + profile.getLastName())
                             .avatar(profile.getAvatar())
+                            .createdAt(post.getCreatedAt())
                             .build();
                 })
                 .collect(Collectors.toList());

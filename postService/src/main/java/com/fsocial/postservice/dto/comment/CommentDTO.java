@@ -1,12 +1,11 @@
-package com.fsocial.postservice.dto;
+package com.fsocial.postservice.dto.comment;
 
-import com.fsocial.postservice.entity.Content;
+import com.fsocial.postservice.dto.ContentDTO;
 import com.fsocial.postservice.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @Builder

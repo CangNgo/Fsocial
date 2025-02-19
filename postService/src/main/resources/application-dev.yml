@@ -1,6 +1,12 @@
 app:
   services:
-    profile: http://localhost:8085/profile
+    profile: http://localhost:8085/profil
+openapi:
+  service:
+    api-docs: api-service
+    server: http://localhost:8080
+    title: API Service
+    version: 1.0.0
 spring:
   application:
     name: postService

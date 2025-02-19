@@ -1,5 +1,6 @@
-package com.fsocial.postservice.dto;
+package com.fsocial.postservice.dto.post;
 
+import com.fsocial.postservice.dto.ContentDTO;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

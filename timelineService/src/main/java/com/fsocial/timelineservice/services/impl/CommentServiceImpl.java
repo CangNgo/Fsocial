@@ -43,6 +43,7 @@ public class CommentServiceImpl implements CommentService {
                             .avatar(profileResponse.getAvatar())
                             .userId(comment.getUserId())
                             .reply(comment.isReply())
+                            .createdAt(comment.getCreatedAt())
                             .build();
                 })
                 .collect(Collectors.toList());

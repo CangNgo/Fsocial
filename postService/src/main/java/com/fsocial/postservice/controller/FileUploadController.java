@@ -36,7 +36,6 @@ public class FileUploadController {
                             .data(urlfile)
                             .message("Upload file successful")
                             .dateTime(LocalDateTime.now())
-                            .statusCode(StatusCode.UPLOAD_FILE_SUCCESS.getCode())
                     .build());
         } catch (IOException| AppCheckedException e) {
             log.error("Lỗi khi upload file: {}", e.getMessage());
@@ -44,7 +43,6 @@ public class FileUploadController {
                     .data(null)
                     .message("Upload file fail")
                     .dateTime(LocalDateTime.now())
-                    .statusCode(StatusCode.FILE_NOT_FOUND.getCode())
                     .build());
         }
     }

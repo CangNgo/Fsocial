@@ -20,7 +20,7 @@ public class MailUtils {
 
     @NonFinal
     @Value("${spring.mail.username}")
-    private String fromEmail;
+    String fromEmail;
 
     public void sendOtp(String toEmail, String otpCode) {
         try {

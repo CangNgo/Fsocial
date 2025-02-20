@@ -5,9 +5,8 @@ import com.fsocial.accountservice.dto.request.account.*;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.DuplicationResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
-import com.fsocial.accountservice.services.impl.AccountServiceImpl;
-import com.fsocial.accountservice.services.impl.OtpServiceImpl;
-import com.fsocial.accountservice.util.RedisUtils;
+import com.fsocial.accountservice.services.AccountService;
+import com.fsocial.accountservice.services.OtpService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
 public class AccountController {
-    AccountServiceImpl accountServices;
-    OtpServiceImpl otpService;
-
-    String KEY_PREFIX_REGIS = "REGIS_";
-    String KEY_PREFIX_RESET = "RESET_";
+    AccountService accountServices;
+    OtpService otpService;
 
     @PostMapping("/register")
     public ApiResponse<Void> persistAccount(@RequestBody @Valid AccountRegisterRequest request) {
@@ -32,32 +30,27 @@ public class AccountController {
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.ACCOUNT_REGISTERED.getCODE())
                 .message(ResponseStatus.ACCOUNT_REGISTERED.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 
     @PostMapping("/send-otp")
     public ApiResponse<Void> sendOtp(@RequestBody @Valid EmailRequest request) {
-        if (RedisUtils.TYPE_REGISTER.equals(request.getType())) {
-            otpService.sendOtp(request.getEmail(), KEY_PREFIX_REGIS);
-        } else {
-            otpService.sendOtp(request.getEmail(), KEY_PREFIX_RESET);
-        }
+        otpService.sortTypeForSendOtp(request);
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.OTP_SENT.getCODE())
                 .message(ResponseStatus.OTP_SENT.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 
     @PostMapping("/verify-otp")
     public ApiResponse<Void> verifyOtp(@RequestBody @Valid OtpRequest request) {
-        if (RedisUtils.TYPE_REGISTER.equals(request.getType())) {
-            otpService.validateOtp(request.getEmail(), request.getOtp(), KEY_PREFIX_REGIS);
-        } else {
-            otpService.validateOtp(request.getEmail(), request.getOtp(), KEY_PREFIX_RESET);
-        }
+        otpService.sortTypeForVerifyOtp(request);
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.OTP_VALID.getCODE())
                 .message(ResponseStatus.OTP_VALID.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 
@@ -81,6 +74,7 @@ public class AccountController {
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.PASSWORD_RESET_SUCCESS.getCODE())
                 .message(ResponseStatus.PASSWORD_RESET_SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 

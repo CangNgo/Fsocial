@@ -1,8 +1,7 @@
 package com.fsocial.accountservice.dto.request.account;
 
+import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,13 +12,11 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 public class DuplicationRequest {
-    @NotBlank(message = "REQUIRED_USERNAME")
-    @NotNull(message = "REQUIRED_USERNAME")
+    @NotNullOrBlank(message = "REQUIRED_USERNAME")
     @Size(min = 6, message = "INVALID_USERNAME")
     String username;
 
-    @NotBlank(message = "REQUIRED_EMAIL")
-    @NotNull(message = "REQUIRED_EMAIL")
+    @NotNullOrBlank(message = "REQUIRED_EMAIL")
     @Email(message = "INVALID_EMAIL")
     String email;
 }

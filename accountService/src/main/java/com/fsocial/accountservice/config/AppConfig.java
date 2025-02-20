@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class AppConfig {
 
     private final String[] PUBLIC_API = {
@@ -28,11 +30,11 @@ public class AppConfig {
             "/verify-otp",
             "/check-duplication",
             "/login",
-            "/register"
+            "/logout"
     };
 
-    @Value("${jwt.signerKey")
-    protected String SIGNER_KEY;
+    @Value("${jwt.signerKey}")
+    private String signerKey;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -67,8 +69,7 @@ public class AppConfig {
     }
 
     private JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKey = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS256");
-
+        SecretKeySpec secretKey = new SecretKeySpec(signerKey.getBytes(), "HmacSHA256");
         return NimbusJwtDecoder
                 .withSecretKey(secretKey)
                 .macAlgorithm(MacAlgorithm.HS256)

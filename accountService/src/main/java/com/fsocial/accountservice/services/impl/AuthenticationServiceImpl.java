@@ -8,11 +8,11 @@ import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.repository.AccountRepository;
-import com.fsocial.accountservice.repository.httpclient.ProfileClient;
 import com.fsocial.accountservice.services.AuthenticationService;
+import com.fsocial.accountservice.services.RefreshTokenService;
+import com.fsocial.accountservice.services.JwtService;
 import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jwt.SignedJWT;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -30,38 +30,41 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     AccountRepository accountRepository;
     PasswordEncoder passwordEncoder;
-    TokenServiceImpl tokenService;
+    JwtService tokenService;
+    RefreshTokenService refreshTokenService;
 
     @Override
-    public AuthenticationResponse login(AccountLoginRequest request) {
+    public AuthenticationResponse login(AccountLoginRequest request, String userAgent, HttpServletRequest httpRequest) {
         Account account = accountRepository.findByUsernameOrEmail(request.getUsername(), request.getUsername())
-                .orElseThrow(() -> new AppException(ErrorCode.LOGIN_FAILED));
+                .filter(acc -> acc.getPassword() != null && passwordEncoder.matches(request.getPassword(), acc.getPassword()))
+                .orElseThrow(() -> {
+                    log.warn("Sai tên tài khoản hoặc mật khẩu: {}", request.getUsername());
+                    return new AppException(ErrorCode.LOGIN_FAILED);
+                });
 
-        if (account.getPassword() == null || !passwordEncoder.matches(request.getPassword(), account.getPassword()))
-            throw new AppException(ErrorCode.LOGIN_FAILED);
+        String ipAddress = httpRequest.getRemoteAddr();
+        String accessToken = tokenService.generateToken(account.getUsername());
+        String refreshToken = refreshTokenService.createRefreshToken(request.getUsername(), userAgent, ipAddress).getToken();
+
+        log.info("Người dùng {} đăng nhập thành công từ IP: {}", request.getUsername(), ipAddress);
 
         return AuthenticationResponse.builder()
-                .token(tokenService.generateToken(account))
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
     @Override
-    public IntrospectResponse introspectValid(TokenRequest request) {
-        try {
-            SignedJWT signedJWT = SignedJWT.parse(request.getToken());
-            return IntrospectResponse.builder()
-                    .valid(signedJWT.verify(new MACVerifier(tokenService.getSignerKey())))
+    public IntrospectResponse introspectValid(TokenRequest request) throws ParseException, JOSEException {
+        tokenService.verifyToken(request.getToken());
+        return IntrospectResponse.builder()
+                    .valid(true)
                     .build();
-        } catch (JOSEException | ParseException e) {
-            log.error("Xác minh token không thành công: {}", e.getMessage(), e);
-            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
-        }
     }
 
     @Override
     public void logout(TokenRequest request) {
-        if (request == null || request.getToken() == null) throw new AppException(ErrorCode.OTP_INVALID);
-        tokenService.invalidateToken(request.getToken());
+        if (request == null) throw new AppException(ErrorCode.UNAUTHENTICATED);
+        tokenService.disableToken(request.getToken());
     }
-
 }

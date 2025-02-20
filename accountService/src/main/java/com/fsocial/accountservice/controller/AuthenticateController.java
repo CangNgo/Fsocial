@@ -16,10 +16,8 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -34,12 +32,17 @@ public class AuthenticateController {
     JwtService jwtService;
 
     @PostMapping("/introspect")
-    public ApiResponse<IntrospectResponse> introspectValid(@RequestBody @Valid TokenRequest request) throws ParseException, JOSEException {
+    public ApiResponse<IntrospectResponse> verifyRefreshToken(@RequestBody @Valid TokenRequest refreshToken,
+                                                              @RequestHeader("User-Agent") String userAgent,
+                                                              HttpServletRequest httpRequest) throws ParseException, JOSEException {
+        String ipAddress = httpRequest.getRemoteAddr();
+
         return ApiResponse.<IntrospectResponse>builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())
                 .message(ResponseStatus.SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
                 .data(
-                        authenticationService.introspectValid(request)
+                        authenticationService.introspect(refreshToken, userAgent, ipAddress)
                 )
                 .build();
     }
@@ -62,21 +65,24 @@ public class AuthenticateController {
     public ApiResponse<AuthenticationResponse> refreshAccessToken(@RequestBody @Valid RefreshTokenRequest request,
                                                                   @RequestHeader("User-Agent") String userAgent,
                                                                   HttpServletRequest httpRequest) {
-
+        String ipAddress = httpRequest.getRemoteAddr();
         return ApiResponse.<AuthenticationResponse>builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())
                 .message(ResponseStatus.SUCCESS.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(
-                        refreshTokenService.refreshAccessToken(request.getRefreshToken(), userAgent, httpRequest)
+                        refreshTokenService.refreshAccessToken(request.getRefreshToken(), userAgent, ipAddress)
                 )
                 .build();
     }
 
     @PostMapping("/logout")
-    public ApiResponse<Void> logout(@RequestBody @Valid TokenRequest refreshToken) throws ParseException, JOSEException {
-        authenticationService.logout(refreshToken);
-        return ApiResponse.<Void>builder()
+    public ApiResponse<?> logout(@RequestBody @Valid TokenRequest refreshToken,
+                                    HttpServletRequest httpRequest) {
+        refreshTokenService.disableRefreshToken(refreshToken.getToken());
+        SecurityContextHolder.clearContext();
+        httpRequest.getSession().invalidate();
+        return ApiResponse.builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())
                 .message(ResponseStatus.SUCCESS.getMessage())
                 .dateTime(LocalDateTime.now())

@@ -78,14 +78,21 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ApiResponse<DuplicationResponse> checkDuplication(DuplicationRequest request) {
-        DuplicationCheckResult isDuplicate = accountRepository.checkDuplication(request.getUsername(), request.getEmail());
+        boolean usernameExisted = false;
+        boolean emailExisted = false;
+
+        if (accountRepository.countByUsername(request.getUsername()) > 0)
+            usernameExisted = true;
+
+        if (accountRepository.countByEmail(request.getEmail()) > 0)
+            emailExisted = true;
 
         DuplicationResponse response = DuplicationResponse.builder()
-                .username(isDuplicate.isUsernameExists() ? ErrorCode.USERNAME_EXISTED.getMessage() : null)
-                .email(isDuplicate.isEmailExists() ? ErrorCode.EMAIL_EXISTED.getMessage() : null)
+                .username(usernameExisted ? ErrorCode.USERNAME_EXISTED.getMessage() : null)
+                .email(emailExisted ? ErrorCode.EMAIL_EXISTED.getMessage() : null)
                 .build();
 
-        boolean hasError = response.getUsername() != null || response.getEmail() != null;
+        boolean hasError = usernameExisted || emailExisted;
 
         ApiResponse.ApiResponseBuilder<DuplicationResponse> builder = ApiResponse.<DuplicationResponse>builder()
                 .statusCode(hasError ? ErrorCode.DUPLICATION.getCode() : ResponseStatus.VALID.getCODE())

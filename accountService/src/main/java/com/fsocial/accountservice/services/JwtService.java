@@ -6,6 +6,6 @@ import java.text.ParseException;
 
 public interface JwtService {
     String generateToken(String username);
-    void verifyToken(String token) throws JOSEException, ParseException;
+    void verifyAccessToken(String token) throws JOSEException, ParseException;
     void disableToken(String token);
 }

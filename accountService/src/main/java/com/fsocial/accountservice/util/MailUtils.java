@@ -1,11 +1,14 @@
 package com.fsocial.accountservice.util;
 
+import com.fsocial.accountservice.enums.ErrorCode;
+import com.fsocial.accountservice.exception.AppException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
+@Slf4j
 public class MailUtils {
 
     JavaMailSender javaMailSender;
@@ -34,7 +38,8 @@ public class MailUtils {
 
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
-            throw new RuntimeException("Failed to send OTP email", e);
+            log.error("Có lỗi xảy ra khi gửi mail: {}", e.getMessage());
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
     }
 

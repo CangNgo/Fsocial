@@ -17,9 +17,11 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     Optional<Account> findByEmail(String email);
     Optional<Account> findByUsernameOrEmail(String username, String email);
     Integer countByUsernameOrEmail(String username, String email);
+    Integer countByUsername(String username);
+    Integer countByEmail(String email);
 
     @Query("SELECT new com.fsocial.accountservice.dto.DuplicationCheckResult(" +
-            "CASE WHEN COUNT(a.username) > 0 THEN TRUE ELSE FALSE END, " +
+            "CASE WHEN COUNT(a) > 0 THEN TRUE ELSE FALSE END, " +
             "CASE WHEN COUNT(a.email) > 0 THEN TRUE ELSE FALSE END) " +
             "FROM Account a WHERE a.username = :username OR a.email = :email")
     DuplicationCheckResult checkDuplication(@Param("username") String username, @Param("email") String email);

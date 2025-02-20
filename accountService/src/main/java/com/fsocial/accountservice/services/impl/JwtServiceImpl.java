@@ -56,7 +56,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public void verifyToken(String token) throws JOSEException, ParseException {
+    public void verifyAccessToken(String token) throws JOSEException, ParseException {
         SignedJWT signedJWT = SignedJWT.parse(token);
         JWSVerifier verifier = new MACVerifier(getSignerKey());
 
@@ -75,7 +75,7 @@ public class JwtServiceImpl implements JwtService {
     @Transactional
     public void disableToken(String token) {
         try {
-            verifyToken(token);
+            verifyAccessToken(token);
             refreshTokenRepository.deleteByToken(token);
         } catch (JOSEException | ParseException e) {
             log.error("Không thể vô hiệu hoá Token: {}", e.getMessage(), e);

@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public interface RefreshTokenService {
     RefreshToken createRefreshToken(String username, String currentUserAgent, String currentIp);
-    RefreshToken validateRefreshToken(String token, String currentUserAgent, String currentIp);
-    AuthenticationResponse refreshAccessToken(String refreshToken, String userAgent, HttpServletRequest httpRequest);
+    RefreshToken validRefreshToken(String token, String currentUserAgent, String currentIp);
+    AuthenticationResponse refreshAccessToken(String refreshToken, String userAgent, String ipAddress);
+    void disableRefreshToken(String refreshToken);
 }
+

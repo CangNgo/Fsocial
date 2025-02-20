@@ -1,12 +1,14 @@
 package com.fsocial.accountservice.services.impl;
 
 import com.fsocial.accountservice.dto.ApiResponse;
+import com.fsocial.accountservice.dto.DuplicationCheckResult;
 import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.DuplicationResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.Role;
+import com.fsocial.accountservice.enums.RedisKeyType;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.enums.ResponseStatus;
@@ -16,6 +18,7 @@ import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.repository.RoleRepository;
 import com.fsocial.accountservice.repository.httpclient.ProfileClient;
 import com.fsocial.accountservice.services.AccountService;
+import com.fsocial.accountservice.services.OtpService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -38,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
     ProfileMapper profileMapper;
     PasswordEncoder passwordEncoder;
     ProfileClient profileClient;
-    OtpServiceImpl otpService;
+    OtpService otpService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -46,6 +49,7 @@ public class AccountServiceImpl implements AccountService {
         validateAccountExistence(request.getUsername(), request.getEmail());
         Account account = saveAccount(request);
         createProfile(account, request);
+        otpService.deleteOtp(request.getEmail(), RedisKeyType.RESET.getRedisKeyPrefix());
     }
 
     @Override
@@ -57,8 +61,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void resetPassword(String email, String otp, String newPassword) {
+
         try {
-            otpService.validateOtp(email, otp, "RESET_");
+            String keyPrefix = RedisKeyType.RESET.getRedisKeyPrefix();
+            otpService.validateOtp(email, otp, keyPrefix);
 
             Account account = accountRepository.findByEmail(email)
                     .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
@@ -72,42 +78,36 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ApiResponse<DuplicationResponse> checkDuplication(DuplicationRequest request) {
+        boolean usernameExisted = false;
+        boolean emailExisted = false;
+
+        if (accountRepository.countByUsername(request.getUsername()) > 0)
+            usernameExisted = true;
+
+        if (accountRepository.countByEmail(request.getEmail()) > 0)
+            emailExisted = true;
+
         DuplicationResponse response = DuplicationResponse.builder()
-                .username(accountRepository.existsByUsername(request.getUsername()) ? ErrorCode.USERNAME_EXISTED.getMessage() : ErrorCode.OK.getMessage())
-                .email(accountRepository.existsByEmail(request.getEmail()) ? ErrorCode.EMAIL_EXISTED.getMessage() : ErrorCode.OK.getMessage())
+                .username(usernameExisted ? ErrorCode.USERNAME_EXISTED.getMessage() : null)
+                .email(emailExisted ? ErrorCode.EMAIL_EXISTED.getMessage() : null)
                 .build();
 
-        boolean hasError = !response.getUsername().equals(ErrorCode.OK.getMessage()) ||
-                !response.getEmail().equals(ErrorCode.OK.getMessage());
+        boolean hasError = usernameExisted || emailExisted;
 
-        return ApiResponse.<DuplicationResponse>builder()
+        ApiResponse.ApiResponseBuilder<DuplicationResponse> builder = ApiResponse.<DuplicationResponse>builder()
                 .statusCode(hasError ? ErrorCode.DUPLICATION.getCode() : ResponseStatus.VALID.getCODE())
-                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage())
-                .data(response)
-                .build();
-    }
+                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage());
 
-    public ApiResponse<DuplicationResponse> checkDuplications(DuplicationRequest request) {
-        DuplicationResponse response = DuplicationResponse.builder()
-                .username(accountRepository.existsByUsername(request.getUsername()) ? ErrorCode.USERNAME_EXISTED.getMessage() : ErrorCode.OK.getMessage())
-                .email(accountRepository.existsByEmail(request.getEmail()) ? ErrorCode.EMAIL_EXISTED.getMessage() : ErrorCode.OK.getMessage())
-                .build();
+        if (hasError) builder.data(response);
 
-        boolean hasError = !response.getUsername().equals(ErrorCode.OK.getMessage()) ||
-                !response.getEmail().equals(ErrorCode.OK.getMessage());
-
-        return ApiResponse.<DuplicationResponse>builder()
-                .statusCode(hasError ? ErrorCode.DUPLICATION.getCode() : ResponseStatus.VALID.getCODE())
-                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage())
-                .data(response)
-                .build();
+        return builder.build();
     }
 
     private void validateAccountExistence(String username, String email) {
         boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;
-        if (accountExisted) {
-            throw new AppException(ErrorCode.ACCOUNT_EXISTED);
-        }
+        if (accountExisted) throw new AppException(ErrorCode.ACCOUNT_EXISTED);
+
+        otpService.validEmailBeforePersist(email);
     }
 
     private Account saveAccount(AccountRegisterRequest request) {

@@ -4,7 +4,7 @@ import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.role.RoleCreationRequest;
 import com.fsocial.accountservice.dto.response.role.RoleResponse;
 import com.fsocial.accountservice.enums.ErrorCode;
-import com.fsocial.accountservice.services.impl.RoleServiceImpl;
+import com.fsocial.accountservice.services.RoleService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +19,7 @@ import java.util.Set;
 @RequestMapping("/role")
 public class RoleController {
 
-    RoleServiceImpl roleService;
+    RoleService roleService;
 
     @PostMapping
     public ApiResponse<RoleResponse> createRole(@RequestBody RoleCreationRequest request) {

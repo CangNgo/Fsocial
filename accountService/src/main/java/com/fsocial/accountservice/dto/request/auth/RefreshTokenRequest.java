@@ -4,12 +4,12 @@ import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor(force = true)
+@Getter
 @Builder
-@Data
-public class TokenRequest {
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class RefreshTokenRequest {
     @NotNullOrBlank(message = "REQUIRED_TOKEN")
-    String token;
+    String refreshToken;
 }

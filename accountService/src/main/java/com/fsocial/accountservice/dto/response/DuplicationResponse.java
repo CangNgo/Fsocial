@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor(force = true)
 @Builder
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DuplicationResponse {
     String username;
     String email;

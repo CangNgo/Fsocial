@@ -1,13 +1,18 @@
 app:
   services:
     profile: http://localhost:8085/profile
+  validation:
+    password-regex: "^(?=.*[A-Za-z])(?=.*\\d).{8,}$"
+    password-length: 8 # Độ dài tối thiểu của password
+    name-regex: "^[A-Za-zÀ-ỹ\\s]+$"
+    age-valid: 18 # Độ tuổi để sử dụng FSocial
 spring:
   application:
     name: accountService
   datasource:
     url: jdbc:mysql://localhost:3306/account_service?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: root
+    password: 12345678
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,7 +29,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: khaildps37419@fpt.edu.vn
-    password: mxzx aacu asud keyh
+    password: ieww vlfs guvu smgs
     properties:
       mail:
         smtp:
@@ -57,6 +62,7 @@ logging:
         security: DEBUG
         security.web.access.ExceptionTranslationFilter: DEBUG
         security.access.intercept.AbstractSecurityInterceptor: DEBUG
+        security.web.FilterChainProxy: DEBUG
       hibernate:
         SQL: DEBUG
         type:
@@ -72,4 +78,11 @@ logging:
             AbstractFlushingEventListener: DEBUG
 
 jwt:
-  signerKey: "R/iERv2snkyWEnD1l8zllBu9JGpBpnfO7UcOLvo0htPGU7xoDyGB3QksYid+G7"
+  signerKey: "q66wYIc6orfW00uGYvH0pJO2TX3fsoFGZEvbpMJNcvGMvqYc7cfI6eTrHTOvulif"
+  duration: 20 # Đơn vị là giây
+  expired-time: 3 # Đơn vị là ngày
+
+otp:
+  expiration:
+    send: 5 # Đơn vị là phút
+    verify: 1 # Đơn vị là giây

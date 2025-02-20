@@ -1,9 +1,16 @@
 package com.fsocial.accountservice.config;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,24 +22,20 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class AppConfig {
 
-    private final String[] PUBLIC_API = {
-            "/register",
-            "/send-otp",
-            "/verify-otp",
-            "/check-duplication",
-            "/login",
-            "/register"
-    };
+    private final String[] PUBLIC_API = {"/register", "/send-otp", "/verify-otp", "/check-duplication", "/login", "/logout", "/introspect", "/refresh"};
 
-    @Value("${jwt.signerKey")
-    protected String SIGNER_KEY;
+    @Value("${jwt.signerKey}")
+    private String signerKey;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -42,7 +45,8 @@ public class AppConfig {
                         author.requestMatchers(HttpMethod.POST, PUBLIC_API).permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/reset-password").permitAll()
                                 .anyRequest().authenticated()
-                );
+                )
+                .logout(AbstractHttpConfigurer::disable);
 
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer ->
@@ -56,6 +60,18 @@ public class AppConfig {
         return httpSecurity.build();
     }
 
+    @Bean
+    public FilterRegistrationBean<OncePerRequestFilter> loggingFilter() {
+        return new FilterRegistrationBean<>(new OncePerRequestFilter() {
+            @Override
+            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+                    throws ServletException, IOException {
+                log.info("Request URI: {}", request.getRequestURI());
+                chain.doFilter(request, response);
+            }
+        });
+    }
+
     private JwtAuthenticationConverter authenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
         jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
@@ -67,7 +83,7 @@ public class AppConfig {
     }
 
     private JwtDecoder jwtDecoder() {
-        SecretKeySpec secretKey = new SecretKeySpec(SIGNER_KEY.getBytes(), "HS256");
+        SecretKeySpec secretKey = new SecretKeySpec(signerKey.getBytes(), "HS256");
 
         return NimbusJwtDecoder
                 .withSecretKey(secretKey)

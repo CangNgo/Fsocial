@@ -3,7 +3,7 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.role.PermissionRequest;
 import com.fsocial.accountservice.dto.response.role.PermissionResponse;
-import com.fsocial.accountservice.services.impl.PermissionServiceImpl;
+import com.fsocial.accountservice.services.PermissionService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/permission")
 public class PermissionController {
 
-    PermissionServiceImpl permissionService;
+    PermissionService permissionService;
 
     @PostMapping
     public ApiResponse<PermissionResponse> createPermission(@RequestBody PermissionRequest request) {

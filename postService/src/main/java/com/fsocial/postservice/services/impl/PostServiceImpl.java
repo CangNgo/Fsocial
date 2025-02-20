@@ -62,6 +62,7 @@ public class PostServiceImpl implements PostService {
             post.setCountLikes(0);
             post.setContent(contentMapper.toContent(content));
             post.setCreatedBy(postRequest.getHTMLText());
+            post.setCreatedAt(LocalDateTime.now());
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {

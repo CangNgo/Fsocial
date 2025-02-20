@@ -29,6 +29,7 @@ public class PostController {
             return ResponseEntity.ok().body(Response.builder()
                     .data(post)
                     .message("Thêm mới bài viết thành công")
+                            .statusCode(200)
                     .dateTime(LocalDateTime.now())
                     .build());
         } catch (RuntimeException | AppCheckedException e) {
@@ -55,6 +56,7 @@ public class PostController {
             return ResponseEntity.ok().body(Response.builder()
                     .data(post)
                     .message("Cập nhật bài viết thành công")
+                            .statusCode(200)
                     .dateTime(LocalDateTime.now())
                     .build());
         } catch (RuntimeException | AppCheckedException e) {
@@ -73,6 +75,7 @@ public class PostController {
         return ResponseEntity.ok().body(Response.builder()
                 .message("Xóa bài viết thành công")
                 .dateTime(LocalDateTime.now())
+                        .statusCode(200)
                 .build());
     }
 }

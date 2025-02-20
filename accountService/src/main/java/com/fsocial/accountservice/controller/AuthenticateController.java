@@ -66,6 +66,7 @@ public class AuthenticateController {
         return ApiResponse.<AuthenticationResponse>builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())
                 .message(ResponseStatus.SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
                 .data(
                         refreshTokenService.refreshAccessToken(request.getRefreshToken(), userAgent, httpRequest)
                 )
@@ -75,10 +76,10 @@ public class AuthenticateController {
     @PostMapping("/logout")
     public ApiResponse<Void> logout(@RequestBody @Valid TokenRequest refreshToken) throws ParseException, JOSEException {
         authenticationService.logout(refreshToken);
-
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())
                 .message(ResponseStatus.SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 }

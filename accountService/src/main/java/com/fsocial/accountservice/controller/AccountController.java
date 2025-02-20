@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
@@ -28,6 +30,7 @@ public class AccountController {
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.ACCOUNT_REGISTERED.getCODE())
                 .message(ResponseStatus.ACCOUNT_REGISTERED.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 
@@ -37,6 +40,7 @@ public class AccountController {
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.OTP_SENT.getCODE())
                 .message(ResponseStatus.OTP_SENT.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 
@@ -46,6 +50,7 @@ public class AccountController {
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.OTP_VALID.getCODE())
                 .message(ResponseStatus.OTP_VALID.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 
@@ -69,6 +74,7 @@ public class AccountController {
         return ApiResponse.<Void>builder()
                 .statusCode(ResponseStatus.PASSWORD_RESET_SUCCESS.getCODE())
                 .message(ResponseStatus.PASSWORD_RESET_SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build();
     }
 

@@ -5,60 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/LoggingFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/auth/RefreshTokenRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/entity/RefreshToken.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/CodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/RedisKeyType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/exception/MethodArgumentNotValidExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/repository/RefreshTokenRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/RefreshTokenService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/RefreshTokenServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/validation/DobValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/validation/NameValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/validation/NotNullOrBlankValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/validation/PasswordValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/validation/constrain/DobValid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/validation/constrain/NameValid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/validation/constrain/NotNullOrBlank.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/validation/constrain/PasswordValid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/JwtAuthenticationEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/JwtAuthenticationEntryPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/WebConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AuthenticateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AuthenticateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/PermissionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/PermissionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/RoleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/AccountLoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/AccountLoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/AccountRegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/AccountRegisterRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/DuplicationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/DuplicationRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/EmailRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/EmailRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/OtpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/OtpRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/ResetPasswordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/ResetPasswordRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/auth/TokenRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/auth/TokenRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/response/AuthenticationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/response/AuthenticationResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/entity/InvalidToken.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/entity/Permission.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/entity/Permission.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/ErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/ValidCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/ValidErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/exception/AppException.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/exception/AppException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/repository/InvalidTokenRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/OtpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/OtpService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/JwtService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AuthenticationServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/OtpServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/OtpServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/TokenServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/JwtServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/util/MailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/util/MailUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/util/RedisUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/util/RegexdUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,11 +208,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.AccountServiceApplication" />
+      <item itemvalue="Application.ApigatewayApplication" />
+      <item itemvalue="Application.ProfileServiceApplication" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AccountServiceApplication" />
         <item itemvalue="Application.ApigatewayApplication" />
         <item itemvalue="Application.ProfileServiceApplication" />
+        <item itemvalue="Application.AccountServiceApplication" />
       </list>
     </recent_temporary>
   </component>

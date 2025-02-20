@@ -8,7 +8,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -20,14 +19,13 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 @Slf4j
 public class AppConfig {
 
-    private final String[] PUBLIC_API = {"/register",
+    private final String[] PUBLIC_API = {
+            "/register",
             "/send-otp",
             "/verify-otp",
             "/check-duplication",
@@ -44,11 +42,9 @@ public class AppConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
                         author.requestMatchers(HttpMethod.POST, PUBLIC_API).permitAll()
-                                .requestMatchers(HttpMethod.POST, "/send-otp").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/reset-password").permitAll()
                                 .anyRequest().authenticated()
-                )
-                .anonymous(withDefaults());
+                );
 
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer

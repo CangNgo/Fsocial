@@ -72,24 +72,25 @@ public class OtpServiceImpl implements OtpService {
 
     @Override
     public void sortTypeForSendOtp(EmailRequest request) {
-        if (request.getType().equals(RedisKeyType.REGISTER.getType())) {
-            sendOtp(request.getEmail(),
-                    RedisKeyType.REGISTER.getRedisKeyPrefix());
-        } else {
-            sendOtp(request.getEmail(),
-                    RedisKeyType.RESET.getRedisKeyPrefix());
-        }
+        String email = request.getEmail();
+        String keyPrefix = checkKeyPrefix(request.getType());
+
+        sendOtp(email, keyPrefix);
     }
 
     @Override
     public void sortTypeForVerifyOtp(OtpRequest request) {
-        if (request.getType().equals(RedisKeyType.REGISTER.getType())) {
-            validateOtp(request.getEmail(), request.getOtp(),
-                    RedisKeyType.REGISTER.getRedisKeyPrefix());
-        } else {
-            validateOtp(request.getEmail(), request.getOtp(),
-                    RedisKeyType.RESET.getRedisKeyPrefix());
-        }
+        String email = request.getEmail();
+        String otp = request.getOtp();
+        String keyPrefix = checkKeyPrefix(request.getType());
+
+        validateOtp(email, otp, keyPrefix);
+    }
+
+    private String checkKeyPrefix(String type) {
+        return type.equals(RedisKeyType.REGISTER.getType())
+                ? RedisKeyType.REGISTER.getRedisKeyPrefix()
+                : RedisKeyType.RESET.getRedisKeyPrefix();
     }
 
     private String generateOtp() {

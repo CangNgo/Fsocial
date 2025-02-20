@@ -69,7 +69,6 @@ public class AccountController {
 
         accountServices.resetPassword(
                 request.getEmail(),
-                request.getOtp(),
                 request.getNewPassword()
         );
 

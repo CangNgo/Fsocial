@@ -12,8 +12,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 public class ResetPasswordRequest {
-    @NotNullOrBlank(message = "REQUIRED_OTP")
-    String otp;
 
     @NotNullOrBlank(message = "REQUIRED_EMAIL")
     @Email(message = "INVALID_EMAIL")

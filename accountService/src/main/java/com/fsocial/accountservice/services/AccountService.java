@@ -9,6 +9,6 @@ import com.fsocial.accountservice.dto.response.DuplicationResponse;
 public interface AccountService {
     void persistAccount(AccountRegisterRequest request);
     AccountResponse getUser(String id);
-    void resetPassword(String email, String otp, String newPassword);
+    void resetPassword(String email, String newPassword);
     ApiResponse<DuplicationResponse> checkDuplication(DuplicationRequest request);
 }

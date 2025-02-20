@@ -5,11 +5,12 @@ import com.fsocial.accountservice.dto.request.auth.TokenRequest;
 import com.fsocial.accountservice.dto.response.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.IntrospectResponse;
 import com.nimbusds.jose.JOSEException;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.text.ParseException;
 
 public interface AuthenticationService {
-    AuthenticationResponse login(AccountLoginRequest request);
-    IntrospectResponse introspectValid(TokenRequest request);
+    AuthenticationResponse login(AccountLoginRequest request, String userAgent, HttpServletRequest httpRequest);
+    IntrospectResponse introspectValid(TokenRequest request) throws ParseException, JOSEException;
     void logout(TokenRequest token)  throws JOSEException, ParseException;
 }

@@ -2,16 +2,13 @@ package com.fsocial.accountservice.exception;
 
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.enums.ErrorCode;
-import com.fsocial.accountservice.enums.ValidCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @ControllerAdvice
 @Slf4j
@@ -24,7 +21,6 @@ public class GlobalExceptionHandler {
                 .statusCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
                 .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage())
                 .dateTime(LocalDateTime.now())
-                .data(null)
                 .build());
     }
 
@@ -32,7 +28,11 @@ public class GlobalExceptionHandler {
     ResponseEntity<ApiResponse> handlingAppCheckedException(AppCheckedException exception) {
         return ResponseEntity
                 .badRequest()
-                .body(createApiResponse(exception.getStatus()));
+                .body(ApiResponse.builder()
+                        .statusCode(exception.getStatus().getCode())
+                        .message(exception.getStatus().getMessage())
+                        .dateTime(LocalDateTime.now())
+                        .build());
     }
 
     @ExceptionHandler(value = NoResourceFoundException.class)
@@ -47,36 +47,18 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        String enumKey = Objects.requireNonNull(exception.getFieldError()).getDefaultMessage();
-        ValidCode validCode = ValidCode.valueOf(enumKey);
-        return ResponseEntity
-                .badRequest()
-                .body(createApiResponse(validCode));
-    }
-
     @ExceptionHandler(value = AppException.class)
      ResponseEntity<ApiResponse> handleAppException(AppException exception) {
-        ErrorCode errorCode = exception.getStatusCode();
+        ErrorCode code = exception.getCode();
+        if (code == null) throw new IllegalArgumentException("Đối tượng không được rỗng.");
         return ResponseEntity
-                .status(errorCode.getStatusCode())
-                .body(createApiResponse(errorCode));
+                .status(exception.getCode().getHttpStatusCode())
+                .body(ApiResponse.builder()
+                        .statusCode(code.getCode())
+                        .message(code.getMessage())
+                        .dateTime(LocalDateTime.now())
+                        .build());
     }
 
-    private ApiResponse createApiResponse(ErrorCode statusCode) {
-        return ApiResponse.builder()
-                .statusCode(statusCode.getCode())
-                .message(statusCode.getMessage())
-                .dateTime(LocalDateTime.now())
-                .build();
-    }
 
-    private ApiResponse createApiResponse(ValidCode validCode) {
-        return ApiResponse.builder()
-                .statusCode(validCode.getCode())
-                .message(validCode.getMessage())
-                .dateTime(LocalDateTime.now())
-                .build();
-    }
 }

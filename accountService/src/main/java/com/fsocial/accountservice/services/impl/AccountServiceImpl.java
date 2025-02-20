@@ -8,6 +8,7 @@ import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.DuplicationResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.Role;
+import com.fsocial.accountservice.enums.RedisKeyType;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.enums.ResponseStatus;
@@ -17,6 +18,7 @@ import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.repository.RoleRepository;
 import com.fsocial.accountservice.repository.httpclient.ProfileClient;
 import com.fsocial.accountservice.services.AccountService;
+import com.fsocial.accountservice.services.OtpService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -39,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
     ProfileMapper profileMapper;
     PasswordEncoder passwordEncoder;
     ProfileClient profileClient;
-    OtpServiceImpl otpService;
+    OtpService otpService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -47,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
         validateAccountExistence(request.getUsername(), request.getEmail());
         Account account = saveAccount(request);
         createProfile(account, request);
-        otpService.deleteOtp(request.getEmail());
+        otpService.deleteOtp(request.getEmail(), RedisKeyType.RESET.getRedisKeyPrefix());
     }
 
     @Override

@@ -1,15 +1,15 @@
 package com.fsocial.accountservice.dto.request.auth;
 
 import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor(force = true)
+@Getter
 @Builder
-@Data
-public class TokenRequest {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class RefreshTokenRequest {
     @NotNullOrBlank(message = "REQUIRED_TOKEN")
-    String token;
+    String refreshToken;
 }

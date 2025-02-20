@@ -60,12 +60,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void resetPassword(String email, String otp, String newPassword) {
+    public void resetPassword(String email, String newPassword) {
 
         try {
-            String keyPrefix = RedisKeyType.RESET.getRedisKeyPrefix();
-            otpService.validateOtp(email, otp, keyPrefix);
-
             Account account = accountRepository.findByEmail(email)
                     .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
 

@@ -53,7 +53,7 @@ public class PostServiceImpl implements PostService {
                             .countLikes(post.getCountLikes())
                             .countComments(countComment)
                             .userId(post.getUserId())
-                            .userName(profile.getFirstName() + " " + profile.getLastName())
+                            .displayName(profile.getFirstName() + " " + profile.getLastName())
                             .avatar(profile.getAvatar())
                             .createdAt(post.getCreatedAt())
                             .build();
@@ -68,6 +68,32 @@ public class PostServiceImpl implements PostService {
         } catch (Exception e) {
             throw new AppCheckedException(e.getMessage(), StatusCode.USER_NOT_FOUND);
         }
+    }
+
+    @Override
+    public List<PostResponse> findByText(String text) throws AppCheckedException {
+        return postRepository.findByContentTextContaining(text).stream()
+                .map(post -> {
+                    ProfileResponse profile = null;
+                    Integer countComment = null;
+                    try {
+                        profile = getProfile(post.getUserId());
+                        countComment = commentRepository.countCommentsByPostId(post.getId());
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return PostResponse.builder()
+                            .id(post.getId())
+                            .content(post.getContent())
+                            .countLikes(post.getCountLikes())
+                            .countComments(countComment)
+                            .userId(post.getUserId())
+                            .displayName(profile.getFirstName() + " " + profile.getLastName())
+                            .avatar(profile.getAvatar())
+                            .createdAt(post.getCreatedAt())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 
 

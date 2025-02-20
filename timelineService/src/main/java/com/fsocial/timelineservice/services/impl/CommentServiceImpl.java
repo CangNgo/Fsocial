@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
                             .content(comment.getContent())
                             .countReplyComments(comment.getCountReplyComment())
                             .countLikes(comment.getCountLikes())
-                            .userName(profileResponse.getFirstName() + " " + profileResponse.getLastName())
+                            .displayName(profileResponse.getFirstName() + " " + profileResponse.getLastName())
                             .avatar(profileResponse.getAvatar())
                             .userId(comment.getUserId())
                             .reply(comment.isReply())

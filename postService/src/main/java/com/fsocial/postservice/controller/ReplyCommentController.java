@@ -28,8 +28,6 @@ import java.time.LocalDateTime;
 public class ReplyCommentController {
 
     ReplyCommentServiceImpl replyCommentService;
-    ReplyCommentMapper replyCommentMapper;
-    UploadImageImpl uploadImage;
 
     @GetMapping
     public ResponseEntity<Response> replyComment(ReplyCommentRequest request) throws AppCheckedException, IOException {

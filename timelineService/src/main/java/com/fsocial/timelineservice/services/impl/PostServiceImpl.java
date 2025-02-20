@@ -53,7 +53,7 @@ public class PostServiceImpl implements PostService {
                             .countLikes(post.getCountLikes())
                             .countComments(countComment)
                             .userId(post.getUserId())
-                            .userName(profile.getFirstName() + " " + profile.getLastName())
+                            .displayName(profile.getFirstName() + " " + profile.getLastName())
                             .avatar(profile.getAvatar())
                             .createdAt(post.getCreatedAt())
                             .build();

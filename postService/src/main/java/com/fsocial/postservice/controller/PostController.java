@@ -29,7 +29,6 @@ public class PostController {
             return ResponseEntity.ok().body(Response.builder()
                     .data(post)
                     .message("Thêm mới bài viết thành công")
-                            .statusCode(200)
                     .dateTime(LocalDateTime.now())
                     .build());
         } catch (RuntimeException | AppCheckedException e) {

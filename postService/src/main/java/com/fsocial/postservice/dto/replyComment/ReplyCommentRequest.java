@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReplyCommentRequest {
+    String commentId;
     String userId;
     String text;
     String HTMLText;

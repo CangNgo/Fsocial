@@ -1,22 +1,18 @@
 package com.fsocial.postservice.controller;
 
+import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
-import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.PostService;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
-/*
- * Khong nhan request 1 image
- * */
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

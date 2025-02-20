@@ -17,7 +17,7 @@ public class CommentResponse {
     Content content;
     Integer countLikes;
     Integer countReplyComments;
-    String userName;
+    String displayName;
     String avatar;
     LocalDateTime createdAt;
     boolean reply;

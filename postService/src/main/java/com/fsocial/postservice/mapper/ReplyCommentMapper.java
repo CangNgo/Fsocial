@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ReplyCommentMapper {
+    @Mapping(source = "commentId", target = "commentId")
     @Mapping(source = "userId", target = "userId")
     @Mapping(source = "countLikes", target = "countLikes")
     @Mapping(source = "countComments", target = "countReplyComment")

@@ -29,7 +29,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: khaildps37419@fpt.edu.vn
-    password: mxzx aacu asud keyh
+    password: ieww vlfs guvu smgs
     properties:
       mail:
         smtp:
@@ -79,7 +79,7 @@ logging:
 
 jwt:
   signerKey: "q66wYIc6orfW00uGYvH0pJO2TX3fsoFGZEvbpMJNcvGMvqYc7cfI6eTrHTOvulif"
-  duration: 30 # Đơn vị là giây
+  duration: 20 # Đơn vị là giây
   expired-time: 3 # Đơn vị là ngày
 
 otp:

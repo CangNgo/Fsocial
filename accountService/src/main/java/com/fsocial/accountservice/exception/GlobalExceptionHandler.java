@@ -2,13 +2,16 @@ package com.fsocial.accountservice.exception;
 
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.enums.ErrorCode;
+import com.fsocial.accountservice.enums.ValidErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @ControllerAdvice
 @Slf4j
@@ -52,7 +55,7 @@ public class GlobalExceptionHandler {
         ErrorCode code = exception.getCode();
         if (code == null) throw new IllegalArgumentException("Đối tượng không được rỗng.");
         return ResponseEntity
-                .status(exception.getCode().getHttpStatusCode())
+                .status(code.getHttpStatusCode())
                 .body(ApiResponse.builder()
                         .statusCode(code.getCode())
                         .message(code.getMessage())
@@ -60,5 +63,14 @@ public class GlobalExceptionHandler {
                         .build());
     }
 
-
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    ResponseEntity<ApiResponse> handleValidException(MethodArgumentNotValidException exception) {
+        String enumKey = Objects.requireNonNull(exception.getFieldError()).getDefaultMessage();
+        ValidErrorCode errorCode = ValidErrorCode.valueOf(enumKey);
+        return ResponseEntity.badRequest().body(ApiResponse.builder()
+                .statusCode(errorCode.getCode())
+                .message(errorCode.getMessage())
+                .dateTime(LocalDateTime.now())
+                .build());
+    }
 }

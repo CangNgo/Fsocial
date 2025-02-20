@@ -3,6 +3,7 @@ package com.fsocial.accountservice.services.impl;
 import com.fsocial.accountservice.dto.request.account.EmailRequest;
 import com.fsocial.accountservice.dto.request.account.OtpRequest;
 import com.fsocial.accountservice.enums.RedisKeyType;
+import com.fsocial.accountservice.enums.ValidErrorCode;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.services.OtpService;
@@ -40,9 +41,6 @@ public class OtpServiceImpl implements OtpService {
     public void sendOtp(String email, String keyPrefix) {
         String otp = generateOtp();
 
-        if (!keyPrefix.equals(RedisKeyType.REGISTER.getType()) && !keyPrefix.equals(RedisKeyType.RESET.getType()))
-            return;
-
         String redisKey = keyPrefix + email;
         redisTemplate.opsForValue().set(redisKey, otp, durationSend, TimeUnit.MINUTES);
         mailUtils.sendOtp(email, otp);
@@ -53,21 +51,35 @@ public class OtpServiceImpl implements OtpService {
     public void validateOtp(String email, String otp, String keyPrefix) {
         String redisKey = keyPrefix + email;
         String storedOtp = redisTemplate.opsForValue().get(redisKey);
-        if (storedOtp == null || !storedOtp.equals(otp)) throw new AppException(ErrorCode.OTP_INVALID);
+
+        if (storedOtp == null) {
+            log.warn("OTP không tồn tại hoặc đã hết hạn cho email: {}", email);
+            throw new AppException(ErrorCode.OTP_INVALID);
+        }
+
+        if (!storedOtp.equals(otp)) {
+            log.warn("OTP không hợp lệ cho email: {}", email);
+            throw new AppException(ErrorCode.OTP_INVALID);
+        }
+
         redisTemplate.opsForValue().set(redisKey, RedisKeyType.VALUE_AFTER_VERIFY.getType(), durationVerify, TimeUnit.SECONDS);
     }
 
     @Override
     public void deleteOtp(String email, String keyPrefix) {
         String redisKey = keyPrefix + email;
-        redisTemplate.delete(email);
+        redisTemplate.delete(redisKey);
     }
 
     @Override
     public void validEmailBeforePersist(String email) {
         String redisKey = RedisKeyType.REGISTER.getRedisKeyPrefix() + email;
         String value = redisTemplate.opsForValue().get(redisKey);
-        if (!RedisKeyType.VALUE_AFTER_VERIFY.getType().equals(value)) throw new AppException(ErrorCode.UNAUTHENTICATED);
+
+        if (!RedisKeyType.VALUE_AFTER_VERIFY.getType().equals(value)) {
+            log.warn("Email chưa được xác thực: {}", email);
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        }
     }
 
     @Override
@@ -84,10 +96,16 @@ public class OtpServiceImpl implements OtpService {
         String otp = request.getOtp();
         String keyPrefix = checkKeyPrefix(request.getType());
 
+
         validateOtp(email, otp, keyPrefix);
     }
 
     private String checkKeyPrefix(String type) {
+        if (!type.equals(RedisKeyType.REGISTER.getType()) && !type.equals(RedisKeyType.RESET.getType())) {
+            log.error("Sai loại yêu cầu ở Request: {}", type);
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
+
         return type.equals(RedisKeyType.REGISTER.getType())
                 ? RedisKeyType.REGISTER.getRedisKeyPrefix()
                 : RedisKeyType.RESET.getRedisKeyPrefix();

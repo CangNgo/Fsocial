@@ -55,16 +55,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public IntrospectResponse introspectValid(TokenRequest request) throws ParseException, JOSEException {
-        tokenService.verifyToken(request.getToken());
+    public IntrospectResponse introspect(TokenRequest request, String userAgent, String ipAddress) throws ParseException, JOSEException {
+        refreshTokenService.validRefreshToken(request.getToken(), userAgent, ipAddress);
         return IntrospectResponse.builder()
                     .valid(true)
                     .build();
-    }
-
-    @Override
-    public void logout(TokenRequest request) {
-        if (request == null) throw new AppException(ErrorCode.UNAUTHENTICATED);
-        tokenService.disableToken(request.getToken());
     }
 }

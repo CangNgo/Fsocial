@@ -5,27 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/LoggingFilter.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AuthenticateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AuthenticateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/auth/RefreshTokenRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/auth/RefreshTokenRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/ErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/exception/MethodArgumentNotValidExceptionHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/repository/AccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/RefreshTokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/RefreshTokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/ResetPasswordRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/request/account/ResetPasswordRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/AccountService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AuthenticationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/JwtServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/JwtServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/OtpServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/OtpServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/RefreshTokenServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/RefreshTokenServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/util/MailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/util/MailUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +44,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.AccountServiceApplication.executor": "Run",
+    "Application.ApigatewayApplication.executor": "Run",
     "Maven.accountService [clean].executor": "Run",
     "Maven.apigateway [clean].executor": "Run",
     "Maven.timeLineService [clean].executor": "Run",
@@ -75,7 +61,7 @@
     "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "git-widget-placeholder": "Merging develop",
+    "git-widget-placeholder": "test-API",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/workspace/Fsocial/Fsocial_be",
@@ -330,5 +316,43 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="develop" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -13,4 +13,6 @@ import java.util.List;
 public interface PostService {
     List<PostResponse> getPosts() throws AppCheckedException;
     ProfileResponse getProfile(String id) throws AppCheckedException;
+    List<PostResponse> findByText (String text) throws AppCheckedException;
+
 }

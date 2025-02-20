@@ -1,13 +1,10 @@
 package com.fsocial.postservice.mapper;
 
-import com.fsocial.postservice.dto.ContentDTORequest;
-import com.fsocial.postservice.dto.PostDTO;
-import com.fsocial.postservice.dto.PostDTORequest;
-import com.fsocial.postservice.entity.Content;
+import com.fsocial.postservice.dto.post.PostDTO;
+import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.entity.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {

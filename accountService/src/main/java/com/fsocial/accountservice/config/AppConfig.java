@@ -22,11 +22,13 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class AppConfig {
 
-    private final String[] PUBLIC_API = {"/register",
+    private final String[] PUBLIC_API = {
+            "/register",
             "/send-otp",
             "/verify-otp",
             "/check-duplication",
-            "/login"
+            "/login",
+            "/register"
     };
 
     @Value("${jwt.signerKey")

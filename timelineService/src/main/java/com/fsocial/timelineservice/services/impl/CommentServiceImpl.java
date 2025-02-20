@@ -26,7 +26,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponse> getComments(String postId) {
-        return commentRepository.findAll().stream()
+        return commentRepository.findCommentsByPostId(postId).stream()
                 .map(comment -> {
                     ProfileResponse profileResponse = null;
                     try {
@@ -43,6 +43,7 @@ public class CommentServiceImpl implements CommentService {
                             .avatar(profileResponse.getAvatar())
                             .userId(comment.getUserId())
                             .reply(comment.isReply())
+                            .createdAt(comment.getCreatedAt())
                             .build();
                 })
                 .collect(Collectors.toList());

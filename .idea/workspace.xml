@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/controller/ApiController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_02_2025,_22_22_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_02_2025__22_22__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/resources/application-dev.yml" afterDir="false" />
-    </list>
+    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,6 +46,7 @@
     "Spring Boot.AccountServiceApplication.executor": "Run",
     "Spring Boot.ApigatewayApplication.executor": "Run",
     "Spring Boot.PostServiceApplication.executor": "Run",
+    "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
     "git-widget-placeholder": "develop",
@@ -166,8 +150,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.ApigatewayApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
+        <item itemvalue="Spring Boot.ApigatewayApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -194,6 +178,7 @@
       <workItem from="1739693277035" duration="1841000" />
       <workItem from="1739719153637" duration="18000" />
       <workItem from="1739719656208" duration="10160000" />
+      <workItem from="1739894558109" duration="2823000" />
     </task>
     <servers />
   </component>

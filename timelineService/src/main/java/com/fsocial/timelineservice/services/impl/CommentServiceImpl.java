@@ -35,6 +35,7 @@ public class CommentServiceImpl implements CommentService {
                         throw new RuntimeException(e);
                     }
 
+
                     return CommentResponse.builder()
                             .id(comment.getId())
                             .content(comment.getContent())

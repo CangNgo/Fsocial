@@ -27,17 +27,12 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<Response> getComment(@RequestParam("postId") String postId) {
-        try {
-            List<CommentResponse> commentByPostId = commentService.getComments(postId);
-            new Response();
-            return ResponseEntity.ok(Response.builder()
-                    .statusCode(StatusCode.GET_COMMENT_SUCCESS.getCode())
-                    .data(commentByPostId)
-                    .dateTime(LocalDateTime.now())
-                    .message("Comment get by postId successfully")
-                    .build());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        List<CommentResponse> commentByPostId = commentService.getComments(postId);
+        return ResponseEntity.ok(Response.builder()
+                .statusCode(StatusCode.GET_COMMENT_SUCCESS.getCode())
+                .data(commentByPostId)
+                .dateTime(LocalDateTime.now())
+                .message("Comment get by postId successfully")
+                .build());
     }
 }

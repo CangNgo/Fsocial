@@ -30,6 +30,5 @@ public class ReplyCommentController {
                         .statusCode(200)
                         .message("Lấy thông tin trả lời comment thành công")
                 .build());
-
     }
 }

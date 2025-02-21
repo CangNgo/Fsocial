@@ -40,8 +40,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = NoResourceFoundException.class)
     ResponseEntity<ApiResponse> handlingNotFoundException(NoResourceFoundException exception) {
-        return ResponseEntity
-                .badRequest()
+        return ResponseEntity.badRequest()
                 .body(ApiResponse.builder()
                     .statusCode(ErrorCode.NOT_FOUND.getCode())
                     .message(ErrorCode.NOT_FOUND.getMessage())
@@ -55,7 +54,7 @@ public class GlobalExceptionHandler {
         ErrorCode code = exception.getCode();
         if (code == null) throw new IllegalArgumentException("Đối tượng không được rỗng.");
         return ResponseEntity
-                .status(code.getHttpStatusCode())
+                .status(code.getCode())
                 .body(ApiResponse.builder()
                         .statusCode(code.getCode())
                         .message(code.getMessage())

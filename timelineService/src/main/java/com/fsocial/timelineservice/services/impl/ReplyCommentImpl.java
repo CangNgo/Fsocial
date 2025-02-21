@@ -1,6 +1,7 @@
 package com.fsocial.timelineservice.services.impl;
 
 import com.fsocial.timelineservice.Repository.ReplyCommentRepository;
+import com.fsocial.timelineservice.entity.ReplyComment;
 import com.fsocial.timelineservice.services.ReplyCommentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class ReplyCommentImpl implements ReplyCommentService {
 
     ReplyCommentRepository replyCommentRepository;
     @Override
-    public List<com.fsocial.timelineservice.entity.ReplyComment> getReplyCommentsByCommentId(String commentId) {
+    public List<ReplyComment> getReplyCommentsByCommentId(String commentId) {
         return replyCommentRepository.findReplyCommentsByCommentId(commentId);
     }
 }

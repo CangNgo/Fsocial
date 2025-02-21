@@ -12,7 +12,6 @@ import com.fsocial.timelineservice.exception.StatusCode;
 import com.fsocial.timelineservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +29,16 @@ public class PostServiceImpl implements PostService {
 
     CommentRepository commentRepository;
 
-    @SneakyThrows
     @Override
-    public List<PostResponse> getPosts() {
+    public List<PostResponse> getPosts() throws AppUnCheckedException {
         return postRepository.findAll().stream()
-                .map(this::mapToPostResponse)
+                .map(post -> {
+                    try {
+                        return this.mapToPostResponse(post);
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

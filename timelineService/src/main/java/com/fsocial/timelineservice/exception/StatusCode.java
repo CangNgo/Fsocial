@@ -6,21 +6,22 @@ import org.springframework.http.HttpStatusCode;
 
 @Getter
 public enum StatusCode {
-    UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
-    OK(200, "OK", HttpStatus.OK),
-    REGISTER_FAILED(101, "Register failed", HttpStatus.BAD_REQUEST),
-    POST_INVALID(222, "POST invalid", HttpStatus.BAD_REQUEST),
-    USER_NOT_FOUND(208, "User Not Found", HttpStatus.NOT_FOUND),
-    GET_COMMENT_SUCCESS(207, "Get comment success", HttpStatus.OK),
-    PROFILE_NOT_FOUND(208, "Profile Not Found", HttpStatus.NOT_FOUND),
+    UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error"),
+    OK(200, "OK"),
+    REGISTER_FAILED(101, "Register failed"),
+    POST_INVALID(222, "POST invalid"),
+    USER_NOT_FOUND(208, "User Not Found"),
+    GET_COMMENT_SUCCESS(207, "Get comment success"),
+    PROFILE_NOT_FOUND(208, "Profile Not Found"),
+    ENPOINTMENT_NOT_FOUND(210, "Enpointment Not Found"),
+    PARAMATER_NOT_FOUND(220, "Paramater Not Found"),
+    METHOD_NOT_INSTALLED(230, "Method Not installed"),
     ;
     private final int code;
     private final String message;
-    private final HttpStatusCode statusCode;
 
-    StatusCode(int code, String message, HttpStatusCode statusCode) {
+    StatusCode(int code, String message) {
         this.code = code;
         this.message = message;
-        this.statusCode = statusCode;
     }
 }

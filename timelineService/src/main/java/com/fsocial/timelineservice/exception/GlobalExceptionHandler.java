@@ -26,9 +26,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AppCheckedException.class)
     ResponseEntity<Response> handlingAppCheckedException(AppCheckedException exception) {
-        StatusCode statusCode = exception.getStatus();
         return ResponseEntity.badRequest().body(Response.builder()
-                .statusCode(statusCode.getCode())
+                .statusCode(exception.getStatus().getCode())
                 .message(exception.getMessage())
                 .build());
     }

@@ -31,9 +31,10 @@ public class CommentServiceImpl implements CommentService {
                     ProfileResponse profileResponse = null;
                     try {
                         profileResponse = getProfile(comment.getUserId());
-                    } catch (RuntimeException e) {
+                    } catch (AppCheckedException e) {
                         throw new RuntimeException(e);
                     }
+
                     return CommentResponse.builder()
                             .id(comment.getId())
                             .content(comment.getContent())
@@ -49,7 +50,12 @@ public class CommentServiceImpl implements CommentService {
                 .collect(Collectors.toList());
     }
 
-    public ProfileResponse getProfile(String userId) {
-        return profileClient.getProfile(userId);
+    public ProfileResponse getProfile(String userId) throws AppCheckedException {
+
+        try {
+            return profileClient.getProfile(userId);
+        } catch (Exception e) {
+            throw new AppCheckedException("Không tìm thấy thông tin người dùng", StatusCode.PROFILE_NOT_FOUND);
+        }
     }
 }

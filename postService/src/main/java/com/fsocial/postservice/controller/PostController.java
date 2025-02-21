@@ -1,6 +1,7 @@
 package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
+import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -55,7 +56,7 @@ public class PostController {
             return ResponseEntity.ok().body(Response.builder()
                     .data(post)
                     .message("Cập nhật bài viết thành công")
-                            .statusCode(200)
+                    .statusCode(200)
                     .dateTime(LocalDateTime.now())
                     .build());
         } catch (RuntimeException | AppCheckedException e) {
@@ -74,7 +75,26 @@ public class PostController {
         return ResponseEntity.ok().body(Response.builder()
                 .message("Xóa bài viết thành công")
                 .dateTime(LocalDateTime.now())
-                        .statusCode(200)
+                .statusCode(200)
                 .build());
+    }
+
+    //Like Post
+
+    @GetMapping("/like")
+    public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO){
+        try {
+            boolean like = postService.toggleLike(likeDTO);
+            return ResponseEntity.ok().body(Response.builder()
+                    .data(like)
+                    .message("Cập nhật bài viết thành công")
+                    .statusCode(200)
+                    .dateTime(LocalDateTime.now())
+                    .build());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        } catch (AppCheckedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

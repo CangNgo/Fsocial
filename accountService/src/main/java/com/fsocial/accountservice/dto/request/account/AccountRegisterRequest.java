@@ -1,8 +1,11 @@
 package com.fsocial.accountservice.dto.request.account;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import com.fsocial.accountservice.validation.constrain.DobValid;
+import com.fsocial.accountservice.validation.constrain.NameValid;
+import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
+import com.fsocial.accountservice.validation.constrain.PasswordValid;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,19 +17,28 @@ import java.time.LocalDate;
 @Builder
 @Data
 public class AccountRegisterRequest {
-    @Size(min = 6, max = 50,message = "Username ít nhất 6 ký tự")
-    @NotNull
+    @Size(min = 6,message = "INVALID_USERNAME")
+    @NotNullOrBlank(message = "REQUIRED_USERNAME")
     String username;
 
-    @Size(min = 6, max = 50,message = "Password ít nhất 6 ký tự")
-    @NotNull
+    @NotNullOrBlank(message = "REQUIRED_PASSWORD")
+    @PasswordValid
     String password;
 
+    @NotNullOrBlank(message = "REQUIRED_EMAIL")
+    @Email(message = "INVALID_EMAIL")
     String email;
+
+    @NotNullOrBlank(message = "REQUIRED_USERNAME")
+    @NameValid
     String firstName;
+
+    @NotNullOrBlank(message = "REQUIRED_USERNAME")
+    @NameValid
     String lastName;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @DobValid
     LocalDate dob;
 
     int gender;

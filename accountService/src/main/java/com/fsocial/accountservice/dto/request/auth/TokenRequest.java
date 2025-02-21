@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.dto.request.auth;
 
+import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor(force = true)
 @Builder
 @Data
-public class IntrospectRequest {
+public class TokenRequest {
+    @NotNullOrBlank(message = "REQUIRED_TOKEN")
     String token;
 }

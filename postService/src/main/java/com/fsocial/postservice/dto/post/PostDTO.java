@@ -4,6 +4,8 @@ import com.fsocial.postservice.dto.ContentDTO;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -12,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 public class PostDTO {
     String id;
     String userId;
+    LocalDateTime createdAt;
     ContentDTO content;
     Integer countLikes = 0;
     Integer countComments = 0;

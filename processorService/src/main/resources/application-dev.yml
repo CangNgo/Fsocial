@@ -2,13 +2,6 @@
 spring:
   application:
     name: processorService
-  data:
-    mongodb:
-      primary:
-        uri: mongodb://root:root@localhost:27017,localhost:27018,localhost:27019/primary_database?replicaSet=rs0&authSource=admin
-      secondary:
-        uri: mongodb://root:root@localhost:27017,localhost:27018,localhost:27019/second_database?replicaSet=rs0&authSource=admin
-      auto-index-creation: true
   jpa:
     hibernate:
       ddl-auto: update

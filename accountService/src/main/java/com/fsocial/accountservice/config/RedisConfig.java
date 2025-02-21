@@ -13,11 +13,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RedisConfig {
-//    @Value("${redis.host}")
-//    String redisHost;
-//
-//    @Value("${redis.port}")
-//    int redisPort;
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {

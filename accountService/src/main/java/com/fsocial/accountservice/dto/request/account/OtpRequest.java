@@ -1,5 +1,7 @@
 package com.fsocial.accountservice.dto.request.account;
 
+import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,7 +11,13 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 public class OtpRequest {
+    @NotNullOrBlank(message = "REQUIRED_EMAIL")
+    @Email(message = "INVALID_EMAIL")
     String email;
+
+    @NotNullOrBlank(message = "REQUIRED_OTP")
     String otp;
+
+    @NotNullOrBlank(message = "REQUIRED_TYPE_REQUEST")
     String type;
 }

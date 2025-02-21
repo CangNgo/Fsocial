@@ -1,25 +1,31 @@
 package com.fsocial.accountservice.services.impl;
 
+import com.fsocial.accountservice.dto.ApiResponse;
+import com.fsocial.accountservice.dto.DuplicationCheckResult;
 import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
-import com.fsocial.accountservice.dto.response.ProfileRegisterResponse;
+import com.fsocial.accountservice.dto.response.DuplicationResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.Role;
+import com.fsocial.accountservice.enums.RedisKeyType;
 import com.fsocial.accountservice.exception.AppException;
-import com.fsocial.accountservice.enums.StatusCode;
+import com.fsocial.accountservice.enums.ErrorCode;
+import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.mapper.AccountMapper;
 import com.fsocial.accountservice.mapper.ProfileMapper;
 import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.repository.RoleRepository;
 import com.fsocial.accountservice.repository.httpclient.ProfileClient;
 import com.fsocial.accountservice.services.AccountService;
+import com.fsocial.accountservice.services.OtpService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -35,48 +41,70 @@ public class AccountServiceImpl implements AccountService {
     ProfileMapper profileMapper;
     PasswordEncoder passwordEncoder;
     ProfileClient profileClient;
-    OtpServiceImpl otpService;
+    OtpService otpService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void persistAccount(AccountRegisterRequest request) {
         validateAccountExistence(request.getUsername(), request.getEmail());
         Account account = saveAccount(request);
-        buildAccountResponse(account, createProfile(account, request));
+        createProfile(account, request);
+        otpService.deleteOtp(request.getEmail(), RedisKeyType.RESET.getRedisKeyPrefix());
     }
 
     @Override
     public AccountResponse getUser(String id) {
         return accountRepository.findById(id)
                 .map(accountMapper::toAccountResponse)
-                .orElseThrow(() -> new AppException(StatusCode.NOT_EXIST));
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
     }
 
     @Override
-    public void resetPassword(String email, String otp, String newPassword) {
-        otpService.validateOtp(email, otp, "RESET_");
+    public void resetPassword(String email, String newPassword) {
 
-        Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new AppException(StatusCode.NOT_EXIST));
+        try {
+            Account account = accountRepository.findByEmail(email)
+                    .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
 
-        account.setPassword(passwordEncoder.encode(newPassword));
-        accountRepository.save(account);
+            account.setPassword(passwordEncoder.encode(newPassword));
+            accountRepository.save(account);
+        } catch (Exception e) {
+            log.warn("Đặt lại mật khẩu cho email không thành công: {}: {}", email, e.getMessage());
+        }
     }
 
     @Override
-    public void checkDuplication(DuplicationRequest request) {
-        if (accountRepository.existsByUsername(request.getUsername()))
-            throw new AppException(StatusCode.USERNAME_EXISTED);
+    public ApiResponse<DuplicationResponse> checkDuplication(DuplicationRequest request) {
+        boolean usernameExisted = false;
+        boolean emailExisted = false;
 
-        if (accountRepository.existsByEmail(request.getEmail()))
-            throw new AppException(StatusCode.EMAIL_EXISTED);
+        if (accountRepository.countByUsername(request.getUsername()) > 0)
+            usernameExisted = true;
+
+        if (accountRepository.countByEmail(request.getEmail()) > 0)
+            emailExisted = true;
+
+        DuplicationResponse response = DuplicationResponse.builder()
+                .username(usernameExisted ? ErrorCode.USERNAME_EXISTED.getMessage() : null)
+                .email(emailExisted ? ErrorCode.EMAIL_EXISTED.getMessage() : null)
+                .build();
+
+        boolean hasError = usernameExisted || emailExisted;
+
+        ApiResponse.ApiResponseBuilder<DuplicationResponse> builder = ApiResponse.<DuplicationResponse>builder()
+                .statusCode(hasError ? ErrorCode.DUPLICATION.getCode() : ResponseStatus.VALID.getCODE())
+                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage());
+
+        if (hasError) builder.data(response);
+
+        return builder.build();
     }
 
     private void validateAccountExistence(String username, String email) {
-        if (accountRepository.existsByUsername(username))
-            throw new AppException(StatusCode.ACCOUNT_EXISTED);
+        boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;
+        if (accountExisted) throw new AppException(ErrorCode.ACCOUNT_EXISTED);
 
-        if ( accountRepository.existsByEmail(email))
-            throw new AppException(StatusCode.EMAIL_EXISTED);
+        otpService.validEmailBeforePersist(email);
     }
 
     private Account saveAccount(AccountRegisterRequest request) {
@@ -87,24 +115,14 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.save(account);
     }
 
-    private ProfileRegisterResponse createProfile(Account account, AccountRegisterRequest request) {
+    private void createProfile(Account account, AccountRegisterRequest request) {
         var profileRequest = profileMapper.toProfileRegister(request);
         profileRequest.setUserId(account.getId());
-        return profileClient.createProfile(profileRequest);
-    }
-
-    private void buildAccountResponse(Account account, ProfileRegisterResponse profileResponse) {
-        AccountResponse.builder()
-                .id(account.getId())
-                .username(account.getUsername())
-                .firstName(profileResponse.getFirstName())
-                .lastName(profileResponse.getLastName())
-                .avatar(profileResponse.getAvatar())
-                .build();
+        profileClient.createProfile(profileRequest);
     }
 
     private Role getDefaultRole() {
         return roleRepository.findById("USER")
-                .orElseThrow(() -> new AppException(StatusCode.NOT_FOUND));
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
     }
 }

@@ -1,5 +1,8 @@
 package com.fsocial.accountservice.dto.request.account;
 
+import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
+import com.fsocial.accountservice.validation.constrain.PasswordValid;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,7 +12,12 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 public class ResetPasswordRequest {
-    String otp;
+
+    @NotNullOrBlank(message = "REQUIRED_EMAIL")
+    @Email(message = "INVALID_EMAIL")
     String email;
+
+    @NotNullOrBlank(message = "REQUIRED_PASSWORD")
+    @PasswordValid
     String newPassword;
 }

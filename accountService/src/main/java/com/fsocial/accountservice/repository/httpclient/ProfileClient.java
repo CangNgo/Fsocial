@@ -1,7 +1,6 @@
 package com.fsocial.accountservice.repository.httpclient;
 
 import com.fsocial.accountservice.dto.request.ProfileRegisterRequest;
-import com.fsocial.accountservice.dto.response.ProfileRegisterResponse;
 import com.fsocial.accountservice.dto.response.ProfileResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface ProfileClient {
 
     @PostMapping(value = "/internal/create", produces = MediaType.APPLICATION_JSON_VALUE)
-    ProfileRegisterResponse createProfile(@RequestBody ProfileRegisterRequest request);
+    void createProfile(@RequestBody ProfileRegisterRequest request);
 
     @GetMapping(value = "/internal/{userId}")
     ProfileResponse getProfileByUserId(@PathVariable("userId") String userId);

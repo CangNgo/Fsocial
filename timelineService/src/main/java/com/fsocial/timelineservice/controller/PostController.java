@@ -27,40 +27,23 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<Response> getPosts() throws AppCheckedException {
-        try {
-            List<PostResponse> posts = postService.getPosts();
+        List<PostResponse> posts = postService.getPosts();
+        return ResponseEntity.ok(Response.builder()
+                .message("Lấy bài đăng thành công")
+                .dateTime(LocalDateTime.now())
+                .data(posts)
+                .build());
 
-            return ResponseEntity.ok(Response.builder()
-                            .message("Lấy bài đăng thành công")
-                            .statusCode(StatusCode.OK.getCode())
-                            .dateTime(LocalDateTime.now())
-                            .data(posts)
-                    .build());
-        } catch (RuntimeException e) {
-            return ResponseEntity.ok(Response.builder()
-                            .message(e.getMessage())
-                            .dateTime(LocalDateTime.now())
-                            .data(null)
-                    .build());
-        }
     }
 
     @GetMapping("/find")
     public ResponseEntity<Response> findPost(@RequestParam("find_post") String findString) throws AppCheckedException {
-        try {
-            List<PostResponse> findByText = postService.findByText(findString);
+        List<PostResponse> findByText = postService.findByText(findString);
+        return ResponseEntity.ok(Response.builder()
+                .message("Lấy bài đăng thành công")
+                .dateTime(LocalDateTime.now())
+                .data(findByText)
+                .build());
 
-            return ResponseEntity.ok(Response.builder()
-                    .message("Lấy bài đăng thành công")
-                    .dateTime(LocalDateTime.now())
-                    .data(findByText)
-                    .build());
-        } catch (RuntimeException e) {
-            return ResponseEntity.ok(Response.builder()
-                            .message(e.getMessage())
-                            .dateTime(LocalDateTime.now())
-                            .data(null)
-                    .build());
-        }
     }
 }

@@ -5,10 +5,16 @@ app:
   api-prefix: /api/v1
 
 spring:
+  security:
+    user:
+      name: admin
+      password: 12345
   application:
     name: apigateway
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
       routes:
         - id: account_service
           uri: http://localhost:8081

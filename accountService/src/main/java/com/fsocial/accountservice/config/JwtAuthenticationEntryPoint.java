@@ -2,7 +2,7 @@ package com.fsocial.accountservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.enums.StatusCode;
+import com.fsocial.accountservice.enums.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,9 +16,9 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        StatusCode errorCode = StatusCode.UNAUTHENTICATED;
+        ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
 
-        response.setStatus(errorCode.getStatusCode().value());
+        response.setStatus(errorCode.getHttpStatusCode().value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         ApiResponse<?> apiResponse = ApiResponse.builder()

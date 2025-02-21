@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response {
+    @Builder.Default
     int statusCode  = 200;
     String message;
     Object data;

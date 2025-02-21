@@ -1,5 +1,6 @@
 package com.fsocial.postservice.dto.post;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class PostDTORequest {
     String userId;
+    @NotBlank(message = "Content invalid")
     String text;
+    @NotBlank(message = "Content invalid")
     String HTMLText;
     MultipartFile[] media;
     Integer countLikes = 0;

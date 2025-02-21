@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public enum ErrorCode implements CodeEnum{
-    UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
+    UNCATEGORIZED_EXCEPTION(9999, "Lỗi chưa được xử lí.", HttpStatus.INTERNAL_SERVER_ERROR),
     OK(200, "OK", HttpStatus.OK),
     REGISTER_FAILED(444, "Đăng ký không thành công.", HttpStatus.BAD_REQUEST),
     ACCOUNT_EXISTED(464, "Tài khoản đã tồn tại.", HttpStatus.BAD_REQUEST),

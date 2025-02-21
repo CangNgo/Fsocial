@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.dto.response;
+package com.fsocial.accountservice.dto.response.auth;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

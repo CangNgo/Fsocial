@@ -1,11 +1,10 @@
 package com.fsocial.accountservice.services.impl;
 
 import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.dto.DuplicationCheckResult;
 import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
-import com.fsocial.accountservice.dto.response.DuplicationResponse;
+import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.Role;
 import com.fsocial.accountservice.enums.RedisKeyType;
@@ -23,6 +22,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,13 +43,15 @@ public class AccountServiceImpl implements AccountService {
     ProfileClient profileClient;
     OtpService otpService;
 
+    static String DEFAULT_ROLE = "USER";
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void persistAccount(AccountRegisterRequest request) {
         validateAccountExistence(request.getUsername(), request.getEmail());
         Account account = saveAccount(request);
         createProfile(account, request);
-        otpService.deleteOtp(request.getEmail(), RedisKeyType.RESET.getRedisKeyPrefix());
+        otpService.deleteOtp(request.getEmail(), RedisKeyType.REGISTER.getRedisKeyPrefix());
     }
 
     @Override
@@ -61,28 +63,20 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void resetPassword(String email, String newPassword) {
+        Account account = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
 
-        try {
-            Account account = accountRepository.findByEmail(email)
-                    .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
-
-            account.setPassword(passwordEncoder.encode(newPassword));
-            accountRepository.save(account);
-        } catch (Exception e) {
-            log.warn("Đặt lại mật khẩu cho email không thành công: {}: {}", email, e.getMessage());
-        }
+        account.setPassword(passwordEncoder.encode(newPassword));
+        account.setUpdatedAt(LocalDateTime.now());
+        account.setUpdatedBy(account.getId());
+        accountRepository.save(account);
+        log.info("Đặt lại mật khẩu thành công.");
     }
 
     @Override
     public ApiResponse<DuplicationResponse> checkDuplication(DuplicationRequest request) {
-        boolean usernameExisted = false;
-        boolean emailExisted = false;
-
-        if (accountRepository.countByUsername(request.getUsername()) > 0)
-            usernameExisted = true;
-
-        if (accountRepository.countByEmail(request.getEmail()) > 0)
-            emailExisted = true;
+        boolean usernameExisted = accountRepository.countByUsername(request.getUsername()) > 0;
+        boolean emailExisted = accountRepository.countByEmail(request.getEmail()) > 0;
 
         DuplicationResponse response = DuplicationResponse.builder()
                 .username(usernameExisted ? ErrorCode.USERNAME_EXISTED.getMessage() : null)
@@ -91,13 +85,11 @@ public class AccountServiceImpl implements AccountService {
 
         boolean hasError = usernameExisted || emailExisted;
 
-        ApiResponse.ApiResponseBuilder<DuplicationResponse> builder = ApiResponse.<DuplicationResponse>builder()
+        return ApiResponse.<DuplicationResponse>builder()
                 .statusCode(hasError ? ErrorCode.DUPLICATION.getCode() : ResponseStatus.VALID.getCODE())
-                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage());
-
-        if (hasError) builder.data(response);
-
-        return builder.build();
+                .message(hasError ? ErrorCode.DUPLICATION.getMessage() : ResponseStatus.VALID.getMessage())
+                .data(hasError ? response : null)
+                .build();
     }
 
     private void validateAccountExistence(String username, String email) {
@@ -122,7 +114,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private Role getDefaultRole() {
-        return roleRepository.findById("USER")
+        return roleRepository.findById(DEFAULT_ROLE)
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
     }
 }

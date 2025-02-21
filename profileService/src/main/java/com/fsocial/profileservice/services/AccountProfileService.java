@@ -7,6 +7,6 @@ import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
 
 public interface AccountProfileService {
     ProfileResponse createAccountProfile(ProfileRegisterRequest request);
-    ProfileResponse getAccountProfile(String userId);
+    ProfileResponse getAccountProfileByUserId(String userId);
     ProfileUpdateResponse updateProfile(String profileId, ProfileUpdateRequest request);
 }

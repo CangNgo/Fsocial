@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.dto.response;
+package com.fsocial.accountservice.dto.response.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

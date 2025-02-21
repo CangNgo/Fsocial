@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.dto.response;
+package com.cangngo.apigateway.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,8 +8,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor(force = true)
 @Builder
 @Data
-public class ProfileRegisterResponse {
-    String firstName;
-    String lastName;
-    String avatar;
+public class IntrospectResponse {
+    boolean valid;
 }

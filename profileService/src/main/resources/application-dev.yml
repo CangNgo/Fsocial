@@ -48,3 +48,7 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
+
+app:
+  services:
+    account: http://localhost:8081/account

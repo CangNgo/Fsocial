@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.config;
+package com.fsocial.profileservice.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,9 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -34,7 +31,6 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
@@ -43,12 +39,7 @@ public class AppConfig {
     CustomJwtDecode customJwtDecode;
 
     @NonFinal
-    private String[] PUBLIC_API = {"/register",
-            "/send-otp",
-            "/verify-otp", "/reset-password",
-//            "/check-duplication",
-            "/login", "/logout",
-            "/introspect", "/refresh-token"};
+    private final String[] PUBLIC_API = {"/internal/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -71,7 +62,6 @@ public class AppConfig {
 
         return httpSecurity.build();
     }
-
     @Bean
     public FilterRegistrationBean<OncePerRequestFilter> loggingFilter() {
         return new FilterRegistrationBean<>(new OncePerRequestFilter() {
@@ -92,10 +82,5 @@ public class AppConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
 
         return jwtAuthenticationConverter;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
     }
 }

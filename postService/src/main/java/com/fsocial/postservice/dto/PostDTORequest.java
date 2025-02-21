@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class PostDTORequest {
     String text;
+    String HTMLText;
     MultipartFile[] media;
     Integer countLikes = 0;
 }

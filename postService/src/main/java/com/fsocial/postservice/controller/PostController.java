@@ -29,10 +29,12 @@ public class PostController {
     @PostMapping
     public ResponseEntity<Response> createPost(
             @RequestParam("text") String text,
+            @RequestParam("HTMLText") String HTMLText,
             @RequestParam(value = "media", required = false) MultipartFile[] media,
             @RequestParam("userId") String userId) {
         PostDTORequest postDTO = PostDTORequest.builder()
                 .text(text)
+                .HTMLText(HTMLText)
                 .media(media)
                 .build();
         try {

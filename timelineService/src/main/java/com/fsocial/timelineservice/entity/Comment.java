@@ -24,5 +24,5 @@ public class Comment extends AbstractEntity<String>{
     @Field("countReplyComment")
     int countReplyComment;
     @Field("reply")
-    boolean reply;
+    boolean Reply;
 }

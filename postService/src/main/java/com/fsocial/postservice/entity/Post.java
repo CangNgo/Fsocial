@@ -18,10 +18,6 @@ public class Post extends AbstractEntity<String> {
     Content content;
     @Field("count_likes")
     Integer countLikes = 0;
-
-    public Post(String userId, Content content) {
-        this.userId = userId;
-        this.content = content;
-        this.countLikes = 0;
-    }
+    @Field("count_comments")
+    Integer countComments = 0;
 }

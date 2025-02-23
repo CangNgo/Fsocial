@@ -6,7 +6,7 @@ import com.fsocial.profileservice.dto.response.ProfileResponse;
 import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
 import com.fsocial.profileservice.entity.AccountProfile;
 import com.fsocial.profileservice.exception.AppException;
-import com.fsocial.profileservice.exception.StatusCode;
+import com.fsocial.profileservice.enums.ErrorCode;
 import com.fsocial.profileservice.mapper.AccountProfileMapper;
 import com.fsocial.profileservice.repository.AccountProfileRepository;
 import com.fsocial.profileservice.services.AccountProfileService;
@@ -30,20 +30,19 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     }
 
     @Override
-    public ProfileResponse getAccountProfile(String userId) {
-
+    public ProfileResponse getAccountProfileByUserId(String userId) {
         return accountProfileRepository.findByUserId(userId).orElseThrow(
-                () -> new AppException(StatusCode.UNCATEGORIZED_EXCEPTION)
+                () -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION)
         );
     }
 
     @Override
     public ProfileUpdateResponse updateProfile(String profileId, ProfileUpdateRequest request) {
         if (!accountProfileRepository.existsById(profileId))
-            throw new AppException(StatusCode.NOT_EXISTED);
+            throw new AppException(ErrorCode.PROFILE_NOT_EXISTED);
 
         AccountProfile accountProfile = accountProfileRepository.findById(profileId).orElseThrow(
-                () -> new AppException(StatusCode.UNCATEGORIZED_EXCEPTION)
+                () -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION)
         );
 
         accountProfileMapper.toAccountProfile(request, accountProfile);

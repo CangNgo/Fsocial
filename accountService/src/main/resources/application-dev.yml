@@ -85,4 +85,4 @@ jwt:
 otp:
   expiration:
     send: 5 # Đơn vị là phút
-    verify: 1 # Đơn vị là giây
+    verify: 10 # Đơn vị là giây

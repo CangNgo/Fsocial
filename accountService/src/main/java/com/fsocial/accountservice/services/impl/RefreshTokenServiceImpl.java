@@ -1,6 +1,6 @@
 package com.fsocial.accountservice.services.impl;
 
-import com.fsocial.accountservice.dto.response.AuthenticationResponse;
+import com.fsocial.accountservice.dto.response.auth.AuthenticationResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.RefreshToken;
 import com.fsocial.accountservice.enums.ErrorCode;
@@ -79,15 +79,15 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     @Override
     public AuthenticationResponse refreshAccessToken(String refreshToken, String userAgent, String ipAddress) {
         RefreshToken token = validRefreshToken(refreshToken, userAgent, ipAddress);
-        long remainingHours = Duration.between(Instant.now(), token.getExpiryDate()).toHours();
-        if (remainingHours < 24) {
+
+        if (Duration.between(Instant.now(), token.getExpiryDate()).toHours() < 24) {
             log.info("Gia hạn RefreshToken thành công.");
             token.setExpiryDate(Instant.now().plus(expirationTime, ChronoUnit.DAYS));
-            token = refreshTokenRepository.save(token);
+            refreshTokenRepository.save(token);
         }
-        String accessToken = jwtService.generateToken(token.getUsername());
+
         return AuthenticationResponse.builder()
-                .accessToken(accessToken)
+                .accessToken(jwtService.generateToken(token.getUsername()))
                 .refreshToken(token.getToken())
                 .build();
     }

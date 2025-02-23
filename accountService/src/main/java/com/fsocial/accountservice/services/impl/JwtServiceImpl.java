@@ -79,7 +79,6 @@ public class JwtServiceImpl implements JwtService {
 
     private JWTClaimsSet buildClaimsSet(Account account) {
         String issuerValue = "FSOCIAL - FCODER";
-        String roleName = "ROLE_" + account.getRole().getName();
 
         JWTClaimsSet.Builder claimsBuilder = new JWTClaimsSet.Builder()
                 .subject(account.getUsername())
@@ -89,7 +88,7 @@ public class JwtServiceImpl implements JwtService {
                         new Date(Instant.now().plus(durationTime, ChronoUnit.SECONDS).toEpochMilli())
                 )
                 .jwtID(UUID.randomUUID().toString())
-                .claim("scope", account.getRole() != null ? roleName : "");
+                .claim("scope", account.getRole() != null ? account.getRole().getName() : "");
 
         return claimsBuilder.build();
     }

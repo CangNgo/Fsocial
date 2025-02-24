@@ -7,6 +7,7 @@ import com.fsocial.accountservice.services.PermissionService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class PermissionController {
 
     PermissionService permissionService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ApiResponse<PermissionResponse> createPermission(@RequestBody PermissionRequest request) {
         return ApiResponse.<PermissionResponse>builder()
@@ -29,6 +31,7 @@ public class PermissionController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ApiResponse<List<PermissionResponse>> getAllPermission() {
         return ApiResponse.<List<PermissionResponse>>builder()
@@ -39,6 +42,7 @@ public class PermissionController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{permissionId}")
     public ApiResponse<Void> deletePermission(@PathVariable String permissionId) {
         permissionService.deletePermission(permissionId);

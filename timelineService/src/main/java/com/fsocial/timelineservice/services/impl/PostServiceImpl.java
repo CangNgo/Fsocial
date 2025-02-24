@@ -7,8 +7,7 @@ import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Post;
 import com.fsocial.timelineservice.exception.AppCheckedException;
-import com.fsocial.timelineservice.exception.AppUnCheckedException;
-import com.fsocial.timelineservice.exception.StatusCode;
+import com.fsocial.timelineservice.enums.ErrorCode;
 import com.fsocial.timelineservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +57,7 @@ public class PostServiceImpl implements PostService {
         try {
             return profileClient.getProfile(userId);
         } catch (Exception e) {
-            throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, StatusCode.USER_NOT_FOUND);
+            throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, ErrorCode.USER_NOT_FOUND);
         }
     }
 

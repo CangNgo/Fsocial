@@ -2,8 +2,7 @@ package com.fsocial.timelineservice.controller;
 
 import com.fsocial.timelineservice.dto.Response;
 import com.fsocial.timelineservice.dto.comment.CommentResponse;
-import com.fsocial.timelineservice.entity.Comment;
-import com.fsocial.timelineservice.exception.StatusCode;
+import com.fsocial.timelineservice.enums.ErrorCode;
 import com.fsocial.timelineservice.services.CommentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class CommentController {
             List<CommentResponse> commentByPostId = commentService.getComments(postId);
             new Response();
             return ResponseEntity.ok(Response.builder()
-                    .statusCode(StatusCode.GET_COMMENT_SUCCESS.getCode())
+                    .statusCode(ErrorCode.GET_COMMENT_SUCCESS.getCode())
                     .data(commentByPostId)
                     .dateTime(LocalDateTime.now())
                     .message("Comment get by postId successfully")

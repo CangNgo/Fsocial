@@ -5,7 +5,7 @@ import com.fsocial.timelineservice.Repository.httpClient.ProfileClient;
 import com.fsocial.timelineservice.dto.comment.CommentResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.exception.AppCheckedException;
-import com.fsocial.timelineservice.exception.StatusCode;
+import com.fsocial.timelineservice.enums.ErrorCode;
 import com.fsocial.timelineservice.services.CommentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
         try {
             return profileClient.getProfile(userId);
         } catch (Exception e) {
-            throw new AppCheckedException("Không tìm thấy thông tin người dùng", StatusCode.PROFILE_NOT_FOUND);
+            throw new AppCheckedException("Không tìm thấy thông tin người dùng", ErrorCode.PROFILE_NOT_FOUND);
         }
     }
 }

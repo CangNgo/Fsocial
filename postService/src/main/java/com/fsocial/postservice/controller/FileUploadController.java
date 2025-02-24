@@ -1,8 +1,7 @@
 package com.fsocial.postservice.controller;
 
-import com.fsocial.postservice.dto.Response;
+import com.fsocial.postservice.dto.ApiResponse;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.UploadImage;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,19 +26,19 @@ public class FileUploadController {
     UploadImage uploadImage;
 
     @PostMapping
-    public ResponseEntity<Response> uploadFile(@RequestParam("fileUpload") MultipartFile[] file) {
+    public ResponseEntity<ApiResponse> uploadFile(@RequestParam("fileUpload") MultipartFile[] file) {
         try {
             String[] urlfile = uploadImage.uploadImage(file);
 
             log.info("Upload file successfull: {}", (Object) urlfile);
-            return ResponseEntity.ok().body(Response.builder()
+            return ResponseEntity.ok().body(ApiResponse.builder()
                             .data(urlfile)
                             .message("Upload file successful")
                             .dateTime(LocalDateTime.now())
                     .build());
         } catch (IOException| AppCheckedException e) {
             log.error("Lỗi khi upload file: {}", e.getMessage());
-            return ResponseEntity.ok().body(Response.builder()
+            return ResponseEntity.ok().body(ApiResponse.builder()
                     .data(null)
                     .message("Upload file fail")
                     .dateTime(LocalDateTime.now())

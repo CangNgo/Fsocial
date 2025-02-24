@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -35,15 +36,10 @@ import java.util.List;
 public class GlobalConfig implements GlobalFilter, Ordered {
     AccountService accountService;
     ObjectMapper objectMapper;
+    AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/register",
-            "/send-otp",
-            "/verify-otp", "/reset-password",
-//            "/check-duplication",
-            "/login", "/logout",
-            "/introspect", "/refresh-token"
-    };
+    private String[] PUBLIC_ENDPOINT = {"/account/**"};
 
     @NonFinal
     @Value("${app.api-prefix}")
@@ -74,8 +70,8 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     }
 
     private boolean isPublicEndpoint(ServerHttpRequest request) {
-        String valueEndPoint = apiPrefix + "/account";
-        return Arrays.stream(PUBLIC_ENDPOINT).anyMatch(endPoint -> request.getURI().getPath().matches(valueEndPoint + endPoint));
+        String path = request.getURI().getPath().replaceFirst(apiPrefix, "");
+        return Arrays.stream(PUBLIC_ENDPOINT).anyMatch(endPoint -> antPathMatcher.match(endPoint, path));
     }
 
     Mono<Void> unauthenticated(ServerHttpResponse response) {

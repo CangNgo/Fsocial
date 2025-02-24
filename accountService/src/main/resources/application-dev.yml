@@ -45,6 +45,12 @@ spring:
         max-idle: 5      # Số kết nối tối đa có thể rỗng
         min-idle: 1      # Số kết nối tối thiểu có thể rỗng
     timeout: 2000ms     # Thời gian chờ kết nối Redis
+  kafka:
+    bootstrap-servers: localhost:9094
+    producer:
+      group-id: notification-group
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 server:
   servlet:

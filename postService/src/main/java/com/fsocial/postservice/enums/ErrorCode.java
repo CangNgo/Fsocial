@@ -1,11 +1,11 @@
-package com.fsocial.postservice.exception;
+package com.fsocial.postservice.enums;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
 @Getter
-public enum StatusCode {
+public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     OK(200, "OK", HttpStatus.OK),
     HTTPMETHOD_NOT_SUPPORTED(201, "HTTP method not supported", HttpStatus.NOT_IMPLEMENTED),
@@ -22,12 +22,13 @@ public enum StatusCode {
     GET_COMMENT_SUCCESS(207, "Get comment success", HttpStatus.OK),
     USER_NOT_FOUND(208, "Client not found", HttpStatus.NOT_FOUND),
     POST_NOT_FOUND(209  , "Post not found", HttpStatus.NOT_FOUND),
+    UNAUTHENTICATED(468, "Tài khoản chưa được xác thực.", HttpStatus.BAD_REQUEST),
     ;
     private final int code;
     private final String message;
     private final HttpStatusCode statusCode;
 
-    StatusCode(int code, String message, HttpStatusCode statusCode) {
+    ErrorCode(int code, String message, HttpStatusCode statusCode) {
         this.code = code;
         this.message = message;
         this.statusCode = statusCode;

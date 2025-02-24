@@ -1,6 +1,6 @@
 package com.fsocial.postservice.controller;
 
-import com.fsocial.postservice.dto.Response;
+import com.fsocial.postservice.dto.ApiResponse;
 import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
@@ -22,18 +22,18 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<Response> createPost(PostDTORequest request) {
+    public ResponseEntity<ApiResponse> createPost(PostDTORequest request) {
 
         try {
             PostDTO post = postService.createPost(request);
 
-            return ResponseEntity.ok().body(Response.builder()
+            return ResponseEntity.ok().body(ApiResponse.builder()
                     .data(post)
                     .message("Thêm mới bài viết thành công")
                     .dateTime(LocalDateTime.now())
                     .build());
         } catch (RuntimeException | AppCheckedException e) {
-            return ResponseEntity.ok().body(Response.builder()
+            return ResponseEntity.ok().body(ApiResponse.builder()
                     .data(null)
                     .message(e.getMessage())
                     .dateTime(LocalDateTime.now())
@@ -42,7 +42,7 @@ public class PostController {
     }
 
     @PutMapping
-    public ResponseEntity<Response> updatePost(
+    public ResponseEntity<ApiResponse> updatePost(
             @RequestParam("text") String text,
             @RequestParam("HTMLText") String HTMLText,
             @RequestParam("postId") String postId) {
@@ -53,14 +53,14 @@ public class PostController {
         try {
             PostDTO post = postService.updatePost(postDTO, postId);
 
-            return ResponseEntity.ok().body(Response.builder()
+            return ResponseEntity.ok().body(ApiResponse.builder()
                     .data(post)
                     .message("Cập nhật bài viết thành công")
                     .statusCode(200)
                     .dateTime(LocalDateTime.now())
                     .build());
         } catch (RuntimeException | AppCheckedException e) {
-            return ResponseEntity.ok().body(Response.builder()
+            return ResponseEntity.ok().body(ApiResponse.builder()
                     .data(null)
                     .message(e.getMessage())
                     .dateTime(LocalDateTime.now())
@@ -69,10 +69,10 @@ public class PostController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Response> deletePost(
+    public ResponseEntity<ApiResponse> deletePost(
             @RequestParam("postId") String postId) {
         postService.deletePost(postId);
-        return ResponseEntity.ok().body(Response.builder()
+        return ResponseEntity.ok().body(ApiResponse.builder()
                 .message("Xóa bài viết thành công")
                 .dateTime(LocalDateTime.now())
                 .statusCode(200)
@@ -82,10 +82,10 @@ public class PostController {
     //Like Post
 
     @GetMapping("/like")
-    public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO){
+    public ResponseEntity<ApiResponse> likePost(@RequestBody LikePostDTO likeDTO){
         try {
             boolean like = postService.toggleLike(likeDTO);
-            return ResponseEntity.ok().body(Response.builder()
+            return ResponseEntity.ok().body(ApiResponse.builder()
                     .data(like)
                     .message("Cập nhật bài viết thành công")
                     .statusCode(200)

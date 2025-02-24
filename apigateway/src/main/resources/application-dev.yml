@@ -52,3 +52,9 @@ spring:
             - Path=${app.api-prefix}/timeline/**
           filters:
             - StripPrefix=2
+        - id: notification_service
+          uri: http://localhost:8087
+          predicates:
+            - Path=${app.api-prefix}/notification/**
+          filters:
+            - StripPrefix=2

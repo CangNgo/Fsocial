@@ -3,19 +3,17 @@ package com.fsocial.postservice.services.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.exception.StatusCode;
+import com.fsocial.postservice.enums.ErrorCode;
 import com.fsocial.postservice.services.UploadImage;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -58,7 +56,7 @@ public class UploadImageImpl implements UploadImage {
         try {
             Files.deleteIfExists(file.toPath());
         } catch (IOException e) {
-            throw new AppCheckedException("File deleted not found", StatusCode.FILE_NOT_FOUND);
+            throw new AppCheckedException("File deleted not found", ErrorCode.FILE_NOT_FOUND);
         }
     }
 

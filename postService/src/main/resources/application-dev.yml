@@ -1,6 +1,6 @@
 app:
   services:
-    profile: http://localhost:8085/profil
+    profile: http://localhost:8085/profile
 openapi:
   service:
     api-docs: api-service

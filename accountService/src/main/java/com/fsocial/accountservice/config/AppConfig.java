@@ -43,12 +43,7 @@ public class AppConfig {
     CustomJwtDecode customJwtDecode;
 
     @NonFinal
-    private String[] PUBLIC_API = {"/register",
-            "/send-otp",
-            "/verify-otp", "/reset-password",
-//            "/check-duplication",
-            "/login", "/logout",
-            "/introspect", "/refresh-token"};
+    private String[] PUBLIC_API = {"/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -28,24 +29,27 @@ public class AccountProfileController {
         return accountProfileService.createAccountProfile(request);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{userId}")
     public ApiResponse<ProfileResponse> getAccountProfile(@PathVariable String userId) {
-        return ApiResponse.<ProfileResponse>builder()
-                .statusCode(ResponseStatus.SUCCESS.getCODE())
-                .message(ResponseStatus.SUCCESS.getMessage())
-                .dateTime(LocalDateTime.now())
-                .data(accountProfileService.getAccountProfileByUserId(userId))
-                .build();
+        ProfileResponse response = accountProfileService.getAccountProfileByUserId(userId);
+        return buildResponse(response);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{profileId}")
     public ApiResponse<ProfileUpdateResponse> updateProfile(@PathVariable String profileId,
                                                             @RequestBody @Valid ProfileUpdateRequest request) {
-        return ApiResponse.<ProfileUpdateResponse>builder()
-                .message("Update profile success.")
-                .data(
-                        accountProfileService.updateProfile(profileId, request)
-                )
+        ProfileUpdateResponse response = accountProfileService.updateProfile(profileId, request);
+        return buildResponse(response);
+    }
+
+    private <T> ApiResponse<T> buildResponse(T data) {
+        return ApiResponse.<T>builder()
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
+                .data(data)
                 .build();
     }
 }

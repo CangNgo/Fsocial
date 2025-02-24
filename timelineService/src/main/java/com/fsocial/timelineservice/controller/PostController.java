@@ -1,13 +1,15 @@
 package com.fsocial.timelineservice.controller;
 
+import com.fsocial.timelineservice.dto.ApiResponse;
 import com.fsocial.timelineservice.dto.Response;
 import com.fsocial.timelineservice.dto.post.PostResponse;
+import com.fsocial.timelineservice.enums.ResponseStatus;
 import com.fsocial.timelineservice.exception.AppCheckedException;
-import com.fsocial.timelineservice.exception.StatusCode;
 import com.fsocial.timelineservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,29 +23,32 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/post")
+@Slf4j
 public class PostController {
 
     PostService postService;
 
     @GetMapping
-    public ResponseEntity<Response> getPosts() throws AppCheckedException {
+    public ApiResponse<List<PostResponse>> getPosts() throws AppCheckedException {
         List<PostResponse> posts = postService.getPosts();
-        return ResponseEntity.ok(Response.builder()
-                .message("Lấy bài đăng thành công")
+        log.info("Lấy bài đăng thành công");
+        return ApiResponse.<List<PostResponse>>builder()
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(posts)
-                .build());
+                .build();
 
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Response> findPost(@RequestParam("find_post") String findString) throws AppCheckedException {
+    public ApiResponse<List<PostResponse>> findPost(@RequestParam("find_post") String findString) throws AppCheckedException {
         List<PostResponse> findByText = postService.findByText(findString);
-        return ResponseEntity.ok(Response.builder()
-                .message("Lấy bài đăng thành công")
+        return ApiResponse.<List<PostResponse>>builder()
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(findByText)
-                .build());
-
+                .build();
     }
 }

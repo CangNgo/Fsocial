@@ -1,6 +1,7 @@
 package com.fsocial.timelineservice.exception;
 
 import com.fsocial.timelineservice.dto.Response;
+import com.fsocial.timelineservice.enums.ErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +18,7 @@ public class GlobalExceptionHandler {
     ResponseEntity<Response> handlingRuntimeException(RuntimeException exception) {
 
         return ResponseEntity.badRequest().body(Response.builder()
-                .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
+                .statusCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
                 .message(exception.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(null)
@@ -35,8 +36,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NoResourceFoundException.class)
     ResponseEntity<Response> handlingNotFoundException(NoResourceFoundException exception) {
         return ResponseEntity.badRequest().body(Response.builder()
-                .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
-                .message(StatusCode.UNCATEGORIZED_EXCEPTION.getMessage())
+                .statusCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
+                .message(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage())
                 .build());
     }
 

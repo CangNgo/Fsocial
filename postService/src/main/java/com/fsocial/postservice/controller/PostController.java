@@ -4,6 +4,7 @@ import com.fsocial.postservice.dto.ApiResponse;
 import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
+import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.services.PostService;
 import lombok.AccessLevel;
@@ -22,22 +23,23 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse> createPost(PostDTORequest request) {
+    public ApiResponse<PostDTO> createPost(@RequestBody PostDTORequest request) {
 
         try {
             PostDTO post = postService.createPost(request);
 
-            return ResponseEntity.ok().body(ApiResponse.builder()
-                    .data(post)
-                    .message("Thêm mới bài viết thành công")
+            return ApiResponse.<PostDTO>builder()
+                    .statusCode(ResponseStatus.SUCCESS.getCODE())
+                    .message(ResponseStatus.SUCCESS.getMessage())
                     .dateTime(LocalDateTime.now())
-                    .build());
+                    .data(post)
+                    .build();
         } catch (RuntimeException | AppCheckedException e) {
-            return ResponseEntity.ok().body(ApiResponse.builder()
-                    .data(null)
+            return ApiResponse.<PostDTO>builder()
+                    .statusCode(ResponseStatus.ERROR.getCODE())
                     .message(e.getMessage())
                     .dateTime(LocalDateTime.now())
-                    .build());
+                    .build();
         }
     }
 

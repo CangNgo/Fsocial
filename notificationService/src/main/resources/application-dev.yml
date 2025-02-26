@@ -1,7 +1,6 @@
 app:
   services:
     profile: http://localhost:8085/profile
-    account: http://localhost:8081/account
 openapi:
   service:
     api-docs: api-service
@@ -23,6 +22,16 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
 
 server:
   servlet:

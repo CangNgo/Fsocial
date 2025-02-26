@@ -1,7 +1,8 @@
 package com.fsocial.postservice.services.impl;
 
-import com.fsocial.postservice.Repository.LikePostRepository;
-import com.fsocial.postservice.Repository.PostRepository;
+import com.fsocial.postservice.enums.MessageNotice;
+import com.fsocial.postservice.repository.LikePostRepository;
+import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.dto.ContentDTO;
 import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
@@ -13,10 +14,12 @@ import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.enums.ErrorCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
+import com.fsocial.postservice.services.KafkaService;
 import com.fsocial.postservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,14 +32,17 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class PostServiceImpl implements PostService {
     PostRepository postRepository;
     LikePostRepository likeRepository;
     UploadImageImpl uploadImage;
     PostMapper postMapper;
     ContentMapper contentMapper;
+    KafkaService kafkaService;
 
     @Override
+    @Transactional
     public PostDTO createPost(PostDTORequest postRequest) throws AppCheckedException {
         try {
             //upload ảnh
@@ -55,6 +61,7 @@ public class PostServiceImpl implements PostService {
             }
             ;
             Post post = postMapper.toPost(postRequest);
+
             //thêm userId
             post.setUserId(postRequest.getUserId());
             //thêm content
@@ -114,6 +121,8 @@ public class PostServiceImpl implements PostService {
                     .build());
             postById.setCountLikes(postById.getCountLikes() + 1);
             postRepository.save(postById);
+
+            kafkaService.sendNotification(postById.getUserId(), like.getUserId(), MessageNotice.NOTIFICATION_LIKE);
             return true;
         }
         //check trùng
@@ -128,6 +137,8 @@ public class PostServiceImpl implements PostService {
             likeRepository.addUserIdToPost(like.getPostId(), like.getUserId());
             postById.setCountLikes(postById.getCountLikes() + 1);
             postRepository.save(postById);
+
+            kafkaService.sendNotification(postById.getUserId(), like.getUserId(), MessageNotice.NOTIFICATION_LIKE);
             return true;
         }
     }

@@ -1,16 +1,17 @@
 package com.fsocial.postservice.enums;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum ResponseStatus {
-    SUCCESS(200,"Thao tác thành công."),
-    ERROR(404, "Thao tác thất bại.")
+    SUCCESS("Thao tác thành công."),
+    VALID("Thông tin hợp lệ."),
+    INVALID("Thông tin không hợp lệ.")
     ;
 
-    private final int CODE;
+    private final int CODE = 200;
     private final String message;
+
 }

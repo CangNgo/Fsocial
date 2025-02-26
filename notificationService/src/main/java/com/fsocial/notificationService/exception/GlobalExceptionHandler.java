@@ -58,20 +58,4 @@ public class GlobalExceptionHandler {
                 .message(exception.getMethod()+ " " + ErrorCode.HTTPMETHOD_NOT_SUPPORTED.getMessage())
                 .build());
     }
-
-    @ExceptionHandler(value = AppException.class)
-    ResponseEntity<ApiResponse> handleAppException(AppException exception) {
-        ErrorCode code = exception.getErrorCode();
-        if (code == null) throw new IllegalArgumentException("Đối tượng không được rỗng.");
-        return buildResponse(code);
-    }
-
-    private ResponseEntity<ApiResponse> buildResponse(ErrorCode errorCode) {
-        return ResponseEntity.status(errorCode.getStatusCode())
-                .body(ApiResponse.builder()
-                        .statusCode(errorCode.getCode())
-                        .message(errorCode.getMessage())
-                        .dateTime(LocalDateTime.now())
-                        .build());
-    }
 }

@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface PostRepository extends MongoRepository<Post, String> {
     List<PostResponse> findByContentTextContaining(String content);
+    List<PostResponse> findByContentTextContainingIgnoreCase(String content);
 }

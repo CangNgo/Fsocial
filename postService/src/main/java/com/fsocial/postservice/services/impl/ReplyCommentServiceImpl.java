@@ -7,6 +7,7 @@ import com.fsocial.postservice.entity.ReplyComment;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.mapper.ReplyCommentMapper;
 import com.fsocial.postservice.services.ReplyCommentService;
+import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,7 +26,7 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
 
     ReplyCommentMapper replyCommentMapper;
 
-    UploadImageImpl uploadImage;
+    UploadMedia uploadMedia;
 
     @Override
     public ReplyComment addReplyComment(ReplyCommentRequest request) throws AppCheckedException, IOException {
@@ -39,7 +40,7 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
                     .toArray(MultipartFile[]::new);
 
             if (validMedia.length > 0) {
-                uripostImage = uploadImage.uploadImage(validMedia);
+                uripostImage = uploadMedia.uploadMedia(validMedia);
             }
         };
 

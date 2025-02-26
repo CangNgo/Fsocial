@@ -2,8 +2,7 @@ package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.exception.StatusCode;
-import com.fsocial.postservice.services.UploadImage;
+import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,12 +23,12 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class FileUploadController {
-    UploadImage uploadImage;
+    UploadMedia uploadImage;
 
     @PostMapping
     public ResponseEntity<Response> uploadFile(@RequestParam("fileUpload") MultipartFile[] file) {
         try {
-            String[] urlfile = uploadImage.uploadImage(file);
+            String[] urlfile = uploadImage.uploadMedia(file);
 
             log.info("Upload file successfull: {}", (Object) urlfile);
             return ResponseEntity.ok().body(Response.builder()

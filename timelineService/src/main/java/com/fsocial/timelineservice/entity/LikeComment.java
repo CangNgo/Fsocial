@@ -1,4 +1,4 @@
-package com.fsocial.postservice.entity;
+package com.fsocial.timelineservice.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "likes")
 @SuperBuilder
 public class LikeComment {
+    String postId;
     String commentId;
     String userId;
 }

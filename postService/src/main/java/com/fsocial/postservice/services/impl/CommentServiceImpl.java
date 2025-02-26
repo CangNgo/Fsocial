@@ -6,6 +6,7 @@ import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.services.CommentService;
+import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +28,7 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
 
-    UploadImageImpl uploadImage;
+    UploadMedia uploadMedia;
 
     @Override
     public Comment addComment(CommentDTORequest request) throws AppCheckedException, IOException {
@@ -42,7 +43,7 @@ public class CommentServiceImpl implements CommentService {
                     .toArray(MultipartFile[]::new);
 
             if (validMedia.length > 0) {
-                uripostImage = uploadImage.uploadImage(validMedia);
+                uripostImage = uploadMedia.uploadMedia(validMedia);
             }
         };
 

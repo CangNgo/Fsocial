@@ -25,6 +25,8 @@ public enum StatusCode {
     ENPOINTMENT_NOT_FOUND(210, "Enpointment Not Found"),
     PARAMATER_NOT_FOUND(220, "Paramater Not Found"),
     METHOD_NOT_INSTALLED(230, "Method Not installed"),
+    INTERNAL_SERVER_ERROR(300, "Internal Server Error"),
+    UNSUPPORTED_MEDIA_TYPE(304, "Unsupported Media Type"),
     ;
     private final int code;
     private final String message;

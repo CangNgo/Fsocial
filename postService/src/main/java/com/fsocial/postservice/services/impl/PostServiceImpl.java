@@ -14,6 +14,7 @@ import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.services.PostService;
+import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -32,7 +33,7 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     PostRepository postRepository;
     LikePostRepository likeRepository;
-    UploadImageImpl uploadImage;
+    UploadMedia uploadMedia;
     PostMapper postMapper;
     ContentMapper contentMapper;
 
@@ -50,7 +51,7 @@ public class PostServiceImpl implements PostService {
                         .toArray(MultipartFile[]::new);
 
                 if (validMedia.length > 0) {
-                    uripostImage = uploadImage.uploadImage(validMedia);
+                    uripostImage = uploadMedia.uploadMedia(validMedia);
                 }
             }
             ;

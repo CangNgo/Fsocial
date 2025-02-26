@@ -1,9 +1,11 @@
-package com.fsocial.postservice.entity;
+package com.fsocial.timelineservice.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = "likes")
 @SuperBuilder
-public class LikeComment {
-    String commentId;
-    String userId;
+public class Like extends AbstractEntity<String>{
+    String postId;
+    List<String> userId;
 }

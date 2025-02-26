@@ -23,7 +23,7 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<Response> createPost(@RequestBody @Valid PostDTORequest request) throws AppCheckedException {
+    public ResponseEntity<Response> createPost(@ModelAttribute PostDTORequest request) throws AppCheckedException {
             PostDTO post = postService.createPost(request);
 
             return ResponseEntity.ok().body(Response.builder()
@@ -65,8 +65,7 @@ public class PostController {
     //Like Post
 
     @GetMapping("/like")
-    public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO){
-        try {
+    public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO) throws AppCheckedException {
             boolean like = postService.toggleLike(likeDTO);
             return ResponseEntity.ok().body(Response.builder()
                     .data(like)
@@ -74,10 +73,6 @@ public class PostController {
                     .statusCode(200)
                     .dateTime(LocalDateTime.now())
                     .build());
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e);
-        } catch (AppCheckedException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 }

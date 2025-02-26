@@ -1,19 +1,17 @@
 package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
-import com.fsocial.postservice.dto.replyComment.ReplyCommentDTO;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentRequest;
 import com.fsocial.postservice.entity.ReplyComment;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.mapper.ReplyCommentMapper;
 import com.fsocial.postservice.services.impl.ReplyCommentServiceImpl;
-import com.fsocial.postservice.services.impl.UploadImageImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

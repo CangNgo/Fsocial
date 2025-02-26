@@ -1,6 +1,7 @@
 package com.fsocial.timelineservice.controller;
 
 import com.fsocial.timelineservice.dto.Response;
+import com.fsocial.timelineservice.dto.post.PostByUserIdResponse;
 import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.exception.StatusCode;
@@ -24,17 +25,35 @@ import java.util.List;
 public class PostController {
 
     PostService postService;
-
     @GetMapping
-    public ResponseEntity<Response> getPosts() throws AppCheckedException {
-        List<PostResponse> posts = postService.getPosts();
-        return ResponseEntity.ok(Response.builder()
-                .message("Lấy bài đăng thành công")
-                .dateTime(LocalDateTime.now())
-                .data(posts)
-                .build());
+    public ResponseEntity<Response> getPosts(@RequestParam(value = "userId", required = false) String userId ) throws AppCheckedException {
+        if(userId == null) {
+            List<PostResponse> posts = postService.getPosts();
+            return ResponseEntity.ok(Response.builder()
+                    .message("Lấy bài đăng thành công")
+                    .dateTime(LocalDateTime.now())
+                    .data(posts)
+                    .build());
+        }else {
+            List<PostByUserIdResponse> posts = postService.getPostsByUserId(userId);
+            return ResponseEntity.ok(Response.builder()
+                    .message("Lấy bài đăng thành công")
+                    .dateTime(LocalDateTime.now())
+                    .data(posts)
+                    .build());
+        }
 
     }
+//
+//    @GetMapping
+//    public ResponseEntity<Response> getPostsByUser(@RequestParam("userId") String userId) throws AppCheckedException {
+//        List<PostByUserIdResponse> posts = postService.getPostsByUserId(userId);
+//        return ResponseEntity.ok(Response.builder()
+//                .message("Lấy bài đăng thành công")
+//                .dateTime(LocalDateTime.now())
+//                .data(posts)
+//                .build());
+//    }
 
     @GetMapping("/find")
     public ResponseEntity<Response> findPost(@RequestParam("find_post") String findString) throws AppCheckedException {

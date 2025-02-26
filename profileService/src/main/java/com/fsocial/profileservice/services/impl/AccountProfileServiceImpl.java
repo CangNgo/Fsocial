@@ -14,6 +14,7 @@ import com.fsocial.profileservice.services.AccountProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +32,8 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     }
 
     @Override
-    public ProfileResponse getAccountProfileByUserId(String userId) {
+    public ProfileResponse getAccountProfileByUserId() {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         return accountProfileRepository.findByUserId(userId).orElseThrow(
                 () -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION)
         );

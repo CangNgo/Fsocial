@@ -15,7 +15,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     PasswordEncoder passwordEncoder;
     JwtService jwtService;
     RefreshTokenService refreshTokenService;
-    KafkaTemplate<String, String> kafkaTemplate;
 
     @Override
     public AuthenticationResponse login(AccountLoginRequest request, String userAgent, HttpServletRequest httpRequest) {
@@ -45,9 +43,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String refreshToken = refreshTokenService.createRefreshToken(request.getUsername(), userAgent, ipAddress).getToken();
 
         log.info("Người dùng {} đăng nhập thành công từ IP: {}", request.getUsername(), ipAddress);
-
-        // Test Kafka
-//        kafkaTemplate.send("test", "Hello Kafka" + account.getUsername());
 
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)

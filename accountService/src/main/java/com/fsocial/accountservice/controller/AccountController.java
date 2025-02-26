@@ -7,7 +7,6 @@ import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.services.AccountService;
 import com.fsocial.accountservice.services.OtpService;
-import com.fsocial.event.NotificationRequest;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -72,10 +70,5 @@ public class AccountController {
                 .dateTime(LocalDateTime.now())
                 .data(data)
                 .build();
-    }
-
-    @KafkaListener(topics = "notice-comment")
-    public void listenNotificationComment(NotificationRequest response) {
-        log.info("Response Data: " + response);
     }
 }

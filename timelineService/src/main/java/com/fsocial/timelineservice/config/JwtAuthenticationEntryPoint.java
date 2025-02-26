@@ -1,8 +1,8 @@
 package com.fsocial.timelineservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fsocial.postservice.dto.ApiResponse;
-import com.fsocial.postservice.enums.ErrorCode;
+import com.fsocial.timelineservice.dto.ApiResponse;
+import com.fsocial.timelineservice.enums.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -31,9 +31,9 @@ public class AccountProfileController {
     }
 
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/{userId}")
-    public ApiResponse<ProfileResponse> getAccountProfile(@PathVariable String userId) {
-        ProfileResponse response = accountProfileService.getAccountProfileByUserId(userId);
+    @GetMapping
+    public ApiResponse<ProfileResponse> getAccountProfile() {
+        ProfileResponse response = accountProfileService.getAccountProfileByUserId();
         return buildResponse(response);
     }
 

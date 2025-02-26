@@ -33,7 +33,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostResponse> getPosts() {
         return postRepository.findAll().stream()
-                .map(this::mapToPostResponse)
+                .map(post -> {
+                    try {
+                        return this.mapToPostResponse(post);
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

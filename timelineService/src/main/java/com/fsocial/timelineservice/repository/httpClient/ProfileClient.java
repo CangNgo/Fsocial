@@ -1,6 +1,8 @@
 package com.fsocial.timelineservice.repository.httpClient;
 
+import com.fsocial.timelineservice.dto.ApiResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
+import com.fsocial.timelineservice.dto.profile.ProfileServiceResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

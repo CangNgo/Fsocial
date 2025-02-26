@@ -22,13 +22,6 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "*"
-#  kafka:
-#    bootstrap-servers: localhost:9094
-#    consumer:
-#      group-id: notification-group
-#      auto-offset-reset: earliest
-#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
   jpa:
     hibernate:

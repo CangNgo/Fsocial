@@ -81,7 +81,7 @@ public class JwtServiceImpl implements JwtService {
         String issuerValue = "FSOCIAL - FCODER";
 
         JWTClaimsSet.Builder claimsBuilder = new JWTClaimsSet.Builder()
-                .subject(account.getUsername())
+                .subject(account.getId())
                 .issuer(issuerValue)
                 .issueTime(new Date())
                 .expirationTime(

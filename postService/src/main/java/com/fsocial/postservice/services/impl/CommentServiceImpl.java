@@ -1,9 +1,15 @@
 package com.fsocial.postservice.services.impl;
 
+import com.fsocial.postservice.entity.Post;
+import com.fsocial.postservice.enums.ErrorCode;
+import com.fsocial.postservice.enums.MessageNotice;
+import com.fsocial.postservice.exception.AppCheckedException;
+import com.fsocial.postservice.exception.AppException;
 import com.fsocial.postservice.repository.CommentRepository;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.Content;
+import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.services.CommentService;
 import com.fsocial.postservice.services.UploadMedia;
 import com.fsocial.postservice.services.KafkaService;
@@ -12,7 +18,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -24,6 +32,7 @@ import java.util.List;
 @Builder
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
 
@@ -62,11 +71,7 @@ public class CommentServiceImpl implements CommentService {
                             && !file.getOriginalFilename().isEmpty())
                     .toArray(MultipartFile[]::new);
 
-            if (validMedia.length > 0) {
-                uripostImage = uploadMedia.uploadMedia(validMedia);
-            }
-        };
-            return validMedia.length > 0 ? uploadImage.uploadImage(validMedia) : new String[0];
+            return validMedia.length > 0 ? uploadMedia.uploadMedia(validMedia) : new String[0];
         } catch (Exception e) {
             log.error("Lỗi khi tải lên tệp: {}", e.getMessage(), e);
             throw new AppException(ErrorCode.UPLOAD_MEDIA_FAILED);
@@ -86,9 +91,6 @@ public class CommentServiceImpl implements CommentService {
                         .HTMLText(request.getHTMLText())
                         .build())
                 .build();
-
-        commentRequest.setCreatedAt(LocalDateTime.now());
-        return commentRepository.save(commentRequest);
     }
 
     @Override

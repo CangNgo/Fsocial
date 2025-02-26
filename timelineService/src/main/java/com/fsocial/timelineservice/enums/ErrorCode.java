@@ -13,6 +13,7 @@ public enum ErrorCode {
     USER_NOT_FOUND(208, "User Not Found", HttpStatus.NOT_FOUND),
     GET_COMMENT_SUCCESS(207, "Get comment success", HttpStatus.OK),
     PROFILE_NOT_FOUND(208, "Profile Not Found", HttpStatus.NOT_FOUND),
+    UNAUTHENTICATED(468, "Tài khoản chưa được xác thực.", HttpStatus.BAD_REQUEST),
     ;
     private final int code;
     private final String message;

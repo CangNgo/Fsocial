@@ -1,17 +1,19 @@
 package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.timelineservice.repository.CommentRepository;
-import com.fsocial.timelineservice.repository.PostRepository;
-import com.fsocial.timelineservice.repository.httpClient.ProfileClient;
+import com.fsocial.timelineservice.dto.post.PostByUserIdResponse;
 import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Post;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.exception.AppUnCheckedException;
-import com.fsocial.timelineservice.exception.StatusCode;
+import com.fsocial.timelineservice.repository.CommentRepository;
+import com.fsocial.timelineservice.repository.LikeRepository;
+import com.fsocial.timelineservice.repository.PostRepository;
+import com.fsocial.timelineservice.repository.httpClient.ProfileClient;
 import com.fsocial.timelineservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
@@ -72,29 +74,12 @@ public class PostServiceImpl implements PostService {
                 .build();
     }
 
-    private PostByUserIdResponse mapToPostResponse(Post post, String userId) throws AppCheckedException {
-        ProfileResponse profile = getProfile(post.getUserId());
-        Integer countComment = commentRepository.countCommentsByPostId(post.getId());
-        boolean like = likeRepository.existsByPostIdAndUserId(post.getId(), userId);
-        return PostByUserIdResponse.builder()
-                .id(post.getId())
-                .content(post.getContent())
-                .countLikes(post.getCountLikes())
-                .countComments(countComment)
-                .userId(post.getUserId())
-                .displayName(profile.getFirstName() + " " + profile.getLastName())
-                .avatar(profile.getAvatar())
-                .createdAt(post.getCreatedAt())
-                .isLike(like)
-                .build();
-    }
-
     @Override
     public ProfileResponse getProfile(String userId) throws AppCheckedException {
         try {
             return profileClient.getProfile(userId);
         } catch (Exception e) {
-            throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, StatusCode.USER_NOT_FOUND);
+            throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, STATU.USER_NOT_FOUND);
         }
     }
 

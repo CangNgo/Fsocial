@@ -23,23 +23,23 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ApiResponse<PostDTO> createPost(@RequestBody PostDTORequest request) {
+    public ResponseEntity<ApiResponse> createPost(@RequestBody PostDTORequest request) {
 
         try {
             PostDTO post = postService.createPost(request);
 
-            return ApiResponse.<PostDTO>builder()
-                    .statusCode(ResponseStatus.SUCCESS.getCODE())
-                    .message(ResponseStatus.SUCCESS.getMessage())
-                    .dateTime(LocalDateTime.now())
+            return ResponseEntity.ok().body(ApiResponse.builder()
                     .data(post)
-                    .build();
+                    .message("Tạo bài viết thành công")
+                    .statusCode(200)
+                    .dateTime(LocalDateTime.now())
+                    .build());
         } catch (RuntimeException | AppCheckedException e) {
-            return ApiResponse.<PostDTO>builder()
-                    .statusCode(ResponseStatus.ERROR.getCODE())
+            return ResponseEntity.badRequest().body(ApiResponse.builder()
+                    .data(null)
                     .message(e.getMessage())
                     .dateTime(LocalDateTime.now())
-                    .build();
+                    .build());
         }
     }
 

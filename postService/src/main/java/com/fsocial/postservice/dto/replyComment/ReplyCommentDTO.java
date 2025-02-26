@@ -1,11 +1,9 @@
 package com.fsocial.postservice.dto.replyComment;
 
 import com.fsocial.postservice.dto.ContentDTO;
-import com.fsocial.postservice.entity.Content;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @NoArgsConstructor

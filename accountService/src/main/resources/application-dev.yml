@@ -13,6 +13,23 @@ spring:
     url: jdbc:mysql://localhost:3306/account_service?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 12345678
+  kafka:
+    bootstrap-servers: localhost:9094
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+#  kafka:
+#    bootstrap-servers: localhost:9094
+#    consumer:
+#      group-id: notification-group
+#      auto-offset-reset: earliest
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -45,6 +62,7 @@ spring:
         max-idle: 5      # Số kết nối tối đa có thể rỗng
         min-idle: 1      # Số kết nối tối thiểu có thể rỗng
     timeout: 2000ms     # Thời gian chờ kết nối Redis
+
 
 server:
   servlet:
@@ -85,4 +103,4 @@ jwt:
 otp:
   expiration:
     send: 5 # Đơn vị là phút
-    verify: 1 # Đơn vị là giây
+    verify: 10 # Đơn vị là giây

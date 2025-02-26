@@ -1,6 +1,6 @@
 package com.fsocial.postservice.services.impl;
 
-import com.fsocial.postservice.Repository.ReplyCommentRepository;
+import com.fsocial.postservice.repository.ReplyCommentRepository;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentRequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.ReplyComment;

@@ -40,26 +40,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = NoResourceFoundException.class)
     ResponseEntity<ApiResponse> handlingNotFoundException(NoResourceFoundException exception) {
-        return ResponseEntity.badRequest()
-                .body(ApiResponse.builder()
-                    .statusCode(ErrorCode.NOT_FOUND.getCode())
-                    .message(ErrorCode.NOT_FOUND.getMessage())
-                    .dateTime(LocalDateTime.now())
-                    .build()
-                );
+        return buildResponse(ErrorCode.NOT_FOUND);
     }
 
     @ExceptionHandler(value = AppException.class)
      ResponseEntity<ApiResponse> handleAppException(AppException exception) {
         ErrorCode code = exception.getCode();
         if (code == null) throw new IllegalArgumentException("Đối tượng không được rỗng.");
-        return ResponseEntity
-                .status(code.getCode())
-                .body(ApiResponse.builder()
-                        .statusCode(code.getCode())
-                        .message(code.getMessage())
-                        .dateTime(LocalDateTime.now())
-                        .build());
+        return buildResponse(code);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)

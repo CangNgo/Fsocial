@@ -1,6 +1,6 @@
 package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.timelineservice.Repository.ReplyCommentRepository;
+import com.fsocial.timelineservice.repository.ReplyCommentRepository;
 import com.fsocial.timelineservice.entity.ReplyComment;
 import com.fsocial.timelineservice.services.ReplyCommentService;
 import lombok.AccessLevel;

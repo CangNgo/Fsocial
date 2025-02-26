@@ -2,7 +2,6 @@ package com.fsocial.postservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fsocial.postservice.exception.StatusCode;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response {
     @Builder.Default
-    int statusCode  = 200;
+    int statusCode = 200;
     String message;
     Object data;
     @Builder.Default

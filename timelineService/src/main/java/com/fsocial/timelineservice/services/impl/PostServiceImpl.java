@@ -1,17 +1,14 @@
 package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.timelineservice.Repository.CommentRepository;
-import com.fsocial.timelineservice.Repository.LikeRepository;
-import com.fsocial.timelineservice.Repository.PostRepository;
-import com.fsocial.timelineservice.Repository.httpClient.ProfileClient;
-import com.fsocial.timelineservice.dto.post.PostByUserIdResponse;
+import com.fsocial.timelineservice.repository.CommentRepository;
+import com.fsocial.timelineservice.repository.PostRepository;
+import com.fsocial.timelineservice.repository.httpClient.ProfileClient;
 import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Post;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.exception.AppUnCheckedException;
 import com.fsocial.timelineservice.exception.StatusCode;
-import com.fsocial.timelineservice.services.LikeService;
 import com.fsocial.timelineservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -126,4 +123,6 @@ public class PostServiceImpl implements PostService {
                 })
                 .collect(Collectors.toList());
     }
+
+
 }

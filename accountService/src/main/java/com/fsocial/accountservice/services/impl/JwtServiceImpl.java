@@ -1,6 +1,7 @@
 package com.fsocial.accountservice.services.impl;
 
 import com.fsocial.accountservice.entity.Account;
+import com.fsocial.accountservice.entity.Permission;
 import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.repository.AccountRepository;
@@ -25,7 +26,9 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,31 +59,22 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public void verifyAccessToken(String token) throws JOSEException, ParseException {
-        SignedJWT signedJWT = SignedJWT.parse(token);
-        JWSVerifier verifier = new MACVerifier(getSignerKey());
+    public boolean verifyToken(String token) {
+        try {
+            JWSVerifier verifier = new MACVerifier(getSignerKey());
+            SignedJWT signedJWT = SignedJWT.parse(token);
 
-        if (!signedJWT.verify(verifier)) {
-            log.warn("Token không hợp lệ: {}", token);
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
-        }
-
-        if (isTokenExpired(signedJWT)) {
-            log.warn("Token đã hết hạn: {}", token);
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
+            return signedJWT.verify(verifier) && !isTokenExpired(signedJWT);
+        } catch (JOSEException | ParseException e) {
+            log.error("Có lỗi trong quá trình phân tích Token.");
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
     }
 
     @Override
-    @Transactional
-    public void disableToken(String token) {
-        try {
-            verifyAccessToken(token);
-            refreshTokenRepository.deleteByToken(token);
-        } catch (JOSEException | ParseException e) {
-            log.error("Không thể vô hiệu hoá Token: {}", e.getMessage(), e);
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
-        }
+    public byte[] getSignerKey() {
+        if (signerKey == null || signerKey.isEmpty()) throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        return signerKey.getBytes();
     }
 
     private JWTClaimsSet buildClaimsSet(Account account) {
@@ -95,7 +89,6 @@ public class JwtServiceImpl implements JwtService {
                 )
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", account.getRole() != null ? account.getRole().getName() : "");
-//                .claim("scope", Optional.ofNullable(account.getRole()).map(Role::getName).orElse(""));
 
         return claimsBuilder.build();
     }
@@ -122,10 +115,5 @@ public class JwtServiceImpl implements JwtService {
 
     private boolean isTokenExpired(SignedJWT signedJWT) throws ParseException {
         return signedJWT.getJWTClaimsSet().getExpirationTime().toInstant().isBefore(Instant.now());
-    }
-
-    public byte[] getSignerKey() {
-        if (signerKey == null || signerKey.isEmpty()) throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
-        return signerKey.getBytes();
     }
 }

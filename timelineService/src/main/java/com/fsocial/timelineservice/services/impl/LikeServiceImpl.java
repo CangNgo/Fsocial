@@ -1,6 +1,6 @@
 package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.timelineservice.Repository.LikeRepository;
+import com.fsocial.timelineservice.repository.LikeRepository;
 import com.fsocial.timelineservice.services.LikeService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

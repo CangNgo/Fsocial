@@ -4,7 +4,6 @@ import com.fsocial.postservice.dto.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -15,14 +14,6 @@ import java.util.Objects;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    ResponseEntity<Response> handlingHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
-        return ResponseEntity.badRequest().body(Response.builder()
-                .statusCode(StatusCode.HTTPMETHOD_NOT_SUPPORTED.getCode())
-                .message(exception.getMethod()+ " " + StatusCode.HTTPMETHOD_NOT_SUPPORTED.getMessage())
-                .build());
-    }
-
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<Response> handlingRuntimeException(RuntimeException exception) {
 
@@ -30,6 +21,7 @@ public class GlobalExceptionHandler {
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
                 .message("Lỗi gì đó mà chúng tôi cũng không biết hihi :D" + exception.getMessage())
                 .dateTime(LocalDateTime.now())
+                .data(null)
                 .build());
     }
 
@@ -55,7 +47,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(Response.builder()
                 .statusCode(StatusCode.PARAMATER_NOT_FOUND.getCode())
                 .message(Objects.requireNonNull(exception.getFieldError()).getDefaultMessage())
-                .dateTime(LocalDateTime.now())
                 .build());
     }
 
@@ -66,5 +57,21 @@ public class GlobalExceptionHandler {
                 .message("Không tìm thấy tham số: " + exception.getParameterName())
                 .dateTime(LocalDateTime.now())
                 .build());
+    }
+
+    @ExceptionHandler(value = AppException.class)
+    ResponseEntity<ApiResponse> handleAppException(AppException exception) {
+        ErrorCode code = exception.getErrorCode();
+        if (code == null) throw new IllegalArgumentException("Đối tượng không được rỗng.");
+        return buildResponse(code);
+    }
+
+    private ResponseEntity<ApiResponse> buildResponse(ErrorCode errorCode) {
+        return ResponseEntity.status(errorCode.getStatusCode())
+                .body(ApiResponse.builder()
+                        .statusCode(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .dateTime(LocalDateTime.now())
+                        .build());
     }
 }

@@ -3,7 +3,6 @@ package com.fsocial.timelineservice.exception;
 import com.fsocial.timelineservice.dto.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -21,6 +20,7 @@ public class GlobalExceptionHandler {
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
                 .message("Lỗi gì đó mà chúng tôi cũng không biết hihi :D" + exception.getMessage())
                 .dateTime(LocalDateTime.now())
+                .data(null)
                 .build());
     }
 
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     ResponseEntity<Response> handlingAppCheckedException(AppCheckedException exception) {
         return ResponseEntity.badRequest().body(Response.builder()
                 .statusCode(exception.getStatus().getCode())
-                .message(exception.getMessage()).dateTime(LocalDateTime.now())
+                .message(exception.getMessage())
                 .build());
     }
 

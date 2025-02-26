@@ -4,9 +4,9 @@ import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
+import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.services.PostService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,13 +24,15 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<Response> createPost(@ModelAttribute PostDTORequest request) throws AppCheckedException {
-            PostDTO post = postService.createPost(request);
 
-            return ResponseEntity.ok().body(Response.builder()
-                    .data(post)
-                    .message("Thêm mới bài viết thành công")
-                    .dateTime(LocalDateTime.now())
-                    .build());
+        PostDTO post = postService.createPost(request);
+
+        return ResponseEntity.ok(Response.builder()
+                .data(post)
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
+                .build());
     }
 
     @PutMapping
@@ -42,20 +44,20 @@ public class PostController {
                 .text(text)
                 .HTMLText(HTMLText)
                 .build();
-            PostDTO post = postService.updatePost(postDTO, postId);
-            return ResponseEntity.ok().body(Response.builder()
-                    .data(post)
-                    .message("Cập nhật bài viết thành công")
-                    .statusCode(200)
-                    .dateTime(LocalDateTime.now())
-                    .build());
+        PostDTO post = postService.updatePost(postDTO, postId);
+        return ResponseEntity.ok(Response.builder()
+                .data(post)
+                .message("Cập nhật bài viết thành công")
+                .statusCode(200)
+                .dateTime(LocalDateTime.now())
+                .build());
     }
 
     @DeleteMapping
     public ResponseEntity<Response> deletePost(
             @RequestParam("postId") String postId) {
         postService.deletePost(postId);
-        return ResponseEntity.ok().body(Response.builder()
+        return ResponseEntity.ok(Response.builder()
                 .message("Xóa bài viết thành công")
                 .dateTime(LocalDateTime.now())
                 .statusCode(200)
@@ -66,13 +68,12 @@ public class PostController {
 
     @GetMapping("/like")
     public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO) throws AppCheckedException {
-            boolean like = postService.toggleLike(likeDTO);
-            return ResponseEntity.ok().body(Response.builder()
-                    .data(like)
-                    .message("Cập nhật bài viết thành công")
-                    .statusCode(200)
-                    .dateTime(LocalDateTime.now())
-                    .build());
-
+        boolean like = postService.toggleLike(likeDTO);
+        return ResponseEntity.ok(Response.builder()
+                .data(like)
+                .message("Cập nhật bài viết thành công")
+                .statusCode(200)
+                .dateTime(LocalDateTime.now())
+                .build());
     }
 }

@@ -1,8 +1,8 @@
-package com.fsocial.postservice.config;
+package com.fsocial.notificationService.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fsocial.postservice.enums.ErrorCode;
-import com.fsocial.postservice.dto.ApiResponse;
+import com.fsocial.notificationService.dto.response.ApiResponse;
+import com.fsocial.notificationService.enums.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

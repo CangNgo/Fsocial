@@ -8,8 +8,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NotificationRequest {
-    String userId;
+public class NoticeRequest {
+    String ownerId;
     String message;
     String type;
 }

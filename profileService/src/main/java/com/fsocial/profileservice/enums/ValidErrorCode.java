@@ -24,6 +24,7 @@ public enum ValidErrorCode {
     REQUIRED_LASTNAME(907, "Họ không được để trống."),
     REQUIRED_TYPE_REQUEST(908, "Loại yêu cầu không được để trống."),
     REQUIRED_TOKEN(909, "Token không được để trống."),
+    REQUIRED_FIELDS(910, "Các trường không được để trống."),
 
     ;
     final int code;

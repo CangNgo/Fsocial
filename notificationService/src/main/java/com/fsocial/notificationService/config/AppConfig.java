@@ -1,4 +1,4 @@
-package com.fsocial.postservice.config;
+package com.fsocial.notificationService.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

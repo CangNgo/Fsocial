@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/profileService/pom.xml" />
         <option value="$PROJECT_DIR$/timelineService/pom.xml" />
         <option value="$PROJECT_DIR$/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/notificationService/pom.xml" />
       </list>
     </option>
   </component>

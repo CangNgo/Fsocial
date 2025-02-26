@@ -1,4 +1,4 @@
-package com.fsocial.notificationService.dto;
+package com.fsocial.notificationService.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

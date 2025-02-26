@@ -1,5 +1,6 @@
 package com.fsocial.profileservice.dto.request;
 
+import com.fsocial.profileservice.validation.constrain.NotNullOrBlank;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -13,12 +14,10 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProfileUpdateRequest {
-    @NotBlank
-    @NotNull
+    @NotNullOrBlank(message = "REQUIRED_FIELDS")
     String firstName;
 
-    @NotBlank
-    @NotNull
+    @NotNullOrBlank(message = "REQUIRED_FIELDS")
     String lastName;
 
     LocalDate dob;

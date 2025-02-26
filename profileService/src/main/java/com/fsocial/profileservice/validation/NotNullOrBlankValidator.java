@@ -1,6 +1,6 @@
-package com.fsocial.accountservice.validation;
+package com.fsocial.profileservice.validation;
 
-import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
+import com.fsocial.profileservice.validation.constrain.NotNullOrBlank;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

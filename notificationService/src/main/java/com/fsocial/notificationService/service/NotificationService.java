@@ -1,4 +1,15 @@
 package com.fsocial.notificationService.service;
 
+import com.fsocial.notificationService.dto.request.NoticeRequest;
+import com.fsocial.notificationService.dto.response.NotificationResponse;
+import com.fsocial.notificationService.entity.Notification;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
+
 public interface NotificationService {
+    NotificationResponse createNotification(NoticeRequest request);
+    List<NotificationResponse> getNotificationsByUser(String userId);
+    void markAsRead(String notificationId);
+    Page<Notification> getNotificationsByUser(String userId, int page, int size);
 }

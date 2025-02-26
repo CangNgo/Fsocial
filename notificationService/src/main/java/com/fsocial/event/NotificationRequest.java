@@ -1,4 +1,4 @@
-package com.fsocial.event.dto;
+package com.fsocial.event;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,6 +9,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NotificationRequest {
-    String userId;
+    String ownerId;
+    String receiverId;
     String message;
+    String topic;
 }

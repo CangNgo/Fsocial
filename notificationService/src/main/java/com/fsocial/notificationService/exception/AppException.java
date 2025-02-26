@@ -1,5 +1,6 @@
 package com.fsocial.notificationService.exception;
 
+import com.fsocial.notificationService.enums.ErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -9,11 +10,11 @@ runtime của ứng dụng của bạn mà không yêu cầu phải khai báo th
  hoặc bắt buộc xử lý bằng khối try-catch.
 * */
 @Getter
-public class AppUnCheckedException extends RuntimeException {
-    private final HttpStatus status;
+public class AppException extends RuntimeException {
+    private final ErrorCode errorCode;
 
-    public AppUnCheckedException(String message, HttpStatus status) {
-        super(message);
-        this.status = status;
+    public AppException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
     }
 }

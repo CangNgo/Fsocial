@@ -1,10 +1,11 @@
 package com.fsocial.accountservice.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public enum ResponseStatus {
     SUCCESS("Thao tác thành công."),
     ACCOUNT_REGISTERED("Tài khoản đã được đăng ký thành công."),

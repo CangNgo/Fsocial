@@ -2,6 +2,7 @@ package com.fsocial.profileservice.services.impl;
 
 import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
+import com.fsocial.profileservice.dto.response.ProfileNameResponse;
 import com.fsocial.profileservice.dto.response.ProfileResponse;
 import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
 import com.fsocial.profileservice.entity.AccountProfile;
@@ -50,6 +51,18 @@ public class AccountProfileServiceImpl implements AccountProfileService {
         return accountProfileMapper.toProfileUpdateResponse(
                 accountProfileRepository.save(accountProfile)
         );
+    }
+
+    @Override
+    public ProfileNameResponse getProfileByUserId(String userId) {
+        ProfileResponse profileResponse = accountProfileRepository.findByUserId(userId).orElseThrow(
+                () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED)
+        );
+
+        return ProfileNameResponse.builder()
+                .firstName(profileResponse.getFirstName())
+                .lastName(profileResponse.getLastName())
+                .build();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.fsocial.postservice.enums;
+package com.fsocial.notificationService.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

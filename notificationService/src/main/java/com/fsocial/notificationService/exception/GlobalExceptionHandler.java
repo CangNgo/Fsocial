@@ -1,7 +1,8 @@
-package com.fsocial.postservice.exception;
+package com.fsocial.notificationService.exception;
 
-import com.fsocial.postservice.dto.ApiResponse;
-import com.fsocial.postservice.enums.ErrorCode;
+import com.fsocial.notificationService.dto.response.ApiResponse;
+import com.fsocial.notificationService.enums.ErrorCode;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -48,6 +49,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(ApiResponse.builder()
                 .statusCode(exception.getStatusCode().value())
                 .message(Objects.requireNonNull(exception.getFieldError()).getDefaultMessage())
+                .build());
+    }
+
+    @ExceptionHandler(value = AppException.class)
+    ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
+        ErrorCode errorCode = exception.getErrorCode();
+        return ResponseEntity.badRequest().body(ApiResponse.builder()
+                .statusCode(errorCode.getCode())
+                .message(errorCode.getMessage())
+                .dateTime(LocalDateTime.now())
                 .build());
     }
 

@@ -1,4 +1,4 @@
-package com.fsocial.profileservice.dto.response;
+package com.fsocial.notificationService.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

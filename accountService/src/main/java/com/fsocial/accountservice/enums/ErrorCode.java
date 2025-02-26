@@ -25,6 +25,7 @@ public enum ErrorCode implements CodeEnum{
     TOKEN_EXPIRED(700, "Token hết thời hạn.", HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(701, "Token không hợp lệ.", HttpStatus.BAD_REQUEST)
     ;
+
     final int code;
     final String message;
     final HttpStatusCode httpStatusCode;

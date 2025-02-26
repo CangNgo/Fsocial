@@ -1,8 +1,6 @@
 package com.fsocial.postservice.exception;
 
-import com.fsocial.postservice.enums.ErrorCode;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 /*
 AppUnCheckedException là một unchecked exception, được sử dụng để xử lý các lỗi trong

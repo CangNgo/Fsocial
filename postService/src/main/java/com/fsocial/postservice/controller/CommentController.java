@@ -3,9 +3,7 @@ package com.fsocial.postservice.controller;
 import com.fsocial.postservice.dto.ApiResponse;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.entity.Comment;
-import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.enums.ErrorCode;
 import com.fsocial.postservice.services.CommentService;
 import com.fsocial.postservice.services.UploadImage;
 import lombok.AccessLevel;
@@ -15,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 
 @RestController

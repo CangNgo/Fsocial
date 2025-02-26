@@ -1,9 +1,7 @@
 package com.fsocial.postservice.services.impl;
 
 import com.fsocial.postservice.entity.Post;
-import com.fsocial.postservice.enums.ErrorCode;
 import com.fsocial.postservice.enums.MessageNotice;
-import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.AppException;
 import com.fsocial.postservice.repository.CommentRepository;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;

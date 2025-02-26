@@ -1,7 +1,6 @@
 package com.fsocial.postservice.exception;
 
 
-import com.fsocial.postservice.enums.ErrorCode;
 import lombok.Getter;
 
 /*

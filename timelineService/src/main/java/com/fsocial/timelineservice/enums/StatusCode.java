@@ -1,8 +1,6 @@
-package com.fsocial.postservice.exception;
+package com.fsocial.timelineservice.enums;
 
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 @Getter
 public enum StatusCode {
@@ -28,6 +26,7 @@ public enum StatusCode {
     INTERNAL_SERVER_ERROR(300, "Internal Server Error"),
     UNSUPPORTED_MEDIA_TYPE(304, "Unsupported Media Type"),
     UNAUTHENTICATED(468, "Tài khoản chưa được xác thực."),
+    PROFILE_NOT_FOUND(400, "Profile not found"),
     ;
     private final int code;
     private final String message;

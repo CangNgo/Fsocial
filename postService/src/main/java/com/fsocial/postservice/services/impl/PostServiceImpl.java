@@ -11,7 +11,6 @@ import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Like;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.enums.ErrorCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.services.KafkaService;

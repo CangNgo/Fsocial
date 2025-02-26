@@ -47,6 +47,19 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<PostResponse> getPostsByUserId(String userId) throws AppUnCheckedException {
+        return postRepository.findAll().stream()
+                .map(post -> {
+                    try {
+                        return this.mapToPostByUserIdResponse(post,userId);
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
     private PostResponse mapToPostResponse(Post post) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
 

@@ -1,7 +1,6 @@
 package com.fsocial.timelineservice.exception;
 
 
-import com.fsocial.timelineservice.enums.ErrorCode;
 import com.fsocial.timelineservice.enums.StatusCode;
 import lombok.Getter;
 

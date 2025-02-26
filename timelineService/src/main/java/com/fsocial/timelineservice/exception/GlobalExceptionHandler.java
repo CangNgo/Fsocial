@@ -4,6 +4,7 @@ import com.fsocial.timelineservice.dto.Response;
 import com.fsocial.timelineservice.enums.StatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -28,7 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AppCheckedException.class)
     ResponseEntity<Response> handlingAppCheckedException(AppCheckedException exception) {
         return ResponseEntity.badRequest().body(Response.builder()
-                .statusCode(exception.getStatus().getCode)
+                .statusCode(exception.getStatus().getCode())
                 .message(exception.getMessage())
                 .build());
     }

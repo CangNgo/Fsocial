@@ -1,21 +1,20 @@
 package com.fsocial.profileservice.exception;
 
 import com.fsocial.profileservice.dto.ApiResponse;
+import com.fsocial.profileservice.enums.ErrorCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
-        log.error("Lỗi ở RuntimeException chưa được xử lý: {}", exception.getMessage());
         return buildResponse(ErrorCode.UNCATEGORIZED_EXCEPTION);
     }
 
@@ -32,6 +31,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = NoResourceFoundException.class)
     ResponseEntity<ApiResponse> handlingNotFoundException(NoResourceFoundException exception) {
+        ErrorCode errorCode = ErrorCode.NOT_FOUND;
         return ResponseEntity.badRequest().body(ApiResponse.builder()
                 .statusCode(errorCode.getCode())
                 .message(errorCode.getMessage())

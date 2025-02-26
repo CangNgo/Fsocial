@@ -1,6 +1,5 @@
 package com.fsocial.postservice.controller;
 
-import com.fsocial.postservice.dto.ApiResponse;
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;

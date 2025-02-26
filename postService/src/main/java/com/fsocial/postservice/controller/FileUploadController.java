@@ -26,23 +26,16 @@ public class FileUploadController {
     UploadMedia uploadImage;
 
     @PostMapping
-    public ResponseEntity<ApiResponse> uploadFile(@RequestParam("fileUpload") MultipartFile[] file) {
-        try {
+    public ResponseEntity<Response> uploadFile(@RequestParam("fileUpload") MultipartFile[] file) throws AppCheckedException {
+
             String[] urlfile = uploadImage.uploadMedia(file);
 
             log.info("Upload file successfull: {}", (Object) urlfile);
-            return ResponseEntity.ok().body(ApiResponse.builder()
+            return ResponseEntity.ok().body(Response.builder()
                             .data(urlfile)
                             .message("Upload file successful")
                             .dateTime(LocalDateTime.now())
                     .build());
-        } catch (IOException| AppCheckedException e) {
-            log.error("Lỗi khi upload file: {}", e.getMessage());
-            return ResponseEntity.ok().body(ApiResponse.builder()
-                    .data(null)
-                    .message("Upload file fail")
-                    .dateTime(LocalDateTime.now())
-                    .build());
-        }
+
     }
 }

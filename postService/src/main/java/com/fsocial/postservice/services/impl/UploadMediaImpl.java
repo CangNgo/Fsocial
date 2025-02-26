@@ -32,7 +32,7 @@ public class UploadMediaImpl implements UploadMedia {
     private static final String[] SUPPORTED_VIDEO_TYPES = {"mp4", "mov", "avi", "wmv"};
 
     @Override
-    public String[] uploadMedia(MultipartFile[] files) throws AppCheckedException, IOException {
+    public String[] uploadMedia(MultipartFile[] files) throws AppCheckedException {
         if (files == null || files.length == 0) {
             throw new AppCheckedException("No files provided", StatusCode.FILE_NOT_FOUND);
         }

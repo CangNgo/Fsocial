@@ -1,9 +1,11 @@
 package com.fsocial.postservice.exception;
 
+import com.cloudinary.api.ApiResponse;
 import com.fsocial.postservice.dto.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -59,16 +61,16 @@ public class GlobalExceptionHandler {
                 .build());
     }
 
-    @ExceptionHandler(value = AppException.class)
-    ResponseEntity<ApiResponse> handleAppException(AppException exception) {
-        ErrorCode code = exception.getErrorCode();
+    @ExceptionHandler(value = AppUnCheckedException.class)
+    ResponseEntity<Response> handleAppException(AppUnCheckedException exception) {
+        StatusCode code = exception.getStatus();
         if (code == null) throw new IllegalArgumentException("Đối tượng không được rỗng.");
         return buildResponse(code);
     }
 
-    private ResponseEntity<ApiResponse> buildResponse(ErrorCode errorCode) {
-        return ResponseEntity.status(errorCode.getStatusCode())
-                .body(ApiResponse.builder()
+    private ResponseEntity<Response> buildResponse(StatusCode errorCode) {
+        return ResponseEntity.status(errorCode.getCode())
+                .body(Response.builder()
                         .statusCode(errorCode.getCode())
                         .message(errorCode.getMessage())
                         .dateTime(LocalDateTime.now())

@@ -8,6 +8,6 @@ import java.io.IOException;
 import java.util.List;
 
 public interface CommentService{
-    Comment addComment(CommentDTORequest comment);
+    Comment addComment(CommentDTORequest comment) throws AppCheckedException, IOException;
     List<Comment> getComments(String postId);
 }

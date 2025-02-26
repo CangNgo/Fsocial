@@ -3,6 +3,7 @@ package com.fsocial.postservice.services.impl;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.enums.ErrorCode;
 import com.fsocial.postservice.enums.MessageNotice;
+import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.AppException;
 import com.fsocial.postservice.repository.CommentRepository;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -35,16 +37,41 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public Comment addComment(CommentDTORequest request) {
-        String[] mediaUrls = extractValidMedia(request.getMedia());
+    public Comment addComment(CommentDTORequest request)  throws AppCheckedException, IOException{
+        String[] uripostImage = new String[0];
+        if(request.getMedia() != null && request.getMedia().length > 0) {
+            MultipartFile[] validMedia = Arrays.stream(request.getMedia())
+                    .filter(file -> file != null &&
+                            !file.isEmpty() &&
+                            file.getOriginalFilename() != null &&
+                            !file.getOriginalFilename().isEmpty())
+                    .toArray(MultipartFile[]::new);
 
-        String postId = request.getPostId();
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
+            if (validMedia.length > 0) {
+                uripostImage = uploadImage.uploadImage(validMedia);
+            }
+        };
 
-        Comment commentRequest = buildComment(request, mediaUrls);
+        Comment commentRequest = Comment.builder()
+                .countReplyComment(0)
+                .countLikes(0)
+                .reply(false)
+                .postId(request.getPostId())
+                .userId(request.getUserId())
+                .content(
+                        Content.builder()
+                                .text(request.getText())
+                                .media(uripostImage)
+                                .HTMLText(request.getHTMLText())
+                                .build()
+                )
+                .build();
+
         commentRequest.setCreatedAt(LocalDateTime.now());
         Comment savedComment = commentRepository.save(commentRequest);
+
+        Post post = postRepository.findById(request.getPostId())
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
 
         // Send request to notification
         String ownerId = post.getUserId();
@@ -52,38 +79,6 @@ public class CommentServiceImpl implements CommentService {
         kafkaService.sendNotification(ownerId, userId, MessageNotice.NOTIFICATION_COMMENT);
 
         return savedComment;
-    }
-
-    private String[] extractValidMedia(MultipartFile[] media) {
-        if (media == null || media.length == 0) return new String[0];
-
-        try {
-            MultipartFile[] validMedia = Arrays.stream(media)
-                    .filter(file -> file != null && !file.isEmpty()
-                            && file.getOriginalFilename() != null
-                            && !file.getOriginalFilename().isEmpty())
-                    .toArray(MultipartFile[]::new);
-
-            return validMedia.length > 0 ? uploadImage.uploadImage(validMedia) : new String[0];
-        } catch (Exception e) {
-            log.error("Lỗi khi tải lên tệp: {}", e.getMessage(), e);
-            throw new AppException(ErrorCode.UPLOAD_MEDIA_FAILED);
-        }
-    }
-
-    private Comment buildComment(CommentDTORequest request, String[] mediaUrls) {
-        return Comment.builder()
-                .countReplyComment(0)
-                .countLikes(0)
-                .reply(false)
-                .postId(request.getPostId())
-                .userId(request.getUserId())
-                .content(Content.builder()
-                        .text(request.getText())
-                        .media(mediaUrls)
-                        .HTMLText(request.getHTMLText())
-                        .build())
-                .build();
     }
 
     @Override

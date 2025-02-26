@@ -25,7 +25,6 @@ public class ApiResponse<T> {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @Builder.Default
     LocalDateTime dateTime = LocalDateTime.now();
 
     T data;

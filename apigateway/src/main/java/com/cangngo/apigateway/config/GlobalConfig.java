@@ -24,7 +24,6 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import com.cangngo.apigateway.dto.response.IntrospectResponse;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -40,7 +39,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**"};
+    private String[] PUBLIC_ENDPOINT = {"/account/**", "/post/**", "/timeline/**"};
 
     @NonFinal
     @Value("${app.api-prefix}")
@@ -57,10 +56,10 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 
         String token = authHeaders.getFirst().replace("Bearer ", "");
         return accountService.apiResponseMono(token).flatMap(introspectResponse -> {
-            if (introspectResponse.getData().isValid())
-                return chain.filter(exchange);
-            else
-                return unauthenticated(exchange.getResponse());
+                    if (introspectResponse.getData().isValid())
+                        return chain.filter(exchange);
+                    else
+                        return unauthenticated(exchange.getResponse());
                 })
                 .onErrorResume(throwable -> unauthenticated(exchange.getResponse()));
     }

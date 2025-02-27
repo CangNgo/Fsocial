@@ -23,7 +23,7 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<Response> createPost(@ModelAttribute PostDTORequest request) throws AppCheckedException {
+    public ResponseEntity<Response> createPost(PostDTORequest request) throws AppCheckedException {
 
         PostDTO post = postService.createPost(request);
 

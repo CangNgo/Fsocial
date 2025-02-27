@@ -50,9 +50,9 @@ public class AccountProfileController {
         return accountProfileService.getProfileByUserId(userId);
     }
 
-    @GetMapping("/internal/{useridByPost}")
-    public ProfileResponse getProfileResponseByUserId(@PathVariable String useridByPost) {
-        return accountProfileService.getAccountProfile(useridByPost);
+    @GetMapping("/{userIdByPost}")
+    public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String userIdByPost) {
+        return accountProfileService.getAccountProfile(userIdByPost);
     }
 
     private <T> ApiResponse<T> buildResponse(T data) {

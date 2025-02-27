@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eceadb77-aae7-4019-8a5a-5c5c5fae9008" name="Changes" comment="" />
+    <list default="true" id="eceadb77-aae7-4019-8a5a-5c5c5fae9008" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/repository/httpClient/ProfileClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/repository/httpClient/ProfileClient.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +88,7 @@
     "Spring Boot.NotificationServiceApplication.executor": "Run",
     "Spring Boot.PostServiceApplication.executor": "Run",
     "Spring Boot.ProcessorServiceApplication.executor": "Run",
-    "Spring Boot.ProfileServiceApplication.executor": "Run",
+    "Spring Boot.ProfileServiceApplication.executor": "Debug",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
     "git-widget-placeholder": "confict",
     "kotlin-language-version-configured": "true",
@@ -239,10 +243,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ProfileServiceApplication" />
         <item itemvalue="Spring Boot.PostServiceApplication" />
         <item itemvalue="Spring Boot.ApigatewayApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
-        <item itemvalue="Spring Boot.ProfileServiceApplication" />
         <item itemvalue="Docker.kafka.yml: Compose Deployment" />
       </list>
     </recent_temporary>
@@ -264,7 +268,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740295673227</updated>
       <workItem from="1740599363806" duration="8235000" />
-      <workItem from="1740635722549" duration="11610000" />
+      <workItem from="1740635722549" duration="12914000" />
     </task>
     <task id="LOCAL-00001" summary="complete send notification when user have new comment and like on user's post">
       <option name="closed" value="true" />
@@ -341,10 +345,19 @@
           </properties>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java</url>
+          <line>42</line>
+          <properties class="com.fsocial.profileservice.services.impl.AccountProfileServiceImpl" method="getAccountProfile">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="6" />
+          <line>52</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

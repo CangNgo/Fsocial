@@ -28,6 +28,9 @@ public class ChatService {
     @Autowired
     private ChatMessageRepository chatMessageRepository;
 
+    public List<ChatMessage> findAll() {
+        return chatMessageRepository.findAll();
+    }
     /**
      * Lưu các file đính kèm lên GridFS và trả về danh sách id của file.
      */

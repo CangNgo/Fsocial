@@ -242,8 +242,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.PostServiceApplication" />
         <item itemvalue="Spring Boot.ApigatewayApplication" />
+        <item itemvalue="Spring Boot.PostServiceApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
         <item itemvalue="Spring Boot.ProfileServiceApplication" />
         <item itemvalue="Docker.kafka.yml: Compose Deployment" />
@@ -270,7 +270,7 @@
       <workItem from="1740635722549" duration="15876000" />
       <workItem from="1740664060965" duration="2282000" />
       <workItem from="1740667052959" duration="1540000" />
-      <workItem from="1740689777153" duration="4219000" />
+      <workItem from="1740689777153" duration="4549000" />
     </task>
     <task id="LOCAL-00001" summary="complete send notification when user have new comment and like on user's post">
       <option name="closed" value="true" />

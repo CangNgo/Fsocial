@@ -104,7 +104,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostResponse> findByText(String text) {
-        return postRepository.findByContentTextContaining(text).stream()
+        return postRepository.findByContentTextContainingIgnoreCase(text).stream()
                 .map(post -> {
                     ProfileResponse profile;
                     try {

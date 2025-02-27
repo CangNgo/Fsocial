@@ -92,6 +92,22 @@ public class AccountServiceImpl implements AccountService {
                 .build();
     }
 
+    @Override
+    public void changePassword(String userId, String odlPassword, String newPassword) {
+        Account account = accountRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
+
+        if (!passwordEncoder.matches(odlPassword, account.getPassword())) {
+            throw new AppException(ErrorCode.WRONG_PASSWORD);
+        }
+
+        account.setPassword(passwordEncoder.encode(newPassword));
+        account.setUpdatedAt(LocalDateTime.now());
+        account.setUpdatedBy(account.getId());
+        accountRepository.save(account);
+        log.info("Đổi mật khẩu thành công.");
+    }
+
     private void validateAccountExistence(String username, String email) {
         boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;
         if (accountExisted) throw new AppException(ErrorCode.ACCOUNT_EXISTED);

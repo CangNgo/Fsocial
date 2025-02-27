@@ -65,7 +65,6 @@ public class PostController {
     }
 
     //Like Post
-
     @GetMapping("/like")
     public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO) throws AppCheckedException {
         boolean like = postService.toggleLike(likeDTO);

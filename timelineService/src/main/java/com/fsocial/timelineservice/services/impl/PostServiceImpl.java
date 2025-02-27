@@ -96,7 +96,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public ProfileResponse getProfile(String userId) throws AppCheckedException {
         try {
-            return profileClient.getProfile(userId);
+            return profileClient.getProfileResponseByUserId(userId);
         } catch (Exception e) {
             throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, StatusCode.USER_NOT_FOUND);
         }

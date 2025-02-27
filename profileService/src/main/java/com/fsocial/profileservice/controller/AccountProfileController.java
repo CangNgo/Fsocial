@@ -50,6 +50,11 @@ public class AccountProfileController {
         return accountProfileService.getProfileByUserId(userId);
     }
 
+    @GetMapping("/internal/{useridByPost}")
+    public ProfileResponse getProfileResponseByUserId(@PathVariable String useridByPost) {
+        return accountProfileService.getAccountProfile(useridByPost);
+    }
+
     private <T> ApiResponse<T> buildResponse(T data) {
         return ApiResponse.<T>builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())

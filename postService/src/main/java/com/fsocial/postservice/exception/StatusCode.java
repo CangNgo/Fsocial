@@ -28,6 +28,7 @@ public enum StatusCode {
     INTERNAL_SERVER_ERROR(300, "Internal Server Error"),
     UNSUPPORTED_MEDIA_TYPE(304, "Unsupported Media Type"),
     UNAUTHENTICATED(468, "Tài khoản chưa được xác thực."),
+    UPLOAD_MEDIA_FAILED(210, "Upload media failed"),
     ;
     private final int code;
     private final String message;

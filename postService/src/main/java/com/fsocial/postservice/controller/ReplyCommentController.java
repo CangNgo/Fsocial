@@ -4,9 +4,7 @@ import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentRequest;
 import com.fsocial.postservice.entity.ReplyComment;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.mapper.ReplyCommentMapper;
 import com.fsocial.postservice.services.impl.ReplyCommentServiceImpl;
-import com.fsocial.postservice.services.impl.UploadImageImpl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,7 +25,7 @@ public class ReplyCommentController {
     ReplyCommentServiceImpl replyCommentService;
 
     @PostMapping
-    public ResponseEntity<Response> replyComment(ReplyCommentRequest request) throws AppCheckedException, IOException {
+    public ResponseEntity<Response> replyComment(ReplyCommentRequest request) throws AppCheckedException {
 
         ReplyComment response = replyCommentService.addReplyComment(request);
 

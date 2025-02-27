@@ -2,7 +2,8 @@ package com.fsocial.postservice.services.impl;
 
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.enums.MessageNotice;
-import com.fsocial.postservice.exception.AppException;
+import com.fsocial.postservice.exception.AppCheckedException;
+import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.repository.CommentRepository;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.entity.Comment;
@@ -40,12 +41,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public Comment addComment(CommentDTORequest request) {
+    public Comment addComment(CommentDTORequest request) throws AppCheckedException {
         String[] mediaUrls = extractValidMedia(request.getMedia());
 
         String postId = request.getPostId();
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
+                .orElseThrow(() -> new AppCheckedException("Không tìm thấy bài đăng", StatusCode.POST_NOT_FOUND));
 
         Comment commentRequest = buildComment(request, mediaUrls);
         commentRequest.setCreatedAt(LocalDateTime.now());
@@ -59,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
         return savedComment;
     }
 
-    private String[] extractValidMedia(MultipartFile[] media) {
+    private String[] extractValidMedia(MultipartFile[] media) throws AppCheckedException {
         if (media == null || media.length == 0) return new String[0];
 
         try {
@@ -72,7 +73,7 @@ public class CommentServiceImpl implements CommentService {
             return validMedia.length > 0 ? uploadMedia.uploadMedia(validMedia) : new String[0];
         } catch (Exception e) {
             log.error("Lỗi khi tải lên tệp: {}", e.getMessage(), e);
-            throw new AppException(ErrorCode.UPLOAD_MEDIA_FAILED);
+            throw new AppCheckedException("Upload hình ảnh thất bại" , StatusCode.UPLOAD_MEDIA_FAILED);
         }
     }
 

@@ -14,6 +14,6 @@ public class LikeServiceImpl implements LikeService {
     LikeRepository likeRepository;
     @Override
     public boolean isLikeByPostIdAndUserId(String postId, String userId) {
-        return likeRepository.existsByPostIdAndUserId(postId,userId);
+        return likeRepository.existsByPostIdAndUserIds(postId,userId);
     }
 }

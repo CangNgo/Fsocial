@@ -1,6 +1,5 @@
-version: '3.8'
-
 services:
+  # MongoDB Replica Set
   mongo1:
     image: mongo
     container_name: fsocial_primary
@@ -13,7 +12,7 @@ services:
     volumes:
       - fsocial_primary:/data/db
     networks:
-      - mongo_replica
+      - app_network
 
   mongo2:
     image: mongo
@@ -27,7 +26,7 @@ services:
     volumes:
       - fsocial_secondary_1:/data/db
     networks:
-      - mongo_replica
+      - app_network
 
   mongo3:
     image: mongo
@@ -41,8 +40,9 @@ services:
     volumes:
       - fsocial_secondary_2:/data/db
     networks:
-      - mongo_replica
+      - app_network
 
+  # Redis
   redis:
     image: redis:latest
     container_name: replica_redis
@@ -52,10 +52,47 @@ services:
     volumes:
       - redis_data:/data
     networks:
-      - mongo_replica
+      - app_network
+
+  # ZooKeeper for Kafka
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: zookeeper
+    restart: always
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    volumes:
+      - zookeeper_data:/var/lib/zookeeper/data
+    networks:
+      - app_network
+
+#  # Kafka Broker
+#  kafka:
+#    image: confluentinc/cp-kafka:7.3.0
+#    container_name: kafka
+#    restart: always
+#    depends_on:
+#      - zookeeper
+#    ports:
+#      - "9094:9094"
+#    environment:
+#      KAFKA_BROKER_ID: 1
+#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9094
+#      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9094
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+#      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+#    volumes:
+#      - kafka_data:/var/lib/kafka/data
+#    networks:
+#      - app_network
 
 networks:
-  mongo_replica:
+  app_network:
     driver: bridge
 
 volumes:
@@ -63,3 +100,5 @@ volumes:
   fsocial_secondary_1:
   fsocial_secondary_2:
   redis_data:
+  zookeeper_data:
+  kafka_data:

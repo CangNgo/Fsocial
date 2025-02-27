@@ -3,7 +3,6 @@ package com.fsocial.timelineservice.controller;
 import com.fsocial.timelineservice.dto.Response;
 import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.exception.AppCheckedException;
-import com.fsocial.timelineservice.exception.StatusCode;
 import com.fsocial.timelineservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,21 +26,18 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<Response> getPosts(@RequestParam(value = "userId", required = false) String userId ) throws AppCheckedException {
+        List<PostResponse> posts ;
+
         if(userId == null) {
-            List<PostResponse> posts = postService.getPosts();
-            return ResponseEntity.ok(Response.builder()
-                    .message("Lấy bài đăng thành công")
-                    .dateTime(LocalDateTime.now())
-                    .data(posts)
-                    .build());
+             posts = postService.getPosts();
         }else {
-            List<PostByUserIdResponse> posts = postService.getPostsByUserId(userId);
-            return ResponseEntity.ok(Response.builder()
-                    .message("Lấy bài đăng thành công")
-                    .dateTime(LocalDateTime.now())
-                    .data(posts)
-                    .build());
+            posts = postService.getPostsByUserId(userId);
         }
+        return ResponseEntity.ok(Response.builder()
+                .message("Lấy bài đăng thành công")
+                .dateTime(LocalDateTime.now())
+                .data(posts)
+                .build());
 
     }
 

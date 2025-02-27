@@ -56,10 +56,10 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 
         String token = authHeaders.getFirst().replace("Bearer ", "");
         return accountService.apiResponseMono(token).flatMap(introspectResponse -> {
-            if (introspectResponse.getData().isValid())
-                return chain.filter(exchange);
-            else
-                return unauthenticated(exchange.getResponse());
+                    if (introspectResponse.getData().isValid())
+                        return chain.filter(exchange);
+                    else
+                        return unauthenticated(exchange.getResponse());
                 })
                 .onErrorResume(throwable -> unauthenticated(exchange.getResponse()));
     }

@@ -1,6 +1,5 @@
 package com.fsocial.postservice.controller;
 
-import com.fsocial.postservice.dto.ApiResponse;
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
@@ -15,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<Response> createPost(@ModelAttribute PostDTORequest request) throws AppCheckedException {
+    public ResponseEntity<Response> createPost(PostDTORequest request) throws AppCheckedException {
 
         PostDTO post = postService.createPost(request);
 
@@ -66,12 +67,13 @@ public class PostController {
     }
 
     //Like Post
-
-    @GetMapping("/like")
+    @PostMapping("/like")
     public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO) throws AppCheckedException {
         boolean like = postService.toggleLike(likeDTO);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("like", like);
         return ResponseEntity.ok(Response.builder()
-                .data(like)
+                .data(map)
                 .message("Cập nhật bài viết thành công")
                 .statusCode(200)
                 .dateTime(LocalDateTime.now())

@@ -47,6 +47,19 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<PostResponse> getPostsByUserId(String userId) throws AppUnCheckedException {
+        return postRepository.findAll().stream()
+                .map(post -> {
+                    try {
+                        return this.mapToPostByUserIdResponse(post,userId);
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
     private PostResponse mapToPostResponse(Post post) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
 
@@ -65,13 +78,13 @@ public class PostServiceImpl implements PostService {
 
     private PostResponse mapToPostByUserIdResponse(Post post, String userId) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
-        boolean likePost = likeRepository.existsByPostIdAndUserId(post.getId(), userId);
-
+        boolean likePost = likeRepository.existsByPostIdAndUserIds(post.getId(), userId);
+        int countComment = commentRepository.countCommentsByPostId(post.getId());
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())
                 .countLikes(post.getCountLikes())
-                .countComments(post.getCountComments())
+                .countComments(countComment)
                 .userId(post.getUserId())
                 .displayName(profile.getFirstName() + " " + profile.getLastName())
                 .avatar(profile.getAvatar())
@@ -83,7 +96,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public ProfileResponse getProfile(String userId) throws AppCheckedException {
         try {
-            return profileClient.getProfile(userId);
+            return profileClient.getProfileResponseByUserId(userId);
         } catch (Exception e) {
             throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, StatusCode.USER_NOT_FOUND);
         }
@@ -91,7 +104,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostResponse> findByText(String text) {
-        return postRepository.findByContentTextContaining(text).stream()
+        return postRepository.findByContentTextContainingIgnoreCase(text).stream()
                 .map(post -> {
                     ProfileResponse profile;
                     try {

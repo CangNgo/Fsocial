@@ -2,19 +2,22 @@ package com.fsocial.postservice.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Document(collection = "likes")
-@SuperBuilder
-public class Like extends AbstractEntity<String>{
+@Document(collection = "complaint")
+@Builder
+public class Complaint extends  AbstractEntity<String>{
     String postId;
-    List<String> userIds;
+    String userId;
+    String complaintType;
+    String termOfService;
+    LocalDateTime dateTime;
+    boolean reading;
 }

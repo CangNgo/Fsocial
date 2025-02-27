@@ -12,8 +12,9 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="apigateway" />
+        <module name="notificationService" />
       </profile>
-      <profile name="Annotation profile for timeLineService" enabled="true">
+      <profile name="Annotation profile for postService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -41,6 +42,7 @@
       <module name="accountService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="apigateway" options="-parameters" />
       <module name="messageService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="notificationService" options="-parameters" />
       <module name="postService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="processorService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="profileService" options="-parameters -Amapstruct.defaultComponentModel=spring" />

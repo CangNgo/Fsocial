@@ -40,6 +40,13 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     }
 
     @Override
+    public ProfileResponse getAccountProfile(String userId) {
+        return accountProfileRepository.findByUserId(userId).orElseThrow(
+                () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED)
+        );
+    }
+
+    @Override
     public ProfileUpdateResponse updateProfile(String profileId, ProfileUpdateRequest request) {
         if (!accountProfileRepository.existsById(profileId))
             throw new AppException(ErrorCode.PROFILE_NOT_EXISTED);

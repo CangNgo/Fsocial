@@ -4,6 +4,7 @@ import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.exception.AppCheckedException;
+import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.CommentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

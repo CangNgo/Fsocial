@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.Update;
 public interface LikePostRepository extends MongoRepository<Like, String> {
 
     // Kiểm tra user đã like bài viết chưa
-    boolean existsByPostIdAndUserId(String postId, String userId);
+    boolean existsByPostIdAndUserIds(String postId, String userId);
 
     // Thêm userId vào mảng userIds (nếu chưa tồn tại)
     @Modifying
@@ -22,4 +22,6 @@ public interface LikePostRepository extends MongoRepository<Like, String> {
     @Query("{ 'postId': ?0 }")
     @Update("{ '$pull': { 'userIds': ?1 } }")
     void removeUserIdFromPost(String postId, String userId);
+
+    int countLikeByPostId(String postId);
 }

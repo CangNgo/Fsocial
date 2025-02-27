@@ -54,7 +54,7 @@ public class CommentServiceImpl implements CommentService {
     public ProfileResponse getProfile(String userId) throws AppCheckedException {
 
         try {
-            return profileClient.getProfile(userId);
+            return profileClient.getProfileResponseByUserId(userId);
         } catch (Exception e) {
             throw new AppCheckedException("Không tìm thấy thông tin người dùng", StatusCode.PROFILE_NOT_FOUND);
         }

@@ -2,8 +2,7 @@ package com.fsocial.timelineservice.controller;
 
 import com.fsocial.timelineservice.dto.Response;
 import com.fsocial.timelineservice.dto.comment.CommentResponse;
-import com.fsocial.timelineservice.entity.Comment;
-import com.fsocial.timelineservice.exception.StatusCode;
+import com.fsocial.timelineservice.enums.StatusCode;
 import com.fsocial.timelineservice.services.CommentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

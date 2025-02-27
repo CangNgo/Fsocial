@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -27,12 +29,12 @@ public class ComplainController {
 
 
     @PostMapping
-    public ResponseEntity<Response> addComplaint(@RequestBody  @Valid ComplaintDTO complaint) {
+    public ResponseEntity<Response> addComplaint(@RequestBody @Valid ComplaintDTO complaint) {
 
             return ResponseEntity.ok().body(Response.builder()
                             .data(complaintService.addComplaint(complaint))
                             .message("Thêm chính sách thành công")
+                            .dateTime(LocalDateTime.now())
                     .build());
-
     }
 }

@@ -1,9 +1,9 @@
-package com.fsocial.postservice.services.impl;
+package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.postservice.dto.complaint.ComplaintDTO;
-import com.fsocial.postservice.mapper.ComplantMapper;
-import com.fsocial.postservice.repository.ComplaintRepository;
-import com.fsocial.postservice.services.ComplaintService;
+import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
+import com.fsocial.timelineservice.mapper.ComplantMapper;
+import com.fsocial.timelineservice.repository.ComplaintRepository;
+import com.fsocial.timelineservice.services.ComplaintService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

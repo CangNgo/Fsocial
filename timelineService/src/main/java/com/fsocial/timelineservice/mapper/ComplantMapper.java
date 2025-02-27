@@ -1,7 +1,7 @@
-package com.fsocial.postservice.mapper;
+package com.fsocial.timelineservice.mapper;
 
-import com.fsocial.postservice.dto.complaint.ComplaintDTO;
-import com.fsocial.postservice.entity.Complaint;
+import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
+import com.fsocial.timelineservice.entity.Complaint;
 import org.mapstruct.Mapper;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.fsocial.postservice.dto.complaint;
+package com.fsocial.timelineservice.dto.complaint;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -19,7 +19,7 @@ public class ComplaintDTO {
     @NotBlank(message = "complaintType không được để trống")
     String complaintType;
     @NotBlank(message = "termOfService không được để trống")
-    String termOfServiceId;
+    String termOfService;
     LocalDateTime dateTime ;
     boolean reading;
 }

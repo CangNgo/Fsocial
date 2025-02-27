@@ -1,6 +1,6 @@
-package com.fsocial.postservice.services;
+package com.fsocial.timelineservice.services;
 
-import com.fsocial.postservice.dto.complaint.ComplaintDTO;
+import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
 
 import java.util.List;
 

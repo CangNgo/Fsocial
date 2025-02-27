@@ -16,5 +16,5 @@ import java.util.List;
 @SuperBuilder
 public class Like extends AbstractEntity<String>{
     String postId;
-    List<String> userId;
+    List<String> userIds;
 }

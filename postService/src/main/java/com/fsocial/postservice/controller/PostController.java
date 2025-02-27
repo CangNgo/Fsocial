@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -68,8 +70,10 @@ public class PostController {
     @PostMapping("/like")
     public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO) throws AppCheckedException {
         boolean like = postService.toggleLike(likeDTO);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("like", like);
         return ResponseEntity.ok(Response.builder()
-                .data(like)
+                .data(map)
                 .message("Cập nhật bài viết thành công")
                 .statusCode(200)
                 .dateTime(LocalDateTime.now())

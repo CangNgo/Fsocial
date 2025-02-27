@@ -78,13 +78,13 @@ public class PostServiceImpl implements PostService {
 
     private PostResponse mapToPostByUserIdResponse(Post post, String userId) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
-        boolean likePost = likeRepository.existsByPostIdAndUserId(post.getId(), userId);
-
+        boolean likePost = likeRepository.existsByPostIdAndUserIds(post.getId(), userId);
+        int countComment = commentRepository.countCommentsByPostId(post.getId());
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())
                 .countLikes(post.getCountLikes())
-                .countComments(post.getCountComments())
+                .countComments(countComment)
                 .userId(post.getUserId())
                 .displayName(profile.getFirstName() + " " + profile.getLastName())
                 .avatar(profile.getAvatar())

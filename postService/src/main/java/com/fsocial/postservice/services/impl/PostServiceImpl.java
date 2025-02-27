@@ -113,9 +113,8 @@ public class PostServiceImpl implements PostService {
         Post postById = postRepository.findById(like.getPostId())
                 .orElseThrow(() -> new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND));
         if (postById.getCountLikes() == 0){
-
             likeRepository.save(Like.builder()
-                            .userId(List.of(like.getUserId()))
+                            .userIds(List.of(like.getUserId()))
                             .postId(like.getPostId())
                     .build());
             postById.setCountLikes(postById.getCountLikes() + 1);
@@ -125,7 +124,7 @@ public class PostServiceImpl implements PostService {
             return true;
         }
         //check trùng
-        boolean exists = likeRepository.existsByPostIdAndUserId(like.getPostId(), like.getUserId());
+        boolean exists = likeRepository.existsByPostIdAndUserIds(like.getPostId(), like.getUserId());
 
         if (exists) {
             likeRepository.removeUserIdFromPost(like.getPostId(), like.getUserId());

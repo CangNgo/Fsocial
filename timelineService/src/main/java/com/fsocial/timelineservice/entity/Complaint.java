@@ -17,7 +17,7 @@ public class Complaint extends  AbstractEntity<String>{
     String postId;
     String userId;
     String complaintType;
-    String termOfService;
+    String termOfServiceId;
     LocalDateTime dateTime;
     boolean reading;
 }

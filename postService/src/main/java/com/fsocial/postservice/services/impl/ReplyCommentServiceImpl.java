@@ -1,12 +1,13 @@
 package com.fsocial.postservice.services.impl;
 
+import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.repository.ReplyCommentRepository;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentRequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.ReplyComment;
-import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.mapper.ReplyCommentMapper;
 import com.fsocial.postservice.services.ReplyCommentService;
+import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,10 +26,10 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
 
     ReplyCommentMapper replyCommentMapper;
 
-    UploadImageImpl uploadImage;
+    UploadMedia uploadMedia;
 
     @Override
-    public ReplyComment addReplyComment(ReplyCommentRequest request) throws AppCheckedException, IOException {
+    public ReplyComment addReplyComment(ReplyCommentRequest request) throws AppCheckedException {
         String[] uripostImage = new String[0];
         if(request.getMedia() != null && request.getMedia().length > 0) {
             MultipartFile[] validMedia = Arrays.stream(request.getMedia())
@@ -39,7 +40,7 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
                     .toArray(MultipartFile[]::new);
 
             if (validMedia.length > 0) {
-                uripostImage = uploadImage.uploadImage(validMedia);
+                uripostImage = uploadMedia.uploadMedia(validMedia);
             }
         };
 

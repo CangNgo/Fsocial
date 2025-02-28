@@ -27,7 +27,6 @@ public enum ErrorCode implements CodeEnum{
     WRONG_PASSWORD(702, "Mật khẩu không đúng.", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED(703, "Không có quyền truy cập.", HttpStatus.UNAUTHORIZED),
     ;
-
     final int code;
     final String message;
     final HttpStatusCode httpStatusCode;

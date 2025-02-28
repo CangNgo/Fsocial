@@ -1,7 +1,6 @@
 package com.fsocial.postservice.exception;
 
 
-import com.fsocial.postservice.enums.ErrorCode;
 import lombok.Getter;
 
 /*
@@ -13,9 +12,9 @@ ngay khi nó xảy ra để đảm bảo tính nhất quán và bảo mật tron
 */
 @Getter
 public class AppCheckedException extends Exception {
-    private final ErrorCode status;
+    private final StatusCode status;
 
-    public AppCheckedException(String message, ErrorCode status) {
+    public AppCheckedException(String message, StatusCode status) {
         super(message);
         this.status = status;
     }

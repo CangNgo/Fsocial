@@ -1,8 +1,8 @@
 package com.fsocial.postservice.controller;
 
-import com.fsocial.postservice.dto.ApiResponse;
+import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.services.UploadImage;
+import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,26 +23,19 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class FileUploadController {
-    UploadImage uploadImage;
+    UploadMedia uploadImage;
 
     @PostMapping
-    public ResponseEntity<ApiResponse> uploadFile(@RequestParam("fileUpload") MultipartFile[] file) {
-        try {
-            String[] urlfile = uploadImage.uploadImage(file);
+    public ResponseEntity<Response> uploadFile(@RequestParam("fileUpload") MultipartFile[] file) throws AppCheckedException {
+
+            String[] urlfile = uploadImage.uploadMedia(file);
 
             log.info("Upload file successfull: {}", (Object) urlfile);
-            return ResponseEntity.ok().body(ApiResponse.builder()
+            return ResponseEntity.ok().body(Response.builder()
                             .data(urlfile)
                             .message("Upload file successful")
                             .dateTime(LocalDateTime.now())
                     .build());
-        } catch (IOException| AppCheckedException e) {
-            log.error("Lỗi khi upload file: {}", e.getMessage());
-            return ResponseEntity.ok().body(ApiResponse.builder()
-                    .data(null)
-                    .message("Upload file fail")
-                    .dateTime(LocalDateTime.now())
-                    .build());
-        }
+
     }
 }

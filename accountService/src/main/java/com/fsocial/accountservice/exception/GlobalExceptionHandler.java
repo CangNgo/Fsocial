@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = AppException.class)
-     ResponseEntity<ApiResponse> handleAppException(AppException exception) {
+    ResponseEntity<ApiResponse> handleAppException(AppException exception) {
         ErrorCode code = exception.getCode();
         if (code == null) throw new IllegalArgumentException("Đối tượng không được rỗng.");
         return buildResponse(code);

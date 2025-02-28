@@ -20,4 +20,5 @@ public class PostResponse {
     String displayName;
     String avatar;
     LocalDateTime createdAt;
+    boolean isLike;
 }

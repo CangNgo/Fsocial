@@ -1,4 +1,4 @@
-package com.fsocial.timelineservice.Repository;
+package com.fsocial.timelineservice.repository;
 
 import com.fsocial.timelineservice.entity.ReplyComment;
 import org.springframework.data.mongodb.repository.MongoRepository;

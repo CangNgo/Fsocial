@@ -13,5 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "likes")
 @SuperBuilder
 public class LikeComment {
+    String commentId;
     String userId;
 }

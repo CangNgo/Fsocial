@@ -1,6 +1,8 @@
 package com.fsocial.postservice.services.impl;
 
 import com.fsocial.postservice.enums.MessageNotice;
+import com.fsocial.postservice.exception.AppCheckedException;
+import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.repository.LikePostRepository;
 import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.dto.ContentDTO;
@@ -10,12 +12,11 @@ import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Like;
 import com.fsocial.postservice.entity.Post;
-import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.enums.ErrorCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.services.KafkaService;
 import com.fsocial.postservice.services.PostService;
+import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -36,7 +37,7 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
     PostRepository postRepository;
     LikePostRepository likeRepository;
-    UploadImageImpl uploadImage;
+    UploadMedia uploadMedia;
     PostMapper postMapper;
     ContentMapper contentMapper;
     KafkaService kafkaService;
@@ -56,7 +57,7 @@ public class PostServiceImpl implements PostService {
                         .toArray(MultipartFile[]::new);
 
                 if (validMedia.length > 0) {
-                    uripostImage = uploadImage.uploadImage(validMedia);
+                    uripostImage = uploadMedia.uploadMedia(validMedia);
                 }
             }
             ;
@@ -80,9 +81,7 @@ public class PostServiceImpl implements PostService {
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-            throw new AppCheckedException("Không thể thêm bài post vào database", ErrorCode.CREATE_POST_FAILED);
-        } catch (IOException e) {
-            throw new AppCheckedException("Không thể upload ảnh lên cloud", ErrorCode.UPLOAD_FILE_FAILED);
+            throw new AppCheckedException("Không thể thêm bài post vào database", StatusCode.CREATE_POST_FAILED);
         }
     }
 
@@ -90,7 +89,7 @@ public class PostServiceImpl implements PostService {
     public PostDTO updatePost(PostDTORequest post, String postId) throws AppCheckedException {
 
         Post existingPost = postRepository.findById(postId)
-                .orElseThrow(() -> new AppCheckedException("Post not found", ErrorCode.POST_NOT_FOUND));
+                .orElseThrow(() -> new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND));
         //Nếu tìm thấy thì cập nhật thông tin
 
         existingPost.setContent(Content.builder()
@@ -112,11 +111,10 @@ public class PostServiceImpl implements PostService {
     public boolean toggleLike(LikePostDTO like) throws AppCheckedException {
 
         Post postById = postRepository.findById(like.getPostId())
-                .orElseThrow(() -> new AppCheckedException("Post not found", ErrorCode.POST_NOT_FOUND));
+                .orElseThrow(() -> new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND));
         if (postById.getCountLikes() == 0){
-
             likeRepository.save(Like.builder()
-                            .userId(List.of(like.getUserId()))
+                            .userIds(List.of(like.getUserId()))
                             .postId(like.getPostId())
                     .build());
             postById.setCountLikes(postById.getCountLikes() + 1);
@@ -126,7 +124,7 @@ public class PostServiceImpl implements PostService {
             return true;
         }
         //check trùng
-        boolean exists = likeRepository.existsByPostIdAndUserId(like.getPostId(), like.getUserId());
+        boolean exists = likeRepository.existsByPostIdAndUserIds(like.getPostId(), like.getUserId());
 
         if (exists) {
             likeRepository.removeUserIdFromPost(like.getPostId(), like.getUserId());

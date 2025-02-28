@@ -1,17 +1,19 @@
 package com.fsocial.postservice.controller;
 
-import com.fsocial.postservice.dto.ApiResponse;
+import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.enums.ErrorCode;
+import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.CommentService;
-import com.fsocial.postservice.services.UploadImage;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
@@ -19,25 +21,22 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/comment")
+@Slf4j
 public class CommentController {
 
     CommentService commentService;
 
-    UploadImage uploadImage;
-
-
     @PostMapping
-    public ResponseEntity<ApiResponse> createComment(CommentDTORequest request) throws AppCheckedException {
+    public ResponseEntity<Response> createComment(CommentDTORequest request) throws AppCheckedException {
         try {
             Comment comment = commentService.addComment(request);
-            return ResponseEntity.ok(ApiResponse.builder()
+            return ResponseEntity.ok(Response.builder()
                     .data(comment)
                     .dateTime(LocalDateTime.now())
-                    .message("Đã tạo bình luận thành công.")
+                    .message("Comment created successfully")
                     .build());
         } catch (Exception e) {
-            throw new AppCheckedException("Không thể thêm comment vào bài viết {}", ErrorCode.CREATE_COMMENT_FAILED);
+            throw new AppCheckedException("Không thể thêm comment vào bài viết {}", StatusCode.CREATE_COMMENT_FAILED);
         }
     }
-
 }

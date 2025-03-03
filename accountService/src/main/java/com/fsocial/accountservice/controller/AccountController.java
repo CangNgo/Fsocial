@@ -14,6 +14,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -61,6 +63,14 @@ public class AccountController {
     public ApiResponse<AccountResponse> getAccount(@PathVariable String userId) {
         AccountResponse account = accountServices.getUser(userId);
         return buildResponse(account, ResponseStatus.SUCCESS);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping("/change-password")
+    public ApiResponse<Void> changePassword(@RequestBody @Valid ChangePasswordRequest request) {
+        var userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        accountServices.changePassword(userId, request.getOldPassword(), request.getNewPassword());
+        return buildResponse(null, ResponseStatus.PASSWORD_CHANGED);
     }
 
     private <T> ApiResponse<T> buildResponse(T data, ResponseStatus responseStatus) {

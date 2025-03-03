@@ -30,6 +30,11 @@ public class AccountProfileController {
         return accountProfileService.createAccountProfile(request);
     }
 
+    @GetMapping("/internal/{userId}")
+    public ProfileNameResponse getProfileByUserId(@PathVariable String userId) {
+        return accountProfileService.getProfileByUserId(userId);
+    }
+
     @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ApiResponse<ProfileResponse> getAccountProfile() {
@@ -43,16 +48,6 @@ public class AccountProfileController {
                                                             @RequestBody @Valid ProfileUpdateRequest request) {
         ProfileUpdateResponse response = accountProfileService.updateProfile(profileId, request);
         return buildResponse(response);
-    }
-
-    @GetMapping("/internal/{userId}")
-    public ProfileNameResponse getProfileByUserId(@PathVariable String userId) {
-        return accountProfileService.getProfileByUserId(userId);
-    }
-
-    @GetMapping("/{userIdByPost}")
-    public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String userIdByPost) {
-        return accountProfileService.getAccountProfile(userIdByPost);
     }
 
     private <T> ApiResponse<T> buildResponse(T data) {

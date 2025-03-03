@@ -23,7 +23,9 @@ public enum ErrorCode implements CodeEnum{
     LOGIN_FAILED(472, "Sai tên đăng nhập hoặc mật khẩu.", HttpStatus.BAD_REQUEST),
     WEAK_SECRET_KEY(473, "Signer Key không đủ mạnh.", HttpStatus.BAD_REQUEST),
     TOKEN_EXPIRED(700, "Token hết thời hạn.", HttpStatus.BAD_REQUEST),
-    INVALID_TOKEN(701, "Token không hợp lệ.", HttpStatus.BAD_REQUEST)
+    INVALID_TOKEN(701, "Token không hợp lệ.", HttpStatus.BAD_REQUEST),
+    WRONG_PASSWORD(702, "Mật khẩu không đúng.", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED(703, "Không có quyền truy cập.", HttpStatus.UNAUTHORIZED),
     ;
     final int code;
     final String message;

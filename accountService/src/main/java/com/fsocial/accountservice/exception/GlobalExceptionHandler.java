@@ -5,6 +5,7 @@ import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.enums.ValidErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,6 +56,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AccessDeniedException.class)
     ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException exception) {
         return buildResponse(ErrorCode.UNAUTHENTICATED);
+    }
+
+    @ExceptionHandler(value = AuthorizationDeniedException.class)
+    ResponseEntity<ApiResponse> handleAuthorizationDeniedException(AuthorizationDeniedException exception) {
+        return buildResponse(ErrorCode.UNAUTHORIZED);
     }
 
     private ResponseEntity<ApiResponse> buildResponse(ErrorCode errorCode) {

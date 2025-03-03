@@ -3,7 +3,6 @@ package com.cangngo.apigateway.config;
 import com.cangngo.apigateway.dto.ApiResponse;
 import com.cangngo.apigateway.enums.ErrorCode;
 import com.cangngo.apigateway.service.AccountService;
-import com.cangngo.apigateway.dto.response.IntrospectResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
@@ -82,7 +81,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
                 .dateTime(LocalDateTime.now())
                 .build();
 
-        String body = null;
+        String body;
         try {
             body = objectMapper.writeValueAsString(apiResponse);
         } catch (JsonProcessingException e) {

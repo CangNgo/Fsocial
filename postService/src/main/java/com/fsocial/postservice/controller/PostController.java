@@ -6,7 +6,9 @@ import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
+import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.PostService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,15 +27,18 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<Response> createPost(PostDTORequest request) throws AppCheckedException {
-
+    public ResponseEntity<Response> createPost(@Valid PostDTORequest request) throws AppCheckedException {
+        //If text and media is null -> return
+        if ((request.getText() == null || request.getText().isEmpty())
+                && (request.getMedia() == null || request.getMedia().length == 0)) {
+            throw new AppCheckedException("Bài viết phải có nội dung, hình ảnh hoặc video", StatusCode.NOT_CONTENT);
+        }
         PostDTO post = postService.createPost(request);
 
         return ResponseEntity.ok(Response.builder()
                 .data(post)
-                .statusCode(ResponseStatus.SUCCESS.getCODE())
-                .message(ResponseStatus.SUCCESS.getMessage())
-                .dateTime(LocalDateTime.now())
+                .statusCode(StatusCode.CREATE_POST_SUCCESS.getCode())
+                .message("Tạo bài viết thành công")
                 .build());
     }
 
@@ -42,16 +47,25 @@ public class PostController {
             @RequestParam("text") String text,
             @RequestParam("HTMLText") String HTMLText,
             @RequestParam("postId") String postId) throws AppCheckedException {
+
+        //check postId
+        if(postId == null || postId.isEmpty()) {
+            throw new AppCheckedException("Mã bài viết không được để trống", StatusCode.POST_NOT_FOUND);
+        }
+
+        //Mapping DTO
         PostDTORequest postDTO = PostDTORequest.builder()
                 .text(text)
                 .HTMLText(HTMLText)
                 .build();
+
+        //Update Post
         PostDTO post = postService.updatePost(postDTO, postId);
+
+        //return result
         return ResponseEntity.ok(Response.builder()
                 .data(post)
                 .message("Cập nhật bài viết thành công")
-                .statusCode(200)
-                .dateTime(LocalDateTime.now())
                 .build());
     }
 
@@ -61,22 +75,20 @@ public class PostController {
         postService.deletePost(postId);
         return ResponseEntity.ok(Response.builder()
                 .message("Xóa bài viết thành công")
-                .dateTime(LocalDateTime.now())
-                .statusCode(200)
                 .build());
     }
 
     //Like Post
     @PostMapping("/like")
-    public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO) throws AppCheckedException {
-        boolean like = postService.toggleLike(likeDTO);
-        Map<String, Boolean> map = new HashMap<>();
+    public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO) throws Exception {
+        boolean like = postService.toggleLike(likeDTO.getPostId(), likeDTO.getUserId());
+
+        Map<String, Object> map = new HashMap<>();
         map.put("like", like);
+        map.put("userId", likeDTO.getUserId());
         return ResponseEntity.ok(Response.builder()
                 .data(map)
-                .message("Cập nhật bài viết thành công")
-                .statusCode(200)
-                .dateTime(LocalDateTime.now())
+                .message(like?"Thích bài viết thành công":"bỏ thích bài viết thành công")
                 .build());
     }
 }

@@ -79,8 +79,6 @@ public class CommentServiceImpl implements CommentService {
 
     private Comment buildComment(CommentDTORequest request, String[] mediaUrls) {
         return Comment.builder()
-                .countReplyComment(0)
-                .countLikes(0)
                 .reply(false)
                 .postId(request.getPostId())
                 .userId(request.getUserId())
@@ -93,7 +91,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getComments(String postId) {
-        return commentRepository.findByPostId(postId);
+    public boolean toggleLikeComment(String commentId, String userId) {
+        boolean existed = commentRepository.existsByIdAndLikes(commentId, userId);
+        if (!existed) {
+             commentRepository.addLikeComment(commentId,userId);
+             kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+             return true;
+        }else {
+            commentRepository.removeLikeComment(commentId,userId);
+            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+            return false;
+        }
+    }
+
+
+    @Override
+    public Integer countLike(String commentId, String userId) {
+        return 0;
     }
 }

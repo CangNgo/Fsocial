@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.List;
 
 public interface CommentService{
-    Comment addComment(CommentDTORequest comment) throws AppCheckedException, IOException, AppCheckedException;
-    List<Comment> getComments(String postId);
+    Comment addComment(CommentDTORequest comment) throws IOException, AppCheckedException;
+
+    boolean toggleLikeComment(String commentId, String userId);
+
+    Integer countLike(String commentId, String userId);
+
 }

@@ -12,5 +12,8 @@ public interface PostService {
 
     void deletePost(String postId) ;
 
-    boolean toggleLike(LikePostDTO like) throws AppCheckedException;
+    boolean toggleLike(String postId, String userId) throws Exception;
+
+
+    Integer CountLike(String postId, String userId);
 }

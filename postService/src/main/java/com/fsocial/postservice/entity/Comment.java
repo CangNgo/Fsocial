@@ -5,6 +5,9 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,17 +15,17 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = "comment")
 @Builder
-public class Comment extends AbstractEntity<String>{
+public class Comment extends AbstractEntity<String> {
     @Field("postId")
     String postId;
     @Field("userId")
     String userId;
     @Field("content")
     Content content;
-    @Field("count_likes")
-    int countLikes;
-    @Field("count_reply_comment")
-    int countReplyComment;
+    @Field("likes")
+    List<String> likes;
+    @Field("creat_datetime")
+    LocalDateTime creatDatetime = LocalDateTime.now();
     @Field("reply")
-    boolean reply;
+    Boolean reply;
 }

@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PostDTORequest {
-    LocalDateTime createdAt = LocalDateTime.now();
+    LocalDateTime createDatetime = LocalDateTime.now();
+    @NotBlank(message = "Id người dùng không được để trống")
     String userId;
     String text;
     String HTMLText;

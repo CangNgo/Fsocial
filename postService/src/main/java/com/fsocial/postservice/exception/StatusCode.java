@@ -29,6 +29,7 @@ public enum StatusCode {
     UNSUPPORTED_MEDIA_TYPE(304, "Unsupported Media Type"),
     UNAUTHENTICATED(468, "Tài khoản chưa được xác thực."),
     UPLOAD_MEDIA_FAILED(210, "Upload media failed"),
+    NOT_CONTENT(211,"Not Content"),
     ;
     private final int code;
     private final String message;

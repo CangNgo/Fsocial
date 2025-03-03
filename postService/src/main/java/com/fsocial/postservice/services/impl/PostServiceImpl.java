@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -71,12 +72,8 @@ public class PostServiceImpl implements PostService {
                     .HTMLText(postRequest.getHTMLText())
                     .media(uripostImage)
                     .build();
-
-            post.setCountComments(0);
-            post.setCountLikes(0);
             post.setContent(contentMapper.toContent(content));
-            post.setCreatedBy(postRequest.getHTMLText());
-            post.setCreatedAt(LocalDateTime.now());
+            post.setCreateDatetime(LocalDateTime.now());
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {
@@ -97,6 +94,7 @@ public class PostServiceImpl implements PostService {
                 .HTMLText(post.getHTMLText())
                 .media(existingPost.getContent().getMedia())
                 .build());
+        //cap nhat thoi gian
         existingPost.setUpdatedAt(LocalDateTime.now());
         return postMapper.toPostDTO(postRepository.save(existingPost));
     }
@@ -105,39 +103,65 @@ public class PostServiceImpl implements PostService {
     public void deletePost(String postId) {
         postRepository.deleteById(postId);
     }
+//
+//    @Override
+//    @Transactional
+//    public boolean toggleLike(LikePostDTO like) throws AppCheckedException {
+//
+//        Post postById = postRepository.findById(like.getPostId())
+//                .orElseThrow(() -> new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND));
+//        if (postById.getLikes().isEmpty()){
+//            likeRepository.save(Like.builder()
+//                            .userIds(List.of(like.getUserId()))
+//                            .postId(like.getPostId())
+//                    .build());
+//            postById.setLikes(Collections.singletonList(like.getUserId()));
+//            postRepository.save(postById);
+//
+//            kafkaService.sendNotification(postById.getUserId(), like.getUserId(), MessageNotice.NOTIFICATION_LIKE);
+//            return true;
+//        }
+//        //check trùng
+//        boolean exists = likeRepository.existsByPostIdAndUserIds(like.getPostId(), like.getUserId());
+//
+//        if (exists) {
+//            likeRepository.removeUserIdFromPost(like.getPostId(), like.getUserId());
+//            postById.setCountLikes(postById.getCountLikes() - 1);
+//            postRepository.save(postById);
+//            return false;
+//        } else {
+//            likeRepository.addUserIdToPost(like.getPostId(), like.getUserId());
+//            postById.setCountLikes(postById.getCountLikes() + 1);
+//            postRepository.save(postById);
+//
+//            kafkaService.sendNotification(postById.getUserId(), like.getUserId(), MessageNotice.NOTIFICATION_LIKE);
+//            return true;
+//        }
+//    }
 
     @Override
-    @Transactional
-    public boolean toggleLike(LikePostDTO like) throws AppCheckedException {
+    public boolean toggleLike(String postId, String userId) throws Exception {
 
-        Post postById = postRepository.findById(like.getPostId())
-                .orElseThrow(() -> new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND));
-        if (postById.getCountLikes() == 0){
-            likeRepository.save(Like.builder()
-                            .userIds(List.of(like.getUserId()))
-                            .postId(like.getPostId())
-                    .build());
-            postById.setCountLikes(postById.getCountLikes() + 1);
-            postRepository.save(postById);
-
-            kafkaService.sendNotification(postById.getUserId(), like.getUserId(), MessageNotice.NOTIFICATION_LIKE);
-            return true;
+        boolean existed = likeRepository.existsByPostIdAndUserIds(postId, userId);
+        try {
+            if (!existed) {
+                postRepository.addLike(postId, userId);
+                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+                return true;
+            } else {
+                postRepository.removeLike(postId, userId);
+                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+                return false;
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
         }
-        //check trùng
-        boolean exists = likeRepository.existsByPostIdAndUserIds(like.getPostId(), like.getUserId());
+    }
 
-        if (exists) {
-            likeRepository.removeUserIdFromPost(like.getPostId(), like.getUserId());
-            postById.setCountLikes(postById.getCountLikes() - 1);
-            postRepository.save(postById);
-            return false;
-        } else {
-            likeRepository.addUserIdToPost(like.getPostId(), like.getUserId());
-            postById.setCountLikes(postById.getCountLikes() + 1);
-            postRepository.save(postById);
 
-            kafkaService.sendNotification(postById.getUserId(), like.getUserId(), MessageNotice.NOTIFICATION_LIKE);
-            return true;
-        }
+    @Override
+    public Integer CountLike(String postId, String userId) {
+        Integer countLike = postRepository.countLikeByPost(postId);
+        return countLike == null ? 0 : countLike;
     }
 }

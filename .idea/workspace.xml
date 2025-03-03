@@ -5,25 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="727dc8d6-7483-4d58-98c8-7e239f5b8b30" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Fsocial pld.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notificationService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/dto/response/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/dto/response/ApiResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/Like.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/LikePostRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/PostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/CommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,39 +16,42 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 7
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2towLgSOzR0vuMKvhOeuUuIVxkz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.notificationService [clean].executor": "Run",
-    "Maven.notificationService [install].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.ApigatewayApplication.executor": "Run",
-    "Spring Boot.NotificationServiceApplication.executor": "Run",
-    "Spring Boot.PostServiceApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "com.poratu.idea.plugins.tomcat.setting.TomcatServersConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.notificationService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [install].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ApigatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.NotificationServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PostServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.poratu.idea.plugins.tomcat.setting.TomcatServersConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
@@ -76,7 +62,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.NotificationServiceApplication">
+  <component name="RunManager" selected="Spring Boot.ApigatewayApplication">
     <configuration name="ApigatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="apigateway" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.cangngo.apigateway.ApigatewayApplication" />

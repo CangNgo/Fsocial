@@ -18,6 +18,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,6 +39,7 @@ public class CommentServiceImpl implements CommentService {
     UploadMedia uploadMedia;
     KafkaService kafkaService;
     PostRepository postRepository;
+    MongoTemplate mongoTemplate;
 
     @Override
     @Transactional

@@ -32,7 +32,7 @@ public class AppConfig {
     CustomJwtDecode customJwtDecode;
 
     @NonFinal
-    private final String[] PUBLIC_API = {"/**"};
+    private final String[] PUBLIC_API = {"/**", "/post/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

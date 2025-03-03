@@ -26,8 +26,12 @@ public class Post extends AbstractEntity<String> {
     List<String> likes = new ArrayList<>();
     @Field("create_datetime")
     LocalDateTime createDatetime = LocalDateTime.now();
+    //share
     @Field("origin_post")
     String originPostId;
     @Field("is_share")
     Boolean isShare = false;
+
+    @Field("status")
+    Boolean status = true;
 }

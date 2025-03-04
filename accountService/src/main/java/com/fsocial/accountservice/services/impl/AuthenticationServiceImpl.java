@@ -1,26 +1,22 @@
 package com.fsocial.accountservice.services.impl;
 
 import com.fsocial.accountservice.dto.request.account.AccountLoginRequest;
-import com.fsocial.accountservice.dto.request.auth.TokenRequest;
-import com.fsocial.accountservice.dto.response.AuthenticationResponse;
-import com.fsocial.accountservice.dto.response.IntrospectResponse;
+import com.fsocial.accountservice.dto.response.auth.AuthenticationResponse;
+import com.fsocial.accountservice.dto.response.auth.IntrospectResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.repository.AccountRepository;
-import com.fsocial.accountservice.repository.httpclient.ProfileClient;
 import com.fsocial.accountservice.services.AuthenticationService;
-import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.MACVerifier;
-import com.nimbusds.jwt.SignedJWT;
+import com.fsocial.accountservice.services.RefreshTokenService;
+import com.fsocial.accountservice.services.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
 
 @Service
 @RequiredArgsConstructor
@@ -30,39 +26,35 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     AccountRepository accountRepository;
     PasswordEncoder passwordEncoder;
-    ProfileClient profileClient;
-    TokenServiceImpl tokenService;
+    JwtService jwtService;
+    RefreshTokenService refreshTokenService;
 
     @Override
-    public AuthenticationResponse login(AccountLoginRequest request) {
+    public AuthenticationResponse login(AccountLoginRequest request, String userAgent, HttpServletRequest httpRequest) {
         Account account = accountRepository.findByUsernameOrEmail(request.getUsername(), request.getUsername())
-                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
+                .filter(acc -> acc.getPassword() != null && passwordEncoder.matches(request.getPassword(), acc.getPassword()))
+                .orElseThrow(() -> {
+                    log.warn("Sai tên tài khoản hoặc mật khẩu: {}", request.getUsername());
+                    return new AppException(ErrorCode.LOGIN_FAILED);
+                });
 
-        if (account.getPassword() == null || !passwordEncoder.matches(request.getPassword(), account.getPassword()))
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
+        String ipAddress = httpRequest.getRemoteAddr();
+        String accessToken = jwtService.generateToken(account.getUsername());
+        String refreshToken = refreshTokenService.createRefreshToken(request.getUsername(), userAgent, ipAddress).getToken();
+
+        log.info("Người dùng {} đăng nhập thành công từ IP: {}", request.getUsername(), ipAddress);
 
         return AuthenticationResponse.builder()
-                .token(tokenService.generateToken(account))
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
     @Override
-    public IntrospectResponse introspectValid(TokenRequest request) {
-        try {
-            SignedJWT signedJWT = SignedJWT.parse(request.getToken());
-            return IntrospectResponse.builder()
-                    .valid(signedJWT.verify(new MACVerifier(tokenService.getSignerKey())))
-                    .build();
-        } catch (JOSEException | ParseException e) {
-            log.error("Xác minh token không thành công: {}", e.getMessage(), e);
-            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
-        }
+    public IntrospectResponse introspect(String token) {
+        boolean valid = jwtService.verifyToken(token);
+        return IntrospectResponse.builder()
+                .valid(valid)
+                .build();
     }
-
-    @Override
-    public void logout(TokenRequest request) {
-        if (request == null || request.getToken() == null) throw new AppException(ErrorCode.OTP_INVALID);
-        tokenService.invalidateToken(request.getToken());
-    }
-
 }

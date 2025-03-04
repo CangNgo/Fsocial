@@ -1,75 +1,82 @@
 package com.fsocial.postservice.controller;
 
-import com.fsocial.postservice.dto.PostDTO;
-import com.fsocial.postservice.dto.PostDTORequest;
 import com.fsocial.postservice.dto.Response;
-import com.fsocial.postservice.entity.Post;
+import com.fsocial.postservice.dto.post.LikePostDTO;
+import com.fsocial.postservice.dto.post.PostDTO;
+import com.fsocial.postservice.dto.post.PostDTORequest;
+import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.PostService;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
-/*
-* Khong nhan request 1 image
-* */
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/create")
+@RequestMapping("/actions")
 public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<Response> createPost(
+    public ResponseEntity<Response> createPost(PostDTORequest request) throws AppCheckedException {
+
+        PostDTO post = postService.createPost(request);
+
+        return ResponseEntity.ok(Response.builder()
+                .data(post)
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message(ResponseStatus.SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
+                .build());
+    }
+
+    @PutMapping
+    public ResponseEntity<Response> updatePost(
             @RequestParam("text") String text,
             @RequestParam("HTMLText") String HTMLText,
-            @RequestParam(value = "media", required = false) MultipartFile[] media,
-            @RequestParam("userId") String userId) {
+            @RequestParam("postId") String postId) throws AppCheckedException {
         PostDTORequest postDTO = PostDTORequest.builder()
                 .text(text)
                 .HTMLText(HTMLText)
-                .media(media)
                 .build();
-        try {
-            PostDTO post = postService.createPost(postDTO, userId);
-
-            return ResponseEntity.ok().body(Response.builder()
+        PostDTO post = postService.updatePost(postDTO, postId);
+        return ResponseEntity.ok(Response.builder()
                 .data(post)
-                .message("Thêm mới bài viết thành công")
-                .statusCode(StatusCode.CREATE_POST_SUCCESS.getCode())
+                .message("Cập nhật bài viết thành công")
+                .statusCode(200)
+                .dateTime(LocalDateTime.now())
                 .build());
-        } catch (RuntimeException | AppCheckedException e) {
-            return ResponseEntity.ok().body(Response.builder()
-                .data(null)
-                .message(e.getMessage())
-                .statusCode(StatusCode.CREATE_POST_FAILED.getCode())
-                .build());
-        }
     }
 
-    @GetMapping
-    public ResponseEntity<Response> getPosts() {
-        try {
-            List<Post> post = postService.getPosts();
+    @DeleteMapping
+    public ResponseEntity<Response> deletePost(
+            @RequestParam("postId") String postId) {
+        postService.deletePost(postId);
+        return ResponseEntity.ok(Response.builder()
+                .message("Xóa bài viết thành công")
+                .dateTime(LocalDateTime.now())
+                .statusCode(200)
+                .build());
+    }
 
-            return ResponseEntity.ok().body(Response.builder()
-                    .data(post)
-                    .message("Thêm mới bài viết thành công")
-                    .statusCode(StatusCode.CREATE_POST_SUCCESS.getCode())
-                    .build());
-        } catch (RuntimeException e) {
-            return ResponseEntity.ok().body(Response.builder()
-                    .data(null)
-                    .message(e.getMessage())
-                    .statusCode(StatusCode.CREATE_POST_FAILED.getCode())
-                    .build());
-        }
+    //Like Post
+    @PostMapping("/like")
+    public ResponseEntity<Response> likePost(@RequestBody LikePostDTO likeDTO) throws AppCheckedException {
+        boolean like = postService.toggleLike(likeDTO);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("like", like);
+        return ResponseEntity.ok(Response.builder()
+                .data(map)
+                .message("Cập nhật bài viết thành công")
+                .statusCode(200)
+                .dateTime(LocalDateTime.now())
+                .build());
     }
 }

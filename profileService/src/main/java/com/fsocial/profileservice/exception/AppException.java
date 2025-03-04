@@ -1,5 +1,6 @@
 package com.fsocial.profileservice.exception;
 
+import com.fsocial.profileservice.enums.ErrorCode;
 import lombok.Getter;
 
 /*
@@ -9,9 +10,9 @@ runtime của ứng dụng của bạn mà không yêu cầu phải khai báo th
 * */
 @Getter
 public class AppException extends RuntimeException {
-    private final StatusCode status;
+    private final ErrorCode status;
 
-    public AppException(StatusCode status) {
+    public AppException(ErrorCode status) {
         super(status.getMessage());
         this.status = status;
     }

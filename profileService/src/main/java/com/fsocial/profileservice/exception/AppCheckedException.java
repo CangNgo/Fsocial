@@ -1,5 +1,6 @@
 package com.fsocial.profileservice.exception;
 
+import com.fsocial.profileservice.enums.ErrorCode;
 import lombok.Getter;
 /*
 AppCheckedException là một checked exception,
@@ -10,9 +11,9 @@ ngay khi nó xảy ra để đảm bảo tính nhất quán và bảo mật tron
 */
 @Getter
 public class AppCheckedException extends Exception {
-    private final StatusCode status;
+    private final ErrorCode status;
 
-    public AppCheckedException(String message, StatusCode status) {
+    public AppCheckedException(String message, ErrorCode status) {
         super(message);
         this.status = status;
     }

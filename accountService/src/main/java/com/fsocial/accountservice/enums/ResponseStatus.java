@@ -1,10 +1,11 @@
 package com.fsocial.accountservice.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public enum ResponseStatus {
     SUCCESS("Thao tác thành công."),
     ACCOUNT_REGISTERED("Tài khoản đã được đăng ký thành công."),
@@ -12,7 +13,8 @@ public enum ResponseStatus {
     OTP_VALID("OTP là hợp lệ."),
     PASSWORD_RESET_SUCCESS("Mật khẩu đã được đặt lại thành công."),
     VALID("Thông tin hợp lệ."),
-    INVALID("Thông tin không hợp lệ.")
+    INVALID("Thông tin không hợp lệ."),
+    PASSWORD_CHANGED("Mật khẩu đã được thay đổi."),
     ;
 
     private final int CODE = 200;

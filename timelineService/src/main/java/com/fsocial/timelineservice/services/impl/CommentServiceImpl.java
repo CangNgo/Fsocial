@@ -1,11 +1,11 @@
 package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.timelineservice.Repository.CommentRepository;
-import com.fsocial.timelineservice.Repository.httpClient.ProfileClient;
+import com.fsocial.timelineservice.enums.StatusCode;
+import com.fsocial.timelineservice.repository.CommentRepository;
+import com.fsocial.timelineservice.repository.httpClient.ProfileClient;
 import com.fsocial.timelineservice.dto.comment.CommentResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.exception.AppCheckedException;
-import com.fsocial.timelineservice.exception.StatusCode;
 import com.fsocial.timelineservice.services.CommentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -26,29 +26,37 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponse> getComments(String postId) {
-        return commentRepository.findAll().stream()
+        return commentRepository.findCommentsByPostId(postId).stream()
                 .map(comment -> {
                     ProfileResponse profileResponse = null;
                     try {
                         profileResponse = getProfile(comment.getUserId());
-                    } catch (RuntimeException e) {
+                    } catch (AppCheckedException e) {
                         throw new RuntimeException(e);
                     }
+
+
                     return CommentResponse.builder()
                             .id(comment.getId())
                             .content(comment.getContent())
                             .countReplyComments(comment.getCountReplyComment())
                             .countLikes(comment.getCountLikes())
-                            .userName(profileResponse.getFirstName() + " " + profileResponse.getLastName())
+                            .displayName(profileResponse.getFirstName() + " " + profileResponse.getLastName())
                             .avatar(profileResponse.getAvatar())
                             .userId(comment.getUserId())
                             .reply(comment.isReply())
+                            .createdAt(comment.getCreatedAt())
                             .build();
                 })
                 .collect(Collectors.toList());
     }
 
-    public ProfileResponse getProfile(String userId) {
-        return profileClient.getProfile(userId);
+    public ProfileResponse getProfile(String userId) throws AppCheckedException {
+
+        try {
+            return profileClient.getProfileResponseByUserId(userId);
+        } catch (Exception e) {
+            throw new AppCheckedException("Không tìm thấy thông tin người dùng", StatusCode.PROFILE_NOT_FOUND);
+        }
     }
 }

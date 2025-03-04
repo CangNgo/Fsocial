@@ -2,59 +2,70 @@ package com.fsocial.accountservice.controller;
 
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.AccountLoginRequest;
+import com.fsocial.accountservice.dto.request.auth.RefreshTokenRequest;
 import com.fsocial.accountservice.dto.request.auth.TokenRequest;
-import com.fsocial.accountservice.dto.response.AuthenticationResponse;
-import com.fsocial.accountservice.dto.response.IntrospectResponse;
+import com.fsocial.accountservice.dto.response.auth.AuthenticationResponse;
+import com.fsocial.accountservice.dto.response.auth.IntrospectResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
-import com.fsocial.accountservice.services.impl.AuthenticationServiceImpl;
-import com.nimbusds.jose.JOSEException;
+import com.fsocial.accountservice.services.AuthenticationService;
+import com.fsocial.accountservice.services.JwtService;
+import com.fsocial.accountservice.services.RefreshTokenService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.antlr.v4.runtime.Token;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RestController
+@Slf4j
 public class AuthenticateController {
 
-    AuthenticationServiceImpl authenticationService;
+    AuthenticationService authenticationService;
+    RefreshTokenService refreshTokenService;
+    JwtService jwtService;
 
     @PostMapping("/introspect")
-    public ApiResponse<IntrospectResponse> introspectValid(@RequestBody TokenRequest request) {
-        return ApiResponse.<IntrospectResponse>builder()
-                .statusCode(ResponseStatus.SUCCESS.getCODE())
-                .message(ResponseStatus.SUCCESS.getMessage())
-                .data(
-                        authenticationService.introspectValid(request)
-                )
-                .build();
+    public ApiResponse<IntrospectResponse> introspect(@RequestBody @Valid TokenRequest token) {
+        return buildResponse(authenticationService.introspect(token.getToken()));
     }
 
     @PostMapping("/login")
-    public ApiResponse<AuthenticationResponse> handleLogin(@RequestBody @Valid AccountLoginRequest request) {
-        return ApiResponse.<AuthenticationResponse>builder()
-                .statusCode(ResponseStatus.SUCCESS.getCODE())
-                .message(ResponseStatus.SUCCESS.getMessage())
-                .data(
-                        authenticationService.login(request)
-                )
-                .build();
+    public ApiResponse<AuthenticationResponse> handleLogin(@RequestBody @Valid AccountLoginRequest request,
+                                                           @RequestHeader("User-Agent") String userAgent,
+                                                           HttpServletRequest httpRequest) {
+        return buildResponse(authenticationService.login(request, userAgent, httpRequest));
+    }
+
+    @PostMapping("/refresh-token")
+    public ApiResponse<AuthenticationResponse> refreshAccessToken(@RequestBody @Valid RefreshTokenRequest request,
+                                                                  @RequestHeader("User-Agent") String userAgent,
+                                                                  HttpServletRequest httpRequest) {
+        String ipAddress = httpRequest.getRemoteAddr();
+        return buildResponse(refreshTokenService.refreshAccessToken(request.getRefreshToken(), userAgent, ipAddress));
     }
 
     @PostMapping("/logout")
-    public ApiResponse<Void> logout(@RequestBody @Valid TokenRequest request) throws ParseException, JOSEException {
-        authenticationService.logout(request);
+    public ApiResponse<?> logout(@RequestBody @Valid TokenRequest refreshToken,
+                                    HttpServletRequest httpRequest) {
+        refreshTokenService.disableRefreshToken(refreshToken.getToken());
+        SecurityContextHolder.clearContext();
+        httpRequest.getSession().invalidate();
+        return buildResponse(null);
+    }
 
-        return ApiResponse.<Void>builder()
+    private <T> ApiResponse<T> buildResponse(T data) {
+        return ApiResponse.<T>builder()
                 .statusCode(ResponseStatus.SUCCESS.getCODE())
                 .message(ResponseStatus.SUCCESS.getMessage())
+                .dateTime(LocalDateTime.now())
+                .data(data)
                 .build();
     }
 }

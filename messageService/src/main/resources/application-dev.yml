@@ -4,10 +4,9 @@ database:
 spring:
   application:
     name: messageService
-  datasource:
-    url: jdbc:mysql://localhost:3306/?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username:
-    password:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/dev_database
   jpa:
     hibernate:
       ddl-auto: update

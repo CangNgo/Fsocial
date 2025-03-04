@@ -13,7 +13,7 @@
         </processorPath>
         <module name="apigateway" />
       </profile>
-      <profile name="Annotation profile for notificationService" enabled="true">
+
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -37,6 +37,7 @@
         <module name="profileService" />
         <module name="postService" />
         <module name="accountService" />
+        <module name="messageService" />
         <module name="timeLineService" />
         <module name="messageService" />
       </profile>

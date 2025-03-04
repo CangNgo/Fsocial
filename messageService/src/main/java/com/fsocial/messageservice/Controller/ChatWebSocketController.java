@@ -1,13 +1,14 @@
 package com.fsocial.messageservice.Controller;
+
 import com.fsocial.messageservice.Entity.ChatMessage;
 import com.fsocial.messageservice.Enum.MessageType;
 import com.fsocial.messageservice.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public class ChatWebSocketController {
 
     @Autowired
     private ChatService chatService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     /**
      * Nhận tin nhắn chat từ client gửi tới "/chat.sendMessage",
@@ -47,5 +51,29 @@ public class ChatWebSocketController {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         chatMessage.setType(MessageType.JOIN);
         return chatMessage;
+    }
+
+    /**
+     * Nhận tin nhắn chat private từ client gửi tới "/chat.private".
+     * Tin nhắn sẽ được lưu vào MongoDB và gửi tới user nhận thông qua "/user/queue/private".
+     * Client nhận tin nhắn private cần subscribe tới "/user/queue/private".
+     */
+    @MessageMapping("/chat.private")
+    public void sendPrivateMessage(@Payload ChatMessage chatMessage) {
+
+        chatService.saveChatMessage(chatMessage);
+
+        messagingTemplate.convertAndSendToUser(
+                chatMessage.getReciver(),
+                "/queue/private",
+                chatMessage
+        );
+    }
+
+
+    @GetMapping("/chat/messages/{username}")
+    @ResponseBody
+    public List<ChatMessage> getMessagesByUser(@PathVariable String username) {
+        return chatService.findMessagesByUser(username);
     }
 }

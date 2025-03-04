@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_02_2025,_22_22_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_11_02_2025__22_22__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Controller/ChatWebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Controller/ChatWebSocketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/ChatMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Repository/ChatMessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/ChatService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +98,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.TimeLineServiceApplication">
+  <component name="RunManager" selected="Spring Boot.MessageServiceApplication">
     <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="accountService" />
@@ -156,13 +155,13 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Spring Boot.AccountServiceApplication" />
+      <item itemvalue="Spring Boot.ApigatewayApplication" />
       <item itemvalue="Spring Boot.MessageServiceApplication" />
       <item itemvalue="Spring Boot.PostServiceApplication" />
-      <item itemvalue="Spring Boot.AccountServiceApplication" />
-      <item itemvalue="Spring Boot.ProfileServiceApplication" />
       <item itemvalue="Spring Boot.ProcessorServiceApplication" />
+      <item itemvalue="Spring Boot.ProfileServiceApplication" />
       <item itemvalue="Spring Boot.TimeLineServiceApplication" />
-      <item itemvalue="Spring Boot.ApigatewayApplication" />
     </list>
   </component>
   <component name="SharedIndexes">
@@ -187,6 +186,10 @@
       <workItem from="1740145165362" duration="1684000" />
       <workItem from="1740148121522" duration="1169000" />
       <workItem from="1740414186304" duration="1774000" />
+      <workItem from="1740615690742" duration="68000" />
+      <workItem from="1740615786273" duration="7000" />
+      <workItem from="1741016792649" duration="2305000" />
+      <workItem from="1741103900258" duration="462000" />
     </task>
     <servers />
   </component>

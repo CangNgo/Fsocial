@@ -14,10 +14,9 @@ springdoc:
     persist-authorization: true
 
 spring:
-  datasource:
-    url: jdbc:mysql://${db.endpoint}:${db.port}/${db.name}?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username: ${db.username}
-    password: ${db.password}
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/dev_database
   jpa:
     hibernate:
       ddl-auto: update

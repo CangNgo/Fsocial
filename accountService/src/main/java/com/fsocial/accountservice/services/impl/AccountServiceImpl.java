@@ -108,6 +108,12 @@ public class AccountServiceImpl implements AccountService {
         log.info("Đổi mật khẩu thành công.");
     }
 
+    @Override
+    public boolean existsById(String id) {
+        boolean exsists = accountRepository.findById(id).isPresent();
+        return exsists;
+    }
+
     private void validateAccountExistence(String username, String email) {
         boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;
         if (accountExisted) throw new AppException(ErrorCode.ACCOUNT_EXISTED);

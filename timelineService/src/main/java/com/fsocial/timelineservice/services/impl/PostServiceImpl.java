@@ -1,6 +1,5 @@
 package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.timelineservice.dto.post.PostByUserIdResponse;
 import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Post;
@@ -8,13 +7,11 @@ import com.fsocial.timelineservice.enums.StatusCode;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.exception.AppUnCheckedException;
 import com.fsocial.timelineservice.repository.CommentRepository;
-import com.fsocial.timelineservice.repository.LikeRepository;
 import com.fsocial.timelineservice.repository.PostRepository;
 import com.fsocial.timelineservice.repository.httpClient.ProfileClient;
 import com.fsocial.timelineservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +28,6 @@ public class PostServiceImpl implements PostService {
     ProfileClient profileClient;
 
     CommentRepository commentRepository;
-
-    LikeRepository likeRepository;
 
     @Override
     public List<PostResponse> getPosts() throws AppUnCheckedException {
@@ -62,33 +57,31 @@ public class PostServiceImpl implements PostService {
 
     private PostResponse mapToPostResponse(Post post) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
-
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())
-                .countLikes(post.getCountLikes())
-                .countComments(post.getCountComments())
+                .countLikes(getCountLikes(post.getId()))
+                .countComments(getCountComment(post.getId()))
                 .userId(post.getUserId())
                 .displayName(profile.getFirstName() + " " + profile.getLastName())
                 .avatar(profile.getAvatar())
-                .createdAt(post.getCreatedAt())
+                .createDatetime(post.getCreateDatetime())
                 .isLike(false)
                 .build();
     }
 
     private PostResponse mapToPostByUserIdResponse(Post post, String userId) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
-        boolean likePost = likeRepository.existsByPostIdAndUserIds(post.getId(), userId);
-        int countComment = commentRepository.countCommentsByPostId(post.getId());
+        boolean likePost = postRepository.existsByIdAndLikes(post.getId(),post.getUserId());
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())
-                .countLikes(post.getCountLikes())
-                .countComments(countComment)
+                .countLikes(getCountLikes(post.getId()))
+                .countComments(getCountComment(post.getId()))
                 .userId(post.getUserId())
                 .displayName(profile.getFirstName() + " " + profile.getLastName())
                 .avatar(profile.getAvatar())
-                .createdAt(post.getCreatedAt())
+                .createDatetime(post.getCreateDatetime())
                 .isLike(likePost)
                 .build();
     }
@@ -122,11 +115,17 @@ public class PostServiceImpl implements PostService {
                             .userId(post.getUserId())
                             .displayName(profile.getFirstName() + " " + profile.getLastName())
                             .avatar(profile.getAvatar())
-                            .createdAt(post.getCreatedAt())
+                            .createDatetime(post.getCreateDatetime())
                             .build();
                 })
                 .collect(Collectors.toList());
     }
 
+    private int getCountLikes (String postId){
+        return postRepository.countLikeByPost(postId);
+    }
+    private int getCountComment (String postId){
+        return commentRepository.countCommentsByPostId(postId);
+    }
 
 }

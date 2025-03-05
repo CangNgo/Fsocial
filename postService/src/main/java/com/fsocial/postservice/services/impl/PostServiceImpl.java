@@ -1,19 +1,16 @@
 package com.fsocial.postservice.services.impl;
 
-import com.fsocial.postservice.enums.MessageNotice;
-import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.exception.StatusCode;
-import com.fsocial.postservice.repository.LikePostRepository;
-import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.dto.ContentDTO;
-import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.entity.Content;
-import com.fsocial.postservice.entity.Like;
 import com.fsocial.postservice.entity.Post;
+import com.fsocial.postservice.enums.MessageNotice;
+import com.fsocial.postservice.exception.AppCheckedException;
+import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
+import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.services.KafkaService;
 import com.fsocial.postservice.services.PostService;
 import com.fsocial.postservice.services.UploadMedia;
@@ -21,14 +18,16 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +35,7 @@ import java.util.List;
 @Slf4j
 public class PostServiceImpl implements PostService {
     PostRepository postRepository;
-    LikePostRepository likeRepository;
+    MongoTemplate mongoTemplate;
     UploadMedia uploadMedia;
     PostMapper postMapper;
     ContentMapper contentMapper;
@@ -71,12 +70,8 @@ public class PostServiceImpl implements PostService {
                     .HTMLText(postRequest.getHTMLText())
                     .media(uripostImage)
                     .build();
-
-            post.setCountComments(0);
-            post.setCountLikes(0);
             post.setContent(contentMapper.toContent(content));
-            post.setCreatedBy(postRequest.getHTMLText());
-            post.setCreatedAt(LocalDateTime.now());
+            post.setCreateDatetime(LocalDateTime.now());
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {
@@ -97,6 +92,7 @@ public class PostServiceImpl implements PostService {
                 .HTMLText(post.getHTMLText())
                 .media(existingPost.getContent().getMedia())
                 .build());
+        //cap nhat thoi gian
         existingPost.setUpdatedAt(LocalDateTime.now());
         return postMapper.toPostDTO(postRepository.save(existingPost));
     }
@@ -107,37 +103,39 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
-    public boolean toggleLike(LikePostDTO like) throws AppCheckedException {
+    public boolean toggleLike(String postId, String userId) throws Exception {
 
-        Post postById = postRepository.findById(like.getPostId())
-                .orElseThrow(() -> new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND));
-        if (postById.getCountLikes() == 0){
-            likeRepository.save(Like.builder()
-                            .userIds(List.of(like.getUserId()))
-                            .postId(like.getPostId())
-                    .build());
-            postById.setCountLikes(postById.getCountLikes() + 1);
-            postRepository.save(postById);
-
-            kafkaService.sendNotification(postById.getUserId(), like.getUserId(), MessageNotice.NOTIFICATION_LIKE);
-            return true;
+        boolean existed = postRepository.existsByIdAndLikes(postId, userId);
+        try {
+            if (!existed) {
+                this.addLike(postId, userId);
+                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+                return true;
+            } else {
+                this.removeLike(postId, userId);
+                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+                return false;
+            }
+        } catch (Exception e) {
+            throw new Exception(e);
         }
-        //check trùng
-        boolean exists = likeRepository.existsByPostIdAndUserIds(like.getPostId(), like.getUserId());
+    }
 
-        if (exists) {
-            likeRepository.removeUserIdFromPost(like.getPostId(), like.getUserId());
-            postById.setCountLikes(postById.getCountLikes() - 1);
-            postRepository.save(postById);
-            return false;
-        } else {
-            likeRepository.addUserIdToPost(like.getPostId(), like.getUserId());
-            postById.setCountLikes(postById.getCountLikes() + 1);
-            postRepository.save(postById);
+    public void addLike(String postId, String userId) {
+        Query query = new Query(Criteria.where("_id").is(postId));
+        Update update = new Update().addToSet("likes", userId);
+        mongoTemplate.updateFirst(query, update, Post.class);
+    }
 
-            kafkaService.sendNotification(postById.getUserId(), like.getUserId(), MessageNotice.NOTIFICATION_LIKE);
-            return true;
-        }
+    public void removeLike(String postId, String userId) {
+        Query query = new Query(Criteria.where("_id").is(postId));
+        Update update = new Update().pull("likes", userId);
+        mongoTemplate.updateFirst(query, update, Post.class);
+    }
+
+    @Override
+    public Integer CountLike(String postId, String userId) {
+        Integer countLike = postRepository.countLikeByPost(postId);
+        return countLike == null ? 0 : countLike;
     }
 }

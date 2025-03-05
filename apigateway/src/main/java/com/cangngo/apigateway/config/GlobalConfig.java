@@ -39,7 +39,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**"};
+    private String[] PUBLIC_ENDPOINT = {"/account/**", "/post/**", "/profile/**", "/timeline/**"};
 
     @NonFinal
     @Value("${app.api-prefix}")
@@ -81,7 +81,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
                 .dateTime(LocalDateTime.now())
                 .build();
 
-        String body = null;
+        String body;
         try {
             body = objectMapper.writeValueAsString(apiResponse);
         } catch (JsonProcessingException e) {

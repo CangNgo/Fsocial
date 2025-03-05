@@ -9,6 +9,7 @@ import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.repository.PostRepository;
+import com.fsocial.postservice.repository.httpClient.Accountclient;
 import com.fsocial.postservice.services.CommentService;
 import com.fsocial.postservice.services.UploadMedia;
 import com.fsocial.postservice.services.KafkaService;
@@ -18,13 +19,16 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +42,8 @@ public class CommentServiceImpl implements CommentService {
     UploadMedia uploadMedia;
     KafkaService kafkaService;
     PostRepository postRepository;
+    MongoTemplate mongoTemplate;
+    Accountclient accountclient;
 
     @Override
     @Transactional
@@ -73,14 +79,13 @@ public class CommentServiceImpl implements CommentService {
             return validMedia.length > 0 ? uploadMedia.uploadMedia(validMedia) : new String[0];
         } catch (Exception e) {
             log.error("Lỗi khi tải lên tệp: {}", e.getMessage(), e);
-            throw new AppCheckedException("Upload hình ảnh thất bại" , StatusCode.UPLOAD_MEDIA_FAILED);
+            throw new AppCheckedException("Upload hình ảnh thất bại", StatusCode.UPLOAD_MEDIA_FAILED);
         }
     }
 
     private Comment buildComment(CommentDTORequest request, String[] mediaUrls) {
         return Comment.builder()
-                .countReplyComment(0)
-                .countLikes(0)
+                .likes(new ArrayList<>())
                 .reply(false)
                 .postId(request.getPostId())
                 .userId(request.getUserId())
@@ -93,7 +98,53 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getComments(String postId) {
-        return commentRepository.findByPostId(postId);
+    public boolean toggleLikeComment(String commentId, String userId) throws AppCheckedException {
+        boolean existed = commentRepository.existsByIdAndLikes(commentId, userId);
+        if (!existed) {
+            this.addLikeComment(commentId, userId);
+            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+            return true;
+        } else {
+            this.removeLikeComment(commentId, userId);
+            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+            return false;
+        }
+    }
+
+    @Override
+    public Integer countLike(String commentId, String userId) {
+        return 0;
+    }
+
+    public void addLikeComment(String commentId, String userId) throws AppCheckedException {
+        boolean check = this.userExists(userId);
+        if (!this.commentExist(commentId))
+            throw new AppCheckedException("Bình luân không tồn tại", StatusCode.COMMENT_NOT_FOUND);
+        if (!this.userExists(userId))
+            throw new AppCheckedException("Tài khoản người dùng không tồn tại", StatusCode.USER_NOT_FOUND);
+
+        Query query = new Query(Criteria.where("_id").is(commentId));
+        Update update = new Update().addToSet("likes", userId);
+        mongoTemplate.updateFirst(query, update, Comment.class);
+
+    }
+
+    public void removeLikeComment(String commentId, String userId) throws AppCheckedException {
+        if (!this.commentExist(commentId))
+            throw new AppCheckedException("Bình luân không tồn tại", StatusCode.COMMENT_NOT_FOUND);
+        if (!this.userExists(userId))
+            throw new AppCheckedException("Tài khoản người dùng không tồn tại", StatusCode.USER_NOT_FOUND);
+
+        Query query = new Query(Criteria.where("_id").is(commentId));
+        Update update = new Update().pull("likes", userId);
+        mongoTemplate.updateFirst(query, update, Comment.class);
+    }
+
+    public boolean userExists(String userId) {
+        return accountclient.existsAccountByUserId(userId).getData().containsKey("exists");
+    }
+
+    public boolean commentExist(String commentId) {
+        return commentRepository.existsById(commentId);
     }
 }

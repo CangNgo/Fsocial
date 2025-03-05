@@ -14,7 +14,6 @@ public interface PostMapper {
 
     @Mapping(target = "content.text", source = "text")
     @Mapping(target = "content.media", ignore = true)
-    @Mapping(target = "countLikes", source = "countLikes")
-    @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "createDatetime", source = "createDatetime")
     Post toPost(PostDTORequest dto);
 }

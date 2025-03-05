@@ -61,7 +61,6 @@ public class AppConfig {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
                     throws ServletException, IOException {
-                log.info("Request URI: {}", request.getRequestURI());
                 chain.doFilter(request, response);
             }
         });

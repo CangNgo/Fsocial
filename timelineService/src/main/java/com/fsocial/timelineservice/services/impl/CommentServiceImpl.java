@@ -35,13 +35,12 @@ public class CommentServiceImpl implements CommentService {
                         throw new RuntimeException(e);
                     }
 
-
                     return CommentResponse.builder()
                             .id(comment.getId())
                             .content(comment.getContent())
-                            .countReplyComments(comment.getCountReplyComment())
-                            .countLikes(comment.getCountLikes())
-                            .displayName(profileResponse.getFirstName() + " " + profileResponse.getLastName())
+                            .countLikes(getCountLikesComment(comment.getId()))
+                            .firstName(profileResponse.getFirstName())
+                            .lastName(profileResponse.getLastName())
                             .avatar(profileResponse.getAvatar())
                             .userId(comment.getUserId())
                             .reply(comment.isReply())
@@ -58,5 +57,13 @@ public class CommentServiceImpl implements CommentService {
         } catch (Exception e) {
             throw new AppCheckedException("Không tìm thấy thông tin người dùng", StatusCode.PROFILE_NOT_FOUND);
         }
+    }
+
+        private int getCountLikesComment(String commentId){
+            Integer count = commentRepository.countLike(commentId);
+            return count != null ? count : 0;
+        }
+    private int getCountComments(String postId){
+        return commentRepository.countCommentsByPostId(postId);
     }
 }

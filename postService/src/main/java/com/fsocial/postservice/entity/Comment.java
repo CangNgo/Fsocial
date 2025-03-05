@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -23,7 +24,7 @@ public class Comment extends AbstractEntity<String> {
     @Field("content")
     Content content;
     @Field("likes")
-    List<String> likes;
+    List<String> likes = new ArrayList<>();
     @Field("creat_datetime")
     LocalDateTime creatDatetime = LocalDateTime.now();
     @Field("reply")

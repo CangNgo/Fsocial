@@ -3,11 +3,14 @@ package com.fsocial.profileservice.controller;
 import com.fsocial.profileservice.dto.ApiResponse;
 import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
+import com.fsocial.profileservice.dto.response.ProfileAdminResponse;
 import com.fsocial.profileservice.dto.response.ProfileNameResponse;
 import com.fsocial.profileservice.dto.response.ProfileResponse;
 import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
 import com.fsocial.profileservice.enums.ResponseStatus;
+import com.fsocial.profileservice.exception.AppCheckedException;
 import com.fsocial.profileservice.services.AccountProfileService;
+import com.fsocial.profileservice.services.ProfileService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,8 @@ import java.time.LocalDateTime;
 @Slf4j
 public class AccountProfileController {
     AccountProfileService accountProfileService;
+
+    ProfileService profileService;
 
     @PostMapping("/internal/create")
     public ProfileResponse createAccountProfile(@RequestBody @Valid ProfileRegisterRequest request) {
@@ -57,5 +62,16 @@ public class AccountProfileController {
                 .dateTime(LocalDateTime.now())
                 .data(data)
                 .build();
+    }
+
+    @GetMapping("/external/{userIdByPost}")
+    public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String useridByPost) {
+        return accountProfileService.getAccountProfile(useridByPost);
+    }
+
+    @GetMapping("/{profileId}")
+    public ApiResponse<ProfileAdminResponse> getProfileAdmin(@PathVariable String profileId) throws AppCheckedException {
+        ProfileAdminResponse response  = profileService.getProfileAdmin(profileId);
+        return buildResponse(response);
     }
 }

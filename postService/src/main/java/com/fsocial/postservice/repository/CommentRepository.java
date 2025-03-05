@@ -12,14 +12,6 @@ import java.util.List;
 public interface CommentRepository extends MongoRepository<Comment, String> {
     List<Comment> findByPostId(String postId);
 
-    @Query("{ '_id': ?0 }")
-    @Update("{'$addToSet': {'likes': ?1}}")
-    void addLikeComment(String commentId, String userId);
-
-    @Query("{ '_id': ?0 }")
-    @Update("{'$pull': {'likes': ?1}}")
-    void removeLikeComment(String commentId, String userId);
-
     Integer countByPostId(String postId);
 
     @Aggregation(pipeline = {
@@ -29,5 +21,8 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
     Integer countLikes(String commentId);
 
     boolean existsByIdAndLikes(String id, String userId);
+
+    boolean existsById(String id);
+
 
 }

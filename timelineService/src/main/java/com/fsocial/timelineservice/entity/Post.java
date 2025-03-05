@@ -5,6 +5,9 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,9 +19,16 @@ public class Post extends AbstractEntity<String> {
     String userId;
     @Field("content")
     Content content;
-    @Field("count_likes")
-    Integer countLikes = 0;
-    @Field("count_comments")
-    Integer countComments = 0;
+    @Field("likes")
+    List<String> likes;
+    @Field("create_datetime")
+    LocalDateTime createDatetime = LocalDateTime.now();
+    //share
+    @Field("origin_post")
+    String originPostId;
+    @Field("is_share")
+    Boolean isShare = false;
 
+    @Field("status")
+    Boolean status = true;
 }

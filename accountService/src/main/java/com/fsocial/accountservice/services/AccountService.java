@@ -12,4 +12,5 @@ public interface AccountService {
     void resetPassword(String email, String newPassword);
     ApiResponse<DuplicationResponse> checkDuplication(DuplicationRequest request);
     void changePassword(String userId, String odlPassword, String newPassword);
+    boolean existsById(String id);
 }

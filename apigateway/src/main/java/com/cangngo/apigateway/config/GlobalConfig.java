@@ -39,7 +39,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**", "/post/**"};
+    private String[] PUBLIC_ENDPOINT = {"/account/**", "/post/**", "/profile/**", "/timeline/**"};
 
     @NonFinal
     @Value("${app.api-prefix}")

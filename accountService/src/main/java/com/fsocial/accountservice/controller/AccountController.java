@@ -5,6 +5,7 @@ import com.fsocial.accountservice.dto.request.account.*;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
+import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.services.AccountService;
 import com.fsocial.accountservice.services.OtpService;
 import jakarta.validation.Valid;
@@ -19,6 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -27,6 +30,7 @@ import java.time.LocalDateTime;
 public class AccountController {
     AccountService accountServices;
     OtpService otpService;
+    private final AccountRepository accountRepository;
 
     @PostMapping("/register")
     public ApiResponse<Void> persistAccount(@RequestBody @Valid AccountRegisterRequest request) {
@@ -79,6 +83,16 @@ public class AccountController {
                 .message(responseStatus.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(data)
+                .build();
+    }
+
+    @GetMapping("/exists")
+    public ApiResponse<Map<String, Boolean>> existsAccountByUserId(@RequestParam String userId) {
+        Map<String, Boolean> exists = new HashMap<>();
+        exists.put("exists", accountServices.existsById(userId));
+        return ApiResponse.<Map<String, Boolean>>builder()
+                .data(exists)
+                .message("Kiểm tra userId có tồn tại hay không thành công")
                 .build();
     }
 }

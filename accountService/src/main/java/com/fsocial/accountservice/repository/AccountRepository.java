@@ -23,4 +23,6 @@ public interface AccountRepository extends JpaRepository<Account, String> {
             "CASE WHEN COUNT(a.email) > 0 THEN TRUE ELSE FALSE END) " +
             "FROM Account a WHERE a.username = :username OR a.email = :email")
     DuplicationCheckResult checkDuplication(@Param("username") String username, @Param("email") String email);
+
+    boolean existsById(String id);
 }

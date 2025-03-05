@@ -49,7 +49,7 @@ public class PostController {
             @RequestParam("postId") String postId) throws AppCheckedException {
 
         //check postId
-        if(postId == null || postId.isEmpty()) {
+        if (postId == null || postId.isEmpty()) {
             throw new AppCheckedException("Mã bài viết không được để trống", StatusCode.POST_NOT_FOUND);
         }
 
@@ -88,7 +88,7 @@ public class PostController {
         map.put("userId", likeDTO.getUserId());
         return ResponseEntity.ok(Response.builder()
                 .data(map)
-                .message(like?"Thích bài viết thành công":"bỏ thích bài viết thành công")
+                .message(like ? "Thích bài viết thành công" : "bỏ thích bài viết thành công")
                 .build());
     }
 }

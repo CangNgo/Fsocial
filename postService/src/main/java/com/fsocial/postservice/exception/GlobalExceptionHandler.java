@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(Response.builder()
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
-                .message("Lỗi gì đó mà chúng tôi cũng không biết hihi :D" + exception.getMessage())
+                .message(exception.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(null)
                 .build());

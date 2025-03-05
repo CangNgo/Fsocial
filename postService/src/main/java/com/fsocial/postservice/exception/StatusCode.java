@@ -30,6 +30,7 @@ public enum StatusCode {
     UNAUTHENTICATED(468, "Tài khoản chưa được xác thực."),
     UPLOAD_MEDIA_FAILED(210, "Upload media failed"),
     NOT_CONTENT(211,"Not Content"),
+    COMMENT_NOT_FOUND(212,"Comment Not Found"),
     ;
     private final int code;
     private final String message;

@@ -41,6 +41,19 @@ services:
       - fsocial_secondary_2:/data/db
     networks:
       - app_network
+  message:
+    image: mongo:6.0 # Chỉ định phiên bản cụ thể
+    container_name: message
+    restart: always
+    ports:
+      - "27004:27017" # Ánh xạ cổng host:container
+    volumes:
+      - message_data:/data/db # Sử dụng named volume với tên rõ ràng
+    networks:
+      - app_network
+    environment: # (Tùy chọn) Thêm biến môi trường để cấu hình MongoDB
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
 
   # Redis
   redis:
@@ -102,3 +115,4 @@ volumes:
   redis_data:
   zookeeper_data:
   kafka_data:
+  message_data:

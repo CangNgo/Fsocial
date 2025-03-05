@@ -11,4 +11,5 @@ import lombok.experimental.FieldDefaults;
 public class TermOfServiceDTO {
     String id;
     String name;
+    boolean status = true;
 }

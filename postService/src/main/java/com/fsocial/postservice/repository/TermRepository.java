@@ -1,4 +1,9 @@
 package com.fsocial.postservice.repository;
 
-public interface TermRepository {
+import com.fsocial.postservice.entity.TermOfServices;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TermRepository extends MongoRepository<TermOfServices, String> {
 }

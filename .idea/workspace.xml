@@ -5,11 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Controller/ChatWebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Controller/ChatWebSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/ChatMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/ChatMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Repository/ChatMessageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/TermOfServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/TermOfServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/replyComment/ReplyCommentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/replyComment/ReplyCommentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/termOfService/TermOfServiceDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/termOfService/TermOfServiceDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/TermOfServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/TermOfServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/mapper/TermOfServiceMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/mapper/TermOfServiceMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/TermRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/TermRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/TermOfServicesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/TermOfServicesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/TermOfServicesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/TermOfServicesServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,41 +49,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.accountService [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.accountService [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.apigateway [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.timeLineService [clean].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.AccountServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ApigatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.PostServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ProcessorServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ProfileServiceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.TimeLineServiceApplication.executor&quot;: &quot;Run&quot;,
-
-    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/workspace/Fsocial/Fsocial_be/timelineService/src/main/java/com/fsocial/timelineservice/entity&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.docker-compose.yml.message: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yml.redis: Compose Deployment.executor": "Run",
+    "Maven.accountService [clean].executor": "Run",
+    "Maven.accountService [install].executor": "Run",
+    "Maven.apigateway [clean].executor": "Run",
+    "Maven.postService [clean].executor": "Run",
+    "Maven.timeLineService [clean].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.AccountServiceApplication.executor": "Run",
+    "Spring Boot.ApigatewayApplication.executor": "Run",
+    "Spring Boot.PostServiceApplication.executor": "Run",
+    "Spring Boot.ProcessorServiceApplication.executor": "Run",
+    "Spring Boot.ProfileServiceApplication.executor": "Run",
+    "Spring Boot.TimeLineServiceApplication.executor": "Run",
+    "git-widget-placeholder": "develop",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/workspace/Fsocial/Fsocial_be/timelineService/src/main/java/com/fsocial/timelineservice/entity",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -85,11 +92,11 @@
       <recent name="C:\workspace\Fsocial\Fsocial_be\timelineService\src\main\java\com\fsocial\timelineservice\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.fsocial.timelineservice.enums" />
-      <recent name="com.fsocial.timelineservice.dto.post" />
-      <recent name="com.fsocial.postservice.dto.comment" />
+      <recent name="com.fsocial.timelineservice.services.impl" />
+      <recent name="com.fsocial.timelineservice.services" />
+      <recent name="com.fsocial.timelineservice.mapper" />
       <recent name="com.fsocial.timelineservice.entity" />
-      <recent name="com.fsocial.accountservice.config" />
+      <recent name="com.fsocial.postservice.entity" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -102,7 +109,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.MessageServiceApplication">
+  <component name="RunManager" selected="Docker.docker-compose.yml.message: Compose Deployment">
     <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="accountService" />
@@ -184,20 +191,53 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml" />
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.message: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="message" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.redis: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="redis" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
-
+      <item itemvalue="Docker.docker-compose.yml.message: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.redis: Compose Deployment" />
       <item itemvalue="Spring Boot.MessageServiceApplication" />
       <item itemvalue="Spring Boot.TimeLineServiceApplication" />
       <item itemvalue="Spring Boot.ProcessorServiceApplication" />
       <item itemvalue="Spring Boot.ProfileServiceApplication" />
       <item itemvalue="Spring Boot.AccountServiceApplication" />
-      <item itemvalue="Spring Boot.ApigatewayApplication" />
       <item itemvalue="Spring Boot.PostServiceApplication" />
+      <item itemvalue="Spring Boot.ApigatewayApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.PostServiceApplication" />
+        <item itemvalue="Docker.docker-compose.yml.message: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.redis: Compose Deployment" />
         <item itemvalue="Spring Boot.ApigatewayApplication" />
+        <item itemvalue="Spring Boot.PostServiceApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
       </list>
     </recent_temporary>
@@ -217,7 +257,6 @@
       <created>1739554449320</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-
       <updated>1739554449320</updated>
       <workItem from="1739554450436" duration="146000" />
       <workItem from="1739638722584" duration="1454000" />
@@ -245,11 +284,29 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java</url>
           <line>104</line>
-          <properties class="com.fsocial.postservice.services.impl.PostServiceImpl">
+          <properties class="com.fsocial.postservice.services.impl.PostServiceImpl" method="toggleLike">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/TermOfServiceImpl.java</url>
+          <line>23</line>
+          <properties class="com.fsocial.timelineservice.services.impl.TermOfServiceImpl" method="getTermOfServices">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/TermOfServiceController.java</url>
+          <line>24</line>
+          <properties class="com.fsocial.postservice.controller.TermOfServiceController" method="addTermOfSerivce">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="14" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NoClassDefFoundError" package="java.lang" />

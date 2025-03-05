@@ -1,6 +1,6 @@
 database:
-  name:
-  password:
+  name: my-mongo
+  password: datgo123
 spring:
   application:
     name: messageService

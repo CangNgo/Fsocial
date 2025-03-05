@@ -59,8 +59,8 @@ public class ChatService {
         return chatMessageRepository.save(message);
     }
 
-    public List<ChatMessage> findMessagesByUser(String username) {
-        return chatMessageRepository.findBySenderOrReciver(username, username);
+    public List<ChatMessage> findMessagesByUser(String userID) {
+        return chatMessageRepository.findBySenderOrReceiver(userID, userID);
     }
     /**
      * Lấy file đính kèm từ GridFS theo id.

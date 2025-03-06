@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @Service
@@ -72,6 +73,7 @@ public class PostServiceImpl implements PostService {
                     .build();
             post.setContent(contentMapper.toContent(content));
             post.setCreateDatetime(LocalDateTime.now());
+            post.setLikes(new ArrayList<>());
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {

@@ -18,8 +18,8 @@ public class ComplaintDTO {
     String userId;
     @NotBlank(message = "complaintType không được để trống")
     String complaintType;
-    @NotBlank(message = "termOfService không được để trống")
+    @NotBlank(message = "termOfServiceId không được để trống")
     String termOfServiceId;
-    LocalDateTime dateTime ;
+    LocalDateTime dateTime = LocalDateTime.now();
     boolean reading;
 }

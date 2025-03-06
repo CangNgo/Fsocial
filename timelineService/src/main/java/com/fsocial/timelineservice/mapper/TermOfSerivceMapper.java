@@ -3,6 +3,7 @@ package com.fsocial.timelineservice.mapper;
 import com.fsocial.timelineservice.dto.termOfService.TermOfServiceDTO;
 import com.fsocial.timelineservice.entity.TermOfServices;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 

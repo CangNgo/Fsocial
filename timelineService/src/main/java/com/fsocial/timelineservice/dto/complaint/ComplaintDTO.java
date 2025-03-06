@@ -11,12 +11,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ComplaintDTOResponse {
+public class ComplaintDTO {
     String postId;
     String userId;
-    String firstName;
-    String lastName;
-    String avatar;
     String complaintType;
     String termOfService;
     LocalDateTime dateTime ;

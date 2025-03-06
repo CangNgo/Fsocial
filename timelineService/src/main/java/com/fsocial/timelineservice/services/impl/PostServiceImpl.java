@@ -72,7 +72,7 @@ public class PostServiceImpl implements PostService {
 
     private PostResponse mapToPostByUserIdResponse(Post post, String userId) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
-        boolean likePost = postRepository.existsByIdAndLikes(post.getId(),post.getUserId());
+        boolean likePost = postRepository.existsByIdAndLikes(post.getId(),userId);
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())

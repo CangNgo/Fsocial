@@ -2,6 +2,7 @@ package com.fsocial.timelineservice.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,6 @@ public class Complaint extends  AbstractEntity<String>{
     String userId;
     String complaintType;
     String termOfServiceId;
-    LocalDateTime dateTime;
+    LocalDateTime dateTime = LocalDateTime.now();
     boolean reading;
 }

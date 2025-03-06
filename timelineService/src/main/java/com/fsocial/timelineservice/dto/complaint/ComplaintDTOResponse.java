@@ -1,6 +1,5 @@
 package com.fsocial.timelineservice.dto.complaint;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,9 +10,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ComplaintDTO {
+public class ComplaintDTOResponse {
+    String id;
     String postId;
     String userId;
+    String firstName;
+    String profileId;
+    String lastName;
     String complaintType;
     String termOfService;
     LocalDateTime dateTime ;

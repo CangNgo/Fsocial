@@ -20,6 +20,4 @@ public class PostDTORequest {
     String text;
     String HTMLText;
     MultipartFile[] media;
-    Integer countLikes = 0;
-    Integer countComment = 0;
 }

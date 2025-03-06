@@ -27,6 +27,7 @@ public enum StatusCode {
     UNSUPPORTED_MEDIA_TYPE(304, "Unsupported Media Type"),
     UNAUTHENTICATED(468, "Tài khoản chưa được xác thực."),
     PROFILE_NOT_FOUND(400, "Profile not found"),
+    TERMOFSERVICE_NOT_FOUND(410, "Termofservice not found"),
 
     ;
     private final int code;

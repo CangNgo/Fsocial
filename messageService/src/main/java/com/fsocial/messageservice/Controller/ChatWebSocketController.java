@@ -64,16 +64,16 @@ public class ChatWebSocketController {
         chatService.saveChatMessage(chatMessage);
 
         messagingTemplate.convertAndSendToUser(
-                chatMessage.getReciver(),
+                chatMessage.getReceiver(),
                 "/queue/private",
                 chatMessage
         );
     }
 
 
-    @GetMapping("/chat/messages/{username}")
+    @GetMapping("/chat/messages/{userId}")
     @ResponseBody
-    public List<ChatMessage> getMessagesByUser(@PathVariable String username) {
-        return chatService.findMessagesByUser(username);
+    public List<ChatMessage> getMessagesByUser(@PathVariable String userId) {
+        return chatService.findMessagesByUser(userId);
     }
 }

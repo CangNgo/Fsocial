@@ -1,7 +1,6 @@
 package com.fsocial.accountservice.dto.request.auth;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Data
 public class TokenRequest {
-    @NotBlank(message = "REQUIRED_TOKEN")
-    @NotNull(message = "REQUIRED_TOKEN")
+    @NotNullOrBlank(message = "REQUIRED_TOKEN")
     String token;
 }

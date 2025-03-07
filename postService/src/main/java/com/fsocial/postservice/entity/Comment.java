@@ -19,9 +19,9 @@ public class Comment extends AbstractEntity<String>{
     String userId;
     @Field("content")
     Content content;
-    @Field("countLikes")
+    @Field("count_likes")
     int countLikes;
-    @Field("countReplyComment")
+    @Field("count_reply_comment")
     int countReplyComment;
     @Field("reply")
     boolean reply;

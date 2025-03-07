@@ -3,7 +3,7 @@ spring:
     uri: bolt://localhost:7687
     authentication:
       username: neo4j
-      password: 12345678
+      password: root1234
   application:
     name: profileService
   jpa:
@@ -48,3 +48,7 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
+
+app:
+  services:
+    account: http://localhost:8081/account

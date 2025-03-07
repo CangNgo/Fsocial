@@ -10,9 +10,9 @@ runtime của ứng dụng của bạn mà không yêu cầu phải khai báo th
 * */
 @Getter
 public class AppUnCheckedException extends RuntimeException {
-    private final HttpStatus status;
+    private final StatusCode status;
 
-    public AppUnCheckedException(String message, HttpStatus status) {
+    public AppUnCheckedException(String message, StatusCode status) {
         super(message);
         this.status = status;
     }

@@ -5,7 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/postService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +70,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.AccountServiceApplication.executor": "Run",
     "Spring Boot.ApigatewayApplication.executor": "Run",
+    "Spring Boot.MessageServiceApplication.executor": "Run",
     "Spring Boot.PostServiceApplication.executor": "Run",
     "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
@@ -82,11 +97,11 @@
       <recent name="C:\workspace\Fsocial\Fsocial_be\timelineService\src\main\java\com\fsocial\timelineservice\entity" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.fsocial.timelineservice.config" />
+      <recent name="com.cangngo.apigateway.config" />
       <recent name="com.fsocial.timelineservice.dto.complaint" />
       <recent name="com.fsocial.timelineservice.services.impl" />
       <recent name="com.fsocial.timelineservice.services" />
-      <recent name="com.fsocial.timelineservice.mapper" />
-      <recent name="com.fsocial.timelineservice.entity" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -99,7 +114,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.yml.message: Compose Deployment">
+  <component name="RunManager" selected="Spring Boot.MessageServiceApplication">
     <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="accountService" />
@@ -133,6 +148,14 @@
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="messageService" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.messageservice.MessageServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="NotificationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="notificationService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.notificationService.NotificationServiceApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -211,6 +234,7 @@
       <item itemvalue="Docker.docker-compose.yml.message: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yml.redis: Compose Deployment" />
       <item itemvalue="Spring Boot.MessageServiceApplication" />
+      <item itemvalue="Spring Boot.NotificationServiceApplication" />
       <item itemvalue="Spring Boot.TimeLineServiceApplication" />
       <item itemvalue="Spring Boot.ProcessorServiceApplication" />
       <item itemvalue="Spring Boot.ProfileServiceApplication" />
@@ -259,7 +283,10 @@
       <workItem from="1740556260860" duration="10897000" />
       <workItem from="1741196839706" duration="1812000" />
       <workItem from="1741211129815" duration="9602000" />
-      <workItem from="1741257621336" duration="3621000" />
+      <workItem from="1741257621336" duration="10230000" />
+      <workItem from="1741291577463" duration="7269000" />
+      <workItem from="1741319377660" duration="10672000" />
+      <workItem from="1741357235639" duration="1562000" />
     </task>
     <servers />
   </component>

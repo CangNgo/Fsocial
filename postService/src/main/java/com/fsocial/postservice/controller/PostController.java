@@ -8,6 +8,7 @@ import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/actions")
+@Tag(name ="Post controller")
 public class PostController {
     PostService postService;
 

@@ -58,14 +58,12 @@ public class ChatWebSocketController {
      * Tin nhắn sẽ được lưu vào MongoDB và gửi tới user nhận thông qua "/user/queue/private".
      * Client nhận tin nhắn private cần subscribe tới "/user/queue/private".
      */
-    @MessageMapping("/chat.private")
+   @MessageMapping("/chat.private")
     public void sendPrivateMessage(@Payload ChatMessage chatMessage) {
 
         chatService.saveChatMessage(chatMessage);
-
-        messagingTemplate.convertAndSendToUser(
-                chatMessage.getReceiver(),
-                "/queue/private",
+        messagingTemplate.convertAndSend(
+                "/queue/private-" + chatMessage.getReceiver(),
                 chatMessage
         );
     }
@@ -75,5 +73,20 @@ public class ChatWebSocketController {
     @ResponseBody
     public List<ChatMessage> getMessagesByUser(@PathVariable String userId) {
         return chatService.findMessagesByUser(userId);
+    }
+    
+    @PutMapping("/chat/messages/{messageId}/read") // api chuyển trạng thái tin nhắn
+    @ResponseBody
+    public void markMessageAsRead(@PathVariable String messageId) {
+        chatService.markMessageAsRead(messageId);
+    }
+    
+    @GetMapping("/chat/messages/{user1}/{user2}") // api hiển thị tin nhắn
+    @ResponseBody
+    public List<ChatMessage> getMessagesBetweenUsers(
+            @PathVariable String user1,
+            @PathVariable String user2,
+            @RequestParam(defaultValue = "0") int page) {
+        return chatService.findChatMessagesBetweenUsers(user1, user2, page);
     }
 }

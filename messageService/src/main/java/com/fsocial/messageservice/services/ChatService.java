@@ -8,9 +8,13 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.mongodb.gridfs.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -34,6 +38,20 @@ public class ChatService {
     /**
      * Lưu các file đính kèm lên GridFS và trả về danh sách id của file.
      */
+    private String createConversationId(String sender, String receiver) {
+        return sender.compareTo(receiver) < 0
+                ? sender + "_" + receiver
+                : receiver + "_" + sender;
+    }
+    public List<ChatMessage> findChatMessagesBetweenUsers(String user1, String user2, int page) {
+        String conversationId = createConversationId(user1, user2);
+        Pageable pageable = PageRequest.of(page, 20); // Lấy 20 tin nhắn mỗi trang (mới nhất trước)
+
+        Page<ChatMessage> chatPage = chatMessageRepository.findByConversationIdOrderByTimestampDesc(conversationId, pageable);
+
+        return chatPage.getContent();
+    }
+
     public List<String> storeFiles(MultipartFile[] files) {
         List<String> attachmentIds = new ArrayList<>();
         if (files != null) {
@@ -56,6 +74,10 @@ public class ChatService {
      * Lưu tin nhắn chat vào MongoDB.
      */
     public ChatMessage saveChatMessage(ChatMessage message) {
+        if (message.getTimestamp() == null) {
+            message.setTimestamp(new Date());
+        }
+        message.setConversationId(createConversationId(message.getSender(), message.getReceiver()));
         return chatMessageRepository.save(message);
     }
 
@@ -71,5 +93,12 @@ public class ChatService {
             return null;
         }
         return gridFsOperations.getResource(gridFSFile);
+    }
+    public void markMessageAsRead(String messageId) {
+        ChatMessage message = chatMessageRepository.findById(messageId).orElse(null);
+        if (message != null) {
+            message.setRead(true);
+            chatMessageRepository.save(message);
+        }
     }
 }

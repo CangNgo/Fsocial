@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ChatMessageRepository extends MongoRepository<ChatMessage, String> {
     List<ChatMessage> findBySenderOrReceiver(String sender, String receiver);
+    Page<ChatMessage> findByConversationIdOrderByTimestampDesc(String conversationId, Pageable pageable);
 }

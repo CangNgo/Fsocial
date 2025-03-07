@@ -19,7 +19,7 @@ public class ChatMessage extends AbstractEntity<String>{
     private MessageType type;
     private String sender;
     private String reciver;
-    private String content;
+    private String git;
     private Date timestamp;
     // Danh sách id của file đính kèm (lưu trên GridFS)
     private List<String> attachmentIds;

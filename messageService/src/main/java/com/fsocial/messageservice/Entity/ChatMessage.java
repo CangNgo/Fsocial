@@ -21,6 +21,8 @@ public class ChatMessage extends AbstractEntity<String>{
     private String receiver;
     private String content;
     private Date timestamp;
+    private String conversationId;
+    private boolean isRead = false;
     // Danh sách id của file đính kèm (lưu trên GridFS)
     private List<String> attachmentIds;
 

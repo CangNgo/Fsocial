@@ -3,7 +3,7 @@ spring:
     uri: bolt://localhost:7687
     authentication:
       username: neo4j
-      password: root1234
+      password: 12345678
   application:
     name: profileService
   jpa:

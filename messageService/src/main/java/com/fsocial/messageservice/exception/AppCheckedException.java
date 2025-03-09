@@ -1,6 +1,8 @@
 package com.fsocial.messageservice.exception;
 
 
+import com.fsocial.messageservice.enums.ErrorCode;
+
 /*
 AppCheckedException là một checked exception,
 được sử dụng để xử lý các lỗi trong ứng dụng mà yêu cầu phải bắt buộc
@@ -9,14 +11,14 @@ Thường được sử dụng cho các trường hợp lỗi mà có thể đư
 ngay khi nó xảy ra để đảm bảo tính nhất quán và bảo mật trong ứng dụng Java.
 */
 public class AppCheckedException extends Exception {
-    private final StatusCode status;
+    private final ErrorCode status;
 
-    public AppCheckedException(String message, StatusCode status) {
-        super(message);
+    public AppCheckedException(ErrorCode status) {
+        super(status.getMessage());
         this.status = status;
     }
 
-    public StatusCode getStatus() {
+    public ErrorCode getStatus() {
         return status;
     }
 }

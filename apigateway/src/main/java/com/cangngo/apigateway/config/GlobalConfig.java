@@ -39,7 +39,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**"};
+    private String[] PUBLIC_ENDPOINT = {"/account/**", "/message/**"};
 
     @NonFinal
     @Value("${app.api-prefix}")
@@ -55,6 +55,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
             return unauthenticated(exchange.getResponse());
 
         String token = authHeaders.getFirst().replace("Bearer ", "");
+        log.info("TEST Token: {}", token);
         return accountService.apiResponseMono(token).flatMap(introspectResponse -> {
                     if (introspectResponse.getData().isValid())
                         return chain.filter(exchange);

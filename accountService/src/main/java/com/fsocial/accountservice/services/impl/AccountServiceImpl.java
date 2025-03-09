@@ -22,7 +22,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,8 +109,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean existsById(String id) {
-        boolean exsists = accountRepository.findById(id).isPresent();
-        return exsists;
+        return accountRepository.findById(id).isPresent();
     }
 
     private void validateAccountExistence(String username, String email) {

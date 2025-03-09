@@ -15,12 +15,12 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProfileUpdateResponse {
-    String id;
     String firstName;
     String lastName;
     LocalDate dob;
     String bio;
     String avatar;
+    String banner;
     String address;
     LocalDate createdAt;
     LocalDate updatedAt;

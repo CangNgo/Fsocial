@@ -5,6 +5,7 @@ import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
 import com.fsocial.profileservice.dto.response.ProfileAdminResponse;
 import com.fsocial.profileservice.dto.response.ProfileNameResponse;
+import com.fsocial.profileservice.dto.response.ProfilePageResponse;
 import com.fsocial.profileservice.dto.response.ProfileResponse;
 import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
 import com.fsocial.profileservice.enums.ResponseStatus;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -37,21 +39,40 @@ public class AccountProfileController {
 
     @GetMapping("/internal/{userId}")
     public ProfileNameResponse getProfileByUserId(@PathVariable String userId) {
-        return accountProfileService.getProfileByUserId(userId);
+        return accountProfileService.getProfileNameByUserId(userId);
     }
+
+    @GetMapping("/internal/message/{userId}")
+    public ProfileResponse getAccountProfileFromAnotherService(@PathVariable String userId) {
+        return accountProfileService.getAccountProfileByUserId(userId);
+    }
+
+//    @GetMapping("/external/{userIdByPost}")
+//    public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String useridByPost) {
+//        return accountProfileService.getAccountProfile(useridByPost);
+//    }
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping
     public ApiResponse<ProfileResponse> getAccountProfile() {
-        ProfileResponse response = accountProfileService.getAccountProfileByUserId();
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        ProfileResponse response = accountProfileService.getAccountProfileByUserId(userId);
         return buildResponse(response);
     }
 
     @PreAuthorize("hasRole('USER')")
-    @PutMapping("/{profileId}")
-    public ApiResponse<ProfileUpdateResponse> updateProfile(@PathVariable String profileId,
-                                                            @RequestBody @Valid ProfileUpdateRequest request) {
-        ProfileUpdateResponse response = accountProfileService.updateProfile(profileId, request);
+    @PutMapping("/update")
+    public ApiResponse<ProfileUpdateResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        ProfileUpdateResponse response = accountProfileService.updateProfile(userId, request);
+        return buildResponse(response);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/profile-page")
+    public ApiResponse<ProfilePageResponse> getProfilePage() {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        ProfilePageResponse response = accountProfileService.getProfilePageByUserId(userId);
         return buildResponse(response);
     }
 
@@ -62,11 +83,6 @@ public class AccountProfileController {
                 .dateTime(LocalDateTime.now())
                 .data(data)
                 .build();
-    }
-
-    @GetMapping("/external/{userIdByPost}")
-    public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String useridByPost) {
-        return accountProfileService.getAccountProfile(useridByPost);
     }
 
     @GetMapping("/{profileId}")

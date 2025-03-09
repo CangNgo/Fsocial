@@ -6,7 +6,8 @@ spring:
     name: messageService
   data:
     mongodb:
-      uri: mongodb://localhost:27017/dev_database
+      uri: mongodb://localhost:27017/message_db
+      database: message_db
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,6 +20,16 @@ spring:
       matching-strategy: ant_path_matcher
   main:
     allow-circular-references: true
+
+redis:
+  host: localhost   # Địa chỉ Redis server
+  port: 6379        # Cổng mặc định Redis
+  lettuce:
+    pool:
+      max-active: 10   # Số lượng kết nối tối đa
+      max-idle: 5      # Số kết nối tối đa có thể rỗng
+      min-idle: 1      # Số kết nối tối thiểu có thể rỗng
+  timeout: 2000ms     # Thời gian chờ kết nối Redis
 
 server:
   servlet:
@@ -48,3 +59,8 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
+
+app:
+  services:
+    profile: http://localhost:8085/profile
+    account: http://localhost:8081/account

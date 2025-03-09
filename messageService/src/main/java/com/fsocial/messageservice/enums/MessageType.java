@@ -1,4 +1,4 @@
-package com.fsocial.messageservice.Enum;
+package com.fsocial.messageservice.enums;
 
 public enum MessageType {
     CHAT,   // Tin nhắn thông thường

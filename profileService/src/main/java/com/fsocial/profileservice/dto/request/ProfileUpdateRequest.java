@@ -14,15 +14,11 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProfileUpdateRequest {
-    @NotNullOrBlank(message = "REQUIRED_FIELDS")
     String firstName;
-
-    @NotNullOrBlank(message = "REQUIRED_FIELDS")
     String lastName;
-
     LocalDate dob;
     String bio;
     String avatar;
+    String banner;
     String address;
-    LocalDate updatedAt = LocalDate.now();
 }

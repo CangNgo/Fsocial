@@ -11,7 +11,6 @@ public interface MessageService {
     List<MessageResponse> findChatMessagesBetweenUsers(String conversationId, int page);
     MessageResponse saveChatMessage(MessageRequest request);
     void markMessagesAsRead(String conversationId);
-    LastMessage findLastMessageByConversationId(String conversationId);
     void deleteMessagesByConversationId(String conversationId);
     void deleteMessage(String messageId);
     Map<String, LastMessage> findLastMessagesForConversations(List<String> conversationIds);

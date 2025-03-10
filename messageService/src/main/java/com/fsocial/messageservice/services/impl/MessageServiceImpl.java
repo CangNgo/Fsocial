@@ -60,12 +60,6 @@ public class MessageServiceImpl implements MessageService {
         return messageMapper.toMessageResponse(messageRepository.save(message));
     }
 
-    @Override
-    public LastMessage findLastMessageByConversationId(String conversationId) {
-        Message lastMessage = messageRepository.findTopByConversationIdOrderByCreateAtDesc(conversationId).orElse(new Message());
-        return messageMapper.toLastMessage(lastMessage);
-    }
-
 
     @Override
     public void deleteMessagesByConversationId(String conversationId) {
@@ -104,7 +98,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Map<String, LastMessage> findLastMessagesForConversations(List<String> conversationIds) {
-        return messageRepository.findTopByConversationIdsAndUnreadOrderByCreateAtDesc(conversationIds)
+        return messageRepository.findTopByConversationIdsOrderByCreateAtDesc(conversationIds)
                 .stream()
                 .collect(Collectors.toMap(
                         Message::getConversationId, // Lấy conversationId làm key

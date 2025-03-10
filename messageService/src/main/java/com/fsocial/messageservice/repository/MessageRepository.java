@@ -21,5 +21,5 @@ public interface MessageRepository extends MongoRepository<Message, String> {
 //    List<Message> findTopByConversationIdsAndUnreadOrderByCreateAtDesc(List<String> conversationIds);
 
     @Query(value = "{ 'conversationId': { $in: ?0 }}", sort = "{ 'createAt' : -1 }")
-    List<Message> findTopByConversationIdsAndUnreadOrderByCreateAtDesc(List<String> conversationIds);
+    List<Message> findTopByConversationIdsOrderByCreateAtDesc(List<String> conversationIds);
 }

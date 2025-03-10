@@ -4,67 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="create relationship service success">
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/InternalController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/Conversation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/CustomJwtDecode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/JwtAuthenticationEntryPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/ConversationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/MessageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/request/ConversationRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/request/MessageRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/ConversationCreateResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/ConversationResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/LastMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/MessageResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/ProfileResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/enums/ErrorCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/enums/ResponseStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/mapper/ConversationMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/mapper/MessageMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/repository/ConversationRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/repository/MessageRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/repository/httpClient/AccountClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/repository/httpClient/ProfileClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/MessageService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/ConversationServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/MessageServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="fix conflicts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/RedisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/OtpServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/OtpServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/WebSocketConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Controller/ChatWebSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/ChatMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Enum/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/enums/MessageType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/MessageServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/MessageServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Repository/ChatMessageRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/ApiResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/exception/AppCheckedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/exception/AppCheckedException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/exception/AppUnCheckedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/exception/AppException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/exception/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/exception/StatusCode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/AccountServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/ConversationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/ChatService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/mapper/AccountProfileMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/mapper/AccountProfileMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/ChatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/repository/MessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/repository/MessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/MessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/ConversationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/ConversationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/MessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/MessageServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="message/update-message-service" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -147,7 +94,7 @@
     "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "git-widget-placeholder": "message/update-message-service",
+    "git-widget-placeholder": "message/update-API",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/leduckhai/Documents/LearningMaterial/FSocial/Fsocial/messageService/src/main/java/com/fsocial/messageservice/Config",
@@ -293,18 +240,18 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.MessageServiceApplication" />
       <item itemvalue="Application.AccountServiceApplication" />
       <item itemvalue="Application.ProfileServiceApplication" />
-      <item itemvalue="Application.MessageServiceApplication" />
       <item itemvalue="Application.ApigatewayApplication" />
       <item itemvalue="Application.NotificationServiceApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.MessageServiceApplication" />
-        <item itemvalue="Application.ApigatewayApplication" />
         <item itemvalue="Application.ProfileServiceApplication" />
         <item itemvalue="Application.AccountServiceApplication" />
+        <item itemvalue="Application.ApigatewayApplication" />
         <item itemvalue="Application.NotificationServiceApplication" />
       </list>
     </recent_temporary>
@@ -340,7 +287,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740765163787</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix conflicts">
+      <option name="closed" value="true" />
+      <created>1741537984087</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741537984087</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -365,7 +320,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="create relationship service success" />
-    <option name="LAST_COMMIT_MESSAGE" value="create relationship service success" />
+    <MESSAGE value="fix conflicts" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix conflicts" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

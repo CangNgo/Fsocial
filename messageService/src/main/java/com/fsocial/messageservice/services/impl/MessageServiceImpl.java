@@ -24,7 +24,9 @@ import org.springframework.data.domain.Pageable;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -85,23 +87,34 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void markMessagesAsRead(List<String> messageIds) {
-        List<Message> messages = messageRepository.findAllById(messageIds)
-                .stream()
-                .filter(message -> !message.isRead())
-                .peek(message -> message.setRead(true))
-                .toList();
+    public void markMessagesAsRead(String conversationId) {
+        // Tìm tất cả tin nhắn chưa đọc trong conversation
+        List<Message> unreadMessages = messageRepository.findByConversationIdAndIsReadFalse(conversationId);
 
-        if (!messages.isEmpty()) {
-            messageRepository.saveAll(messages);
+        if (unreadMessages.isEmpty()) {
+            log.info("Không có tin nhắn chưa đọc trong cuộc trò chuyện {}", conversationId);
+            return;
         }
+
+        unreadMessages.forEach(message -> message.setRead(true));
+        messageRepository.saveAll(unreadMessages);
+
+        log.info("Đã đánh dấu {} tin nhắn đã đọc trong cuộc trò chuyện {}", unreadMessages.size(), conversationId);
     }
 
     @Override
-    public List<LastMessage> findLastMessagesForConversations(List<String> conversationIds) {
-        return messageRepository.findTopByConversationIdsOrderByCreateAtDesc(conversationIds).stream()
-                .map(messageMapper::toLastMessage)
-                .toList();
+    public Map<String, LastMessage> findLastMessagesForConversations(List<String> conversationIds) {
+        return messageRepository.findTopByConversationIdsAndUnreadOrderByCreateAtDesc(conversationIds)
+                .stream()
+                .collect(Collectors.toMap(
+                        Message::getConversationId, // Lấy conversationId làm key
+                        message -> LastMessage.builder()
+                                .content(message.getContent())
+                                .createAt(message.getCreateAt())
+                                .isRead(message.isRead())
+                                .build(),
+                        (existing, replacement) -> existing.getCreateAt().isAfter(replacement.getCreateAt()) ? existing : replacement
+                ));
     }
 
     private void validateUser(String userId) {

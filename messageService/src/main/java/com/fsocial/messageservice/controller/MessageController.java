@@ -34,10 +34,11 @@ public class MessageController {
     }
 
     @PutMapping("/mark-read")
-    public ApiResponse<?> markMessageAsRead(@RequestBody List<String> messageIds) {
-        chatService.markMessagesAsRead(messageIds);
+    public ApiResponse<?> markMessagesAsRead(@RequestParam String conversationId) {
+        chatService.markMessagesAsRead(conversationId);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
+
 
     @DeleteMapping("/{messageId}")
     public ApiResponse<Void> deleteMessage(@PathVariable String messageId) {

@@ -82,14 +82,7 @@ public class ConversationServiceImpl implements ConversationService {
                 .map(Conversation::getId)
                 .toList();
 
-        List<LastMessage> lastMessages = messageService.findLastMessagesForConversations(conversationIds);
-
-        Map<String, LastMessage> lastMessagesMap = conversationIds.stream()
-                .collect(Collectors.toMap(
-                        id -> id,
-                        messageService::findLastMessageByConversationId,
-                        (existing, replacement) -> existing.getCreateAt().isAfter(replacement.getCreateAt()) ? existing : replacement
-                ));;
+        Map<String, LastMessage> lastMessagesMap = messageService.findLastMessagesForConversations(conversationIds);
 
         return conversations.stream()
                 .map(conversation -> {
@@ -99,7 +92,7 @@ public class ConversationServiceImpl implements ConversationService {
                 })
                 .sorted(Comparator.comparing((ConversationResponse c) -> {
                             LastMessage lastMessage = c.getLastMessage();
-                            return lastMessage != null && !lastMessage.isRead(); // Tin nhắn chưa đọc lên trước
+                            return lastMessage != null && lastMessage.isRead(); // Tin nhắn chưa đọc lên trước
                         }).reversed()
                         .thenComparing((ConversationResponse c) -> {
                             LastMessage lastMessage = c.getLastMessage();

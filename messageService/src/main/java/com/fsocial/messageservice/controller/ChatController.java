@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.*;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,7 @@ public class ChatController {
      */
 //    @MessageMapping("/chat.addUser")
 //    @SendTo("/topic/public")
-//    public ChatMessage addUser(@Payload ChatMessage chatMessage,
+//    public MessageResponse addUser(@Payload MessageRequest chatMessage,
 //                               SimpMessageHeaderAccessor headerAccessor) {
 //        // Lưu tên người dùng vào session
 //        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());

@@ -15,7 +15,11 @@ public interface MessageRepository extends MongoRepository<Message, String> {
     Page<Message> findByConversationIdOrderByCreateAtDesc(String conversationId, Pageable pageable);
     void deleteAllByConversationId(String conversationId);
     Optional<Message> findTopByConversationIdOrderByCreateAtDesc(String conversationId);
+    List<Message> findByConversationIdAndIsReadFalse(String conversationId);
 
-    @Query(value = "{ 'conversationId': { $in: ?0 } }", sort = "{ 'createAt' : -1 }")
-    List<Message> findTopByConversationIdsOrderByCreateAtDesc(List<String> conversationIds);
+//    @Query(value = "{ 'conversationId': { $in: ?0 }, 'isRead': false }", sort = "{ 'createAt' : -1 }")
+//    List<Message> findTopByConversationIdsAndUnreadOrderByCreateAtDesc(List<String> conversationIds);
+
+    @Query(value = "{ 'conversationId': { $in: ?0 }}", sort = "{ 'createAt' : -1 }")
+    List<Message> findTopByConversationIdsAndUnreadOrderByCreateAtDesc(List<String> conversationIds);
 }

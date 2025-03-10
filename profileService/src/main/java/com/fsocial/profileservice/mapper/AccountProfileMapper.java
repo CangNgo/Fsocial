@@ -2,10 +2,7 @@ package com.fsocial.profileservice.mapper;
 
 import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
-import com.fsocial.profileservice.dto.response.ProfileAdminResponse;
-import com.fsocial.profileservice.dto.response.ProfilePageResponse;
-import com.fsocial.profileservice.dto.response.ProfileResponse;
-import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
+import com.fsocial.profileservice.dto.response.*;
 import com.fsocial.profileservice.entity.AccountProfile;
 import org.mapstruct.*;
 
@@ -21,4 +18,5 @@ public interface AccountProfileMapper {
     ProfileUpdateResponse toProfileUpdateResponse(AccountProfile accountProfile);
     ProfilePageResponse toProfilePageResponse(AccountProfile entity);
     ProfileAdminResponse toProfileAdminResponse(AccountProfile accountProfile);
+    UserResponse toUserResponse(AccountProfile accountProfile);
 }

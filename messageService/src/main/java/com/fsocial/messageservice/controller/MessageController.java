@@ -23,6 +23,7 @@ public class MessageController {
     public ApiResponse<List<MessageResponse>> getMessagesBetweenUsers(
             @PathVariable String conversationId,
             @RequestParam(defaultValue = "0") int page) {
+
         List<MessageResponse> messageResponses = chatService.findChatMessagesBetweenUsers(conversationId, page);
         return ApiResponse.buildApiResponse(messageResponses, ResponseStatus.SUCCESS);
     }

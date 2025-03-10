@@ -29,7 +29,6 @@ import java.time.LocalDateTime;
 @Slf4j
 public class AccountProfileController {
     AccountProfileService accountProfileService;
-
     ProfileService profileService;
 
     @PostMapping("/internal/create")
@@ -57,7 +56,7 @@ public class AccountProfileController {
     public ApiResponse<ProfileResponse> getAccountProfile() {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         ProfileResponse response = accountProfileService.getAccountProfileByUserId(userId);
-        return buildResponse(response);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -65,7 +64,7 @@ public class AccountProfileController {
     public ApiResponse<ProfileUpdateResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         ProfileUpdateResponse response = accountProfileService.updateProfile(userId, request);
-        return buildResponse(response);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -73,21 +72,12 @@ public class AccountProfileController {
     public ApiResponse<ProfilePageResponse> getProfilePage() {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         ProfilePageResponse response = accountProfileService.getProfilePageByUserId(userId);
-        return buildResponse(response);
-    }
-
-    private <T> ApiResponse<T> buildResponse(T data) {
-        return ApiResponse.<T>builder()
-                .statusCode(ResponseStatus.SUCCESS.getCODE())
-                .message(ResponseStatus.SUCCESS.getMessage())
-                .dateTime(LocalDateTime.now())
-                .data(data)
-                .build();
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
     @GetMapping("/{profileId}")
     public ApiResponse<ProfileAdminResponse> getProfileAdmin(@PathVariable String profileId) throws AppCheckedException {
         ProfileAdminResponse response  = profileService.getProfileAdmin(profileId);
-        return buildResponse(response);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 }

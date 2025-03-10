@@ -13,8 +13,7 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import java.time.LocalDate;
 
 @Node("account_profile")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)

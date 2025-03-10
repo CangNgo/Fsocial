@@ -46,7 +46,11 @@ public class MessageServiceImpl implements MessageService {
         Page<Message> chatPage = messageRepository.findByConversationIdOrderByCreateAtDesc(conversationId, pageable);
 
         return chatPage.getContent().stream()
-                .map(messageMapper::toMessageResponse)
+                .map(mess -> {
+                    MessageResponse response = messageMapper.toMessageResponse(mess);
+                    response.setReceiverId(mess.getReceiver());
+                    return response;
+                })
                 .toList();
     }
 
@@ -57,7 +61,11 @@ public class MessageServiceImpl implements MessageService {
         checkExistConversation(request.getConversationId());
 
         Message message = messageMapper.toEntity(request);
-        return messageMapper.toMessageResponse(messageRepository.save(message));
+        message.setReceiver(request.getReceiverId());
+
+        MessageResponse response = messageMapper.toMessageResponse(messageRepository.save(message));
+        response.setReceiverId(message.getReceiver());
+        return response;
     }
 
 

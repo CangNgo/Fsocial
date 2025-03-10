@@ -15,6 +15,7 @@ public enum ErrorCode {
     INVALID_TOKEN(701, "Token không hợp lệ.", HttpStatus.BAD_REQUEST),
     NOT_FOUND(404, "Không tìm thấy.", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(468, "Tài khoản chưa được xác thực.", HttpStatus.BAD_REQUEST),
+    ACCOUNT_EXISTED(464, "Tài khoản đã tồn tại.", HttpStatus.BAD_REQUEST),
     ;
     final int code;
     final String message;

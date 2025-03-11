@@ -4,28 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="mark index for collection, optimize performance">
-      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/FollowController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/FollowRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/UserResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/FollowService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/FollowServiceImpl.java" afterDir="false" />
+    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="fix conflict">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/MessageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/MessageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/MessageResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/MessageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/MessageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/ApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/ApiResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/entity/AccountProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/entity/AccountProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/enums/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/enums/ErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/mapper/AccountProfileMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/mapper/AccountProfileMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/FollowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/FollowController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/ProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/ProfileRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/FollowServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/FollowServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +91,7 @@
     "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "git-widget-placeholder": "relationship/update-follow-feature",
+    "git-widget-placeholder": "relationship/update-profileService-Follow",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/leduckhai/Documents/LearningMaterial/FSocial/Fsocial/messageService/src/main/java/com/fsocial/messageservice/Config",
@@ -262,10 +245,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MessageServiceApplication" />
         <item itemvalue="Application.ProfileServiceApplication" />
         <item itemvalue="Application.AccountServiceApplication" />
         <item itemvalue="Application.ApigatewayApplication" />
+        <item itemvalue="Application.MessageServiceApplication" />
         <item itemvalue="Application.NotificationServiceApplication" />
       </list>
     </recent_temporary>
@@ -317,7 +300,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741580151884</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="fix conflict">
+      <option name="closed" value="true" />
+      <created>1741710593845</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741710593845</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -353,7 +344,8 @@
     <MESSAGE value="create relationship service success" />
     <MESSAGE value="fix conflicts" />
     <MESSAGE value="mark index for collection, optimize performance" />
-    <option name="LAST_COMMIT_MESSAGE" value="mark index for collection, optimize performance" />
+    <MESSAGE value="fix conflict" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix conflict" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

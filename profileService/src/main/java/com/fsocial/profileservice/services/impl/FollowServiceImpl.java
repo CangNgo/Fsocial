@@ -10,11 +10,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class FollowServiceImpl implements FollowService {
     AccountProfileMapper accountProfileMapper;
     AccountProfileRepository accountProfileRepository;
+    RedisTemplate<String, Boolean> redisTemplate;
 
     @Override
     @Transactional(rollbackFor = AppException.class)
@@ -31,6 +34,14 @@ public class FollowServiceImpl implements FollowService {
         validUserId(userId);
         // Lấy userId của chính chủ từ Token
         String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        checkFollowerBeforeFollowOrUnFollow(ownerId, userId);
+
+        // Kiểm tra nếu đã follow trước đó
+        if (accountProfileRepository.isFollowing(ownerId, userId)) {
+            log.warn("Người dùng {} đã theo dõi {}", ownerId, userId);
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
+
         accountProfileRepository.followUser(ownerId, userId);
     }
 
@@ -40,6 +51,13 @@ public class FollowServiceImpl implements FollowService {
         validUserId(userId);
         // Lấy userId của chính chủ từ Token
         String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        checkFollowerBeforeFollowOrUnFollow(ownerId, userId);
+
+        // Kiểm tra nếu chưa follow thì không thể unfollow
+        if (!accountProfileRepository.isFollowing(ownerId, userId)) {
+            log.warn("Người dùng {} chưa theo dõi {}, không thể bỏ theo dõi", ownerId, userId);
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
 
         accountProfileRepository.unfollowUser(ownerId, userId);
     }
@@ -49,6 +67,7 @@ public class FollowServiceImpl implements FollowService {
         validUserId(userId);
         // Lấy userId của chính chủ từ Token
         String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        checkFollowerBeforeFollowOrUnFollow(ownerId, userId);
         return accountProfileRepository.getFollowingUsers(ownerId)
                 .stream()
                 .anyMatch(user -> user.getUserId().equals(userId));
@@ -71,9 +90,25 @@ public class FollowServiceImpl implements FollowService {
     }
 
     private void validUserId(String userId) {
-        if (!accountProfileRepository.existsByUserId(userId)) {
-            log.warn("Tài khoản không tồn tại.");
+        String redisKey = "user:exists:" + userId;
+
+        Boolean exists = redisTemplate.opsForValue().get(redisKey);
+        if (Boolean.TRUE.equals(exists)) return;
+
+        boolean userExists = accountProfileRepository.existsByUserId(userId);
+        if (!userExists) {
+            log.warn("Tài khoản {} không tồn tại.", userId);
             throw new AppException(ErrorCode.ACCOUNT_EXISTED);
+        }
+
+        // Lưu vào Redis với thời gian hết hạn là 5 phút
+        redisTemplate.opsForValue().set(redisKey, true, 5, TimeUnit.MINUTES);
+    }
+
+    private void checkFollowerBeforeFollowOrUnFollow(String userId, String followingId) {
+        if (userId.equals(followingId)) {
+            log.warn("Người dùng không thể tự thao tác trên chính mình.");
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
     }
 }

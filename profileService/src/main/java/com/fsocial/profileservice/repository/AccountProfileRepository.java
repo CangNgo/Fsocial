@@ -3,6 +3,7 @@ package com.fsocial.profileservice.repository;
 import com.fsocial.profileservice.entity.AccountProfile;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,4 +38,8 @@ public interface AccountProfileRepository extends Neo4jRepository<AccountProfile
         RETURN a
     """)
     List<AccountProfile> getFollowers(String userId);
+
+    @Query("MATCH (a:AccountProfile {userId: $ownerId})-[:FOLLOWS]->(b:AccountProfile {userId: $userId}) RETURN COUNT(b) > 0")
+    boolean isFollowing(@Param("ownerId") String ownerId, @Param("userId") String userId);
+
 }

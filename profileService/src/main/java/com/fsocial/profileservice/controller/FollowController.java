@@ -26,7 +26,7 @@ public class FollowController {
     }
 
     @DeleteMapping("/{userId}")
-    public ApiResponse<String> unfollowUser(@RequestBody String userId) {
+    public ApiResponse<String> unfollowUser(@PathVariable String userId) {
         followService.unfollowUser(userId);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }

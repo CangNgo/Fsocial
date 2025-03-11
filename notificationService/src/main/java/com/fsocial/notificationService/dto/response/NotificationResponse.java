@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 @Builder
 public class NotificationResponse {
     String id;
+    String postId;
+    String commentId;
     String ownerId;
     String message;
     boolean isRead;

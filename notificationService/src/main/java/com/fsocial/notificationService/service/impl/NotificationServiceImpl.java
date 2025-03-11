@@ -67,16 +67,31 @@ public class NotificationServiceImpl implements NotificationService {
 
     @KafkaListener(topics = {"notice-comment", "notice-like"})
     public void handleKafkaNotification(NotificationRequest response) {
+        log.info("Received Kafka message: {}", response);
+
+        // Lấy thông tin người nhận thông báo từ Profile Service
         var profile = profileClient.getProfileByUserId(response.getReceiverId());
+
+        // Sử dụng postId từ response
+        String postId = response.getPostId();
+        String commentId = response.getCommentId();// Lấy postId từ thông báo Kafka
+
+        // Tạo thông điệp thông báo
         String message = profile.getFirstName() + " " + profile.getLastName() + " " + response.getMessage();
         String notificationType = response.getTopic().equals("notice-comment") ? "COMMENT" : "LIKE";
 
+        // Gọi phương thức tạo thông báo (Lưu vào CSDL)
         createNotification(NoticeRequest.builder()
-                .ownerId(response.getOwnerId())
+                .ownerId(response.getOwnerId())  // OwnerId là bài viết (postId)
                 .message(message)
                 .type(notificationType)
+                .postId(postId)
+                .commentId(commentId)// Thêm postId vào thông báo
                 .build());
 
-        log.info("Kafka notification received: Topic={}, ReceiverId={}, Message={}", response.getTopic(), response.getReceiverId(), message);
+        // Log thông báo đã nhận
+        log.info("Kafka notification received: Topic={}, ReceiverId={}, Message={}, CommentId={}",
+                response.getTopic(), response.getReceiverId(), message, commentId);
     }
+
 }

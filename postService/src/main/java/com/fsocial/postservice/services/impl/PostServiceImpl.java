@@ -106,22 +106,22 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean toggleLike(String postId, String userId) throws Exception {
-
         boolean existed = postRepository.existsByIdAndLikes(postId, userId);
         try {
             if (!existed) {
                 this.addLike(postId, userId);
-                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE, postId, null);
                 return true;
             } else {
                 this.removeLike(postId, userId);
-                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE, postId, null);
                 return false;
             }
         } catch (Exception e) {
             throw new Exception(e);
         }
     }
+
 
     public void addLike(String postId, String userId) {
         Query query = new Query(Criteria.where("_id").is(postId));

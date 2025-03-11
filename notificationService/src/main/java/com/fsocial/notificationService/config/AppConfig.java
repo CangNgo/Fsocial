@@ -39,7 +39,8 @@ public class AppConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
-                        author.requestMatchers(PUBLIC_API).permitAll()
+                        author
+                        .requestMatchers(PUBLIC_API).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .logout(AbstractHttpConfigurer::disable);

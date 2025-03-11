@@ -60,13 +60,14 @@ public class CommentServiceImpl implements CommentService {
         commentRequest.setCreatDatetime(LocalDateTime.now());
         Comment savedComment = commentRepository.save(commentRequest);
 
-        // Send request to notification
+        // Gửi thông báo với commentId
         String ownerId = post.getUserId();
         String userId = request.getUserId();
-        kafkaService.sendNotification(ownerId, userId, MessageNotice.NOTIFICATION_COMMENT);
+        kafkaService.sendNotification(ownerId, userId, MessageNotice.NOTIFICATION_COMMENT, postId, savedComment.getId());
 
         return savedComment;
     }
+
 
     private String[] extractValidMedia(MultipartFile[] media) throws AppCheckedException {
         if (media == null || media.length == 0) return new String[0];
@@ -102,16 +103,22 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean toggleLikeComment(String commentId, String userId) throws AppCheckedException {
         boolean existed = commentRepository.existsByIdAndLikes(commentId, userId);
+
+        // Lấy postId từ comment
+        String postId = commentRepository.findPostIdByCommentId(commentId)
+                .orElseThrow(() -> new AppCheckedException("Không tìm thấy bài đăng cho comment", StatusCode.POST_NOT_FOUND));
+
         if (!existed) {
             this.addLikeComment(commentId, userId);
-            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT, postId, null);
             return true;
         } else {
             this.removeLikeComment(commentId, userId);
-            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT, postId, null);
             return false;
         }
     }
+
 
     @Override
     public Integer countLike(String commentId, String userId) {

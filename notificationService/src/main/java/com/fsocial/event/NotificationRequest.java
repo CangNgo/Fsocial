@@ -9,6 +9,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NotificationRequest {
+    String postId;
+    String commentId;
     String ownerId;
     String receiverId;
     String message;

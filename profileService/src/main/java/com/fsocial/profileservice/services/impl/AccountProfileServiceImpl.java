@@ -2,16 +2,14 @@ package com.fsocial.profileservice.services.impl;
 
 import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
-import com.fsocial.profileservice.dto.response.ProfileNameResponse;
-import com.fsocial.profileservice.dto.response.ProfilePageResponse;
-import com.fsocial.profileservice.dto.response.ProfileResponse;
-import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
+import com.fsocial.profileservice.dto.response.*;
 import com.fsocial.profileservice.entity.AccountProfile;
 import com.fsocial.profileservice.exception.AppException;
 import com.fsocial.profileservice.enums.ErrorCode;
 import com.fsocial.profileservice.mapper.AccountProfileMapper;
 import com.fsocial.profileservice.repository.AccountProfileRepository;
 import com.fsocial.profileservice.services.AccountProfileService;
+import com.fsocial.profileservice.services.FollowService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,13 +19,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class AccountProfileServiceImpl implements AccountProfileService {
-
+    FollowService followService;
     AccountProfileRepository accountProfileRepository;
     AccountProfileMapper accountProfileMapper;
 
@@ -36,7 +35,7 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     public ProfileResponse createAccountProfile(ProfileRegisterRequest request) {
         AccountProfile accountProfile = accountProfileMapper.toAccountProfile(request);
         accountProfileRepository.save(accountProfile);
-        log.info("Profile created for user: {}", accountProfile.getUserId());
+        log.info("Tạo thành công hồ sơ cho người dùng: {}", accountProfile.getUserId());
         return accountProfileMapper.toProfileResponse(accountProfile);
     }
 
@@ -53,7 +52,7 @@ public class AccountProfileServiceImpl implements AccountProfileService {
         accountProfileMapper.toAccountProfile(request, accountProfile);
         accountProfile.setUpdatedAt(LocalDate.now());
         accountProfileRepository.save(accountProfile);
-        log.info("Profile updated for user: {}", userId);
+        log.info("Cập nhật hồ sơ thành công cho userId: {}", userId);
 
         return accountProfileMapper.toProfileUpdateResponse(accountProfile);
     }
@@ -66,7 +65,10 @@ public class AccountProfileServiceImpl implements AccountProfileService {
 
     @Override
     public ProfilePageResponse getProfilePageByUserId(String userId) {
-        return accountProfileMapper.toProfilePageResponse(findProfileByUserId(userId));
+        List<UserResponse> followers = followService.getFollowers(userId);
+        var response = accountProfileMapper.toProfilePageResponse(findProfileByUserId(userId));
+        response.setFollowers(followers);
+        return response;
     }
 
     private AccountProfile findProfileByUserId(String userId) {

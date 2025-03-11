@@ -46,10 +46,10 @@ public class AccountProfileController {
         return accountProfileService.getAccountProfileByUserId(userId);
     }
 
-//    @GetMapping("/external/{userIdByPost}")
-//    public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String useridByPost) {
-//        return accountProfileService.getAccountProfile(useridByPost);
-//    }
+    @GetMapping("/external/{userIdByPost}")
+    public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String useridByPost) {
+        return accountProfileService.getAccountProfileByUserId(useridByPost);
+    }
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping

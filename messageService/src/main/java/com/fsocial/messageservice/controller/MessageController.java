@@ -5,9 +5,11 @@ import com.fsocial.messageservice.dto.request.MessageRequest;
 import com.fsocial.messageservice.dto.response.MessageResponse;
 import com.fsocial.messageservice.enums.ResponseStatus;
 import com.fsocial.messageservice.services.MessageService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,34 +17,34 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/chat")
+@RequestMapping("/messages")
+@Slf4j
 public class MessageController {
-    MessageService chatService;
+    MessageService messageService;
 
     @GetMapping("/{conversationId}")
-    public ApiResponse<List<MessageResponse>> getMessagesBetweenUsers(
+    public ApiResponse<List<MessageResponse>> getMessages(
             @PathVariable String conversationId,
             @RequestParam(defaultValue = "0") int page) {
-        List<MessageResponse> messageResponses = chatService.findChatMessagesBetweenUsers(conversationId, page);
-        return ApiResponse.buildApiResponse(messageResponses, ResponseStatus.SUCCESS);
+        List<MessageResponse> messages = messageService.findChatMessagesBetweenUsers(conversationId, page);
+        return ApiResponse.buildApiResponse(messages, ResponseStatus.SUCCESS);
     }
 
-    @PostMapping("/create")
-    public ApiResponse<MessageResponse> createMessage(@RequestBody MessageRequest request) {
-        MessageResponse response = chatService.saveChatMessage(request);
+    @PostMapping
+    public ApiResponse<MessageResponse> sendMessage(@RequestBody @Valid MessageRequest request) {
+        MessageResponse response = messageService.saveChatMessage(request);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
-    @PutMapping("/mark-read")
-    public ApiResponse<?> markMessagesAsRead(@RequestParam String conversationId) {
-        chatService.markMessagesAsRead(conversationId);
+    @DeleteMapping("/{messageId}")
+    public ApiResponse<Void> deleteMessage(@PathVariable String messageId) {
+        messageService.deleteMessage(messageId);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
 
-
-    @DeleteMapping("/{messageId}")
-    public ApiResponse<Void> deleteMessage(@PathVariable String messageId) {
-        chatService.deleteMessage(messageId);
+    @PutMapping("/{conversationId}/mark-as-read")
+    public ApiResponse<Void> markMessagesAsRead(@PathVariable String conversationId) {
+        messageService.markMessagesAsRead(conversationId);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
 }

@@ -35,7 +35,7 @@ public class Message {
     MessageType type;
 
     @Indexed
-    String receiver; // Hỗ trợ tìm kiếm tin nhắn theo người nhận
+    String receiverId; // Hỗ trợ tìm kiếm tin nhắn theo người nhận
 
     String content;
 

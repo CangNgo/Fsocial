@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = "conversation")
 @CompoundIndexes({
-        @CompoundIndex(name = "idx_sender_receiver", def = "{'senderId': 1, 'receiverId': 1}", unique = true),
+        @CompoundIndex(name = "idx_participants", def = "{'participants': 1}"),
         @CompoundIndex(name = "idx_createAt", def = "{'createAt': -1}")
 })
 public class Conversation {
@@ -29,14 +30,7 @@ public class Conversation {
     String id;
 
     @Indexed
-    String senderId;  // Tìm kiếm theo senderId
-
-    @Indexed
-    String receiverId; // Tìm kiếm theo receiverId
-
-    String firstName;
-    String lastName;
-    String avatar;
+    List<String> participants; // 🆕 Danh sách người tham gia cuộc trò chuyện
 
     @Indexed(direction = IndexDirection.DESCENDING)
     LocalDateTime createAt = LocalDateTime.now(); // Tối ưu sắp xếp cuộc trò chuyện mới nhất

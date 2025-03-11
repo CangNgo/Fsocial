@@ -18,25 +18,25 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/conversation")
+@RequestMapping("/conversations")
 @Slf4j
 public class ConversationController {
     ConversationService conversationService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ApiResponse<ConversationCreateResponse> createConversation(@RequestBody @Valid ConversationRequest request) {
         ConversationCreateResponse response = conversationService.responseToClient(request);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
-    @DeleteMapping("/delete/{conversationId}")
+    @DeleteMapping("/{conversationId}")
     public ApiResponse<Void> deleteConversation(@PathVariable String conversationId) {
         conversationService.deleteConversation(conversationId);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
 
-    @GetMapping("/{userId}")
-    public ApiResponse<List<ConversationResponse>> getConversations(@PathVariable String userId) {
+    @GetMapping("/user/{userId}")
+    public ApiResponse<List<ConversationResponse>> getUserConversations(@PathVariable String userId) {
         List<ConversationResponse> response = conversationService.getAllConversations(userId);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }

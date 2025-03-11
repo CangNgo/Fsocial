@@ -9,8 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface ConversationRepository extends MongoRepository<Conversation, String> {
-    Optional<Conversation> findBySenderId(String senderId);
-    Optional<Conversation> findByReceiverId(String receiverId);
-    List<Conversation> findAllBySenderId(String senderId);
-    boolean existsBySenderIdAndReceiverId(String senderId, String receiverId);
+    Optional<Conversation> findByParticipantsContaining(String userId);
+    List<Conversation> findAllByParticipantsContaining(String userId);
+    boolean existsByParticipants(List<String> participants);
 }

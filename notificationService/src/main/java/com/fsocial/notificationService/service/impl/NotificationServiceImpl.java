@@ -36,9 +36,16 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public NotificationResponse createNotification(NoticeRequest request) {
-        Notification notification = notificationRepository.save(notificationMapper.toEntity(request));
-        log.info("Thông báo: OwnerId={}, Type={}, Message={}", request.getOwnerId(), request.getType(), request.getMessage());
-        return notificationMapper.toDto(notification);
+        log.info("Received NoticeRequest: OwnerId={}, PostId={}, CommentId={}, Type={}, Message={}",
+                request.getOwnerId(), request.getPostId(), request.getCommentId(), request.getType(), request.getMessage());
+
+        Notification notification = notificationMapper.toEntity(request);
+        log.info("Mapped Notification Entity: {}", notification);
+
+        Notification savedNotification = notificationRepository.save(notification);
+        log.info("Saved Notification: {}", savedNotification);
+
+        return notificationMapper.toDto(savedNotification);
     }
 
     @Override

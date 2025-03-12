@@ -52,3 +52,13 @@ logging:
 app:
   services:
     account: http://localhost:8081/account
+
+redis:
+  host: localhost   # Địa chỉ Redis server
+  port: 6379        # Cổng mặc định Redis
+  lettuce:
+    pool:
+      max-active: 10   # Số lượng kết nối tối đa
+      max-idle: 5      # Số kết nối tối đa có thể rỗng
+      min-idle: 1      # Số kết nối tối thiểu có thể rỗng
+  timeout: 2000ms     # Thời gian chờ kết nối Redis

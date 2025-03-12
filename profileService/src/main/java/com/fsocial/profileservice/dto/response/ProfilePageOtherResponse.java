@@ -10,11 +10,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProfilePageResponse {
+public class ProfilePageOtherResponse {
     String firstName;
     String lastName;
     String avatar;
     String banner;
     String bio;
     List<UserResponse> followers;
+    boolean relationship;
 }

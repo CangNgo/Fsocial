@@ -3,7 +3,6 @@ package com.fsocial.accountservice.services.impl;
 import com.fsocial.accountservice.dto.request.account.EmailRequest;
 import com.fsocial.accountservice.dto.request.account.OtpRequest;
 import com.fsocial.accountservice.enums.RedisKeyType;
-import com.fsocial.accountservice.enums.ValidErrorCode;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.services.OtpService;

@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/postService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/processorService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/profileService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/relationshipService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/timelineService/src/main/java" charset="UTF-8" />
   </component>
 </project>

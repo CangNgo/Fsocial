@@ -70,3 +70,9 @@ spring:
             - Path=${app.api-prefix}/notification/**
           filters:
             - StripPrefix=2
+        - id: relationship_service
+          uri: http://localhost:8088
+          predicates:
+            - Path=${app.api-prefix}/relationship/**
+          filters:
+            - StripPrefix=2

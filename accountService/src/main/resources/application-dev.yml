@@ -12,7 +12,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/account_service?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: root
+    password: 12345678
   kafka:
     bootstrap-servers: localhost:9094
     consumer:
@@ -46,15 +46,16 @@ spring:
           auth: true
           starttls:
             enable: true
-  redis:
-    host: localhost   # Địa chỉ Redis server
-    port: 6379        # Cổng mặc định Redis
-    lettuce:
-      pool:
-        max-active: 10   # Số lượng kết nối tối đa
-        max-idle: 5      # Số kết nối tối đa có thể rỗng
-        min-idle: 1      # Số kết nối tối thiểu có thể rỗng
-    timeout: 2000ms     # Thời gian chờ kết nối Redis
+
+redis:
+  host: localhost   # Địa chỉ Redis server
+  port: 6379        # Cổng mặc định Redis
+  lettuce:
+    pool:
+      max-active: 10   # Số lượng kết nối tối đa
+      max-idle: 5      # Số kết nối tối đa có thể rỗng
+      min-idle: 1      # Số kết nối tối thiểu có thể rỗng
+  timeout: 2000ms     # Thời gian chờ kết nối Redis
 
 
 server:
@@ -90,7 +91,7 @@ logging:
 
 jwt:
   signerKey: "q66wYIc6orfW00uGYvH0pJO2TX3fsoFGZEvbpMJNcvGMvqYc7cfI6eTrHTOvulif"
-  duration: 20 # Đơn vị là giây
+  duration: 1 # Đơn vị là phút
   expired-time: 3 # Đơn vị là ngày
 
 otp:

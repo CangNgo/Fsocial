@@ -10,7 +10,8 @@ import java.util.List;
 
 @Repository
 public interface NotificationRepository extends MongoRepository<Notification, String> {
-    List<Notification> findByOwnerIdOrderByCreatedAtDesc(String userId);
-    // Lấy danh sách thông báo theo userId, phân trang và sắp xếp theo createdAt giảm dần
-    Page<Notification> findByOwnerIdOrderByCreatedAtDesc(String userId, Pageable pageable);
+//    List<Notification> findByOwnerIdOrderByCreatedAtDesc(String userId);
+//    // Lấy danh sách thông báo theo userId, phân trang và sắp xếp theo createdAt giảm dần
+//    Page<Notification> findByOwnerIdOrderByCreatedAtDesc(String userId, Pageable pageable);
+    List<Notification> findByReceiverIdOrderByCreatedAtDesc(String receiverId);
 }

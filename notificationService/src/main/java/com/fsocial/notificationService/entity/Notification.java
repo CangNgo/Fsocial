@@ -20,7 +20,9 @@ public class Notification {
     String id;
     String postID;
     String commentID;
-    String ownerId;
+    String senderId;
+    String receiverId;
+
     String message;
     boolean isRead;
     String type;

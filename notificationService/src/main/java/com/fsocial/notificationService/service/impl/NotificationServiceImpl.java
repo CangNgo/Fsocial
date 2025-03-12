@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,28 +38,53 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public NotificationResponse createNotification(NoticeRequest request) {
-        log.info("Received NoticeRequest: OwnerId={}, PostId={}, CommentId={}, Type={}, Message={}",
-                request.getOwnerId(), request.getPostId(), request.getCommentId(), request.getType(), request.getMessage());
+        log.info("Received NoticeRequest: SenderId={}, PostId={}, CommentId={}, Type={}, Message={}",
+                request.getSenderId(), request.getPostId(), request.getCommentId(), request.getType(), request.getMessage());
 
-        Notification notification = notificationMapper.toEntity(request);
-        log.info("Mapped Notification Entity: {}", notification);
+        // Tạo đối tượng Notification từ NoticeRequest
+        Notification notification = new Notification();
+        notification.setPostID(request.getPostId());
+        notification.setCommentID(request.getCommentId());
+        notification.setSenderId(request.getSenderId());
+        notification.setReceiverId(request.getReceiverId());
+        notification.setMessage(request.getMessage());
+        notification.setType(request.getType());
+        notification.setRead(false);  // Mới tạo thì chưa đọc
 
+        // Lưu vào MongoDB
         Notification savedNotification = notificationRepository.save(notification);
         log.info("Saved Notification: {}", savedNotification);
 
-        return notificationMapper.toDto(savedNotification);
+        // Lấy thông tin người gửi từ ProfileService
+        ProfileNameResponse profileData = profileClient.getProfileByUserId(request.getSenderId());
+
+        // Tạo NotificationResponse từ Notification và Profile thông tin
+        return new NotificationResponse(
+                savedNotification.getId(),
+                savedNotification.getPostID(),
+                savedNotification.getCommentID(),
+                savedNotification.getSenderId(),
+                savedNotification.getMessage(),
+                savedNotification.isRead(),
+                savedNotification.getType(),
+                profileData != null ? profileData.getFirstName() : null, // firstName
+                profileData != null ? profileData.getLastName() : null,  // lastName
+                profileData != null ? profileData.getAvatar() : null,    // avatar
+                savedNotification.getCreatedAt()
+
+        );
     }
 
     @Override
     public List<NotificationResponse> getNotificationsByUser(String userId) {
-        List<Notification> notifications = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
-        log.info("Lấy toàn bộ thông báo thành công.");
+        List<Notification> notifications = notificationRepository.findByReceiverIdOrderByCreatedAtDesc(userId);
+        log.info("Fetched all notifications for userId: {}", userId);
 
         return notifications.stream().map(notification -> {
             NotificationResponse response = notificationMapper.toDto(notification);
 
-            // Gọi ProfileService qua Feign Client
-            ProfileNameResponse profileData = profileClient.getProfileByUserId(notification.getOwnerId());
+            // Lấy thông tin người gửi từ ProfileService
+            ProfileNameResponse profileData = profileClient.getProfileByUserId(notification.getSenderId());
             if (profileData != null) {
                 response.setFirstName(profileData.getFirstName());
                 response.setLastName(profileData.getLastName());
@@ -66,7 +92,7 @@ public class NotificationServiceImpl implements NotificationService {
             }
 
             return response;
-        }).toList();
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -80,39 +106,39 @@ public class NotificationServiceImpl implements NotificationService {
         log.info("Notification marked as read: Id={}", notificationId);
     }
 
-    @Override
-    public Page<Notification> getNotificationsByUser(String userId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable);
-    }
+//    @Override
+//    public Page<Notification> getNotificationsByUser(String userId, int page, int size) {
+//        Pageable pageable = PageRequest.of(page, size);
+//        return notificationRepository.findByReceiverIdOrderByCreatedAtDesc(userId, pageable);
+//    }
 
     @KafkaListener(topics = {"notice-comment", "notice-like"})
     public void handleKafkaNotification(NotificationRequest response) {
         log.info("Received Kafka message: {}", response);
 
         // Lấy thông tin người nhận thông báo từ Profile Service
-        var profile = profileClient.getProfileByUserId(response.getReceiverId());
+        ProfileNameResponse profile = profileClient.getProfileByUserId(response.getReceiverId());
 
         // Sử dụng postId từ response
         String postId = response.getPostId();
-        String commentId = response.getCommentId();// Lấy postId từ thông báo Kafka
+        String commentId = response.getCommentId();  // Lấy commentId từ thông báo Kafka
 
         // Tạo thông điệp thông báo
         String message = profile.getFirstName() + " " + profile.getLastName() + " " + response.getMessage();
         String notificationType = response.getTopic().equals("notice-comment") ? "COMMENT" : "LIKE";
 
-        // Gọi phương thức tạo thông báo (Lưu vào CSDL)
+        // Tạo thông báo và lưu vào MongoDB
         createNotification(NoticeRequest.builder()
-                .ownerId(response.getOwnerId())  // OwnerId là bài viết (postId)
+                .senderId(response.getSenderId())  // OwnerId là bài viết (postId)
+                .receiverId(response.getReceiverId())
                 .message(message)
                 .type(notificationType)
                 .postId(postId)
-                .commentId(commentId)// Thêm postId vào thông báo
+                .commentId(commentId)  // Thêm postId và commentId vào thông báo
                 .build());
 
         // Log thông báo đã nhận
         log.info("Kafka notification received: Topic={}, ReceiverId={}, Message={}, CommentId={}",
                 response.getTopic(), response.getReceiverId(), message, commentId);
     }
-
 }

@@ -33,14 +33,14 @@ public class NotificationController {
         return buildResponse(notificationService.getNotificationsByUser(userId));
     }
 
-    @GetMapping("/{userId}")
-    public ApiResponse<Page<Notification>> getNotifications(
-            @PathVariable String userId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-
-        return buildResponse(notificationService.getNotificationsByUser(userId, page, size));
-    }
+//    @GetMapping("/{userId}")
+//    public ApiResponse<Page<Notification>> getNotifications(
+//            @PathVariable String userId,
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "10") int size) {
+//
+//        return buildResponse(notificationService.getNotificationsByUser(userId, page, size));
+//    }
 
     @PutMapping("/{notificationId}")
     public ApiResponse<Void> markAsRead(@PathVariable String notificationId) {

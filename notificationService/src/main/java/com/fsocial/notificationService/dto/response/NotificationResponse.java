@@ -14,7 +14,7 @@ public class NotificationResponse {
     String id;
     String postId;
     String commentId;
-    String ownerId;
+    String senderId;        // Người gửi thông báo (trước đây là userId)
     String message;
     boolean isRead;
     String type;

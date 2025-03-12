@@ -22,4 +22,5 @@ public class PostResponse {
     LocalDateTime createDatetime;
     boolean isShare;
     boolean isLike;
+    boolean status;
 }

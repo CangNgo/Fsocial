@@ -83,6 +83,8 @@ public class PostServiceImpl implements PostService {
                 .avatar(profile.getAvatar())
                 .createDatetime(post.getCreateDatetime())
                 .isLike(likePost)
+                .isShare(post.getIsShare())
+                .status(post.getStatus())
                 .build();
     }
 

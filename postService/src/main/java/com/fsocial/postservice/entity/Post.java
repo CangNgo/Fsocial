@@ -30,8 +30,10 @@ public class Post extends AbstractEntity<String> {
     @Field("origin_post")
     String originPostId;
     @Field("is_share")
+    @Builder.Default
     Boolean isShare = false;
 
     @Field("status")
+    @Builder.Default
     Boolean status = true;
 }

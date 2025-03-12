@@ -3,6 +3,7 @@ package com.fsocial.postservice.services;
 import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
+import com.fsocial.postservice.dto.post.PostShareDTORequest;
 import com.fsocial.postservice.exception.AppCheckedException;
 
 public interface PostService {
@@ -16,4 +17,6 @@ public interface PostService {
 
 
     Integer CountLike(String postId, String userId);
+
+    PostDTO sharePost (PostShareDTORequest dto );
 }

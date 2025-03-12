@@ -18,7 +18,7 @@
         </processorPath>
         <module name="notificationService" />
       </profile>
-      <profile name="Annotation profile for timeLineService" enabled="true">
+      <profile name="Annotation profile for postService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

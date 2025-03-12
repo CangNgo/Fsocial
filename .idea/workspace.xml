@@ -5,21 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/ApplicationAuditAware.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/AuditingConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Config/ApplicationAuditAware.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Config/AuditingConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/config/ApplicationAuditAware.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/config/AuditingConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/ApplicationAuditAware.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/AuditingConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/post/PostShareDTORequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/ApplicationAuditAware.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/AuditingConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messageService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/AccountServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/AccountServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/NotificationServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/NotificationServiceApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/postService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/postService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/PostServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/PostServiceApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/PostController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SwaggerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/post/PostDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/post/PostDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/AbstractEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/AbstractEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/PostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/ProfileServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/ProfileServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/post/PostResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/post/PostResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/PostServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,14 +89,14 @@
     "git-widget-placeholder": "postservice",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/workspace/Fsocial/Fsocial_be/timelineService/src/main/java/com/fsocial/timelineservice/entity",
+    "last_opened_file_path": "C:/workspace/Fsocial/Fsocial_be/profileService/src/main/java/com/fsocial/profileservice/config",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -94,14 +105,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\workspace\Fsocial\Fsocial_be\timelineService\src\main\java\com\fsocial\timelineservice\entity" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\profileService\src\main\java\com\fsocial\profileservice\config" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\notificationService\src\main\java\com\fsocial\notificationService\config" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\messageService\src\main\java\com\fsocial\messageservice\Config" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\accountService\src\main\java\com\fsocial\accountservice\config" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\postService\src\main\java\com\fsocial\postservice\config" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.fsocial.postservice.dto.post" />
       <recent name="com.fsocial.timelineservice.config" />
       <recent name="com.cangngo.apigateway.config" />
       <recent name="com.fsocial.timelineservice.dto.complaint" />
       <recent name="com.fsocial.timelineservice.services.impl" />
-      <recent name="com.fsocial.timelineservice.services" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -286,7 +301,11 @@
       <workItem from="1741257621336" duration="10230000" />
       <workItem from="1741291577463" duration="7269000" />
       <workItem from="1741319377660" duration="10672000" />
-      <workItem from="1741357235639" duration="1562000" />
+      <workItem from="1741357235639" duration="3829000" />
+      <workItem from="1741422699224" duration="862000" />
+      <workItem from="1741618544938" duration="797000" />
+      <workItem from="1741621852455" duration="603000" />
+      <workItem from="1741789477238" duration="6615000" />
     </task>
     <servers />
   </component>
@@ -298,7 +317,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java</url>
-          <line>106</line>
+          <line>98</line>
           <properties class="com.fsocial.postservice.services.impl.PostServiceImpl" method="toggleLike">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -331,6 +350,15 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/PostController.java</url>
+          <line>97</line>
+          <properties class="com.fsocial.postservice.controller.PostController" method="sharePost">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NoClassDefFoundError" package="java.lang" />

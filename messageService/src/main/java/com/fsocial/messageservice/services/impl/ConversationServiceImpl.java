@@ -32,6 +32,7 @@ public class ConversationServiceImpl implements ConversationService {
     ProfileClient profileClient;
     AccountClient accountClient;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Conversation createConversation(ConversationRequest request) {
         boolean flag = accountClient.validUserId(request.getReceiverId());
@@ -53,7 +54,6 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public ConversationCreateResponse responseToClient(ConversationRequest request) {
         validateUser(request.getReceiverId());
         Conversation conversation = createConversation(request);
@@ -65,8 +65,8 @@ public class ConversationServiceImpl implements ConversationService {
         return response;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    @Transactional
     public void deleteConversation(String conversationId) {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new AppException(ErrorCode.CONVERSATION_NOT_EXIST));
@@ -75,7 +75,7 @@ public class ConversationServiceImpl implements ConversationService {
         conversationRepository.delete(conversation);
         log.info("Xóa thành công cuộc trò chuyện {}", conversationId);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public List<ConversationResponse> getAllConversations(String userId) {
         List<Conversation> conversations = conversationRepository.findAllByParticipantsContaining(userId);

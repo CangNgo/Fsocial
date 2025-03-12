@@ -38,6 +38,7 @@ public class MessageServiceImpl implements MessageService {
     AccountClient accountClient;
     RedisTemplate<String, Boolean> redisTemplate;
 
+    @Transactional(readOnly = true)
     @Override
     public List<MessageResponse> findChatMessagesBetweenUsers(String conversationId, int page) {
         Pageable pageable = PageRequest.of(page, 20); // Lấy 20 tin nhắn mỗi trang (mới nhất trước)
@@ -48,8 +49,8 @@ public class MessageServiceImpl implements MessageService {
                 .toList();
     }
 
-    @Override
     @Transactional(rollbackFor = Exception.class)
+    @Override
     public MessageResponse saveChatMessage(MessageRequest request) {
         validateUser(request.getReceiverId());
         ensureConversationExists(request.getConversationId());
@@ -61,14 +62,14 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteMessagesByConversationId(String conversationId) {
         messageRepository.deleteAllByConversationId(conversationId);
         log.warn("Đã xoá tin nhắn trong Conversation {}", conversationId);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteMessage(String messageId) {
         if (!messageRepository.existsById(messageId)) {
             throw new AppException(ErrorCode.NOT_FOUND);
@@ -77,8 +78,8 @@ public class MessageServiceImpl implements MessageService {
         log.info("Đã xoá tin nhắn với id: {}", messageId);
     }
 
-    @Override
     @Transactional
+    @Override
     public void markMessagesAsRead(String conversationId) {
         List<Message> unreadMessages = messageRepository.findByConversationIdAndIsReadFalse(conversationId);
 
@@ -91,6 +92,7 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Map<String, LastMessage> findLastMessagesForConversations(List<String> conversationIds) {
         return messageRepository.findTopByConversationIdsOrderByCreateAtDesc(conversationIds)
@@ -106,7 +108,8 @@ public class MessageServiceImpl implements MessageService {
         String cacheKey = "user:" + userId;
 
         if (Boolean.TRUE.equals(redisTemplate.opsForValue().get(cacheKey))) {
-            redisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
+            Long ttl = redisTemplate.getExpire(cacheKey, TimeUnit.MINUTES);
+            if (ttl == null || ttl < 3) redisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
             return;
         }
 
@@ -118,11 +121,13 @@ public class MessageServiceImpl implements MessageService {
         redisTemplate.opsForValue().set(cacheKey, true, 5, TimeUnit.MINUTES);
     }
 
+
     private void ensureConversationExists(String conversationId) {
         String cacheKey = "conversation:" + conversationId;
 
         if (Boolean.TRUE.equals(redisTemplate.opsForValue().get(cacheKey))) {
-            redisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
+            Long ttl = redisTemplate.getExpire(cacheKey, TimeUnit.MINUTES);
+            if (ttl == null || ttl < 3) redisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
             return;
         }
 
@@ -132,4 +137,5 @@ public class MessageServiceImpl implements MessageService {
 
         redisTemplate.opsForValue().set(cacheKey, true, 5, TimeUnit.MINUTES);
     }
+
 }

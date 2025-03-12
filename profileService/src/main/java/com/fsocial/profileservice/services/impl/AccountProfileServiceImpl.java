@@ -71,6 +71,17 @@ public class AccountProfileServiceImpl implements AccountProfileService {
         return response;
     }
 
+    @Override
+    public ProfilePageOtherResponse getProfilePageOther(String userId) {
+        ProfilePageResponse response = getProfilePageByUserId(userId);
+        boolean relationship = followService.isFollowing(userId);
+
+        ProfilePageOtherResponse result = accountProfileMapper.toProfilePageOtherResponse(response);
+        result.setRelationship(relationship);
+
+        return result;
+    }
+
     private AccountProfile findProfileByUserId(String userId) {
         return accountProfileRepository.findByUserId(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));

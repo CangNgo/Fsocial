@@ -3,11 +3,7 @@ package com.fsocial.profileservice.controller;
 import com.fsocial.profileservice.dto.ApiResponse;
 import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
-import com.fsocial.profileservice.dto.response.ProfileAdminResponse;
-import com.fsocial.profileservice.dto.response.ProfileNameResponse;
-import com.fsocial.profileservice.dto.response.ProfilePageResponse;
-import com.fsocial.profileservice.dto.response.ProfileResponse;
-import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
+import com.fsocial.profileservice.dto.response.*;
 import com.fsocial.profileservice.enums.ResponseStatus;
 import com.fsocial.profileservice.exception.AppCheckedException;
 import com.fsocial.profileservice.services.AccountProfileService;
@@ -72,6 +68,13 @@ public class AccountProfileController {
     public ApiResponse<ProfilePageResponse> getProfilePage() {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         ProfilePageResponse response = accountProfileService.getProfilePageByUserId(userId);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/profile-page/{userId}/other")
+    public ApiResponse<ProfilePageOtherResponse> getProfilePageOther(@PathVariable String userId) {
+        ProfilePageOtherResponse response = accountProfileService.getProfilePageOther(userId);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 

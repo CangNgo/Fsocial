@@ -19,4 +19,5 @@ public interface AccountProfileMapper {
     ProfilePageResponse toProfilePageResponse(AccountProfile entity);
     ProfileAdminResponse toProfileAdminResponse(AccountProfile accountProfile);
     UserResponse toUserResponse(AccountProfile accountProfile);
+    ProfilePageOtherResponse toProfilePageOtherResponse(ProfilePageResponse request);
 }

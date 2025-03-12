@@ -1,7 +1,10 @@
 package com.fsocial.messageservice.controller;
 
+import com.fsocial.messageservice.dto.ApiResponse;
 import com.fsocial.messageservice.dto.request.MessageRequest;
+import com.fsocial.messageservice.dto.request.TypingStatusRequest;
 import com.fsocial.messageservice.dto.response.MessageResponse;
+import com.fsocial.messageservice.enums.ResponseStatus;
 import com.fsocial.messageservice.services.MessageService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -49,11 +52,23 @@ public class ChatController {
      * Client nhận tin nhắn private cần subscribe tới "/user/queue/private".
      */
     @MessageMapping("/chat.private")
-    public void sendPrivateMessage(@Payload MessageRequest request) {
+    public ApiResponse<MessageResponse> sendPrivateMessage(@Payload MessageRequest request) {
         MessageResponse response = chatService.saveChatMessage(request);
+
         messagingTemplate.convertAndSend(
                 "/queue/private-" + request.getReceiverId(),
                 response
         );
+
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
+
+    @MessageMapping("/chat.typing")
+    public void sendTypingStatus(@Payload TypingStatusRequest request) {
+        messagingTemplate.convertAndSend(
+                "/queue/typing-" + request.getConversationId(),
+                request
+        );
+    }
+
 }

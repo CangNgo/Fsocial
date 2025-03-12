@@ -18,5 +18,8 @@ public class NotificationResponse {
     String message;
     boolean isRead;
     String type;
+    String firstName;
+    String lastName;
+    String avatar;
     LocalDateTime createdAt;
 }

@@ -8,8 +8,10 @@ import com.fsocial.notificationService.enums.ResponseStatus;
 import com.fsocial.notificationService.service.NotificationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class NotificationController {
-
+    @Autowired
     NotificationService notificationService;
 
     @GetMapping("/all/{userId}")

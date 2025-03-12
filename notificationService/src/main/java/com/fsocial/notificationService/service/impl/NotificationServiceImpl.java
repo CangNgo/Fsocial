@@ -3,6 +3,7 @@ package com.fsocial.notificationService.service.impl;
 import com.fsocial.event.NotificationRequest;
 import com.fsocial.notificationService.dto.request.NoticeRequest;
 import com.fsocial.notificationService.dto.response.NotificationResponse;
+import com.fsocial.notificationService.dto.response.ProfileNameResponse;
 import com.fsocial.notificationService.entity.Notification;
 import com.fsocial.notificationService.enums.ErrorCode;
 import com.fsocial.notificationService.exception.AppException;
@@ -50,9 +51,22 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<NotificationResponse> getNotificationsByUser(String userId) {
-        List<Notification> notifications =  notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
-        log.info("Lấy toàn bộ Thông báo thành công.");
-        return notifications.stream().map(notificationMapper::toDto).toList();
+        List<Notification> notifications = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
+        log.info("Lấy toàn bộ thông báo thành công.");
+
+        return notifications.stream().map(notification -> {
+            NotificationResponse response = notificationMapper.toDto(notification);
+
+            // Gọi ProfileService qua Feign Client
+            ProfileNameResponse profileData = profileClient.getProfileByUserId(notification.getOwnerId());
+            if (profileData != null) {
+                response.setFirstName(profileData.getFirstName());
+                response.setLastName(profileData.getLastName());
+                response.setAvatar(profileData.getAvatar());
+            }
+
+            return response;
+        }).toList();
     }
 
     @Override

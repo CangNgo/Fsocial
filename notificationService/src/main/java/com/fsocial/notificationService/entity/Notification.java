@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 public class Notification {
     @Id
     String id;
+    String postID;
+    String commentID;
     String ownerId;
     String message;
     boolean isRead;

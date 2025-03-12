@@ -74,7 +74,8 @@ public class AccountProfileController {
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/profile-page/{userId}/other")
     public ApiResponse<ProfilePageOtherResponse> getProfilePageOther(@PathVariable String userId) {
-        ProfilePageOtherResponse response = accountProfileService.getProfilePageOther(userId);
+        String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        ProfilePageOtherResponse response = accountProfileService.getProfilePageOther(ownerId, userId);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 

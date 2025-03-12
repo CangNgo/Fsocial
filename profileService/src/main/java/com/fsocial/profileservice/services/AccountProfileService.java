@@ -10,5 +10,5 @@ public interface AccountProfileService {
     ProfileUpdateResponse updateProfile(String userId, ProfileUpdateRequest request);
     ProfileNameResponse getProfileNameByUserId(String userId);
     ProfilePageResponse getProfilePageByUserId(String userId);
-    ProfilePageOtherResponse getProfilePageOther(String userId);
+    ProfilePageOtherResponse getProfilePageOther(String ownerId, String userId);
 }

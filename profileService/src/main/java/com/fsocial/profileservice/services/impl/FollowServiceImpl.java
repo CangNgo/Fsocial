@@ -30,10 +30,8 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional(rollbackFor = AppException.class)
-    public void followUser(String userId) {
+    public void followUser(String ownerId, String userId) {
         validUserId(userId);
-        // Lấy userId của chính chủ từ Token
-        String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
         checkFollowerBeforeFollowOrUnFollow(ownerId, userId);
 
         // Kiểm tra nếu đã follow trước đó
@@ -47,14 +45,12 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     @Transactional
-    public void unfollowUser(String userId) {
+    public void unfollowUser(String ownerId, String userId) {
         validUserId(userId);
-        // Lấy userId của chính chủ từ Token
-        String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
         checkFollowerBeforeFollowOrUnFollow(ownerId, userId);
 
         // Kiểm tra nếu chưa follow thì không thể unfollow
-        if (!accountProfileRepository.isFollowing(ownerId, userId)) {
+        if (!isFollowing(ownerId, userId)) {
             log.warn("Người dùng {} chưa theo dõi {}, không thể bỏ theo dõi", ownerId, userId);
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
@@ -63,14 +59,13 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public boolean isFollowing(String userId) {
-        validUserId(userId);
-        // Lấy userId của chính chủ từ Token
-        String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
-        checkFollowerBeforeFollowOrUnFollow(ownerId, userId);
-        return accountProfileRepository.getFollowingUsers(ownerId)
+    public boolean isFollowing(String userId, String follower) {
+        validUserId(follower);
+        checkFollowerBeforeFollowOrUnFollow(userId, follower);
+
+        return accountProfileRepository.getFollowingUsers(userId)
                 .stream()
-                .anyMatch(user -> user.getUserId().equals(userId));
+                .anyMatch(user -> user.getUserId().equals(follower));
     }
 
     @Override

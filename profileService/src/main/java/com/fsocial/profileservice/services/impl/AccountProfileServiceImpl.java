@@ -72,9 +72,9 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     }
 
     @Override
-    public ProfilePageOtherResponse getProfilePageOther(String userId) {
+    public ProfilePageOtherResponse getProfilePageOther(String ownerId, String userId) {
         ProfilePageResponse response = getProfilePageByUserId(userId);
-        boolean relationship = followService.isFollowing(userId);
+        boolean relationship = followService.isFollowing(ownerId, userId);
 
         ProfilePageOtherResponse result = accountProfileMapper.toProfilePageOtherResponse(response);
         result.setRelationship(relationship);

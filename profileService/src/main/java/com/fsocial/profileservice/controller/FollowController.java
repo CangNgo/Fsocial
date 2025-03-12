@@ -21,19 +21,22 @@ public class FollowController {
 
     @GetMapping("/{userId}")
     public ApiResponse<Void> followUser(@PathVariable String userId) {
-        followService.followUser(userId);
+        String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        followService.followUser(ownerId,userId);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
 
     @DeleteMapping("/{userId}")
     public ApiResponse<String> unfollowUser(@PathVariable String userId) {
-        followService.unfollowUser(userId);
+        String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        followService.unfollowUser(ownerId, userId);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
 
     @GetMapping("/is-following/{userId}")
     public ApiResponse<Boolean> isFollowing(@PathVariable String userId) {
-        Boolean response = followService.isFollowing(userId);
+        String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Boolean response = followService.isFollowing(ownerId, userId);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 

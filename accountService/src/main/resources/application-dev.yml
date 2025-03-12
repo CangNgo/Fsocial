@@ -91,7 +91,7 @@ logging:
 
 jwt:
   signerKey: "q66wYIc6orfW00uGYvH0pJO2TX3fsoFGZEvbpMJNcvGMvqYc7cfI6eTrHTOvulif"
-  duration: 20 # Đơn vị là giây
+  duration: 1 # Đơn vị là phút
   expired-time: 3 # Đơn vị là ngày
 
 otp:

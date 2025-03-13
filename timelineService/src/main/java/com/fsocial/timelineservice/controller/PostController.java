@@ -51,4 +51,14 @@ public class PostController {
                 .build());
 
     }
+
+    @GetMapping("/getpost_id")
+    public ResponseEntity<Response> getPostId(@RequestParam("post_id") String postId,@RequestParam("user_id") String userId) throws AppCheckedException {
+
+        return ResponseEntity.ok(Response.builder()
+                .message("Lấy bài đăng thành công")
+                .dateTime(LocalDateTime.now())
+                .data(postService.getPostById(postId,userId))
+                .build());
+    }
 }

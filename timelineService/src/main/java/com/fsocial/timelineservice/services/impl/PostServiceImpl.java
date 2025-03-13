@@ -126,6 +126,12 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public PostResponse getPostById(String postId, String userId) throws AppCheckedException {
+        Post postResponse = postRepository.findById(postId).orElseThrow(() -> new AppCheckedException("Không tìm thấy thông tin bài viết", StatusCode.POST_NOT_FOUND));
+        return mapToPostByUserIdResponse(postResponse, userId);
+    }
+
     private int getCountLikes (String postId){
         return postRepository.countLikeByPost(postId);
     }

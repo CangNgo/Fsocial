@@ -11,5 +11,5 @@ public interface PostService {
     List<PostResponse> getPostsByUserId(String userId) throws AppCheckedException;
     ProfileResponse getProfile(String id) throws AppCheckedException;
     List<PostResponse> findByText (String text) throws AppCheckedException;
-
+    PostResponse getPostById(String postId, String userId) throws AppCheckedException;
 }

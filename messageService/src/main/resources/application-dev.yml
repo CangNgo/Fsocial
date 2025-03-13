@@ -6,8 +6,7 @@ spring:
     name: messageService
   data:
     mongodb:
-      uri: mongodb://localhost:27017/message_db
-      database: message_db
+      uri: mongodb://root:root@localhost:27004/message?authSource=admin
   jpa:
     hibernate:
       ddl-auto: update

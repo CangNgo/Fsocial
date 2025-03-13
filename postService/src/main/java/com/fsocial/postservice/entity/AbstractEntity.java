@@ -1,7 +1,11 @@
 package com.fsocial.postservice.entity;
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -31,11 +35,13 @@ public abstract class AbstractEntity<T extends Serializable> implements Serializ
     @Field("updated_by")
     private T updatedBy;
 
-    @CreatedDate
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Field("created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @LastModifiedDate
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Field("updated_at")
     private LocalDateTime updatedAt;
 

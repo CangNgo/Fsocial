@@ -52,14 +52,14 @@ public class UploadMediaImpl implements UploadMedia {
                 String resourceType = determineResourceType(extension);
 
                 tempFile = convertToFile(files[i], extension);
+                Map<String, Object> uploadParams = configureUploadParams(resourceType);
 
-                Map uploadResult = cloudinary.uploader().upload(tempFile, ObjectUtils.asMap(
-                        "public_id", publicId,
-                        "resource_type", resourceType,
-                        "overwrite", true,
-                        "invalidate", true
-                ));
+                uploadParams.put("public_id", publicId);
+                uploadParams.put("resource_type", resourceType);
+                uploadParams.put("overwrite", true);
+                uploadParams.put("invalidate", true);
 
+                Map uploadResult = cloudinary.uploader().upload(tempFile, uploadParams);
                 mediaUrls[i] = (String) uploadResult.get("secure_url");
 
             } catch (Exception e) {
@@ -70,6 +70,20 @@ public class UploadMediaImpl implements UploadMedia {
             }
         }
         return mediaUrls;
+    }
+    private Map<String, Object> configureUploadParams(String resourceType) {
+        if ("image".equals(resourceType)) {
+            return ObjectUtils.asMap(
+                    "fetch_format", "auto",     // Tự động chọn định dạng tối ưu (WebP nếu hỗ trợ)
+                    "quality", "80"            // Giới hạn chất lượng ảnh ở 80%
+            );
+        } else if ("video".equals(resourceType)) {
+            return ObjectUtils.asMap(
+                    "video_codec", "h264",     // Sử dụng codec H.264
+                    "quality", "70"            // Giới hạn chất lượng video ở 70%
+            );
+        }
+        return ObjectUtils.emptyMap(); // Mặc định nếu không xác định được
     }
 
     private String determineResourceType(String extension) throws AppCheckedException {

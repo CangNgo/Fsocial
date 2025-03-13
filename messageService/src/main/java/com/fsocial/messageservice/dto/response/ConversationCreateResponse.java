@@ -3,6 +3,8 @@ package com.fsocial.messageservice.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,7 +13,4 @@ import lombok.experimental.FieldDefaults;
 public class ConversationCreateResponse {
     String id;
     String receiverId;
-    String firstName;
-    String lastName;
-    String avatar;
 }

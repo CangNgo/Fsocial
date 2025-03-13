@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class MessageResponse {
     String conversationId;
+    String receiverId;
     String content;
     boolean isRead;
     LocalDateTime createAt;

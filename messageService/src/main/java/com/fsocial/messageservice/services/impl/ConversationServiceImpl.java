@@ -19,11 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,34 +32,41 @@ public class ConversationServiceImpl implements ConversationService {
     ProfileClient profileClient;
     AccountClient accountClient;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Conversation createConversation(ConversationRequest request) {
-        ProfileResponse recipientProfile = Optional.ofNullable(profileClient.getAccountProfileFromAnotherService(request.getReceiverId()))
-                .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
+        boolean flag = accountClient.validUserId(request.getReceiverId());
+        if (!flag) {
+            log.warn("Không tìm thấy User: {}", request.getReceiverId());
+            throw new AppException(ErrorCode.ACCOUNT_NOT_EXISTED);
+        }
+
+        List<String> participants = Arrays.asList(request.getSenderId(), request.getReceiverId());
+
+        if (conversationRepository.existsByParticipants(participants)) {
+            throw new AppException(ErrorCode.CONVERSATION_EXISTED);
+        }
 
         Conversation conversation = conversationMapper.toEntity(request);
-        updateConversationWithProfile(conversation, recipientProfile);
+        conversation.setParticipants(participants);
 
         return conversationRepository.save(conversation);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public ConversationCreateResponse responseToClient(ConversationRequest request) {
         validateUser(request.getReceiverId());
-
-        // Kiểm tra nhanh xem cuộc trò chuyện đã tồn tại chưa
-        if (conversationRepository.existsBySenderIdAndReceiverId(request.getSenderId(), request.getReceiverId())) {
-            throw new AppException(ErrorCode.CONVERSATION_EXISTED);
-        }
-
         Conversation conversation = createConversation(request);
-        log.info("Khởi tạo thành công cuộc trò chuyện giữa {} và {}", request.getSenderId(), request.getReceiverId());
-        return conversationMapper.toConversationCreateResponse(conversation);
+        String receiverId = conversation.getParticipants().getLast();
+
+        ConversationCreateResponse response = conversationMapper.toConversationCreateResponse(conversation);
+        response.setReceiverId(receiverId);
+
+        return response;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    @Transactional
     public void deleteConversation(String conversationId) {
         Conversation conversation = conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new AppException(ErrorCode.CONVERSATION_NOT_EXIST));
@@ -72,52 +75,66 @@ public class ConversationServiceImpl implements ConversationService {
         conversationRepository.delete(conversation);
         log.info("Xóa thành công cuộc trò chuyện {}", conversationId);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public List<ConversationResponse> getAllConversations(String userId) {
-        List<Conversation> conversations = conversationRepository.findAllBySenderId(userId);
+        List<Conversation> conversations = conversationRepository.findAllByParticipantsContaining(userId);
         if (conversations.isEmpty()) return List.of();
 
+        // Lấy danh sách conversationId
         List<String> conversationIds = conversations.stream()
                 .map(Conversation::getId)
                 .toList();
 
-        List<LastMessage> lastMessages = messageService.findLastMessagesForConversations(conversationIds);
-
-        Map<String, LastMessage> lastMessagesMap = conversationIds.stream()
-                .collect(Collectors.toMap(
-                        id -> id,
-                        messageService::findLastMessageByConversationId,
-                        (existing, replacement) -> existing.getCreateAt().isAfter(replacement.getCreateAt()) ? existing : replacement
-                ));;
+        // Lấy lastMessage của mỗi cuộc trò chuyện
+        Map<String, LastMessage> lastMessagesMap = messageService.findLastMessagesForConversations(conversationIds);
 
         return conversations.stream()
-                .map(conversation -> {
-                    var conversationResponse = conversationMapper.toConversationResponse(conversation);
-                    conversationResponse.setLastMessage(lastMessagesMap.get(conversation.getId()));
-                    return conversationResponse;
-                })
-                .sorted(Comparator.comparing((ConversationResponse c) -> {
+                .map(conversation -> buildConversationResponse(conversation, userId, lastMessagesMap))
+                .sorted(Comparator
+                        .comparing((ConversationResponse c) -> {
                             LastMessage lastMessage = c.getLastMessage();
                             return lastMessage != null && !lastMessage.isRead(); // Tin nhắn chưa đọc lên trước
                         }).reversed()
-                        .thenComparing((ConversationResponse c) -> {
+                        .thenComparing(c -> {
                             LastMessage lastMessage = c.getLastMessage();
-                            return lastMessage != null ? lastMessage.getCreateAt() : LocalDateTime.MIN; // Tin nhắn mới nhất trước
-                        }).reversed())
+                            return lastMessage != null ? lastMessage.getCreateAt() : LocalDateTime.MIN;
+                        }, Comparator.reverseOrder())) // Tin nhắn mới nhất lên trước
                 .toList();
     }
+
+    private ConversationResponse buildConversationResponse(
+            Conversation conversation, String userId, Map<String, LastMessage> lastMessagesMap) {
+
+        var conversationResponse = conversationMapper.toConversationResponse(conversation);
+        conversationResponse.setLastMessage(lastMessagesMap.get(conversation.getId()));
+
+        // Xác định receiverId
+        List<String> participants = conversation.getParticipants();
+        String receiverId = Objects.equals(participants.getFirst(), userId) ? participants.getLast() : participants.getFirst();
+
+        // Lấy thông tin người nhận từ ProfileClient
+        ProfileResponse profileResponse;
+        try {
+            profileResponse = profileClient.getAccountProfileFromAnotherService(receiverId);
+        } catch (Exception e) {
+            log.error("Lỗi khi gọi ProfileService cho receiverId {}: {}", receiverId, e.getMessage());
+            throw new AppException(ErrorCode.PROFILE_NOT_EXISTED);
+        }
+
+        conversationResponse.setReceiverId(receiverId);
+        conversationResponse.setFirstName(profileResponse.getFirstName());
+        conversationResponse.setLastName(profileResponse.getLastName());
+        conversationResponse.setAvatar(profileResponse.getAvatar());
+
+        return conversationResponse;
+    }
+
 
     private void validateUser(String userId) {
         if (!accountClient.validUserId(userId)) {
             log.warn("Tài khoản {} không tồn tại.", userId);
             throw new AppException(ErrorCode.ACCOUNT_NOT_EXISTED);
         }
-    }
-
-    private void updateConversationWithProfile(Conversation conversation, ProfileResponse profile) {
-        conversation.setFirstName(profile.getFirstName());
-        conversation.setLastName(profile.getLastName());
-        conversation.setAvatar(profile.getAvatar());
     }
 }

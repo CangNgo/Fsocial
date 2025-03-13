@@ -85,7 +85,7 @@ public class JwtServiceImpl implements JwtService {
                 .issuer(issuerValue)
                 .issueTime(new Date())
                 .expirationTime(
-                        new Date(Instant.now().plus(durationTime, ChronoUnit.SECONDS).toEpochMilli())
+                        new Date(Instant.now().plus(durationTime, ChronoUnit.MINUTES).toEpochMilli())
                 )
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", account.getRole() != null ? account.getRole().getName() : "");

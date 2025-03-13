@@ -63,7 +63,8 @@ public class PostServiceImpl implements PostService {
                 .countLikes(getCountLikes(post.getId()))
                 .countComments(getCountComment(post.getId()))
                 .userId(post.getUserId())
-                .displayName(profile.getFirstName() + " " + profile.getLastName())
+                .lastName(profile.getLastName())
+                .firtName(profile.getFirstName())
                 .avatar(profile.getAvatar())
                 .createDatetime(post.getCreateDatetime())
                 .isLike(false)
@@ -79,10 +80,13 @@ public class PostServiceImpl implements PostService {
                 .countLikes(getCountLikes(post.getId()))
                 .countComments(getCountComment(post.getId()))
                 .userId(post.getUserId())
-                .displayName(profile.getFirstName() + " " + profile.getLastName())
+                .lastName(profile.getLastName())
+                .firtName(profile.getFirstName())
                 .avatar(profile.getAvatar())
                 .createDatetime(post.getCreateDatetime())
                 .isLike(likePost)
+                .isShare(post.getIsShare())
+                .status(post.getStatus())
                 .build();
     }
 
@@ -113,7 +117,8 @@ public class PostServiceImpl implements PostService {
                             .countLikes(post.getCountLikes())
                             .countComments(countComment)
                             .userId(post.getUserId())
-                            .displayName(profile.getFirstName() + " " + profile.getLastName())
+                            .lastName(profile.getLastName())
+                            .firtName(profile.getFirstName())
                             .avatar(profile.getAvatar())
                             .createDatetime(post.getCreateDatetime())
                             .build();

@@ -22,9 +22,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,97 +38,104 @@ public class MessageServiceImpl implements MessageService {
     AccountClient accountClient;
     RedisTemplate<String, Boolean> redisTemplate;
 
+    @Transactional(readOnly = true)
     @Override
     public List<MessageResponse> findChatMessagesBetweenUsers(String conversationId, int page) {
         Pageable pageable = PageRequest.of(page, 20); // Lấy 20 tin nhắn mỗi trang (mới nhất trước)
-
         Page<Message> chatPage = messageRepository.findByConversationIdOrderByCreateAtDesc(conversationId, pageable);
 
-        return chatPage.getContent().stream()
+        return chatPage.stream()
                 .map(messageMapper::toMessageResponse)
                 .toList();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    @Transactional(rollbackFor = AppException.class)
     public MessageResponse saveChatMessage(MessageRequest request) {
         validateUser(request.getReceiverId());
-        checkExistConversation(request.getConversationId());
+        ensureConversationExists(request.getConversationId());
 
         Message message = messageMapper.toEntity(request);
-        return messageMapper.toMessageResponse(messageRepository.save(message));
+        Message savedMessage = messageRepository.save(message);
+
+        return messageMapper.toMessageResponse(savedMessage);
     }
 
     @Override
-    public LastMessage findLastMessageByConversationId(String conversationId) {
-        Message lastMessage = messageRepository.findTopByConversationIdOrderByCreateAtDesc(conversationId).orElse(new Message());
-        return messageMapper.toLastMessage(lastMessage);
-    }
-
-
-    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteMessagesByConversationId(String conversationId) {
         messageRepository.deleteAllByConversationId(conversationId);
-        log.warn("Đã xoá thành công tất cả các tin nhắn trong Conversation {}", conversationId);
+        log.warn("Đã xoá tin nhắn trong Conversation {}", conversationId);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteMessage(String messageId) {
-        Message message = messageRepository.findById(messageId).orElseThrow(
-                () -> new AppException(ErrorCode.NOT_FOUND)
-        );
+        if (!messageRepository.existsById(messageId)) {
+            throw new AppException(ErrorCode.NOT_FOUND);
+        }
+        messageRepository.deleteById(messageId);
+        log.info("Đã xoá tin nhắn với id: {}", messageId);
+    }
 
-        if (message != null) {
-            messageRepository.deleteById(messageId);
-            log.info("Đã xoá tin nhắn với id: {}", messageId);
+    @Transactional
+    @Override
+    public void markMessagesAsRead(String conversationId) {
+        List<Message> unreadMessages = messageRepository.findByConversationIdAndIsReadFalse(conversationId);
+
+        if (!unreadMessages.isEmpty()) {
+            unreadMessages.forEach(message -> message.setRead(true));
+            messageRepository.saveAll(unreadMessages);
+            log.info("Đã đánh dấu {} tin nhắn đã đọc trong cuộc trò chuyện {}", unreadMessages.size(), conversationId);
+        } else {
+            log.info("Không có tin nhắn chưa đọc trong cuộc trò chuyện {}", conversationId);
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public void markMessagesAsRead(List<String> messageIds) {
-        List<Message> messages = messageRepository.findAllById(messageIds)
+    public Map<String, LastMessage> findLastMessagesForConversations(List<String> conversationIds) {
+        return messageRepository.findTopByConversationIdsOrderByCreateAtDesc(conversationIds)
                 .stream()
-                .filter(message -> !message.isRead())
-                .peek(message -> message.setRead(true))
-                .toList();
-
-        if (!messages.isEmpty()) {
-            messageRepository.saveAll(messages);
-        }
-    }
-
-    @Override
-    public List<LastMessage> findLastMessagesForConversations(List<String> conversationIds) {
-        return messageRepository.findTopByConversationIdsOrderByCreateAtDesc(conversationIds).stream()
-                .map(messageMapper::toLastMessage)
-                .toList();
+                .collect(Collectors.toMap(
+                        Message::getConversationId,
+                        message -> new LastMessage(message.getContent(), message.isRead(), message.getCreateAt()),
+                        (existing, replacement) -> existing.getCreateAt().isAfter(replacement.getCreateAt()) ? existing : replacement
+                ));
     }
 
     private void validateUser(String userId) {
-        String userCacheKey = "user:" + userId;
-        if (Boolean.TRUE.equals(redisTemplate.hasKey(userCacheKey))) {
-            redisTemplate.expire(userCacheKey, 5, TimeUnit.MINUTES);
+        String cacheKey = "user:" + userId;
+
+        if (Boolean.TRUE.equals(redisTemplate.opsForValue().get(cacheKey))) {
+            Long ttl = redisTemplate.getExpire(cacheKey, TimeUnit.MINUTES);
+            if (ttl == null || ttl < 3) redisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
             return;
         }
 
         if (!accountClient.validUserId(userId)) {
-            log.error("Xác thực người dùng không thành công cho userId: {}", userId);
+            log.error("Xác thực thất bại: userId {}", userId);
             throw new AppException(ErrorCode.ACCOUNT_NOT_EXISTED);
         }
 
-        redisTemplate.opsForValue().set(userCacheKey, true, 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(cacheKey, true, 5, TimeUnit.MINUTES);
     }
 
-    private void checkExistConversation(String conversationId) {
-        String conversationKey = "conversation:" + conversationId;
-        if (Boolean.FALSE.equals(redisTemplate.hasKey(conversationKey))) {
-            if (!conversationRepository.existsById(conversationId))
-                throw new AppException(ErrorCode.CONVERSATION_NOT_EXIST);
 
-            redisTemplate.opsForValue().set(conversationKey, true, 5, TimeUnit.MINUTES);
+    private void ensureConversationExists(String conversationId) {
+        String cacheKey = "conversation:" + conversationId;
+
+        if (Boolean.TRUE.equals(redisTemplate.opsForValue().get(cacheKey))) {
+            Long ttl = redisTemplate.getExpire(cacheKey, TimeUnit.MINUTES);
+            if (ttl == null || ttl < 3) redisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
+            return;
         }
 
-        redisTemplate.expire(conversationKey, 5, TimeUnit.MINUTES);
+        if (!conversationRepository.existsById(conversationId)) {
+            throw new AppException(ErrorCode.CONVERSATION_NOT_EXIST);
+        }
+
+        redisTemplate.opsForValue().set(cacheKey, true, 5, TimeUnit.MINUTES);
     }
+
 }

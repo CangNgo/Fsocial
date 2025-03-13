@@ -25,14 +25,14 @@ public class PostController {
     PostService postService;
 
     @GetMapping
-    public ResponseEntity<Response> getPosts(@RequestParam(value = "userId", required = false) String userId ) throws AppCheckedException {
+    public ResponseEntity<Response> getPosts(@RequestParam(value = "userId") String userId ) throws AppCheckedException {
         List<PostResponse> posts ;
 
-        if(userId == null) {
-             posts = postService.getPosts();
-        }else {
+//        if(userId == null) {
+//             posts = postService.getPosts();
+//        }else {
+//        }
             posts = postService.getPostsByUserId(userId);
-        }
         return ResponseEntity.ok(Response.builder()
                 .message("Lấy bài đăng thành công")
                 .dateTime(LocalDateTime.now())

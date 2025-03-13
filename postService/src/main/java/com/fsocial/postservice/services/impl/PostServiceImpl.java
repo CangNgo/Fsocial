@@ -3,6 +3,7 @@ package com.fsocial.postservice.services.impl;
 import com.fsocial.postservice.dto.ContentDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
+import com.fsocial.postservice.dto.post.PostShareDTORequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.enums.MessageNotice;
@@ -60,20 +61,11 @@ public class PostServiceImpl implements PostService {
                     uripostImage = uploadMedia.uploadMedia(validMedia);
                 }
             }
-            ;
-            Post post = postMapper.toPost(postRequest);
+            ContentDTO contentDTO = buildContent(postRequest.getHTMLText(),
+                    postRequest.getText(),
+                    uripostImage);
+            Post post = buildPost(contentDTO, postRequest);
 
-            //thêm userId
-            post.setUserId(postRequest.getUserId());
-            //thêm content
-            ContentDTO content = ContentDTO.builder()
-                    .text(postRequest.getText())
-                    .HTMLText(postRequest.getHTMLText())
-                    .media(uripostImage)
-                    .build();
-            post.setContent(contentMapper.toContent(content));
-            post.setCreateDatetime(LocalDateTime.now());
-            post.setLikes(new ArrayList<>());
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {
@@ -139,5 +131,45 @@ public class PostServiceImpl implements PostService {
     public Integer CountLike(String postId, String userId) {
         Integer countLike = postRepository.countLikeByPost(postId);
         return countLike == null ? 0 : countLike;
+    }
+
+    @Override
+    public PostDTO sharePost(PostShareDTORequest postRequest) {
+        ContentDTO contentDTO = buildContent(postRequest.getHTMLText(),
+                postRequest.getText());
+        Post post = Post.builder()
+                .content(contentMapper.toContent(contentDTO))
+                .userId(postRequest.getUserId())
+                .isShare(true)
+                .originPostId(postRequest.getOriginPostId())
+                .likes(new ArrayList<>())
+                .createDatetime(LocalDateTime.now())
+                .build();
+
+        return postMapper.toPostDTO(postRepository.save(post));
+    }
+
+    private ContentDTO buildContent(String html, String text, String[] media){
+        return ContentDTO.builder()
+                .text(text)
+                .HTMLText(html)
+                .media(media)
+                .build();
+    } private ContentDTO buildContent(String html, String text){
+        return ContentDTO.builder()
+                .text(text)
+                .HTMLText(html)
+                .build();
+    }
+
+    private Post buildPost(ContentDTO contentDTO, PostDTORequest postRequest){
+        Post post =postMapper.toPost(postRequest);
+
+        //thêm userId
+        post.setUserId(postRequest.getUserId());
+        post.setContent(contentMapper.toContent(contentDTO));
+        post.setCreateDatetime(LocalDateTime.now());
+        post.setLikes(new ArrayList<>());
+        return  post;
     }
 }

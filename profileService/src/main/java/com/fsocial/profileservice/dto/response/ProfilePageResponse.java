@@ -3,6 +3,8 @@ package com.fsocial.profileservice.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,4 +16,5 @@ public class ProfilePageResponse {
     String avatar;
     String banner;
     String bio;
+    List<UserResponse> followers;
 }

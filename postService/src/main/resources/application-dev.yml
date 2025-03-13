@@ -13,12 +13,15 @@ springdoc:
   default-produces-media-type: application/json
 openapi:
   service:
+    api-docs: post-service
+    server: http://localhost:8083
+    serverName: Post service
     title: Post Service API
     version: 1.0.0
     description: API for managing posts
 spring:
   application:
-    name: postService
+    name: post_service
   data:
     mongodb:
        uri: mongodb://root:root@localhost:27001/primary_database?authSource=admin

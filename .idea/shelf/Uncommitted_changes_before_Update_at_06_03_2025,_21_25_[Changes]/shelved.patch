@@ -1,0 +1,705 @@
+Index: profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fsocial.profileservice.controller;\n\nimport com.fsocial.profileservice.dto.ApiResponse;\nimport com.fsocial.profileservice.dto.request.ProfileRegisterRequest;\nimport com.fsocial.profileservice.dto.request.ProfileUpdateRequest;\nimport com.fsocial.profileservice.dto.response.ProfileAdminResponse;\nimport com.fsocial.profileservice.dto.response.ProfileNameResponse;\nimport com.fsocial.profileservice.dto.response.ProfileResponse;\nimport com.fsocial.profileservice.dto.response.ProfileUpdateResponse;\nimport com.fsocial.profileservice.enums.ResponseStatus;\nimport com.fsocial.profileservice.exception.AppCheckedException;\nimport com.fsocial.profileservice.services.AccountProfileService;\nimport com.fsocial.profileservice.services.ProfileService;\nimport jakarta.validation.Valid;\nimport lombok.AccessLevel;\nimport lombok.RequiredArgsConstructor;\nimport lombok.experimental.FieldDefaults;\nimport lombok.extern.slf4j.Slf4j;\nimport org.springframework.security.access.prepost.PreAuthorize;\nimport org.springframework.web.bind.annotation.*;\n\nimport java.time.LocalDateTime;\n\n@RestController\n@RequiredArgsConstructor\n@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)\n@Slf4j\npublic class AccountProfileController {\n    AccountProfileService accountProfileService;\n\n    ProfileService profileService;\n\n    @PostMapping(\"/internal/create\")\n    public ProfileResponse createAccountProfile(@RequestBody @Valid ProfileRegisterRequest request) {\n        return accountProfileService.createAccountProfile(request);\n    }\n\n    @GetMapping(\"/internal/{userId}\")\n    public ProfileNameResponse getProfileByUserId(@PathVariable String userId) {\n        return accountProfileService.getProfileByUserId(userId);\n    }\n\n    @PreAuthorize(\"hasRole('USER')\")\n    @GetMapping\n    public ApiResponse<ProfileResponse> getAccountProfile() {\n        ProfileResponse response = accountProfileService.getAccountProfileByUserId();\n        return buildResponse(response);\n    }\n\n    @PreAuthorize(\"hasRole('USER')\")\n    @PutMapping(\"/{profileId}\")\n    public ApiResponse<ProfileUpdateResponse> updateProfile(@PathVariable String profileId,\n                                                            @RequestBody @Valid ProfileUpdateRequest request) {\n        ProfileUpdateResponse response = accountProfileService.updateProfile(profileId, request);\n        return buildResponse(response);\n    }\n\n    private <T> ApiResponse<T> buildResponse(T data) {\n        return ApiResponse.<T>builder()\n                .statusCode(ResponseStatus.SUCCESS.getCODE())\n                .message(ResponseStatus.SUCCESS.getMessage())\n                .dateTime(LocalDateTime.now())\n                .data(data)\n                .build();\n    }\n\n    @GetMapping(\"/external/{userIdByPost}\")\n    public ProfileResponse getProfileResponseByUserId(@PathVariable(\"userIdByPost\") String useridByPost) {\n        return accountProfileService.getAccountProfile(useridByPost);\n    }\n\n    @GetMapping(\"/{profileId}\")\n    public ApiResponse<ProfileAdminResponse> getProfileAdmin(@PathVariable String profileId) throws AppCheckedException {\n        ProfileAdminResponse response  = profileService.getProfileAdmin(profileId);\n        return buildResponse(response);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java b/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java
+--- a/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java	(date 1741191744884)
+@@ -5,6 +5,7 @@
+ import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
+ import com.fsocial.profileservice.dto.response.ProfileAdminResponse;
+ import com.fsocial.profileservice.dto.response.ProfileNameResponse;
++import com.fsocial.profileservice.dto.response.ProfilePageResponse;
+ import com.fsocial.profileservice.dto.response.ProfileResponse;
+ import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
+ import com.fsocial.profileservice.enums.ResponseStatus;
+@@ -17,6 +18,7 @@
+ import lombok.experimental.FieldDefaults;
+ import lombok.extern.slf4j.Slf4j;
+ import org.springframework.security.access.prepost.PreAuthorize;
++import org.springframework.security.core.context.SecurityContextHolder;
+ import org.springframework.web.bind.annotation.*;
+ 
+ import java.time.LocalDateTime;
+@@ -37,21 +39,30 @@
+ 
+     @GetMapping("/internal/{userId}")
+     public ProfileNameResponse getProfileByUserId(@PathVariable String userId) {
+-        return accountProfileService.getProfileByUserId(userId);
++        return accountProfileService.getProfileNameByUserId(userId);
+     }
+ 
+     @PreAuthorize("hasRole('USER')")
+     @GetMapping
+     public ApiResponse<ProfileResponse> getAccountProfile() {
+-        ProfileResponse response = accountProfileService.getAccountProfileByUserId();
++        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
++        ProfileResponse response = accountProfileService.getAccountProfileByUserId(userId);
++        return buildResponse(response);
++    }
++
++    @PreAuthorize("hasRole('USER')")
++    @PutMapping("/update")
++    public ApiResponse<ProfileUpdateResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {
++        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
++        ProfileUpdateResponse response = accountProfileService.updateProfile(userId, request);
+         return buildResponse(response);
+     }
+ 
+     @PreAuthorize("hasRole('USER')")
+-    @PutMapping("/{profileId}")
+-    public ApiResponse<ProfileUpdateResponse> updateProfile(@PathVariable String profileId,
+-                                                            @RequestBody @Valid ProfileUpdateRequest request) {
+-        ProfileUpdateResponse response = accountProfileService.updateProfile(profileId, request);
++    @GetMapping("/profile-page")
++    public ApiResponse<ProfilePageResponse> getProfilePage() {
++        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
++        ProfilePageResponse response = accountProfileService.getProfilePageByUserId(userId);
+         return buildResponse(response);
+     }
+ 
+Index: apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cangngo.apigateway.config;\n\nimport com.cangngo.apigateway.dto.ApiResponse;\nimport com.cangngo.apigateway.enums.ErrorCode;\nimport com.cangngo.apigateway.service.AccountService;\nimport com.fasterxml.jackson.core.JsonProcessingException;\nimport com.fasterxml.jackson.databind.ObjectMapper;\nimport lombok.AccessLevel;\nimport lombok.RequiredArgsConstructor;\nimport lombok.experimental.FieldDefaults;\nimport lombok.experimental.NonFinal;\nimport lombok.extern.slf4j.Slf4j;\nimport org.springframework.beans.factory.annotation.Value;\nimport org.springframework.cloud.gateway.filter.GatewayFilterChain;\nimport org.springframework.cloud.gateway.filter.GlobalFilter;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.core.Ordered;\nimport org.springframework.http.HttpHeaders;\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.MediaType;\nimport org.springframework.http.server.reactive.ServerHttpRequest;\nimport org.springframework.http.server.reactive.ServerHttpResponse;\nimport org.springframework.util.AntPathMatcher;\nimport org.springframework.util.CollectionUtils;\nimport org.springframework.web.server.ServerWebExchange;\nimport reactor.core.publisher.Mono;\n\nimport java.time.LocalDateTime;\nimport java.util.Arrays;\nimport java.util.List;\n\n@Configuration\n@RequiredArgsConstructor\n@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)\n@Slf4j\npublic class GlobalConfig implements GlobalFilter, Ordered {\n    AccountService accountService;\n    ObjectMapper objectMapper;\n    AntPathMatcher antPathMatcher = new AntPathMatcher();\n\n    @NonFinal\n    private String[] PUBLIC_ENDPOINT = {\"/account/**\", \"/post/**\", \"/profile/**\", \"/timeline/**\"};\n\n    @NonFinal\n    @Value(\"${app.api-prefix}\")\n    String apiPrefix;\n\n    @Override\n    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {\n        if (isPublicEndpoint(exchange.getRequest()))\n            return chain.filter(exchange);\n\n        List<String> authHeaders = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION);\n        if (CollectionUtils.isEmpty(authHeaders))\n            return unauthenticated(exchange.getResponse());\n\n        String token = authHeaders.getFirst().replace(\"Bearer \", \"\");\n        return accountService.apiResponseMono(token).flatMap(introspectResponse -> {\n                    if (introspectResponse.getData().isValid())\n                        return chain.filter(exchange);\n                    else\n                        return unauthenticated(exchange.getResponse());\n                })\n                .onErrorResume(throwable -> unauthenticated(exchange.getResponse()));\n    }\n\n    @Override\n    public int getOrder() {\n        return -1;\n    }\n\n    private boolean isPublicEndpoint(ServerHttpRequest request) {\n        String path = request.getURI().getPath().replaceFirst(apiPrefix, \"\");\n        return Arrays.stream(PUBLIC_ENDPOINT).anyMatch(endPoint -> antPathMatcher.match(endPoint, path));\n    }\n\n    Mono<Void> unauthenticated(ServerHttpResponse response) {\n        ApiResponse<?> apiResponse = ApiResponse.builder()\n                .statusCode(ErrorCode.UNAUTHENTICATED.getCode())\n                .message(ErrorCode.UNAUTHENTICATED.getMessage())\n                .dateTime(LocalDateTime.now())\n                .build();\n\n        String body;\n        try {\n            body = objectMapper.writeValueAsString(apiResponse);\n        } catch (JsonProcessingException e) {\n            throw new RuntimeException(e);\n        }\n        response.setStatusCode(HttpStatus.UNAUTHORIZED);\n        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);\n        return response.writeWith(\n                Mono.just(response.bufferFactory().wrap(body.getBytes()))\n        );\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java b/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java
+--- a/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java	(date 1741191739486)
+@@ -55,6 +55,7 @@
+             return unauthenticated(exchange.getResponse());
+ 
+         String token = authHeaders.getFirst().replace("Bearer ", "");
++        log.info("TEST Token: {}", token);
+         return accountService.apiResponseMono(token).flatMap(introspectResponse -> {
+                     if (introspectResponse.getData().isValid())
+                         return chain.filter(exchange);
+Index: profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fsocial.profileservice.repository;\n\nimport com.fsocial.profileservice.dto.response.ProfileResponse;\nimport com.fsocial.profileservice.entity.AccountProfile;\nimport org.springframework.data.neo4j.repository.Neo4jRepository;\nimport org.springframework.stereotype.Repository;\n\nimport java.util.Optional;\n\n@Repository\npublic interface AccountProfileRepository extends Neo4jRepository<AccountProfile, String> {\n    Optional<ProfileResponse> findByUserId(String userId);\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java b/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java
+--- a/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java	(date 1741191739490)
+@@ -9,5 +9,5 @@
+ 
+ @Repository
+ public interface AccountProfileRepository extends Neo4jRepository<AccountProfile, String> {
+-    Optional<ProfileResponse> findByUserId(String userId);
++    Optional<AccountProfile> findByUserId(String userId);
+ }
+Index: .idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"Encoding\">\n    <file url=\"file://$PROJECT_DIR$/accountService/src/main/java\" charset=\"UTF-8\" />\n    <file url=\"file://$PROJECT_DIR$/apigateway/src/main/java\" charset=\"UTF-8\" />\n    <file url=\"file://$PROJECT_DIR$/messageService/src/main/java\" charset=\"UTF-8\" />\n    <file url=\"file://$PROJECT_DIR$/postService/src/main/java\" charset=\"UTF-8\" />\n    <file url=\"file://$PROJECT_DIR$/processorService/src/main/java\" charset=\"UTF-8\" />\n    <file url=\"file://$PROJECT_DIR$/profileService/src/main/java\" charset=\"UTF-8\" />\n    <file url=\"file://$PROJECT_DIR$/relationshipService/src/main/java\" charset=\"UTF-8\" />\n    <file url=\"file://$PROJECT_DIR$/timelineService/src/main/java\" charset=\"UTF-8\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/encodings.xml b/.idea/encodings.xml
+--- a/.idea/encodings.xml	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/.idea/encodings.xml	(date 1741191806070)
+@@ -4,6 +4,7 @@
+     <file url="file://$PROJECT_DIR$/accountService/src/main/java" charset="UTF-8" />
+     <file url="file://$PROJECT_DIR$/apigateway/src/main/java" charset="UTF-8" />
+     <file url="file://$PROJECT_DIR$/messageService/src/main/java" charset="UTF-8" />
++    <file url="file://$PROJECT_DIR$/notificationService/src/main/java" charset="UTF-8" />
+     <file url="file://$PROJECT_DIR$/postService/src/main/java" charset="UTF-8" />
+     <file url="file://$PROJECT_DIR$/processorService/src/main/java" charset="UTF-8" />
+     <file url="file://$PROJECT_DIR$/profileService/src/main/java" charset="UTF-8" />
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"526d44bb-c681-4d66-9320-216d9c787f83\" name=\"Changes\" comment=\"\">\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/.gitattributes\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/.gitignore\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/.mvn/wrapper/maven-wrapper.properties\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/mvnw\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/mvnw.cmd\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/pom.xml\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/RelationshipServiceApplication.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/AppConfig.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/CustomJwtDecode.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/JwtAuthenticationEntryPoint.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/RedisConfig.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/controller/RelationshipController.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/dto/ApiResponse.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/dto/request/FollowRequest.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/entity/Relationship.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/enums/ErrorCode.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/enums/ResponseStatus.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/enums/ValidErrorCode.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/exception/AppCheckedException.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/exception/AppException.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/exception/GlobalExceptionHandler.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/repository/RelationshipRepository.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/service/RelationshipService.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/service/impl/RelationshipServiceImpl.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/validation/NotNullOrBlankValidator.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/validation/constrain/NotNullOrBlank.java\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/resources/application-dev.yml\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/resources/application-pro.yml\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/main/resources/application.yml\" afterDir=\"false\" />\n      <change afterPath=\"$PROJECT_DIR$/relationshipService/src/test/java/com/fsocial/relationshipService/RelationshipServiceApplicationTests.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/compiler.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/compiler.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/encodings.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/encodings.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/modules.xml\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Interface\" />\n        <option value=\"Class\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"develop\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"JpbToolWindowState\">\n    <option name=\"isToolWindowVisible\" value=\"false\" />\n  </component>\n  <component name=\"KubernetesApiPersistence\">{}</component>\n  <component name=\"KubernetesApiProvider\">{\n  &quot;isMigrated&quot;: true\n}</component>\n  <component name=\"MavenImportPreferences\">\n    <option name=\"generalSettings\">\n      <MavenGeneralSettings>\n        <option name=\"mavenHomeTypeForPersistence\" value=\"WRAPPER\" />\n      </MavenGeneralSettings>\n    </option>\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 7\n}</component>\n  <component name=\"ProjectId\" id=\"2t2eA2A2rUOOL6oDssfaAAt1SHI\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"Application.AccountServiceApplication.executor\": \"Run\",\n    \"Application.ApigatewayApplication.executor\": \"Run\",\n    \"Application.NotificationServiceApplication.executor\": \"Run\",\n    \"Application.RelationshipServiceApplication.executor\": \"Run\",\n    \"Maven.accountService [clean].executor\": \"Run\",\n    \"Maven.apigateway [clean].executor\": \"Run\",\n    \"Maven.postService [clean].executor\": \"Run\",\n    \"Maven.timeLineService [clean].executor\": \"Run\",\n    \"RequestMappingsPanelOrder0\": \"0\",\n    \"RequestMappingsPanelOrder1\": \"1\",\n    \"RequestMappingsPanelWidth0\": \"75\",\n    \"RequestMappingsPanelWidth1\": \"75\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\n    \"Spring Boot.AccountServiceApplication.executor\": \"Run\",\n    \"Spring Boot.ApigatewayApplication.executor\": \"Run\",\n    \"Spring Boot.PostServiceApplication.executor\": \"Run\",\n    \"Spring Boot.ProcessorServiceApplication.executor\": \"Run\",\n    \"Spring Boot.ProfileServiceApplication.executor\": \"Run\",\n    \"Spring Boot.TimeLineServiceApplication.executor\": \"Run\",\n    \"git-widget-placeholder\": \"relationship/create-relationship-service\",\n    \"ignore.virus.scanning.warn.message\": \"true\",\n    \"kotlin-language-version-configured\": \"true\",\n    \"last_opened_file_path\": \"/Users/leduckhai/Documents/LearningMaterial/FSocial/Fsocial/relationshipService/src/main/java/com/fsocial/relationshipService\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.tslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"nodejs_package_manager_path\": \"npm\",\n    \"run.configurations.included.in.services\": \"true\",\n    \"settings.editor.selected.configurable\": \"reference.projectsettings.compiler.annotationProcessors\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"ReactorSettings\">\n    <option name=\"notificationShown\" value=\"true\" />\n  </component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService\" />\n      <recent name=\"$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/enums\" />\n      <recent name=\"$PROJECT_DIR$/relationshipService/src/main/resources\" />\n      <recent name=\"$PROJECT_DIR$\" />\n      <recent name=\"C:\\workspace\\Fsocial\\Fsocial_be\\timelineService\\src\\main\\java\\com\\fsocial\\timelineservice\\entity\" />\n    </key>\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\n      <recent name=\"com.fsocial.relationshipService.enums\" />\n      <recent name=\"com.fsocial.relationshipService.validation.constrain\" />\n      <recent name=\"com.fsocial.relationshipService.validation\" />\n      <recent name=\"com.fsocial.relationshipService.config\" />\n      <recent name=\"com.fsocial.relationshipService.dto\" />\n    </key>\n  </component>\n  <component name=\"RunDashboard\">\n    <option name=\"configurationTypes\">\n      <set>\n        <option value=\"Application\" />\n        <option value=\"KtorApplicationConfigurationType\" />\n        <option value=\"MicronautRunConfigurationType\" />\n        <option value=\"QuarkusRunConfigurationType\" />\n        <option value=\"SpringBootApplicationConfigurationType\" />\n      </set>\n    </option>\n  </component>\n  <component name=\"RunManager\" selected=\"Application.RelationshipServiceApplication\">\n    <configuration name=\"NotificationServiceApplication\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.fsocial.notificationService.NotificationServiceApplication\" />\n      <module name=\"notificationService\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.fsocial.notificationService.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"RelationshipServiceApplication\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.fsocial.relationshipService.RelationshipServiceApplication\" />\n      <module name=\"relationshipService\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.fsocial.relationshipService.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"AccountServiceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\n      <module name=\"accountService\" />\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.fsocial.accountservice.AccountServiceApplication\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.fsocial.accountservice.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"ApigatewayApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" temporary=\"true\" nameIsGenerated=\"true\">\n      <module name=\"apigateway\" />\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.cangngo.apigateway.ApigatewayApplication\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.cangngo.apigateway.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"MessageServiceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\n      <module name=\"messageService\" />\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.fsocial.messageservice.MessageServiceApplication\" />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"PostServiceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\n      <module name=\"postService\" />\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.fsocial.postservice.PostServiceApplication\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"com.fsocial.postservice.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"ProcessorServiceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\n      <module name=\"processorService\" />\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.fsocial.processorservice.ProcessorServiceApplication\" />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"ProfileServiceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\n      <module name=\"profileService\" />\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.fsocial.profileservice.ProfileServiceApplication\" />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration name=\"TimeLineServiceApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\n      <module name=\"timeLineService\" />\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"com.fsocial.timelineservice.TimeLineServiceApplication\" />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <list>\n      <item itemvalue=\"Application.NotificationServiceApplication\" />\n      <item itemvalue=\"Application.RelationshipServiceApplication\" />\n    </list>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Application.RelationshipServiceApplication\" />\n        <item itemvalue=\"Application.NotificationServiceApplication\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SharedIndexes\">\n    <attachedChunks>\n      <set>\n        <option value=\"bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419\" />\n        <option value=\"bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419\" />\n      </set>\n    </attachedChunks>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"526d44bb-c681-4d66-9320-216d9c787f83\" name=\"Changes\" comment=\"\" />\n      <created>1739554449320</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1739554449320</updated>\n      <workItem from=\"1739554450436\" duration=\"146000\" />\n      <workItem from=\"1739638722584\" duration=\"1454000\" />\n      <workItem from=\"1739640689683\" duration=\"4404000\" />\n      <workItem from=\"1739692775572\" duration=\"63000\" />\n      <workItem from=\"1739693277035\" duration=\"1841000\" />\n      <workItem from=\"1739719153637\" duration=\"18000\" />\n      <workItem from=\"1739719656208\" duration=\"10160000\" />\n      <workItem from=\"1739894558109\" duration=\"2823000\" />\n      <workItem from=\"1740128517041\" duration=\"2368000\" />\n      <workItem from=\"1740148156196\" duration=\"1475000\" />\n      <workItem from=\"1740162269553\" duration=\"180000\" />\n      <workItem from=\"1740411181774\" duration=\"11000\" />\n      <workItem from=\"1740471865498\" duration=\"3442000\" />\n      <workItem from=\"1740556260860\" duration=\"10897000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"\" />\n  </component>\n  <component name=\"XDebuggerManager\">\n    <breakpoint-manager>\n      <breakpoints>\n        <line-breakpoint enabled=\"true\" type=\"java-method\">\n          <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java</url>\n          <line>104</line>\n          <properties class=\"com.fsocial.postservice.services.impl.PostServiceImpl\" method=\"deletePost\">\n            <option name=\"EMULATED\" value=\"true\" />\n            <option name=\"WATCH_EXIT\" value=\"false\" />\n          </properties>\n          <option name=\"timeStamp\" value=\"3\" />\n        </line-breakpoint>\n        <breakpoint enabled=\"true\" type=\"java-exception\">\n          <properties class=\"java.lang.NoClassDefFoundError\" package=\"java.lang\" />\n          <option name=\"timeStamp\" value=\"4\" />\n        </breakpoint>\n      </breakpoints>\n    </breakpoint-manager>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/.idea/workspace.xml	(date 1741198311461)
+@@ -4,44 +4,19 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/relationshipService/.gitattributes" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/.gitignore" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/mvnw" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/mvnw.cmd" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/pom.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/RelationshipServiceApplication.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/AppConfig.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/CustomJwtDecode.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/JwtAuthenticationEntryPoint.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/RedisConfig.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/controller/RelationshipController.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/dto/ApiResponse.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/dto/request/FollowRequest.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/entity/Relationship.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/enums/ErrorCode.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/enums/ResponseStatus.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/enums/ValidErrorCode.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/exception/AppCheckedException.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/exception/AppException.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/exception/GlobalExceptionHandler.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/repository/RelationshipRepository.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/service/RelationshipService.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/service/impl/RelationshipServiceImpl.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/validation/NotNullOrBlankValidator.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/validation/constrain/NotNullOrBlank.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/resources/application-dev.yml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/resources/application-pro.yml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/resources/application.yml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/relationshipService/src/test/java/com/fsocial/relationshipService/RelationshipServiceApplicationTests.java" afterDir="false" />
++    <list default="true" id="526d44bb-c681-4d66-9320-216d9c787f83" name="Changes" comment="create relationship service success">
++      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/resources/application-dev.yml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/AccountProfileRepository.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -59,11 +34,23 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="develop" />
++        <entry key="$PROJECT_DIR$" value="profile/API-profile-page" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;LDKhair&quot;
++  }
++}</component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/CangNgo/Fsocial.git&quot;,
++    &quot;accountId&quot;: &quot;cf32e784-218c-4869-a192-f3abc7be8d6b&quot;
++  }
++}</component>
+   <component name="JpbToolWindowState">
+     <option name="isToolWindowVisible" value="false" />
+   </component>
+@@ -90,11 +77,14 @@
+   "keyToString": {
+     "Application.AccountServiceApplication.executor": "Run",
+     "Application.ApigatewayApplication.executor": "Run",
++    "Application.MessageServiceApplication.executor": "Run",
+     "Application.NotificationServiceApplication.executor": "Run",
++    "Application.ProfileServiceApplication.executor": "Run",
+     "Application.RelationshipServiceApplication.executor": "Run",
+     "Maven.accountService [clean].executor": "Run",
+     "Maven.apigateway [clean].executor": "Run",
+     "Maven.postService [clean].executor": "Run",
++    "Maven.profileService [clean].executor": "Run",
+     "Maven.timeLineService [clean].executor": "Run",
+     "RequestMappingsPanelOrder0": "0",
+     "RequestMappingsPanelOrder1": "1",
+@@ -108,7 +98,7 @@
+     "Spring Boot.ProcessorServiceApplication.executor": "Run",
+     "Spring Boot.ProfileServiceApplication.executor": "Run",
+     "Spring Boot.TimeLineServiceApplication.executor": "Run",
+-    "git-widget-placeholder": "relationship/create-relationship-service",
++    "git-widget-placeholder": "develop",
+     "ignore.virus.scanning.warn.message": "true",
+     "kotlin-language-version-configured": "true",
+     "last_opened_file_path": "/Users/leduckhai/Documents/LearningMaterial/FSocial/Fsocial/relationshipService/src/main/java/com/fsocial/relationshipService",
+@@ -134,11 +124,11 @@
+       <recent name="C:\workspace\Fsocial\Fsocial_be\timelineService\src\main\java\com\fsocial\timelineservice\entity" />
+     </key>
+     <key name="CopyClassDialog.RECENTS_KEY">
++      <recent name="com.fsocial.profileservice.dto.response" />
+       <recent name="com.fsocial.relationshipService.enums" />
+       <recent name="com.fsocial.relationshipService.validation.constrain" />
+       <recent name="com.fsocial.relationshipService.validation" />
+       <recent name="com.fsocial.relationshipService.config" />
+-      <recent name="com.fsocial.relationshipService.dto" />
+     </key>
+   </component>
+   <component name="RunDashboard">
+@@ -152,26 +142,13 @@
+       </set>
+     </option>
+   </component>
+-  <component name="RunManager" selected="Application.RelationshipServiceApplication">
+-    <configuration name="NotificationServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="com.fsocial.notificationService.NotificationServiceApplication" />
+-      <module name="notificationService" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="com.fsocial.notificationService.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-    <configuration name="RelationshipServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="com.fsocial.relationshipService.RelationshipServiceApplication" />
+-      <module name="relationshipService" />
++  <component name="RunManager" selected="Application.NotificationServiceApplication">
++    <configuration name="MessageServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="com.fsocial.messageservice.MessageServiceApplication" />
++      <module name="messageService" />
+       <extension name="coverage">
+         <pattern>
+-          <option name="PATTERN" value="com.fsocial.relationshipService.*" />
++          <option name="PATTERN" value="com.fsocial.messageservice.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+@@ -179,26 +156,12 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+-      <module name="accountService" />
+-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.accountservice.AccountServiceApplication" />
++    <configuration name="NotificationServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="com.fsocial.notificationService.NotificationServiceApplication" />
++      <module name="notificationService" />
+       <extension name="coverage">
+         <pattern>
+-          <option name="PATTERN" value="com.fsocial.accountservice.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-    <configuration name="ApigatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+-      <module name="apigateway" />
+-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.cangngo.apigateway.ApigatewayApplication" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="com.cangngo.apigateway.*" />
++          <option name="PATTERN" value="com.fsocial.notificationService.*" />
+           <option name="ENABLED" value="true" />
+         </pattern>
+       </extension>
+@@ -214,20 +177,6 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration name="PostServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+-      <module name="postService" />
+-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.postservice.PostServiceApplication" />
+-      <extension name="coverage">
+-        <pattern>
+-          <option name="PATTERN" value="com.fsocial.postservice.*" />
+-          <option name="ENABLED" value="true" />
+-        </pattern>
+-      </extension>
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+     <configuration name="ProcessorServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+       <module name="processorService" />
+@@ -253,23 +202,15 @@
+       </method>
+     </configuration>
+     <list>
++      <item itemvalue="Application.MessageServiceApplication" />
+       <item itemvalue="Application.NotificationServiceApplication" />
+-      <item itemvalue="Application.RelationshipServiceApplication" />
+     </list>
+     <recent_temporary>
+       <list>
+-        <item itemvalue="Application.RelationshipServiceApplication" />
++        <item itemvalue="Application.MessageServiceApplication" />
+         <item itemvalue="Application.NotificationServiceApplication" />
+       </list>
+     </recent_temporary>
+-  </component>
+-  <component name="SharedIndexes">
+-    <attachedChunks>
+-      <set>
+-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
+-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+-      </set>
+-    </attachedChunks>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+@@ -294,20 +235,47 @@
+       <workItem from="1740471865498" duration="3442000" />
+       <workItem from="1740556260860" duration="10897000" />
+     </task>
++    <task id="LOCAL-00001" summary="create relationship service success">
++      <option name="closed" value="true" />
++      <created>1740765163787</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1740765163787</updated>
++    </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+     <option name="version" value="3" />
++  </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="RECENT_FILTERS">
++      <map>
++        <entry key="Branch">
++          <value>
++            <list>
++              <RecentGroup>
++                <option name="FILTER_VALUES">
++                  <option value="relationship/create-relationship-service" />
++                </option>
++              </RecentGroup>
++            </list>
++          </value>
++        </entry>
++      </map>
++    </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+-    <option name="LAST_COMMIT_MESSAGE" value="" />
++    <MESSAGE value="create relationship service success" />
++    <option name="LAST_COMMIT_MESSAGE" value="create relationship service success" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+       <breakpoints>
+         <line-breakpoint enabled="true" type="java-method">
+           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java</url>
+-          <line>104</line>
++          <line>100</line>
+           <properties class="com.fsocial.postservice.services.impl.PostServiceImpl" method="deletePost">
+             <option name="EMULATED" value="true" />
+             <option name="WATCH_EXIT" value="false" />
+Index: profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fsocial.profileservice.services.impl;\n\nimport com.fsocial.profileservice.dto.request.ProfileRegisterRequest;\nimport com.fsocial.profileservice.dto.request.ProfileUpdateRequest;\nimport com.fsocial.profileservice.dto.response.ProfileNameResponse;\nimport com.fsocial.profileservice.dto.response.ProfileResponse;\nimport com.fsocial.profileservice.dto.response.ProfileUpdateResponse;\nimport com.fsocial.profileservice.entity.AccountProfile;\nimport com.fsocial.profileservice.exception.AppException;\nimport com.fsocial.profileservice.enums.ErrorCode;\nimport com.fsocial.profileservice.mapper.AccountProfileMapper;\nimport com.fsocial.profileservice.repository.AccountProfileRepository;\nimport com.fsocial.profileservice.services.AccountProfileService;\nimport lombok.AccessLevel;\nimport lombok.RequiredArgsConstructor;\nimport lombok.experimental.FieldDefaults;\nimport org.springframework.security.core.context.SecurityContextHolder;\nimport org.springframework.stereotype.Service;\n\n@Service\n@RequiredArgsConstructor\n@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)\npublic class AccountProfileServiceImpl implements AccountProfileService {\n\n    AccountProfileRepository accountProfileRepository;\n    AccountProfileMapper accountProfileMapper;\n\n    @Override\n    public ProfileResponse createAccountProfile(ProfileRegisterRequest request) {\n        AccountProfile accountProfile = accountProfileRepository.save(accountProfileMapper.toAccountProfile(request));\n        return accountProfileMapper.toProfileResponse(accountProfile);\n    }\n\n    @Override\n    public ProfileResponse getAccountProfileByUserId() {\n        String userId = SecurityContextHolder.getContext().getAuthentication().getName();\n        return accountProfileRepository.findByUserId(userId).orElseThrow(\n                () -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION)\n        );\n    }\n\n    @Override\n    public ProfileResponse getAccountProfile(String userId) {\n        return accountProfileRepository.findByUserId(userId).orElseThrow(\n                () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED)\n        );\n    }\n\n    @Override\n    public ProfileUpdateResponse updateProfile(String profileId, ProfileUpdateRequest request) {\n        if (!accountProfileRepository.existsById(profileId))\n            throw new AppException(ErrorCode.PROFILE_NOT_EXISTED);\n\n        AccountProfile accountProfile = accountProfileRepository.findById(profileId).orElseThrow(\n                () -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION)\n        );\n\n        accountProfileMapper.toAccountProfile(request, accountProfile);\n\n        return accountProfileMapper.toProfileUpdateResponse(\n                accountProfileRepository.save(accountProfile)\n        );\n    }\n\n    @Override\n    public ProfileNameResponse getProfileByUserId(String userId) {\n        ProfileResponse profileResponse = accountProfileRepository.findByUserId(userId).orElseThrow(\n                () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED)\n        );\n\n        return ProfileNameResponse.builder()\n                .firstName(profileResponse.getFirstName())\n                .lastName(profileResponse.getLastName())\n                .build();\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java b/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java
+--- a/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java	(date 1741191744894)
+@@ -3,6 +3,7 @@
+ import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
+ import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
+ import com.fsocial.profileservice.dto.response.ProfileNameResponse;
++import com.fsocial.profileservice.dto.response.ProfilePageResponse;
+ import com.fsocial.profileservice.dto.response.ProfileResponse;
+ import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
+ import com.fsocial.profileservice.entity.AccountProfile;
+@@ -14,64 +15,62 @@
+ import lombok.AccessLevel;
+ import lombok.RequiredArgsConstructor;
+ import lombok.experimental.FieldDefaults;
++import lombok.extern.slf4j.Slf4j;
+ import org.springframework.security.core.context.SecurityContextHolder;
+ import org.springframework.stereotype.Service;
++import org.springframework.transaction.annotation.Transactional;
++
++import java.time.LocalDate;
+ 
+ @Service
+ @RequiredArgsConstructor
+ @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
++@Slf4j
+ public class AccountProfileServiceImpl implements AccountProfileService {
+ 
+     AccountProfileRepository accountProfileRepository;
+     AccountProfileMapper accountProfileMapper;
+ 
+     @Override
++    @Transactional
+     public ProfileResponse createAccountProfile(ProfileRegisterRequest request) {
+-        AccountProfile accountProfile = accountProfileRepository.save(accountProfileMapper.toAccountProfile(request));
++        AccountProfile accountProfile = accountProfileMapper.toAccountProfile(request);
++        accountProfileRepository.save(accountProfile);
++        log.info("Profile created for user: {}", accountProfile.getUserId());
+         return accountProfileMapper.toProfileResponse(accountProfile);
+     }
+ 
+     @Override
+-    public ProfileResponse getAccountProfileByUserId() {
+-        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+-        return accountProfileRepository.findByUserId(userId).orElseThrow(
+-                () -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION)
+-        );
++    public ProfileResponse getAccountProfileByUserId(String userId) {
++        return accountProfileMapper.toProfileResponse(findProfileByUserId(userId));
+     }
+ 
+     @Override
+-    public ProfileResponse getAccountProfile(String userId) {
+-        return accountProfileRepository.findByUserId(userId).orElseThrow(
+-                () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED)
+-        );
++    @Transactional
++    public ProfileUpdateResponse updateProfile(String userId, ProfileUpdateRequest request) {
++        AccountProfile accountProfile = findProfileByUserId(userId);
++
++        accountProfileMapper.updateAccountProfile(request, accountProfile);
++        accountProfile.setUpdatedAt(LocalDate.now());
++        accountProfileRepository.save(accountProfile);
++        log.info("Profile updated for user: {}", userId);
++
++        return accountProfileMapper.toProfileUpdateResponse(accountProfile);
+     }
+ 
+     @Override
+-    public ProfileUpdateResponse updateProfile(String profileId, ProfileUpdateRequest request) {
+-        if (!accountProfileRepository.existsById(profileId))
+-            throw new AppException(ErrorCode.PROFILE_NOT_EXISTED);
+-
+-        AccountProfile accountProfile = accountProfileRepository.findById(profileId).orElseThrow(
+-                () -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION)
+-        );
+-
+-        accountProfileMapper.toAccountProfile(request, accountProfile);
+-
+-        return accountProfileMapper.toProfileUpdateResponse(
+-                accountProfileRepository.save(accountProfile)
+-        );
++    public ProfileNameResponse getProfileNameByUserId(String userId) {
++        AccountProfile accountProfile = findProfileByUserId(userId);
++        return new ProfileNameResponse(accountProfile.getFirstName(), accountProfile.getLastName());
+     }
+ 
+     @Override
+-    public ProfileNameResponse getProfileByUserId(String userId) {
+-        ProfileResponse profileResponse = accountProfileRepository.findByUserId(userId).orElseThrow(
+-                () -> new AppException(ErrorCode.PROFILE_NOT_EXISTED)
+-        );
+-
+-        return ProfileNameResponse.builder()
+-                .firstName(profileResponse.getFirstName())
+-                .lastName(profileResponse.getLastName())
+-                .build();
++    public ProfilePageResponse getProfilePageByUserId(String userId) {
++        return accountProfileMapper.toProfilePageResponse(findProfileByUserId(userId));
+     }
+ 
++    private AccountProfile findProfileByUserId(String userId) {
++        return accountProfileRepository.findByUserId(userId)
++                .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
++    }
+ }
+Index: profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fsocial.profileservice.services;\n\nimport com.fsocial.profileservice.dto.request.ProfileRegisterRequest;\nimport com.fsocial.profileservice.dto.request.ProfileUpdateRequest;\nimport com.fsocial.profileservice.dto.response.ProfileNameResponse;\nimport com.fsocial.profileservice.dto.response.ProfileResponse;\nimport com.fsocial.profileservice.dto.response.ProfileUpdateResponse;\n\npublic interface AccountProfileService {\n    ProfileResponse createAccountProfile(ProfileRegisterRequest request);\n    ProfileResponse getAccountProfileByUserId();\n    ProfileResponse getAccountProfile(String userId);\n    ProfileUpdateResponse updateProfile(String profileId, ProfileUpdateRequest request);\n    ProfileNameResponse getProfileByUserId(String userId);\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java b/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java
+--- a/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java	(date 1741191744897)
+@@ -3,13 +3,14 @@
+ import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
+ import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
+ import com.fsocial.profileservice.dto.response.ProfileNameResponse;
++import com.fsocial.profileservice.dto.response.ProfilePageResponse;
+ import com.fsocial.profileservice.dto.response.ProfileResponse;
+ import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
+ 
+ public interface AccountProfileService {
+     ProfileResponse createAccountProfile(ProfileRegisterRequest request);
+-    ProfileResponse getAccountProfileByUserId();
+-    ProfileResponse getAccountProfile(String userId);
+-    ProfileUpdateResponse updateProfile(String profileId, ProfileUpdateRequest request);
+-    ProfileNameResponse getProfileByUserId(String userId);
++    ProfileResponse getAccountProfileByUserId(String userId);
++    ProfileUpdateResponse updateProfile(String userId, ProfileUpdateRequest request);
++    ProfileNameResponse getProfileNameByUserId(String userId);
++    ProfilePageResponse getProfilePageByUserId(String userId);
+ }
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"CompilerConfiguration\">\n    <annotationProcessing>\n      <profile default=\"true\" name=\"Default\" enabled=\"true\" />\n      <profile name=\"Annotation profile for apigateway\" enabled=\"true\">\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\n        <outputRelativeToContentRoot value=\"true\" />\n        <processorPath useClasspath=\"false\">\n          <entry name=\"$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar\" />\n          <entry name=\"$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar\" />\n        </processorPath>\n        <module name=\"apigateway\" />\n      </profile>\n      <profile name=\"Annotation profile for timeLineService\" enabled=\"true\">\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\n        <outputRelativeToContentRoot value=\"true\" />\n        <option name=\"mapstruct.defaultComponentModel\" value=\"spring\" />\n        <processorPath useClasspath=\"false\">\n          <entry name=\"$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar\" />\n          <entry name=\"$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar\" />\n          <entry name=\"$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar\" />\n          <entry name=\"$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar\" />\n        </processorPath>\n        <module name=\"processorService\" />\n        <module name=\"profileService\" />\n        <module name=\"postService\" />\n        <module name=\"accountService\" />\n        <module name=\"timeLineService\" />\n        <module name=\"messageService\" />\n      </profile>\n      <profile name=\"Annotation profile for RelationshipService\" enabled=\"true\">\n        <sourceOutputDir name=\"target/generated-sources/annotations\" />\n        <sourceTestOutputDir name=\"target/generated-test-sources/test-annotations\" />\n        <outputRelativeToContentRoot value=\"true\" />\n        <processorPath useClasspath=\"false\">\n          <entry name=\"$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar\" />\n          <entry name=\"$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar\" />\n          <entry name=\"$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar\" />\n          <entry name=\"$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar\" />\n        </processorPath>\n        <module name=\"relationshipService\" />\n        <module name=\"notificationService\" />\n      </profile>\n    </annotationProcessing>\n  </component>\n  <component name=\"JavacSettings\">\n    <option name=\"ADDITIONAL_OPTIONS_OVERRIDE\">\n      <module name=\"accountService\" options=\"-parameters -Amapstruct.defaultComponentModel=spring\" />\n      <module name=\"apigateway\" options=\"-parameters\" />\n      <module name=\"messageService\" options=\"-parameters -Amapstruct.defaultComponentModel=spring\" />\n      <module name=\"notificationService\" options=\"-parameters\" />\n      <module name=\"postService\" options=\"-parameters -Amapstruct.defaultComponentModel=spring\" />\n      <module name=\"processorService\" options=\"-parameters -Amapstruct.defaultComponentModel=spring\" />\n      <module name=\"profileService\" options=\"-parameters -Amapstruct.defaultComponentModel=spring\" />\n      <module name=\"relationshipService\" options=\"-parameters\" />\n      <module name=\"timeLineService\" options=\"-parameters -Amapstruct.defaultComponentModel=spring\" />\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+--- a/.idea/compiler.xml	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/.idea/compiler.xml	(date 1741192705516)
+@@ -9,11 +9,28 @@
+         <outputRelativeToContentRoot value="true" />
+         <processorPath useClasspath="false">
+           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+         </processorPath>
+         <module name="apigateway" />
++        <module name="relationshipService" />
+       </profile>
+-      <profile name="Annotation profile for timeLineService" enabled="true">
++      <profile name="Annotation profile for accountService" enabled="true">
++        <sourceOutputDir name="target/generated-sources/annotations" />
++        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
++        <outputRelativeToContentRoot value="true" />
++        <option name="mapstruct.defaultComponentModel" value="spring" />
++        <processorPath useClasspath="false">
++          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.6.3/mapstruct-processor-1.6.3.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
++          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
++        </processorPath>
++        <module name="accountService" />
++      </profile>
++      <profile name="Annotation profile for messageService" enabled="true">
+         <sourceOutputDir name="target/generated-sources/annotations" />
+         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+         <outputRelativeToContentRoot value="true" />
+@@ -27,11 +44,10 @@
+         <module name="processorService" />
+         <module name="profileService" />
+         <module name="postService" />
+-        <module name="accountService" />
++        <module name="messageService" />
+         <module name="timeLineService" />
+-        <module name="messageService" />
+       </profile>
+-      <profile name="Annotation profile for RelationshipService" enabled="true">
++      <profile name="Annotation profile for notificationService" enabled="true">
+         <sourceOutputDir name="target/generated-sources/annotations" />
+         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+         <outputRelativeToContentRoot value="true" />
+@@ -41,7 +57,6 @@
+           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
+           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+         </processorPath>
+-        <module name="relationshipService" />
+         <module name="notificationService" />
+       </profile>
+     </annotationProcessing>
+Index: profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java b/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java
+new file mode 100644
+--- /dev/null	(date 1741191739453)
++++ b/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java	(date 1741191739453)
+@@ -0,0 +1,17 @@
++package com.fsocial.profileservice.dto.response;
++
++import lombok.*;
++import lombok.experimental.FieldDefaults;
++
++@Data
++@NoArgsConstructor
++@AllArgsConstructor
++@Builder
++@FieldDefaults(level = AccessLevel.PRIVATE)
++public class ProfilePageResponse {
++    String firstName;
++    String lastName;
++    String avatar;
++    String banner;
++    String bio;
++}
+Index: profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fsocial.profileservice.dto.response;\n\nimport com.fasterxml.jackson.annotation.JsonInclude;\nimport jakarta.validation.constraints.NotBlank;\nimport jakarta.validation.constraints.NotNull;\nimport lombok.*;\nimport lombok.experimental.FieldDefaults;\n\nimport java.time.LocalDate;\n\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\n@Builder\n@FieldDefaults(level = AccessLevel.PRIVATE)\n@JsonInclude(JsonInclude.Include.NON_NULL)\npublic class ProfileUpdateResponse {\n    String id;\n    String firstName;\n    String lastName;\n    LocalDate dob;\n    String bio;\n    String avatar;\n    String address;\n    LocalDate createdAt;\n    LocalDate updatedAt;\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java b/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java
+--- a/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java	(date 1741191744902)
+@@ -15,12 +15,12 @@
+ @FieldDefaults(level = AccessLevel.PRIVATE)
+ @JsonInclude(JsonInclude.Include.NON_NULL)
+ public class ProfileUpdateResponse {
+-    String id;
+     String firstName;
+     String lastName;
+     LocalDate dob;
+     String bio;
+     String avatar;
++    String banner;
+     String address;
+     LocalDate createdAt;
+     LocalDate updatedAt;
+Index: profileService/src/main/resources/application-dev.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring:\n  neo4j:\n    uri: bolt://localhost:7687\n    authentication:\n      username: neo4j\n      password: root1234\n  application:\n    name: profileService\n  jpa:\n    hibernate:\n      ddl-auto: update\n    show-sql: true\n    properties:\n      hibernate:\n        format_sql: true\n  mvc:\n    pathmatch:\n      matching-strategy: ant_path_matcher\n  main:\n    allow-circular-references: true\n\nserver:\n  servlet:\n    context-path: /profile\n    session:\n      timeout: 3m\n  port: 8085\n\nlogging:\n  level:\n    org.neo4j.driver: ERROR\n    org:\n      springframework=DEBUG:\n      springframework:\n        security: DEBUG\n        security.web.access.ExceptionTranslationFilter: DEBUG\n        security.access.intercept.AbstractSecurityInterceptor: DEBUG\n      hibernate:\n        SQL: DEBUG\n        type:\n          descriptor:\n            sql:\n              BasicBinder: TRACE\n        engine:\n          transaction:\n            internal:\n              TransactionImpl: DEBUG\n        event:\n          internal:\n            AbstractFlushingEventListener: DEBUG\n\napp:\n  services:\n    account: http://localhost:8081/account
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/profileService/src/main/resources/application-dev.yml b/profileService/src/main/resources/application-dev.yml
+--- a/profileService/src/main/resources/application-dev.yml	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/profileService/src/main/resources/application-dev.yml	(date 1741191744905)
+@@ -3,7 +3,7 @@
+     uri: bolt://localhost:7687
+     authentication:
+       username: neo4j
+-      password: root1234
++      password: 12345678
+   application:
+     name: profileService
+   jpa:
+Index: profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fsocial.profileservice.dto.request;\n\nimport com.fsocial.profileservice.validation.constrain.NotNullOrBlank;\nimport jakarta.validation.constraints.NotBlank;\nimport jakarta.validation.constraints.NotNull;\nimport lombok.*;\nimport lombok.experimental.FieldDefaults;\n\nimport java.time.LocalDate;\n\n@Data\n@NoArgsConstructor\n@AllArgsConstructor\n@Builder\n@FieldDefaults(level = AccessLevel.PRIVATE)\npublic class ProfileUpdateRequest {\n    @NotNullOrBlank(message = \"REQUIRED_FIELDS\")\n    String firstName;\n\n    @NotNullOrBlank(message = \"REQUIRED_FIELDS\")\n    String lastName;\n\n    LocalDate dob;\n    String bio;\n    String avatar;\n    String address;\n    LocalDate updatedAt = LocalDate.now();\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java b/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java
+--- a/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java	(revision 3aa02bc8b5b124ff2dd6b15e2912bb59ba329c43)
++++ b/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java	(date 1741191744907)
+@@ -14,15 +14,11 @@
+ @Builder
+ @FieldDefaults(level = AccessLevel.PRIVATE)
+ public class ProfileUpdateRequest {
+-    @NotNullOrBlank(message = "REQUIRED_FIELDS")
+     String firstName;
+-
+-    @NotNullOrBlank(message = "REQUIRED_FIELDS")
+     String lastName;
+-
+     LocalDate dob;
+     String bio;
+     String avatar;
++    String banner;
+     String address;
+-    LocalDate updatedAt = LocalDate.now();
+ }

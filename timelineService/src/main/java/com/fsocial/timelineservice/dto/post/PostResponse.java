@@ -17,9 +17,11 @@ public class PostResponse {
     Content content;
     Integer countLikes;
     Integer countComments;
-    String displayName;
+    String lastName;
+    String firtName;
     String avatar;
     LocalDateTime createDatetime;
     boolean isShare;
     boolean isLike;
+    boolean status;
 }

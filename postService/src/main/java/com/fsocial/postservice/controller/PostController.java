@@ -4,10 +4,12 @@ import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
+import com.fsocial.postservice.dto.post.PostShareDTORequest;
 import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.services.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/actions")
+@Tag(name ="Post controller")
 public class PostController {
     PostService postService;
 
@@ -89,6 +92,15 @@ public class PostController {
         return ResponseEntity.ok(Response.builder()
                 .data(map)
                 .message(like ? "Thích bài viết thành công" : "bỏ thích bài viết thành công")
+                .build());
+    }
+    @PostMapping("/share")
+    public ResponseEntity<Response> sharePost(@Valid PostShareDTORequest share){
+        PostDTO post = postService.sharePost(share);
+        return ResponseEntity.ok(Response.builder()
+                .data(post)
+                .statusCode(StatusCode.CREATE_POST_SUCCESS.getCode())
+                .message("Chia sẽ bài viết thành công")
                 .build());
     }
 }

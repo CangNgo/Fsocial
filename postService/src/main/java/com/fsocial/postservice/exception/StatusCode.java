@@ -31,6 +31,7 @@ public enum StatusCode {
     UPLOAD_MEDIA_FAILED(210, "Upload media failed"),
     NOT_CONTENT(211,"Not Content"),
     COMMENT_NOT_FOUND(212,"Comment Not Found"),
+    TERM_OF_SERVICE_NOT_FOUND(305,"Term of service not found"),
     ;
     private final int code;
     private final String message;

@@ -2,16 +2,13 @@ package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.termOfService.TermOfServiceDTO;
-import com.fsocial.postservice.entity.TermOfServices;
+import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.services.TermOfServicesService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +24,24 @@ public class TermOfServiceController {
         return ResponseEntity.ok().body(Response.builder()
                         .message("Thêm chính sách mới thành công")
                         .data(termOfService)
+                .build());
+    }
+
+    @PutMapping
+    public ResponseEntity<Response> updateTermOfSerivce(@RequestBody TermOfServiceDTO termOfServiceDTO) throws AppCheckedException {
+        TermOfServiceDTO termOfService = termOfServicesService.updateTermOfService(termOfServiceDTO);
+        return ResponseEntity.ok().body(Response.builder()
+                .message("Cập nhật chính sách mới thành công")
+                .data(termOfService)
+                .build());
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Response> deleteTermOfSerivce(@RequestParam("term_id") String termId) throws AppCheckedException {
+
+        return ResponseEntity.ok().body(Response.builder()
+                .message("Cập nhật chính sách mới thành công")
+                .data(termOfServicesService.deleteTermOfService(termId))
                 .build());
     }
 }

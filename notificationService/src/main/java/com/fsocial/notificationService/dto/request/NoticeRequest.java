@@ -14,4 +14,5 @@ public class NoticeRequest {
     String type;
     String postId;
     String commentId;
+    String receiverId;
 }

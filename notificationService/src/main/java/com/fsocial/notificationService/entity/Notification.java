@@ -25,4 +25,5 @@ public class Notification {
     LocalDateTime createdAt = LocalDateTime.now();
     String postId;
     String commentId;
+    String receiverId;
 }

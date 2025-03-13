@@ -48,38 +48,63 @@ public class NotificationServiceImpl implements NotificationService {
         return notificationRepository.save(notification);
     }
 
-    private NotificationResponse updateNotificationResponse(NotificationResponse response, String senderId) {
-        // Lấy thông tin profile của người nhận từ API (profileClient)
-        var profile = profileClient.getProfileByUserId(senderId);
-        String firstName = profile.getFirstName();
-        String lastName = profile.getLastName();
-        String avatar = profile.getAvatar();  // Lấy avatar từ ProfileNameResponse
-
-        // Chuyển Notification thành NotificationResponse
+//    private NotificationResponse updateNotificationResponse(NotificationRequest request) {
+//        // Lấy thông tin profile của người nhận từ API (profileClient)
+//        var profile = profileClient.getProfileByUserId(request.getReceiverId());
+//        String firstName = profile.getFirstName();
+//        String lastName = profile.getLastName();
+//        String avatar = profile.getAvatar();  // Lấy avatar từ ProfileNameResponse
+//
+////         Chuyển Notification thành NotificationResponse
 //        NotificationResponse response = notificationMapper.toDto(notification);
-
-        // Thêm các trường firstName, lastName và avatar vào response (chỉ khi trả về)
-        response.setFirstName(firstName);
-        response.setLastName(lastName);
-        response.setAvatar(avatar);
-
-        // Ghi log thông tin
-//        log.info("Thông báo: OwnerId={}, Type={}, Message={}, PostId={}, CommentId={}, FirstName={}, LastName={}, Avatar={}",
-//                request.getOwnerId(), request.getType(), request.getMessage(), request.getPostId(), request.getCommentId(),
-//                firstName, lastName, avatar);
-
-        // Trả về thông báo đã được bổ sung thêm thông tin
+//
+//        // Thêm các trường firstName, lastName và avatar vào response (chỉ khi trả về)
+//        response.setFirstName(firstName);
+//        response.setLastName(lastName);
+//        response.setAvatar(avatar);
+//
+//        // Ghi log thông tin
+////        log.info("Thông báo: OwnerId={}, Type={}, Message={}, PostId={}, CommentId={}, FirstName={}, LastName={}, Avatar={}",
+////                request.getOwnerId(), request.getType(), request.getMessage(), request.getPostId(), request.getCommentId(),
+////                firstName, lastName, avatar);
+//
+//        // Trả về thông báo đã được bổ sung thêm thông tin
 //        return response;
-        return null;
-    }
+//
+//    }
 
-    @Override
-    public List<NotificationResponse> getNotificationsByUser(String userId) {
-        List<Notification> notifications =  notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
+@Override
+public List<NotificationResponse> getNotificationsByUser(String userId) {
+    // Lấy danh sách thông báo từ cơ sở dữ liệu
+    List<Notification> notifications = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
 
-        log.info("Lấy toàn bộ Thông báo thành công.");
-        return notifications.stream().map(notificationMapper::toDto).toList();
-    }
+    // Duyệt qua danh sách các thông báo và cập nhật thông tin người thực hiện hành động (receiverId)
+    List<NotificationResponse> responseList = notifications.stream()
+            .map(notification -> {
+                // Chuyển đổi Notification thành NotificationResponse
+                NotificationResponse response = notificationMapper.toDto(notification);
+
+                // Lấy receiverId từ thông báo, đây là người thực hiện hành động (like hoặc comment)
+                String receiverId = notification.getReceiverId(); // Sử dụng receiverId là người thực hiện hành động
+
+                // Lấy thông tin người thực hiện hành động từ ProfileClient (dùng receiverId ở đây)
+                var profile = profileClient.getProfileByUserId(receiverId);  // Lấy thông tin người thực hiện hành động
+                String firstName = profile.getFirstName();
+                String lastName = profile.getLastName();
+                String avatar = profile.getAvatar();  // Lấy avatar của người thực hiện hành động
+
+                // Cập nhật các thông tin vào NotificationResponse
+                response.setFirstName(firstName);
+                response.setLastName(lastName);
+                response.setAvatar(avatar);
+
+                return response;
+            })
+            .toList();
+
+    log.info("Lấy toàn bộ Thông báo thành công.");
+    return responseList;
+}
 
     @Override
     @Transactional
@@ -110,6 +135,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .type(notificationType)
                 .postId(response.getPostId())
                 .commentId(response.getCommentId())
+                .receiverId(response.getReceiverId())
                 .build());
     }
 }

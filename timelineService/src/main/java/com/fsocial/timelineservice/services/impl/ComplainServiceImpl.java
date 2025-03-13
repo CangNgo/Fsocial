@@ -2,6 +2,7 @@ package com.fsocial.timelineservice.services.impl;
 
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTOResponse;
+import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Complaint;
 import com.fsocial.timelineservice.entity.TermOfServices;
@@ -21,7 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.metrics.Stat;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,6 +62,30 @@ public class ComplainServiceImpl implements ComplaintService {
                     }
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ComplaintStatisticsDTO> countComplaintByToday(LocalDateTime startDate, LocalDateTime endDate) {
+
+        List<ComplaintStatisticsDTO> complaintStatisticsDTOS = complaintRepository.countByCreatedAtByHours(startDate, endDate);
+        List<ComplaintStatisticsDTO> result = new ArrayList<>();
+        Map<String, Integer> mapComplaint = new HashMap<>();
+
+        for (ComplaintStatisticsDTO complaintStatisticsDTO : complaintStatisticsDTOS) {
+            String hour = complaintStatisticsDTO.getHour();
+            Integer count = complaintStatisticsDTO.getCount();
+            mapComplaint.put(hour, count);
+        }
+
+        for ( int hour = 0; hour < 24; hour++ ) {
+            if (mapComplaint.containsKey(String.valueOf(hour))){
+                result.add(new ComplaintStatisticsDTO(String.valueOf(hour), mapComplaint.get(String.valueOf(hour))));
+            }
+            result.add(new ComplaintStatisticsDTO(String.valueOf(hour), 0));
+
+        };
+
+        return result;
     }
 
     private ComplaintDTOResponse mapToComplainResponse(Complaint complaint) throws AppCheckedException {

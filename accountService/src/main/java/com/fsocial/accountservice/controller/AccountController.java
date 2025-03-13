@@ -3,6 +3,7 @@ package com.fsocial.accountservice.controller;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.*;
 import com.fsocial.accountservice.dto.response.AccountResponse;
+import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
 import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.repository.AccountRepository;
@@ -13,14 +14,18 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -92,6 +97,39 @@ public class AccountController {
         exists.put("exists", accountServices.existsById(userId));
         return ApiResponse.<Map<String, Boolean>>builder()
                 .data(exists)
+                .message("Kiểm tra userId có tồn tại hay không thành công")
+                .build();
+    }
+
+    @GetMapping("/statistics_register_today")
+    public ApiResponse<List<AccountStatisticRegiserDTO>> statisticsRegister(@RequestParam("date_time") String dateTime) {
+        LocalDate date = LocalDate.parse(dateTime);
+        LocalDateTime startDate = date.atStartOfDay();
+        LocalDateTime endDate = date.atTime(23, 59, 59);
+
+        log.info("Bắt đầu ngày: ", startDate);
+        log.info("Kết thúc ngày: ", endDate);
+
+        List<AccountStatisticRegiserDTO> res = accountServices.countByCreatedAtByHours(startDate, endDate);
+        return ApiResponse.<List<AccountStatisticRegiserDTO>>builder()
+                .data(res)
+                .message("Kiểm tra userId có tồn tại hay không thành công")
+                .build();
+    }
+
+    @GetMapping("/statistics_register_start_end")
+    public ApiResponse<List<AccountStatisticRegiserDTO>> statisticsRegisterStartEnd(@RequestParam("startdate") String startDateRe, @RequestParam("enddate") String endDateRe) {
+        LocalDate start = LocalDate.parse(startDateRe);
+        LocalDate end = LocalDate.parse(endDateRe);
+        LocalDateTime startDate= start.atStartOfDay();
+        LocalDateTime endDate= end.atTime(23, 59, 59);
+
+        log.info("Bắt đầu ngày: ", startDate);
+        log.info("Kết thúc ngày: ", endDate);
+
+        List<AccountStatisticRegiserDTO> res = accountServices.countByCreatedAtByHours(startDate, endDate);
+        return ApiResponse.<List<AccountStatisticRegiserDTO>>builder()
+                .data(res)
                 .message("Kiểm tra userId có tồn tại hay không thành công")
                 .build();
     }

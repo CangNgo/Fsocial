@@ -4,13 +4,14 @@ import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
+import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
 import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.Role;
-import com.fsocial.accountservice.enums.RedisKeyType;
-import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.enums.ErrorCode;
+import com.fsocial.accountservice.enums.RedisKeyType;
 import com.fsocial.accountservice.enums.ResponseStatus;
+import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.mapper.AccountMapper;
 import com.fsocial.accountservice.mapper.ProfileMapper;
 import com.fsocial.accountservice.repository.AccountRepository;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.*;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -111,6 +113,30 @@ public class AccountServiceImpl implements AccountService {
     public boolean existsById(String id) {
         return accountRepository.findById(id).isPresent();
     }
+
+    @Override
+    public List<AccountStatisticRegiserDTO> countByCreatedAtByHours(LocalDateTime startDay, LocalDateTime endDay) {
+
+        List<Object[]> results = accountRepository.countByCreatedAtByHours(startDay, endDay);
+
+        List<AccountStatisticRegiserDTO> res = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+
+        // Lưu dữ liệu vào map theo dạng <hour, count>
+        for (Object[] row : results) {
+            int hour = ((Number) row[0]).intValue();  // Chuyển Object thành int
+            int count = ((Number) row[1]).intValue(); // Chuyển Object thành int
+            map.put(hour, count);
+        }
+
+        // Duyệt từ 00:00 - 23:00, kiểm tra map để lấy giá trị
+        for (int hour = 0; hour < 24; hour++) {
+            String formattedHour = String.format("%02d:00", hour); // Định dạng HH:00
+            res.add(new AccountStatisticRegiserDTO(formattedHour, map.getOrDefault(hour, 0)));
+        }
+        return res;
+    }
+
 
     private void validateAccountExistence(String username, String email) {
         boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;

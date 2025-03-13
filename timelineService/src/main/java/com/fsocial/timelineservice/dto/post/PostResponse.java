@@ -18,7 +18,7 @@ public class PostResponse {
     Integer countLikes;
     Integer countComments;
     String lastName;
-    String firtName;
+    String firstName;
     String avatar;
     LocalDateTime createDatetime;
     boolean isShare;

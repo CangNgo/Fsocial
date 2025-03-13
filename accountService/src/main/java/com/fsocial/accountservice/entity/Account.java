@@ -25,4 +25,6 @@ public class Account extends AbstractEntity<String> {
     Role role;
 
     String email;
+
+    boolean status;
 }

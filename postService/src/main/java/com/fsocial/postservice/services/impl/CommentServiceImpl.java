@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
         // Send request to notification
         String ownerId = post.getUserId();
         String userId = request.getUserId();
-        kafkaService.sendNotification(ownerId, userId, MessageNotice.NOTIFICATION_COMMENT);
+        kafkaService.sendNotification(ownerId, userId, MessageNotice.NOTIFICATION_COMMENT, postId, savedComment.getId());
 
         return savedComment;
     }
@@ -101,14 +101,34 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean toggleLikeComment(String commentId, String userId) throws AppCheckedException {
+        // Kiểm tra xem người dùng đã thích bình luận chưa
         boolean existed = commentRepository.existsByIdAndLikes(commentId, userId);
+
+        // Nếu chưa thích, thêm like và gửi thông báo
         if (!existed) {
             this.addLikeComment(commentId, userId);
-            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+
+            // Lấy thông tin bài đăng (postId) từ bình luận
+            Comment comment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new AppCheckedException("Bình luận không tồn tại", StatusCode.COMMENT_NOT_FOUND));
+            String postId = comment.getPostId();  // Lấy postId từ bình luận
+
+            // Gửi thông báo qua Kafka, gửi thêm postId và commentId
+            kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT, postId, commentId);
+
             return true;
         } else {
+            // Nếu đã thích, gỡ like và gửi thông báo
             this.removeLikeComment(commentId, userId);
-            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+
+            // Lấy thông tin bài đăng (postId) từ bình luận
+            Comment comment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new AppCheckedException("Bình luận không tồn tại", StatusCode.COMMENT_NOT_FOUND));
+            String postId = comment.getPostId();  // Lấy postId từ bình luận
+
+            // Gửi thông báo qua Kafka, gửi thêm postId và commentId
+            kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT, postId, commentId);
+
             return false;
         }
     }

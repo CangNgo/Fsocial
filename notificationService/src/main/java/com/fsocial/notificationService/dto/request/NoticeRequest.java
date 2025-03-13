@@ -12,4 +12,6 @@ public class NoticeRequest {
     String ownerId;
     String message;
     String type;
+    String postId;
+    String commentId;
 }

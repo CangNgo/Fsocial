@@ -10,7 +10,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NotificationRequest {
     String ownerId;
-    String receiverId;
+    String receiverId; // nguoi thuc hien hanh dong
     String message;
     String topic;
+    String postId;  // Thêm trường postId
+    String commentId;
 }

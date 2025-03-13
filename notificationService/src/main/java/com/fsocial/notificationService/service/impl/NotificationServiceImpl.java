@@ -36,9 +36,35 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public NotificationResponse createNotification(NoticeRequest request) {
-        Notification notification = notificationRepository.save(notificationMapper.toEntity(request));
-        log.info("Thông báo: OwnerId={}, Type={}, Message={}", request.getOwnerId(), request.getType(), request.getMessage());
-        return notificationMapper.toDto(notification);
+        // Lưu thông báo vào cơ sở dữ liệu (không cần lưu firstName, lastName, avatar)
+        Notification notification = notificationMapper.toEntity(request);
+        notification.setPostId(request.getPostId());  // Lưu postId
+        notification.setCommentId(request.getCommentId());  // Lưu commentId
+
+        // Lưu thông báo vào cơ sở dữ liệu
+        notification = notificationRepository.save(notification);
+
+        // Lấy thông tin profile của người nhận từ API (profileClient)
+        var profile = profileClient.getProfileByUserId(request.getOwnerId());
+        String firstName = profile.getFirstName();
+        String lastName = profile.getLastName();
+        String avatar = profile.getAvatar();  // Lấy avatar từ ProfileNameResponse
+
+        // Chuyển Notification thành NotificationResponse
+        NotificationResponse response = notificationMapper.toDto(notification);
+
+        // Thêm các trường firstName, lastName và avatar vào response (chỉ khi trả về)
+        response.setFirstName(firstName);
+        response.setLastName(lastName);
+        response.setAvatar(avatar);
+
+        // Ghi log thông tin
+        log.info("Thông báo: OwnerId={}, Type={}, Message={}, PostId={}, CommentId={}, FirstName={}, LastName={}, Avatar={}",
+                request.getOwnerId(), request.getType(), request.getMessage(), request.getPostId(), request.getCommentId(),
+                firstName, lastName, avatar);
+
+        // Trả về thông báo đã được bổ sung thêm thông tin
+        return response;
     }
 
     @Override
@@ -75,6 +101,8 @@ public class NotificationServiceImpl implements NotificationService {
                 .ownerId(response.getOwnerId())
                 .message(message)
                 .type(notificationType)
+                .postId(response.getPostId())
+                .commentId(response.getCommentId())
                 .build());
 
         log.info("Kafka notification received: Topic={}, ReceiverId={}, Message={}", response.getTopic(), response.getReceiverId(), message);

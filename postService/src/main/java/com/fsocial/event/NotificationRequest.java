@@ -16,4 +16,6 @@ public class NotificationRequest {
     String receiverId;
     String message;
     String topic;
+     String postId;  // Thêm trường postId
+     String commentId;
 }

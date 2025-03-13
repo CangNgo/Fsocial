@@ -18,19 +18,22 @@ public class KafkaServiceImpl implements KafkaService {
     KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
-    public void sendNotification(String ownerId, String userId, MessageNotice messageNotice, String postId, String commentId) {
-        NotificationRequest noticeRequest = NotificationRequest.builder()
-                .ownerId(ownerId)
-                .receiverId(userId)
-                .message(messageNotice.getMessage())
-                .topic(messageNotice.getTopic())
-                .postId(postId)  // Gửi thêm postId
-                .commentId(commentId)  // Gửi thêm commentId
-                .build();
+    public void sendNotification(NotificationRequest request) {
+//        NotificationRequest noticeRequest = NotificationRequest.builder()
+//                .ownerId(ownerId)
+//                .receiverId(userId)
+//                .message(messageNotice.getMessage())
+//                .topic(messageNotice.getTopic())
+//                .postId(postId)  // Gửi thêm postId
+//                .commentId(commentId)  // Gửi thêm commentId
+//                .build();
 
-        kafkaTemplate.send(messageNotice.getTopic(), noticeRequest);
-        log.info("Notification sent: OwnerId={}, ReceiverId={}, Topic={}, PostId={}, CommentId={}",
-                ownerId, userId, messageNotice.getTopic(), postId, commentId);
+//        kafkaTemplate.send(messageNotice.getTopic(), noticeRequest);
+//        log.info("Notification sent: OwnerId={}, ReceiverId={}, Topic={}, PostId={}, CommentId={}",
+//                ownerId, userId, messageNotice.getTopic(), postId, commentId);
+
+        kafkaTemplate.send(request.getTopic(), request);
+        log.info("Gui thanh cong.........");
     }
 
 }

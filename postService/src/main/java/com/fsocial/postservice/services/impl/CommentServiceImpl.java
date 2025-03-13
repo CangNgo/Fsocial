@@ -1,5 +1,6 @@
 package com.fsocial.postservice.services.impl;
 
+import com.fsocial.event.NotificationRequest;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.enums.MessageNotice;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -63,7 +64,14 @@ public class CommentServiceImpl implements CommentService {
         // Send request to notification
         String ownerId = post.getUserId();
         String userId = request.getUserId();
-        kafkaService.sendNotification(ownerId, userId, MessageNotice.NOTIFICATION_COMMENT, postId, savedComment.getId());
+        kafkaService.sendNotification(NotificationRequest.builder()
+                        .ownerId(ownerId)
+                        .receiverId(userId)
+                        .topic("notice-comment")
+                        .message(MessageNotice.NOTIFICATION_COMMENT.getMessage())
+                        .postId(postId)
+                        .commentId(savedComment.getId())
+                .build());
 
         return savedComment;
     }
@@ -114,7 +122,7 @@ public class CommentServiceImpl implements CommentService {
             String postId = comment.getPostId();  // Lấy postId từ bình luận
 
             // Gửi thông báo qua Kafka, gửi thêm postId và commentId
-            kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT, postId, commentId);
+//            kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT, postId, commentId);
 
             return true;
         } else {
@@ -127,8 +135,8 @@ public class CommentServiceImpl implements CommentService {
             String postId = comment.getPostId();  // Lấy postId từ bình luận
 
             // Gửi thông báo qua Kafka, gửi thêm postId và commentId
-            kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT, postId, commentId);
-
+//            kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT, postId, commentId);
+//
             return false;
         }
     }

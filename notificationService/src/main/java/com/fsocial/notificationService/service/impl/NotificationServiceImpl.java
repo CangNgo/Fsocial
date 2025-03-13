@@ -17,11 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -35,23 +37,26 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    public NotificationResponse createNotification(NoticeRequest request) {
+    public Notification createNotification(NoticeRequest request) {
         // Lưu thông báo vào cơ sở dữ liệu (không cần lưu firstName, lastName, avatar)
         Notification notification = notificationMapper.toEntity(request);
-        notification.setPostId(request.getPostId());  // Lưu postId
-        notification.setCommentId(request.getCommentId());  // Lưu commentId
+        notification.setPostId(request.getPostId());
+        notification.setCommentId(request.getCommentId());
 
-        // Lưu thông báo vào cơ sở dữ liệu
-        notification = notificationRepository.save(notification);
 
+        log.info("Đã lưu thông báo.");
+        return notificationRepository.save(notification);
+    }
+
+    private NotificationResponse updateNotificationResponse(NotificationResponse response, String senderId) {
         // Lấy thông tin profile của người nhận từ API (profileClient)
-        var profile = profileClient.getProfileByUserId(request.getOwnerId());
+        var profile = profileClient.getProfileByUserId(senderId);
         String firstName = profile.getFirstName();
         String lastName = profile.getLastName();
         String avatar = profile.getAvatar();  // Lấy avatar từ ProfileNameResponse
 
         // Chuyển Notification thành NotificationResponse
-        NotificationResponse response = notificationMapper.toDto(notification);
+//        NotificationResponse response = notificationMapper.toDto(notification);
 
         // Thêm các trường firstName, lastName và avatar vào response (chỉ khi trả về)
         response.setFirstName(firstName);
@@ -59,17 +64,19 @@ public class NotificationServiceImpl implements NotificationService {
         response.setAvatar(avatar);
 
         // Ghi log thông tin
-        log.info("Thông báo: OwnerId={}, Type={}, Message={}, PostId={}, CommentId={}, FirstName={}, LastName={}, Avatar={}",
-                request.getOwnerId(), request.getType(), request.getMessage(), request.getPostId(), request.getCommentId(),
-                firstName, lastName, avatar);
+//        log.info("Thông báo: OwnerId={}, Type={}, Message={}, PostId={}, CommentId={}, FirstName={}, LastName={}, Avatar={}",
+//                request.getOwnerId(), request.getType(), request.getMessage(), request.getPostId(), request.getCommentId(),
+//                firstName, lastName, avatar);
 
         // Trả về thông báo đã được bổ sung thêm thông tin
-        return response;
+//        return response;
+        return null;
     }
 
     @Override
     public List<NotificationResponse> getNotificationsByUser(String userId) {
         List<Notification> notifications =  notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
+
         log.info("Lấy toàn bộ Thông báo thành công.");
         return notifications.stream().map(notificationMapper::toDto).toList();
     }
@@ -97,14 +104,12 @@ public class NotificationServiceImpl implements NotificationService {
         String message = profile.getFirstName() + " " + profile.getLastName() + " " + response.getMessage();
         String notificationType = response.getTopic().equals("notice-comment") ? "COMMENT" : "LIKE";
 
-        createNotification(NoticeRequest.builder()
+        Notification notification = createNotification(NoticeRequest.builder()
                 .ownerId(response.getOwnerId())
                 .message(message)
                 .type(notificationType)
                 .postId(response.getPostId())
                 .commentId(response.getCommentId())
                 .build());
-
-        log.info("Kafka notification received: Topic={}, ReceiverId={}, Message={}", response.getTopic(), response.getReceiverId(), message);
     }
 }

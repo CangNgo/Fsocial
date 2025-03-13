@@ -24,8 +24,8 @@ spring:
     name: post_service
   data:
     mongodb:
-       uri: mongodb://root:root@localhost:27001/primary_database?authSource=admin
-       auto-index-creation: true
+       uri: mongodb://localhost:27017/post_db
+       database: post_db
   servlet:
     multipart:
       max-file-size: 10MB

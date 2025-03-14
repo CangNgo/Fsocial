@@ -1,5 +1,6 @@
 package com.fsocial.postservice.services.impl;
 
+import com.fsocial.event.NotificationRequest;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.enums.MessageNotice;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -63,7 +64,14 @@ public class CommentServiceImpl implements CommentService {
         // Send request to notification
         String ownerId = post.getUserId();
         String userId = request.getUserId();
-        kafkaService.sendNotification(ownerId, userId, MessageNotice.NOTIFICATION_COMMENT);
+        kafkaService.sendNotification(NotificationRequest.builder()
+                .ownerId(ownerId)
+                .receiverId(userId)
+                .topic("notice-comment")
+                .message(MessageNotice.NOTIFICATION_COMMENT.getMessage())
+                .postId(postId)
+                .commentId(savedComment.getId())
+                .build());
 
         return savedComment;
     }
@@ -104,11 +112,11 @@ public class CommentServiceImpl implements CommentService {
         boolean existed = commentRepository.existsByIdAndLikes(commentId, userId);
         if (!existed) {
             this.addLikeComment(commentId, userId);
-            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+//            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
             return true;
         } else {
             this.removeLikeComment(commentId, userId);
-            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
+//            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
             return false;
         }
     }

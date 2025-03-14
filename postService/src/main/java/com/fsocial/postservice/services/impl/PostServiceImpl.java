@@ -103,11 +103,11 @@ public class PostServiceImpl implements PostService {
         try {
             if (!existed) {
                 this.addLike(postId, userId);
-                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
                 return true;
             } else {
                 this.removeLike(postId, userId);
-                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
                 return false;
             }
         } catch (Exception e) {

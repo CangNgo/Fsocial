@@ -23,4 +23,7 @@ public class Notification {
     boolean isRead;
     String type;
     LocalDateTime createdAt = LocalDateTime.now();
+    String postId;
+    String commentId;
+    String receiverId;
 }

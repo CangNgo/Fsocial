@@ -17,4 +17,9 @@ public class NotificationResponse {
     boolean isRead;
     String type;
     LocalDateTime createdAt;
+    String postId;
+    String commentId;
+    String firstName;
+    String lastName;
+    String avatar;
 }

@@ -35,17 +35,48 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    public NotificationResponse createNotification(NoticeRequest request) {
-        Notification notification = notificationRepository.save(notificationMapper.toEntity(request));
-        log.info("Thông báo: OwnerId={}, Type={}, Message={}", request.getOwnerId(), request.getType(), request.getMessage());
-        return notificationMapper.toDto(notification);
+    public Notification createNotification(NoticeRequest request) {
+        // Lưu thông báo vào cơ sở dữ liệu (không cần lưu firstName, lastName, avatar)
+        Notification notification = notificationMapper.toEntity(request);
+        notification.setPostId(request.getPostId());
+        notification.setCommentId(request.getCommentId());
+
+
+        log.info("Đã lưu thông báo.");
+        return notificationRepository.save(notification);
     }
 
     @Override
     public List<NotificationResponse> getNotificationsByUser(String userId) {
-        List<Notification> notifications =  notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
+        // Lấy danh sách thông báo từ cơ sở dữ liệu
+        List<Notification> notifications = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
+
+        // Duyệt qua danh sách các thông báo và cập nhật thông tin người thực hiện hành động (receiverId)
+        List<NotificationResponse> responseList = notifications.stream()
+                .map(notification -> {
+                    // Chuyển đổi Notification thành NotificationResponse
+                    NotificationResponse response = notificationMapper.toDto(notification);
+
+                    // Lấy receiverId từ thông báo, đây là người thực hiện hành động (like hoặc comment)
+                    String receiverId = notification.getReceiverId(); // Sử dụng receiverId là người thực hiện hành động
+
+                    // Lấy thông tin người thực hiện hành động từ ProfileClient (dùng receiverId ở đây)
+                    var profile = profileClient.getProfileByUserId(receiverId);  // Lấy thông tin người thực hiện hành động
+                    String firstName = profile.getFirstName();
+                    String lastName = profile.getLastName();
+                    String avatar = profile.getAvatar();  // Lấy avatar của người thực hiện hành động
+
+                    // Cập nhật các thông tin vào NotificationResponse
+                    response.setFirstName(firstName);
+                    response.setLastName(lastName);
+                    response.setAvatar(avatar);
+
+                    return response;
+                })
+                .toList();
+
         log.info("Lấy toàn bộ Thông báo thành công.");
-        return notifications.stream().map(notificationMapper::toDto).toList();
+        return responseList;
     }
 
     @Override
@@ -71,12 +102,13 @@ public class NotificationServiceImpl implements NotificationService {
         String message = profile.getFirstName() + " " + profile.getLastName() + " " + response.getMessage();
         String notificationType = response.getTopic().equals("notice-comment") ? "COMMENT" : "LIKE";
 
-        createNotification(NoticeRequest.builder()
+        Notification notification = createNotification(NoticeRequest.builder()
                 .ownerId(response.getOwnerId())
                 .message(message)
                 .type(notificationType)
+                .postId(response.getPostId())
+                .commentId(response.getCommentId())
+                .receiverId(response.getReceiverId())
                 .build());
-
-        log.info("Kafka notification received: Topic={}, ReceiverId={}, Message={}", response.getTopic(), response.getReceiverId(), message);
     }
 }

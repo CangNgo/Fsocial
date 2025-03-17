@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NoticeRequest {
     String ownerId;
-    String message;
     String type;
     String postId;
     String commentId;

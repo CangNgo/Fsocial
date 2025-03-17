@@ -1,13 +1,15 @@
 package com.fsocial.postservice.services.impl;
 
+import com.fsocial.event.NotificationRequest;
 import com.fsocial.postservice.dto.ContentDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.dto.post.PostShareDTORequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Post;
-import com.fsocial.postservice.enums.MessageNotice;
+import com.fsocial.postservice.enums.TopicKafka;
 import com.fsocial.postservice.exception.AppCheckedException;
+import com.fsocial.postservice.exception.AppUnCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
@@ -41,7 +43,6 @@ public class PostServiceImpl implements PostService {
     UploadMedia uploadMedia;
     PostMapper postMapper;
     ContentMapper contentMapper;
-    KafkaService kafkaService;
 
     @Override
     @Transactional
@@ -100,14 +101,13 @@ public class PostServiceImpl implements PostService {
     public boolean toggleLike(String postId, String userId) throws Exception {
 
         boolean existed = postRepository.existsByIdAndLikes(postId, userId);
+
         try {
             if (!existed) {
                 this.addLike(postId, userId);
-//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE,postId, null);
                 return true;
             } else {
                 this.removeLike(postId, userId);
-//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE,postId, null);
                 return false;
             }
         } catch (Exception e) {
@@ -155,7 +155,9 @@ public class PostServiceImpl implements PostService {
                 .HTMLText(html)
                 .media(media)
                 .build();
-    } private ContentDTO buildContent(String html, String text){
+    }
+
+    private ContentDTO buildContent(String html, String text){
         return ContentDTO.builder()
                 .text(text)
                 .HTMLText(html)

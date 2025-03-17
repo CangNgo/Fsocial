@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -17,16 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
+@RequestMapping("/notice")
 public class NotificationController {
 
     NotificationService notificationService;
-
-    @GetMapping("/all/{userId}")
-    public ApiResponse<List<NotificationResponse>> getNotificationsByUser(@PathVariable String userId) {
-        log.info("Getting notifications for user: {}", userId);
-        return ApiResponse.buildApiResponse(notificationService.getNotificationsByUser(userId),
-                ResponseStatus.SUCCESS);
-    }
 
     @GetMapping("/{userId}")
     public ApiResponse<List<NotificationResponse>> getNotifications(

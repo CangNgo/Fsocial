@@ -71,9 +71,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteMessage(String messageId) {
-        if (!messageRepository.existsById(messageId)) {
-            throw new AppException(ErrorCode.NOT_FOUND);
-        }
+        if (!messageRepository.existsById(messageId)) throw new AppException(ErrorCode.NOT_FOUND);
         messageRepository.deleteById(messageId);
         log.info("Đã xoá tin nhắn với id: {}", messageId);
     }
@@ -131,9 +129,8 @@ public class MessageServiceImpl implements MessageService {
             return;
         }
 
-        if (!conversationRepository.existsById(conversationId)) {
+        if (!conversationRepository.existsById(conversationId))
             throw new AppException(ErrorCode.CONVERSATION_NOT_EXIST);
-        }
 
         redisTemplate.opsForValue().set(cacheKey, true, 5, TimeUnit.MINUTES);
     }

@@ -14,7 +14,6 @@ import lombok.experimental.FieldDefaults;
 public class NotificationRequest {
     String ownerId;
     String receiverId;
-    String message;
     String topic;
     String postId;  // Thêm trường postId
     String commentId;

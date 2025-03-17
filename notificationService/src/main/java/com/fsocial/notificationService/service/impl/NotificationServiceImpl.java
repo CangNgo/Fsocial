@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -36,43 +37,19 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public Notification createNotification(NoticeRequest request) {
-        // Lưu thông báo vào cơ sở dữ liệu (không cần lưu firstName, lastName, avatar)
         Notification notification = notificationMapper.toEntity(request);
-        notification.setPostId(request.getPostId());
-        notification.setCommentId(request.getCommentId());
-
 
         log.info("Đã lưu thông báo.");
         return notificationRepository.save(notification);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<NotificationResponse> getNotificationsByUser(String userId) {
-        // Lấy danh sách thông báo từ cơ sở dữ liệu
         List<Notification> notifications = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
 
-        // Duyệt qua danh sách các thông báo và cập nhật thông tin người thực hiện hành động (receiverId)
         List<NotificationResponse> responseList = notifications.stream()
-                .map(notification -> {
-                    // Chuyển đổi Notification thành NotificationResponse
-                    NotificationResponse response = notificationMapper.toDto(notification);
-
-                    // Lấy receiverId từ thông báo, đây là người thực hiện hành động (like hoặc comment)
-                    String receiverId = notification.getReceiverId(); // Sử dụng receiverId là người thực hiện hành động
-
-                    // Lấy thông tin người thực hiện hành động từ ProfileClient (dùng receiverId ở đây)
-                    var profile = profileClient.getProfileByUserId(receiverId);  // Lấy thông tin người thực hiện hành động
-                    String firstName = profile.getFirstName();
-                    String lastName = profile.getLastName();
-                    String avatar = profile.getAvatar();  // Lấy avatar của người thực hiện hành động
-
-                    // Cập nhật các thông tin vào NotificationResponse
-                    response.setFirstName(firstName);
-                    response.setLastName(lastName);
-                    response.setAvatar(avatar);
-
-                    return response;
-                })
+                .map(this::updateNotificationToResponse)
                 .toList();
 
         log.info("Lấy toàn bộ Thông báo thành công.");
@@ -91,9 +68,32 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public Page<Notification> getNotificationsByUser(String userId, int page, int size) {
+    @Transactional(readOnly = true)
+    public List<NotificationResponse> getNotificationsByUser(String userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable);
+        Page<Notification> notifications = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable);
+        return notifications.stream().map(this::updateNotificationToResponse).toList();
+    }
+
+    private NotificationResponse updateNotificationToResponse(Notification notification) {
+        NotificationResponse response = notificationMapper.toDto(notification);
+
+        String receiverId = notification.getReceiverId();
+        log.info(">>>>>>>> TEST RECEIVERID: {}", receiverId);
+        getAndSetSenderProfile(response, receiverId);
+        return response;
+    }
+
+    private void getAndSetSenderProfile(NotificationResponse response, String receiverId) {
+        var profile = profileClient.getProfileByUserId(receiverId);
+        log.info(">>>>>>>> TEST PROFILE: {}", profile);
+        String firstName = profile.getFirstName();
+        String lastName = profile.getLastName();
+        String avatar = profile.getAvatar();
+
+        response.setFirstName(firstName);
+        response.setLastName(lastName);
+        response.setAvatar(avatar);
     }
 
     @KafkaListener(topics = {"notice-comment", "notice-like"})
@@ -102,7 +102,7 @@ public class NotificationServiceImpl implements NotificationService {
         String message = profile.getFirstName() + " " + profile.getLastName() + " " + response.getMessage();
         String notificationType = response.getTopic().equals("notice-comment") ? "COMMENT" : "LIKE";
 
-        Notification notification = createNotification(NoticeRequest.builder()
+        createNotification(NoticeRequest.builder()
                 .ownerId(response.getOwnerId())
                 .message(message)
                 .type(notificationType)

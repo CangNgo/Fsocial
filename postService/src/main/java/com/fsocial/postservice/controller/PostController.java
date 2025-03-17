@@ -30,7 +30,7 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<Response> createPost(@Valid PostDTORequest request) throws AppCheckedException {
+    public ResponseEntity<Response> createPost(@RequestBody @Valid PostDTORequest request) throws AppCheckedException {
         //If text and media is null -> return
         if ((request.getText() == null || request.getText().isEmpty())
                 && (request.getMedia() == null || request.getMedia().length == 0)) {

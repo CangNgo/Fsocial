@@ -1,17 +1,13 @@
 package com.fsocial.notificationService.controller;
 
-import com.fsocial.event.NotificationRequest;
-import com.fsocial.notificationService.dto.response.ApiResponse;
+import com.fsocial.notificationService.dto.ApiResponse;
 import com.fsocial.notificationService.dto.response.NotificationResponse;
-import com.fsocial.notificationService.entity.Notification;
 import com.fsocial.notificationService.enums.ResponseStatus;
 import com.fsocial.notificationService.service.NotificationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -28,30 +24,23 @@ public class NotificationController {
     @GetMapping("/all/{userId}")
     public ApiResponse<List<NotificationResponse>> getNotificationsByUser(@PathVariable String userId) {
         log.info("Getting notifications for user: {}", userId);
-        return buildResponse(notificationService.getNotificationsByUser(userId));
+        return ApiResponse.buildApiResponse(notificationService.getNotificationsByUser(userId),
+                ResponseStatus.SUCCESS);
     }
 
     @GetMapping("/{userId}")
-    public ApiResponse<Page<Notification>> getNotifications(
+    public ApiResponse<List<NotificationResponse>> getNotifications(
             @PathVariable String userId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "15") int size) {
 
-        return buildResponse(notificationService.getNotificationsByUser(userId, page, size));
+        return ApiResponse.buildApiResponse(notificationService.getNotificationsByUser(userId, page, size),
+                ResponseStatus.SUCCESS);
     }
 
     @PutMapping("/{notificationId}")
     public ApiResponse<Void> markAsRead(@PathVariable String notificationId) {
         notificationService.markAsRead(notificationId);
-        return buildResponse(null);
-    }
-
-    private <T> ApiResponse<T> buildResponse(T data) {
-        return ApiResponse.<T>builder()
-                .statusCode(ResponseStatus.SUCCESS.getCODE())
-                .message(ResponseStatus.SUCCESS.getMessage())
-                .dateTime(LocalDateTime.now())
-                .data(data)
-                .build();
+        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
 }

@@ -43,9 +43,6 @@ public class ComplainController {
         LocalDateTime startDate = date.atStartOfDay();
         LocalDateTime endDate = date.atTime(23, 59, 59);
 
-        log.info("Bắt đầu ngày: ", startDate);
-        log.info("Kết thúc ngày: ", endDate);
-
         return ResponseEntity.ok().body(Response.builder()
                 .data(complaintService.countComplaintByToday(startDate, endDate))
                 .message("Lấy toàn bộ danh sách báo cáo thành công")
@@ -58,9 +55,6 @@ public class ComplainController {
         LocalDate end = LocalDate.parse(endDateRe);
         LocalDateTime startDate= start.atStartOfDay();
         LocalDateTime endDate= end.atTime(23, 59, 59);
-
-        log.info("Bắt đầu ngày: ", startDate);
-        log.info("Kết thúc ngày: ", endDate);
 
         return ResponseEntity.ok().body(Response.builder()
                 .data(complaintService.countComplaintByToday(startDate, endDate))

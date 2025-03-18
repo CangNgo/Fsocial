@@ -2,6 +2,8 @@ package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentRequest;
+import com.fsocial.postservice.dto.replyComment.ReplyCommentUpdateDTORequest;
+import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.ReplyComment;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.services.impl.ReplyCommentServiceImpl;
@@ -39,6 +41,15 @@ public class ReplyCommentController {
         return ResponseEntity.ok().body(Response.builder()
                 .data(replyCommentService.deleteReplyComment(id))
                 .message("Delete reply comment successfully")
+                .build());
+    }
+
+    @PutMapping
+    public ResponseEntity<Response> updateReplyComment(ReplyCommentUpdateDTORequest request) throws AppCheckedException {
+        ReplyComment update = replyCommentService.updateReplyComment(request);
+        return ResponseEntity.ok().body(Response.builder()
+                .data(update)
+                .message("Update reply comment successfully")
                 .build());
     }
 }

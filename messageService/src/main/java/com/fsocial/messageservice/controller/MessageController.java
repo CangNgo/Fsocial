@@ -25,8 +25,9 @@ public class MessageController {
     @GetMapping("/{conversationId}")
     public ApiResponse<List<MessageResponse>> getMessages(
             @PathVariable String conversationId,
-            @RequestParam(defaultValue = "0") int page) {
-        List<MessageResponse> messages = messageService.findChatMessagesBetweenUsers(conversationId, page);
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int pageSize) {
+        List<MessageResponse> messages = messageService.findChatMessagesBetweenUsers(conversationId, page, pageSize);
         return ApiResponse.buildApiResponse(messages, ResponseStatus.SUCCESS);
     }
 

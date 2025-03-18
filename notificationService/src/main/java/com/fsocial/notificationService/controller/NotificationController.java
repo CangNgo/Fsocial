@@ -8,10 +8,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -29,8 +27,8 @@ public class NotificationController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "15") int size) {
 
-        return ApiResponse.buildApiResponse(notificationService.getNotificationsByUser(userId, page, size),
-                ResponseStatus.SUCCESS);
+        List<NotificationResponse> response = notificationService.getNotificationsByUser(userId, page, size);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
     @PutMapping("/{notificationId}")

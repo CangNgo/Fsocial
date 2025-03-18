@@ -11,6 +11,7 @@ import com.fsocial.notificationService.mapper.NotificationMapper;
 import com.fsocial.notificationService.repository.NotificationRepository;
 import com.fsocial.notificationService.repository.httpClient.ProfileClient;
 import com.fsocial.notificationService.service.NotificationService;
+import com.fsocial.notificationService.service.WebSocketService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -39,6 +40,7 @@ public class NotificationServiceImpl implements NotificationService {
     ProfileClient profileClient;
     RedisTemplate<String, Object> redisTemplate;
     SimpMessagingTemplate messagingTemplate;
+    WebSocketService webSocketService;
 
     private static final String PROFILE_CACHE_PREFIX = "profile:user:";
     private static final int CACHE_DURATION_MINUTES = 10;
@@ -152,15 +154,9 @@ public class NotificationServiceImpl implements NotificationService {
             NotificationResponse response = notificationMapper.toDto(notification);
 
             // Gửi thông báo qua WebSocket
-            sendNotificationToUser(request.getOwnerId(), response);
+            webSocketService.sendNotificationToUser(request.getOwnerId(), response);
         } catch (Exception e) {
             log.error("Lỗi khi xử lý thông báo Kafka: {}", e.getMessage());
         }
-    }
-
-    public void sendNotificationToUser(String userId, NotificationResponse notification) {
-        String destination = "/topic/notifications/" + userId;
-        messagingTemplate.convertAndSend(destination, notification);
-        log.info("Đã gửi thông báo qua WebSocket tới userId={}", userId);
     }
 }

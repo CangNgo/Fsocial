@@ -30,12 +30,13 @@ public class PostController {
     PostService postService;
 
     @PostMapping
-    public ResponseEntity<Response> createPost(@RequestBody @Valid PostDTORequest request) throws AppCheckedException {
+    public ResponseEntity<Response> createPost(@Valid PostDTORequest request) throws AppCheckedException {
         //If text and media is null -> return
         if ((request.getText() == null || request.getText().isEmpty())
                 && (request.getMedia() == null || request.getMedia().length == 0)) {
             throw new AppCheckedException("Bài viết phải có nội dung, hình ảnh hoặc video", StatusCode.NOT_CONTENT);
         }
+
         PostDTO post = postService.createPost(request);
 
         return ResponseEntity.ok(Response.builder()

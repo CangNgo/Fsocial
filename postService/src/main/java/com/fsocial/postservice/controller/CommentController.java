@@ -30,7 +30,7 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Response> createComment(@RequestBody CommentDTORequest request) throws AppCheckedException{
+    public ResponseEntity<Response> createComment(CommentDTORequest request) throws AppCheckedException{
             Comment comment = commentService.addComment(request);
             return ResponseEntity.ok(Response.builder()
                     .data(comment)

@@ -9,9 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -34,7 +32,13 @@ public class ReplyCommentController {
                         .dateTime(LocalDateTime.now())
                         .message("Reply comment thành công")
                 .build());
-
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> deleteReplyComment(@PathVariable("id") String id) throws AppCheckedException {
+        return ResponseEntity.ok().body(Response.builder()
+                .data(replyCommentService.deleteReplyComment(id))
+                .message("Delete reply comment successfully")
+                .build());
+    }
 }

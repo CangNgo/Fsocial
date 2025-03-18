@@ -1,5 +1,6 @@
 package com.fsocial.postservice.services.impl;
 
+import com.fsocial.postservice.dto.comment.CommentUpdateDTORequest;
 import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.enums.MessageNotice;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -116,6 +117,26 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Integer countLike(String commentId, String userId) {
         return 0;
+    }
+
+    @Override
+    public Comment updateComment(CommentUpdateDTORequest comment) throws AppCheckedException {
+        if (userExists(comment.getUserId()))
+            throw new AppCheckedException("User không tồn tại", StatusCode.USER_NOT_FOUND);
+
+        Comment update = commentRepository.findById(comment.getCommentId()).orElseThrow(() -> new AppCheckedException("Không tìm thấy comment", StatusCode.COMMENT_NOT_FOUND));
+        //cập nhật text
+        update.setContent(Content.builder()
+                        .HTMLText(comment.getHTMLText())
+                        .text(comment.getText())
+                .build());
+        return commentRepository.save(update);
+    }
+
+    @Override
+    public String deleteComment(String commentID) {
+        commentRepository.deleteById(commentID);
+        return "Xóa comment thành công";
     }
 
     public void addLikeComment(String commentId, String userId) throws AppCheckedException {

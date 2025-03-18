@@ -1,6 +1,7 @@
 package com.fsocial.postservice.services;
 
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
+import com.fsocial.postservice.dto.comment.CommentUpdateDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.exception.AppCheckedException;
 
@@ -14,4 +15,7 @@ public interface CommentService{
 
     Integer countLike(String commentId, String userId);
 
+    Comment updateComment(CommentUpdateDTORequest comment) throws AppCheckedException;
+
+    String deleteComment(String commentID);
 }

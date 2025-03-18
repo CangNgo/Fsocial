@@ -2,6 +2,7 @@ package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
+import com.fsocial.postservice.dto.comment.CommentUpdateDTORequest;
 import com.fsocial.postservice.dto.comment.LikeCommentDTO;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -30,23 +31,41 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Response> createComment(CommentDTORequest request) throws AppCheckedException{
-            Comment comment = commentService.addComment(request);
-            return ResponseEntity.ok(Response.builder()
-                    .data(comment)
-                    .message("Comment created successfully")
-                    .build());
+    public ResponseEntity<Response> createComment(CommentDTORequest request) throws AppCheckedException {
+        Comment comment = commentService.addComment(request);
+        return ResponseEntity.ok(Response.builder()
+                .data(comment)
+                .message("Comment created successfully")
+                .build());
     }
 
     @PostMapping("/like")
-    public ResponseEntity<Response> likeComment(@RequestBody @Valid LikeCommentDTO dto ) throws AppCheckedException {
+    public ResponseEntity<Response> likeComment(@RequestBody @Valid LikeCommentDTO dto) throws AppCheckedException {
         boolean like = commentService.toggleLikeComment(dto.getCommentId(), dto.getUserId());
         Map<String, Object> result = new HashMap<>();
         result.put("like", like);
         result.put("userid", dto.getUserId());
         return ResponseEntity.ok(Response.builder()
                 .data(result)
-                .message(like?"Thích bình luận thành công":"Hủy thích bình luận thành công")
+                .message(like ? "Thích bình luận thành công" : "Hủy thích bình luận thành công")
                 .build());
+    }
+
+    @PutMapping
+    public ResponseEntity<Response> updateComment(@RequestBody @Valid CommentUpdateDTORequest dto) throws AppCheckedException {
+        Comment update = commentService.updateComment(dto);
+        return ResponseEntity.ok(Response.builder()
+                .message("Comment updated successfully")
+                .data(update)
+                .build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> deleteComment(@PathVariable("id") String id) {
+        return ResponseEntity.ok(Response.builder()
+                .message("Comment deleted successfully")
+                .data(commentService.deleteComment(id))
+                .build());
+
     }
 }

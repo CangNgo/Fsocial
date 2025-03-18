@@ -32,6 +32,7 @@ public enum StatusCode {
     NOT_CONTENT(211,"Not Content"),
     COMMENT_NOT_FOUND(212,"Comment Not Found"),
     TERM_OF_SERVICE_NOT_FOUND(305,"Term of service not found"),
+    REPLY_COMMENT_NOT_FOUND(306,"Reply Comment Not Found"),
     ;
     private final int code;
     private final String message;

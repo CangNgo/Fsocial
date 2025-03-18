@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface MessageService {
-    List<MessageResponse> findChatMessagesBetweenUsers(String conversationId, int page);
+    List<MessageResponse> findChatMessagesBetweenUsers(String conversationId, int page, int pageSize);
     MessageResponse saveChatMessage(MessageRequest request);
     void markMessagesAsRead(String conversationId);
     void deleteMessagesByConversationId(String conversationId);

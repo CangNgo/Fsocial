@@ -1,4 +1,4 @@
-package com.fsocial.messageservice.Config;
+package com.fsocial.messageservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -11,7 +11,6 @@ import com.fsocial.notificationService.mapper.NotificationMapper;
 import com.fsocial.notificationService.repository.NotificationRepository;
 import com.fsocial.notificationService.repository.httpClient.ProfileClient;
 import com.fsocial.notificationService.service.NotificationService;
-import com.fsocial.notificationService.service.WebSocketService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -40,54 +39,32 @@ public class NotificationServiceImpl implements NotificationService {
     ProfileClient profileClient;
     RedisTemplate<String, Object> redisTemplate;
     SimpMessagingTemplate messagingTemplate;
-    WebSocketService webSocketService;
 
-    private static final String PROFILE_CACHE_PREFIX = "profile:user:";
-    private static final int CACHE_DURATION_MINUTES = 10;
+    static final String PROFILE_CACHE_PREFIX = "profile:user:";
+    static final int CACHE_DURATION_MINUTES = 10;
 
     @Override
     @Transactional
     public Notification createNotification(NoticeRequest request) {
-        Notification notification = notificationMapper.toEntity(request);
-
-        log.info("Đã lưu thông báo.");
-        return notificationRepository.save(notification);
+        return notificationRepository.save(notificationMapper.toEntity(request));
     }
 
     @Override
     @Transactional
     public void markAsRead(String notificationId) {
-        Notification notification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-
-        notification.setRead(true);
-        notificationRepository.save(notification);
-        log.info("Thông báo được đánh dấu là đã đọc: Id={}", notificationId);
+        notificationRepository.findById(notificationId).ifPresentOrElse(notification -> {
+            notification.setRead(true);
+            notificationRepository.save(notification);
+            log.info("Thông báo đã được đánh dấu là đã đọc: Id={}", notificationId);
+        }, () -> { throw new AppException(ErrorCode.NOT_FOUND); });
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<NotificationResponse> getNotificationsByUser(String userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Notification> notifications = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable);
-
-        // Map để lưu profile tránh gọi API nhiều lần
-        Map<String, ProfileNameResponse> profileCache = new HashMap<>();
-
-        return notifications.stream().map(notification -> {
-            NotificationResponse response = notificationMapper.toDto(notification);
-            String receiverId = notification.getReceiverId();
-
-            // Kiểm tra xem profile đã có trong Map chưa
-            ProfileNameResponse profile = profileCache.computeIfAbsent(receiverId, this::getProfileFromCacheOrApi);
-
-            if (profile != null) {
-                response.setFirstName(profile.getFirstName());
-                response.setLastName(profile.getLastName());
-                response.setAvatar(profile.getAvatar());
-            }
-            return response;
-        }).toList();
+        return notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable)
+                .map(this::mapNotificationToResponse).toList();
     }
 
     private ProfileNameResponse getProfileFromCacheOrApi(String userId) {
@@ -113,50 +90,41 @@ public class NotificationServiceImpl implements NotificationService {
 
     private NotificationResponse mapNotificationToResponse(Notification notification) {
         NotificationResponse response = notificationMapper.toDto(notification);
-
-        String receiverId = notification.getReceiverId();
-        ProfileNameResponse profile = getProfileFromCacheOrApi(receiverId);
-
+        ProfileNameResponse profile = getProfileFromCacheOrApi(notification.getReceiverId());
         if (profile != null) {
             response.setFirstName(profile.getFirstName());
             response.setLastName(profile.getLastName());
             response.setAvatar(profile.getAvatar());
         }
-
         return response;
     }
 
     @KafkaListener(topics = {"notice-comment", "notice-like"})
     private void handleKafkaNotification(NotificationRequest request) {
-        try {
-            if (request == null || request.getReceiverId() == null) {
-                log.warn("Đã nhận được yêu cầu thông báo không hợp lệ");
-                return;
-            }
-
-            ProfileNameResponse profile = getProfileFromCacheOrApi(request.getReceiverId());
-            if (profile == null) {
-                log.warn("Lỗi khi tìm thông tin hồ sơ cho userId = {}", request.getReceiverId());
-                return;
-            }
-
-            String notificationType = "notice-comment".equals(request.getTopic()) ? "COMMENT" : "LIKE";
-
-            NoticeRequest noticeRequest = NoticeRequest.builder()
-                    .ownerId(request.getOwnerId())
-                    .type(notificationType)
-                    .postId(request.getPostId())
-                    .commentId(request.getCommentId())
-                    .receiverId(request.getReceiverId())
-                    .build();
-
-            Notification notification = createNotification(noticeRequest);
-            NotificationResponse response = notificationMapper.toDto(notification);
-
-            // Gửi thông báo qua WebSocket
-            webSocketService.sendNotificationToUser(request.getOwnerId(), response);
-        } catch (Exception e) {
-            log.error("Lỗi khi xử lý thông báo Kafka: {}", e.getMessage());
+        if (request == null || request.getReceiverId() == null) {
+            log.warn("Đã nhận được yêu cầu thông báo không hợp lệ");
+            return;
         }
+        ProfileNameResponse profile = getProfileFromCacheOrApi(request.getReceiverId());
+        if (profile == null) {
+            log.warn("Lỗi khi tìm thông tin hồ sơ cho userId = {}", request.getReceiverId());
+            return;
+        }
+        String notificationType = "notice-comment".equals(request.getTopic()) ? "COMMENT" : "LIKE";
+        Notification notification = createNotification(NoticeRequest.builder()
+                .ownerId(request.getOwnerId())
+                .type(notificationType)
+                .postId(request.getPostId())
+                .commentId(request.getCommentId())
+                .receiverId(request.getReceiverId())
+                .build());
+
+        sendNotificationToUser(notificationMapper.toDto(notification));
+    }
+
+    private void sendNotificationToUser(NotificationResponse notification) {
+        String userId = notification.getOwnerId();
+        messagingTemplate.convertAndSend("/topic/notifications-" + userId, notification);
+        log.info("Đã gửi thông báo qua WebSocket tới userId={}", userId);
     }
 }

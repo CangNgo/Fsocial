@@ -19,7 +19,6 @@ public class Notification {
     @Id
     String id;
     String ownerId;
-    String message;
     boolean isRead;
     String type;
     LocalDateTime createdAt = LocalDateTime.now();

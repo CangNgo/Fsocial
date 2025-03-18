@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class NotificationResponse {
     String id;
     String ownerId;
-    String message;
     boolean isRead;
     String type;
     LocalDateTime createdAt;

@@ -12,6 +12,7 @@ import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.repository.PostRepository;
+import com.fsocial.postservice.repository.httpClient.Accountclient;
 import com.fsocial.postservice.services.KafkaService;
 import com.fsocial.postservice.services.PostService;
 import com.fsocial.postservice.services.UploadMedia;
@@ -42,6 +43,7 @@ public class PostServiceImpl implements PostService {
     PostMapper postMapper;
     ContentMapper contentMapper;
     KafkaService kafkaService;
+    Accountclient accountclient;
 
     @Override
     @Transactional
@@ -98,16 +100,21 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean toggleLike(String postId, String userId) throws Exception {
-
+        if (postExists(postId)) {
+            throw new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND);
+        }
+        if (userExists(userId)) {
+            throw new AppCheckedException("User not found", StatusCode.USER_NOT_FOUND);
+        }
         boolean existed = postRepository.existsByIdAndLikes(postId, userId);
         try {
             if (!existed) {
                 this.addLike(postId, userId);
-                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
                 return true;
             } else {
                 this.removeLike(postId, userId);
-                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
                 return false;
             }
         } catch (Exception e) {
@@ -145,31 +152,40 @@ public class PostServiceImpl implements PostService {
                 .likes(new ArrayList<>())
                 .createDatetime(LocalDateTime.now())
                 .build();
-
         return postMapper.toPostDTO(postRepository.save(post));
     }
 
-    private ContentDTO buildContent(String html, String text, String[] media){
+    private ContentDTO buildContent(String html, String text, String[] media) {
         return ContentDTO.builder()
                 .text(text)
                 .HTMLText(html)
                 .media(media)
                 .build();
-    } private ContentDTO buildContent(String html, String text){
+    }
+
+    private ContentDTO buildContent(String html, String text) {
         return ContentDTO.builder()
                 .text(text)
                 .HTMLText(html)
                 .build();
     }
 
-    private Post buildPost(ContentDTO contentDTO, PostDTORequest postRequest){
-        Post post =postMapper.toPost(postRequest);
+    private Post buildPost(ContentDTO contentDTO, PostDTORequest postRequest) {
+        Post post = postMapper.toPost(postRequest);
 
         //thêm userId
         post.setUserId(postRequest.getUserId());
         post.setContent(contentMapper.toContent(contentDTO));
         post.setCreateDatetime(LocalDateTime.now());
         post.setLikes(new ArrayList<>());
-        return  post;
+        return post;
+    }
+
+    private boolean postExists(String postId) {
+        return postRepository.existsById(postId);
+    }
+
+    private boolean userExists(String userId) {
+        return accountclient.existsAccountByUserId(userId).getData().containsKey("exists");
     }
 }

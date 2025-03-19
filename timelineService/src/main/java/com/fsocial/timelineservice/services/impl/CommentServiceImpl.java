@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
                             .avatar(profileResponse.getAvatar())
                             .userId(comment.getUserId())
                             .reply(comment.isReply())
-                            .createdAt(comment.getCreatedAt())
+                            .creat_datetime(comment.getCreatDatetime())
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -59,11 +59,12 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
-        private int getCountLikesComment(String commentId){
-            Integer count = commentRepository.countLike(commentId);
-            return count != null ? count : 0;
-        }
-    private int getCountComments(String postId){
+    private int getCountLikesComment(String commentId) {
+        Integer count = commentRepository.countLike(commentId);
+        return count != null ? count : 0;
+    }
+
+    private int getCountComments(String postId) {
         return commentRepository.countCommentsByPostId(postId);
     }
 }

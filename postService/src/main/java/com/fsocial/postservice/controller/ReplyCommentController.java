@@ -1,12 +1,14 @@
 package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
+import com.fsocial.postservice.dto.replyComment.LikeReplyCommentDTO;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentRequest;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentUpdateDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.ReplyComment;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.services.impl.ReplyCommentServiceImpl;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +27,18 @@ import java.time.LocalDateTime;
 public class ReplyCommentController {
 
     ReplyCommentServiceImpl replyCommentService;
+
+    @GetMapping("/like")
+    public ResponseEntity<Response> likeReplyComment(@RequestBody @Valid LikeReplyCommentDTO request) throws AppCheckedException {
+        boolean like = replyCommentService.likeReplyComment(request);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("like", like);
+        return ResponseEntity.ok().body(Response.builder()
+                .data(map)
+                .dateTime(LocalDateTime.now())
+                .message(like?"Like thành công":"Bỏ like thành công")
+                .build());
+    }
 
     @PostMapping
     public ResponseEntity<Response> replyComment(ReplyCommentRequest request) throws AppCheckedException {

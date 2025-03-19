@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Document(collection = "comment")
 @Builder
 public class ReplyCommentDTO {
     String commentId;
@@ -16,8 +15,4 @@ public class ReplyCommentDTO {
     com.fsocial.timelineservice.dto.post.ContentDTO content;
 
     String  userId;
-
-    int countLikes;
-
-    int countReplyComment;
 }

@@ -9,8 +9,6 @@ import org.mapstruct.Mapping;
 public interface ReplyCommentMapper {
     @Mapping(source = "commentId", target = "commentId")
     @Mapping(source = "userId", target = "userId")
-    @Mapping(source = "countLikes", target = "countLikes")
-    @Mapping(source = "countComments", target = "countReplyComment")
     @Mapping(source = "text", target = "content.text")
     @Mapping(source = "HTMLText", target = "content.HTMLText")
     ReplyComment toEntity(ReplyCommentRequest request);

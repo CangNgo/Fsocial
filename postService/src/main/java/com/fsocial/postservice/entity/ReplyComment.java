@@ -4,6 +4,11 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,10 +26,10 @@ public class ReplyComment extends AbstractEntity<String>{
     @Field("userId")
     String  userId;
 
-    @Field("count_likes")
-    int countLikes;
+    @Field("likes")
+    List<String> likes = new ArrayList<>();
 
-    @Field("count_reply_comment")
-    int countReplyComment;
+    @Field("created_datetime")
+    LocalDateTime created_datetime;
 
 }

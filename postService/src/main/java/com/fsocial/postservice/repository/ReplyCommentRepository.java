@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReplyCommentRepository extends MongoRepository<ReplyComment, String> {
+
+    boolean existsByIdAndLikes(String id, String userId);
 }

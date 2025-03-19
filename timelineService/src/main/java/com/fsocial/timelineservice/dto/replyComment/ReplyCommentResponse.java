@@ -1,4 +1,4 @@
-package com.fsocial.timelineservice.dto.comment;
+package com.fsocial.timelineservice.dto.replyComment;
 
 import com.fsocial.timelineservice.entity.Content;
 import lombok.*;
@@ -7,11 +7,11 @@ import lombok.experimental.FieldDefaults;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CommentResponse {
+@Builder
+public class ReplyCommentResponse {
     String id;
     String userId;
     Content content;
@@ -20,5 +20,4 @@ public class CommentResponse {
     String lastName;
     String avatar;
     LocalDateTime creat_datetime;
-    boolean reply;
 }

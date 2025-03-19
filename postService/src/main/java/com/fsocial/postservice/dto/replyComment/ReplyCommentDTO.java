@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Document(collection = "comment")
 @Builder
 public class ReplyCommentDTO {
     String commentId;

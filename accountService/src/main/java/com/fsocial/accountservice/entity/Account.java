@@ -26,5 +26,5 @@ public class Account extends AbstractEntity<String> {
 
     String email;
 
-    boolean status;
+    boolean status = true;
 }

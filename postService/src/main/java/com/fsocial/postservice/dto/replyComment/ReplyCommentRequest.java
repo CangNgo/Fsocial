@@ -14,6 +14,4 @@ public class ReplyCommentRequest {
     String text;
     String HTMLText;
     MultipartFile[] media;
-    int countLikes = 0;
-    int countComments = 0;
 }

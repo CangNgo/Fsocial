@@ -5,6 +5,7 @@ import com.fsocial.messageservice.dto.request.MessageRequest;
 import com.fsocial.messageservice.dto.request.TypingStatusRequest;
 import com.fsocial.messageservice.dto.response.MessageResponse;
 import com.fsocial.messageservice.enums.ResponseStatus;
+import com.fsocial.messageservice.services.ChatService;
 import com.fsocial.messageservice.services.MessageService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,32 +20,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ChatController {
-    MessageService chatService;
+    ChatService chatService;
     SimpMessagingTemplate messagingTemplate;
-
-    /**
-     * Nhận tin nhắn chat từ client gửi tới "/chat.sendMessage",
-     * lưu vào MongoDB và broadcast tới topic "/topic/public".
-     */
-    @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
-    public MessageResponse sendMessage(@Payload MessageRequest chatMessage) {
-        return chatService.saveChatMessage(chatMessage);
-    }
-
-    /**
-     * Khi có người dùng tham gia chat, nhận thông báo từ "/chat.addUser"
-     * và gửi broadcast tới "/topic/public".
-     */
-//    @MessageMapping("/chat.addUser")
-//    @SendTo("/topic/public")
-//    public MessageResponse addUser(@Payload MessageRequest chatMessage,
-//                               SimpMessageHeaderAccessor headerAccessor) {
-//        // Lưu tên người dùng vào session
-//        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-//        chatMessage.setType(MessageType.JOIN);
-//        return chatMessage;
-//    }
 
     /**
      * Nhận tin nhắn chat private từ client gửi tới "/chat.private".
@@ -53,7 +30,7 @@ public class ChatController {
      */
     @MessageMapping("/chat.private")
     public void sendPrivateMessage(@Payload MessageRequest request) {
-        MessageResponse response = chatService.saveChatMessage(request);
+        MessageResponse response = chatService.cacheChatMessage(request);
 
         messagingTemplate.convertAndSend(
                 "/queue/private-" + response.getReceiverId(),

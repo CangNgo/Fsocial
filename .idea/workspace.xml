@@ -4,27 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/replyComment/LikeReplyCommentDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/replyComment/ReplyCommentResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/entity/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/entity/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/ReplyCommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/ReplyCommentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/replyComment/ReplyCommentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/replyComment/ReplyCommentDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/replyComment/ReplyCommentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/replyComment/ReplyCommentRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/ReplyComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/ReplyComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/mapper/ReplyCommentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/mapper/ReplyCommentMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/ReplyCommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/ReplyCommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/ReplyCommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/ReplyCommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/comment/CommentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/comment/CommentResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/replyComment/ReplyCommentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/replyComment/ReplyCommentDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/entity/ReplyComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/entity/ReplyComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/repository/ReplyCommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/repository/ReplyCommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/ReplyCommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/ReplyCommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/CommentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ReplyCommentImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ReplyCommentImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,7 +59,7 @@
     "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "git-widget-placeholder": "postservice",
+    "git-widget-placeholder": "develop",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/workspace/Fsocial/Fsocial_be/profileService/src/main/java/com/fsocial/profileservice/config",
@@ -316,7 +296,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java</url>
           <line>99</line>
-          <properties class="com.fsocial.postservice.services.impl.PostServiceImpl">
+          <properties class="com.fsocial.postservice.services.impl.PostServiceImpl" method="toggleLike">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -352,7 +332,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/PostController.java</url>
           <line>96</line>
-          <properties class="com.fsocial.postservice.controller.PostController" method="sharePost">
+          <properties class="com.fsocial.postservice.controller.PostController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -388,7 +368,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java</url>
           <line>101</line>
-          <properties class="com.fsocial.postservice.services.impl.PostServiceImpl" method="toggleLike">
+          <properties class="com.fsocial.postservice.services.impl.PostServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

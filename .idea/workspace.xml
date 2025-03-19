@@ -192,6 +192,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="RelationshipServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="relationshipService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.relationshipService.RelationshipServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TimeLineServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="timeLineService" />
@@ -235,6 +243,7 @@
     <list>
       <item itemvalue="Docker.docker-compose.yml.message: Compose Deployment" />
       <item itemvalue="Docker.docker-compose.yml.redis: Compose Deployment" />
+      <item itemvalue="Spring Boot.RelationshipServiceApplication" />
       <item itemvalue="Spring Boot.MessageServiceApplication" />
       <item itemvalue="Spring Boot.NotificationServiceApplication" />
       <item itemvalue="Spring Boot.TimeLineServiceApplication" />

@@ -8,8 +8,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface NotificationService {
-    NotificationResponse createNotification(NoticeRequest request);
-    List<NotificationResponse> getNotificationsByUser(String userId);
+    Notification createNotification(NoticeRequest request);
     void markAsRead(String notificationId);
-    Page<Notification> getNotificationsByUser(String userId, int page, int size);
+    List<NotificationResponse> getNotificationsByUser(String userId, int page, int size);
 }

@@ -3,6 +3,7 @@ package com.fsocial.notificationService.service.impl;
 import com.fsocial.event.NotificationRequest;
 import com.fsocial.notificationService.dto.request.NoticeRequest;
 import com.fsocial.notificationService.dto.response.NotificationResponse;
+import com.fsocial.notificationService.dto.response.ProfileNameResponse;
 import com.fsocial.notificationService.entity.Notification;
 import com.fsocial.notificationService.enums.ErrorCode;
 import com.fsocial.notificationService.exception.AppException;
@@ -17,66 +18,113 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
-
     NotificationRepository notificationRepository;
     NotificationMapper notificationMapper;
     ProfileClient profileClient;
+    RedisTemplate<String, Object> redisTemplate;
+    SimpMessagingTemplate messagingTemplate;
+
+    static final String PROFILE_CACHE_PREFIX = "profile:user:";
+    static final int CACHE_DURATION_MINUTES = 10;
 
     @Override
     @Transactional
-    public NotificationResponse createNotification(NoticeRequest request) {
-        Notification notification = notificationRepository.save(notificationMapper.toEntity(request));
-        log.info("Thông báo: OwnerId={}, Type={}, Message={}", request.getOwnerId(), request.getType(), request.getMessage());
-        return notificationMapper.toDto(notification);
-    }
-
-    @Override
-    public List<NotificationResponse> getNotificationsByUser(String userId) {
-        List<Notification> notifications =  notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId);
-        log.info("Lấy toàn bộ Thông báo thành công.");
-        return notifications.stream().map(notificationMapper::toDto).toList();
+    public Notification createNotification(NoticeRequest request) {
+        return notificationRepository.save(notificationMapper.toEntity(request));
     }
 
     @Override
     @Transactional
     public void markAsRead(String notificationId) {
-        Notification notification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-
-        notification.setRead(true);
-        notificationRepository.save(notification);
-        log.info("Notification marked as read: Id={}", notificationId);
+        notificationRepository.findById(notificationId).ifPresentOrElse(notification -> {
+            notification.setRead(true);
+            notificationRepository.save(notification);
+            log.info("Thông báo đã được đánh dấu là đã đọc: Id={}", notificationId);
+        }, () -> { throw new AppException(ErrorCode.NOT_FOUND); });
     }
 
     @Override
-    public Page<Notification> getNotificationsByUser(String userId, int page, int size) {
+    @Transactional(readOnly = true)
+    public List<NotificationResponse> getNotificationsByUser(String userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable);
+        return notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable)
+                .map(this::mapNotificationToResponse).toList();
+    }
+
+    private ProfileNameResponse getProfileFromCacheOrApi(String userId) {
+        if (userId == null) throw new AppException(ErrorCode.NOT_FOUND);
+
+        String cacheKey = PROFILE_CACHE_PREFIX + userId;
+
+        ProfileNameResponse profile = (ProfileNameResponse) redisTemplate.opsForValue().get(cacheKey);
+        if (profile != null) return profile;
+
+        try {
+            profile = profileClient.getProfileByUserId(userId);
+            if (profile != null) {
+                redisTemplate.opsForValue().set(cacheKey, profile, CACHE_DURATION_MINUTES, TimeUnit.MINUTES);
+                return profile;
+            }
+        } catch (Exception e) {
+            log.error("Lỗi khi tìm thông tin hồ sơ cho userId = {}: {}", userId, e.getMessage());
+        }
+
+        return null;
+    }
+
+    private NotificationResponse mapNotificationToResponse(Notification notification) {
+        NotificationResponse response = notificationMapper.toDto(notification);
+        ProfileNameResponse profile = getProfileFromCacheOrApi(notification.getReceiverId());
+        if (profile != null) {
+            response.setFirstName(profile.getFirstName());
+            response.setLastName(profile.getLastName());
+            response.setAvatar(profile.getAvatar());
+        }
+        return response;
     }
 
     @KafkaListener(topics = {"notice-comment", "notice-like"})
-    public void handleKafkaNotification(NotificationRequest response) {
-        var profile = profileClient.getProfileByUserId(response.getReceiverId());
-        String message = profile.getFirstName() + " " + profile.getLastName() + " " + response.getMessage();
-        String notificationType = response.getTopic().equals("notice-comment") ? "COMMENT" : "LIKE";
-
-        createNotification(NoticeRequest.builder()
-                .ownerId(response.getOwnerId())
-                .message(message)
+    private void handleKafkaNotification(NotificationRequest request) {
+        if (request == null || request.getReceiverId() == null) {
+            log.warn("Đã nhận được yêu cầu thông báo không hợp lệ");
+            return;
+        }
+        ProfileNameResponse profile = getProfileFromCacheOrApi(request.getReceiverId());
+        if (profile == null) {
+            log.warn("Lỗi khi tìm thông tin hồ sơ cho userId = {}", request.getReceiverId());
+            return;
+        }
+        String notificationType = "notice-comment".equals(request.getTopic()) ? "COMMENT" : "LIKE";
+        Notification notification = createNotification(NoticeRequest.builder()
+                .ownerId(request.getOwnerId())
                 .type(notificationType)
+                .postId(request.getPostId())
+                .commentId(request.getCommentId())
+                .receiverId(request.getReceiverId())
                 .build());
 
-        log.info("Kafka notification received: Topic={}, ReceiverId={}, Message={}", response.getTopic(), response.getReceiverId(), message);
+        sendNotificationToUser(notificationMapper.toDto(notification));
+    }
+
+    private void sendNotificationToUser(NotificationResponse notification) {
+        String userId = notification.getOwnerId();
+        messagingTemplate.convertAndSend("/topic/notifications-" + userId, notification);
+        log.info("Đã gửi thông báo qua WebSocket tới userId={}", userId);
     }
 }

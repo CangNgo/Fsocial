@@ -38,10 +38,10 @@ public class MessageServiceImpl implements MessageService {
     AccountClient accountClient;
     RedisTemplate<String, Boolean> redisTemplate;
 
-    @Transactional(readOnly = true)
     @Override
-    public List<MessageResponse> findChatMessagesBetweenUsers(String conversationId, int page) {
-        Pageable pageable = PageRequest.of(page, 20); // Lấy 20 tin nhắn mỗi trang (mới nhất trước)
+    @Transactional(readOnly = true)
+    public List<MessageResponse> findChatMessagesBetweenUsers(String conversationId, int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize); // Lấy 20 tin nhắn mỗi trang (mới nhất trước)
         Page<Message> chatPage = messageRepository.findByConversationIdOrderByCreateAtDesc(conversationId, pageable);
 
         return chatPage.stream()
@@ -49,8 +49,8 @@ public class MessageServiceImpl implements MessageService {
                 .toList();
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public MessageResponse saveChatMessage(MessageRequest request) {
         validateUser(request.getReceiverId());
         ensureConversationExists(request.getConversationId());
@@ -71,9 +71,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteMessage(String messageId) {
-        if (!messageRepository.existsById(messageId)) {
-            throw new AppException(ErrorCode.NOT_FOUND);
-        }
+        if (!messageRepository.existsById(messageId)) throw new AppException(ErrorCode.NOT_FOUND);
         messageRepository.deleteById(messageId);
         log.info("Đã xoá tin nhắn với id: {}", messageId);
     }
@@ -86,14 +84,14 @@ public class MessageServiceImpl implements MessageService {
         if (!unreadMessages.isEmpty()) {
             unreadMessages.forEach(message -> message.setRead(true));
             messageRepository.saveAll(unreadMessages);
-            log.info("Đã đánh dấu {} tin nhắn đã đọc trong cuộc trò chuyện {}", unreadMessages.size(), conversationId);
+            log.info("Đã đánh dấu tin nhắn đã đọc trong cuộc trò chuyện {}", conversationId);
         } else {
             log.info("Không có tin nhắn chưa đọc trong cuộc trò chuyện {}", conversationId);
         }
     }
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public Map<String, LastMessage> findLastMessagesForConversations(List<String> conversationIds) {
         return messageRepository.findTopByConversationIdsOrderByCreateAtDesc(conversationIds)
                 .stream()
@@ -131,11 +129,9 @@ public class MessageServiceImpl implements MessageService {
             return;
         }
 
-        if (!conversationRepository.existsById(conversationId)) {
+        if (!conversationRepository.existsById(conversationId))
             throw new AppException(ErrorCode.CONVERSATION_NOT_EXIST);
-        }
 
         redisTemplate.opsForValue().set(cacheKey, true, 5, TimeUnit.MINUTES);
     }
-
 }

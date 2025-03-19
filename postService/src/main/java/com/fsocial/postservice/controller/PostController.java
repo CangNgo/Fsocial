@@ -36,6 +36,7 @@ public class PostController {
                 && (request.getMedia() == null || request.getMedia().length == 0)) {
             throw new AppCheckedException("Bài viết phải có nội dung, hình ảnh hoặc video", StatusCode.NOT_CONTENT);
         }
+
         PostDTO post = postService.createPost(request);
 
         return ResponseEntity.ok(Response.builder()

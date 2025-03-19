@@ -1,8 +1,7 @@
 package com.fsocial.notificationService.exception;
 
-import com.fsocial.notificationService.dto.response.ApiResponse;
+import com.fsocial.notificationService.dto.ApiResponse;
 import com.fsocial.notificationService.enums.ErrorCode;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;

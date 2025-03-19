@@ -1,7 +1,6 @@
 package com.fsocial.postservice.services.impl;
 
 import com.fsocial.event.NotificationRequest;
-import com.fsocial.postservice.enums.MessageNotice;
 import com.fsocial.postservice.services.KafkaService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +17,9 @@ public class KafkaServiceImpl implements KafkaService {
     KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
-    public void sendNotification(String ownerId, String userId, MessageNotice messageNotice) {
-        NotificationRequest noticeRequest = NotificationRequest.builder()
-                .ownerId(ownerId)
-                .receiverId(userId)
-                .message(messageNotice.getMessage())
-                .topic(messageNotice.getTopic())
-                .build();
-
-        kafkaTemplate.send(messageNotice.getTopic(), noticeRequest);
-        log.info("Notification sent: OwnerId={}, ReceiverId={}, Topic={}", ownerId, userId, messageNotice.getTopic());
+    public void sendNotification(NotificationRequest request) {
+        kafkaTemplate.send(request.getTopic(), request);
+        log.info("Gửi thành công.");
     }
+
 }

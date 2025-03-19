@@ -6,7 +6,6 @@ import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.dto.post.PostShareDTORequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Post;
-import com.fsocial.postservice.enums.MessageNotice;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.mapper.ContentMapper;
@@ -110,11 +109,9 @@ public class PostServiceImpl implements PostService {
         try {
             if (!existed) {
                 this.addLike(postId, userId);
-//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
                 return true;
             } else {
                 this.removeLike(postId, userId);
-//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
                 return false;
             }
         } catch (Exception e) {
@@ -152,33 +149,32 @@ public class PostServiceImpl implements PostService {
                 .likes(new ArrayList<>())
                 .createDatetime(LocalDateTime.now())
                 .build();
+
         return postMapper.toPostDTO(postRepository.save(post));
     }
 
-    private ContentDTO buildContent(String html, String text, String[] media) {
+    private ContentDTO buildContent(String html, String text, String[] media){
         return ContentDTO.builder()
                 .text(text)
                 .HTMLText(html)
                 .media(media)
                 .build();
-    }
-
-    private ContentDTO buildContent(String html, String text) {
+    } private ContentDTO buildContent(String html, String text){
         return ContentDTO.builder()
                 .text(text)
                 .HTMLText(html)
                 .build();
     }
 
-    private Post buildPost(ContentDTO contentDTO, PostDTORequest postRequest) {
-        Post post = postMapper.toPost(postRequest);
+    private Post buildPost(ContentDTO contentDTO, PostDTORequest postRequest){
+        Post post =postMapper.toPost(postRequest);
 
         //thêm userId
         post.setUserId(postRequest.getUserId());
         post.setContent(contentMapper.toContent(contentDTO));
         post.setCreateDatetime(LocalDateTime.now());
         post.setLikes(new ArrayList<>());
-        return post;
+        return  post;
     }
 
     private boolean postExists(String postId) {

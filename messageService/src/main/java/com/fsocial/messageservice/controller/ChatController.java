@@ -52,15 +52,18 @@ public class ChatController {
      * Client nhận tin nhắn private cần subscribe tới "/user/queue/private".
      */
     @MessageMapping("/chat.private")
-    public ApiResponse<MessageResponse> sendPrivateMessage(@Payload MessageRequest request) {
+    public void sendPrivateMessage(@Payload MessageRequest request) {
         MessageResponse response = chatService.saveChatMessage(request);
 
         messagingTemplate.convertAndSend(
-                "/queue/private-" + request.getReceiverId(),
+                "/queue/private-" + response.getReceiverId(),
                 response
         );
 
-        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+        messagingTemplate.convertAndSend(
+                "/queue/private-" + response.getConversationId(),
+                response
+        );
     }
 
     @MessageMapping("/chat.typing")

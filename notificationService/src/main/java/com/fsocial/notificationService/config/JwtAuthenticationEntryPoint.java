@@ -1,7 +1,7 @@
 package com.fsocial.notificationService.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fsocial.notificationService.dto.response.ApiResponse;
+import com.fsocial.notificationService.dto.ApiResponse;
 import com.fsocial.notificationService.enums.ErrorCode;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

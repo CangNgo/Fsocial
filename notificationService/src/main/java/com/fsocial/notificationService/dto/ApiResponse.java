@@ -1,4 +1,4 @@
-package com.fsocial.notificationService.dto.response;
+package com.fsocial.notificationService.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fsocial.notificationService.enums.ResponseStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -29,4 +30,13 @@ public class ApiResponse<T> {
     LocalDateTime dateTime = LocalDateTime.now();
 
     T data;
+
+    public static <T> ApiResponse<T> buildApiResponse(T data, ResponseStatus status) {
+        return ApiResponse.<T>builder()
+                .statusCode(status.getCODE())
+                .message(status.getMessage())
+                .dateTime(LocalDateTime.now())
+                .data(data)
+                .build();
+    }
 }

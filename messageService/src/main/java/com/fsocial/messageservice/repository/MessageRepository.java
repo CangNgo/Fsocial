@@ -22,4 +22,9 @@ public interface MessageRepository extends MongoRepository<Message, String> {
 
     @Query(value = "{ 'conversationId': { $in: ?0 }}", sort = "{ 'createAt' : -1 }")
     List<Message> findTopByConversationIdsOrderByCreateAtDesc(List<String> conversationIds);
+
+    // Đếm số lượng tin nhắn chưa đọc thay vì lấy toàn bộ danh sách
+    @Query(value = "{ 'conversationId': ?0, 'isRead': false }", count = true)
+    long countUnreadMessages(String conversationId);
+
 }

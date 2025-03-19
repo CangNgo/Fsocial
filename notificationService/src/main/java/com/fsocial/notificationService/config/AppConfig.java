@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,15 +33,16 @@ public class AppConfig {
     CustomJwtDecode customJwtDecode;
 
     @NonFinal
-    private final String[] PUBLIC_API = {"/**"};
+    private String[] PUBLIC_API = {"/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
-                        author.requestMatchers(PUBLIC_API).permitAll()
-                                .anyRequest().authenticated()
+                                author.anyRequest().permitAll()
+//                        author.requestMatchers(PUBLIC_API).permitAll()
+//                                .anyRequest().authenticated()
                 )
                 .logout(AbstractHttpConfigurer::disable);
 
@@ -55,12 +57,14 @@ public class AppConfig {
 
         return httpSecurity.build();
     }
+
     @Bean
     public FilterRegistrationBean<OncePerRequestFilter> loggingFilter() {
         return new FilterRegistrationBean<>(new OncePerRequestFilter() {
             @Override
             protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
                     throws ServletException, IOException {
+                log.info("Request URI: {}", request.getRequestURI());
                 chain.doFilter(request, response);
             }
         });

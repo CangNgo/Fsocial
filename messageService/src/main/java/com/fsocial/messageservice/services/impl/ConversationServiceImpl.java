@@ -43,9 +43,8 @@ public class ConversationServiceImpl implements ConversationService {
 
         List<String> participants = Arrays.asList(request.getSenderId(), request.getReceiverId());
 
-        if (conversationRepository.existsByParticipants(participants)) {
+        if (conversationRepository.existsByParticipants(participants))
             throw new AppException(ErrorCode.CONVERSATION_EXISTED);
-        }
 
         Conversation conversation = conversationMapper.toEntity(request);
         conversation.setParticipants(participants);

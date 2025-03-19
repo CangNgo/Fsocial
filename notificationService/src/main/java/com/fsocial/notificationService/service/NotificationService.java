@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface NotificationService {
     Notification createNotification(NoticeRequest request);
-    List<NotificationResponse> getNotificationsByUser(String userId);
     void markAsRead(String notificationId);
-    Page<Notification> getNotificationsByUser(String userId, int page, int size);
+    List<NotificationResponse> getNotificationsByUser(String userId, int page, int size);
 }

@@ -40,6 +40,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 
     @NonFinal
     private String[] PUBLIC_ENDPOINT = {"/account/**", "/post/**", "/timeline/**", "/profile/**", "/notification/**"};
+
     @NonFinal
     @Value("${app.api-prefix}")
     String apiPrefix;

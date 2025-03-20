@@ -19,4 +19,12 @@ public interface ComplaintRepository extends MongoRepository<Complaint, String> 
             "{ '$project': { 'hour': '$_id', 'count': 1, '_id': 0 } }"
     })
     List<ComplaintStatisticsDTO> countByCreatedAtByHours(LocalDateTime startDay, LocalDateTime endDay);
+
+    @Aggregation(pipeline = {
+            "{ '$match': { 'dateTime': { '$gte': ?0, '$lte': ?1 } } }",
+            "{ '$group': { '_id': { '$dateToString': { 'date': 'dateTime' } }, 'count': { '$sum': 1 } } }",
+            "{ '$project': { 'date': '$_id', 'count': 1, '_id': 0 } }",
+            "{ '$sort': { 'date': 1 } }"
+    })
+    List<ComplaintStatisticsDTO> countByDate(LocalDateTime startDay, LocalDateTime endDay);
 }

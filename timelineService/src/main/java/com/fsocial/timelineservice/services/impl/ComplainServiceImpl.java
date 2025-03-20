@@ -65,7 +65,16 @@ public class ComplainServiceImpl implements ComplaintService {
     }
 
     @Override
-    public List<ComplaintStatisticsDTO> countComplaintByToday(LocalDateTime startDate, LocalDateTime endDate) {
+    public ComplaintDTOResponse getComplaintById(String complaintId) throws AppCheckedException {
+
+        Complaint complaint = complaintRepository.findById(complaintId).orElseThrow(() ->
+                new AppCheckedException("Không tìm thấy báo cáo", StatusCode.COMPLAIN_NOT_FOUND));
+
+        return mapToComplainResponse(complaint);
+    }
+
+    @Override
+    public List<ComplaintStatisticsDTO> countStatisticsComplainToday(LocalDateTime startDate, LocalDateTime endDate) {
 
         List<ComplaintStatisticsDTO> complaintStatisticsDTOS = complaintRepository.countByCreatedAtByHours(startDate, endDate);
         List<ComplaintStatisticsDTO> result = new ArrayList<>();

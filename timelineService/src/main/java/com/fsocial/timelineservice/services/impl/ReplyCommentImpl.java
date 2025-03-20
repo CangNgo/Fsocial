@@ -36,13 +36,14 @@ public class ReplyCommentImpl implements ReplyCommentService {
 
                     return ReplyCommentResponse.builder()
                             .id(replyComment.getId())
+                            .commentId(replyComment.getCommentId())
                             .content(replyComment.getContent())
                             .countLikes(getCountLikesComment(replyComment.getId()))
                             .firstName(profileResponse.getFirstName())
                             .lastName(profileResponse.getLastName())
                             .avatar(profileResponse.getAvatar())
                             .userId(replyComment.getUserId())
-                            .creat_datetime(replyComment.getCreated_datetime())
+                            .created_datetime(replyComment.getCreated_datetime())
                             .build();
                 })
                 .collect(Collectors.toList());

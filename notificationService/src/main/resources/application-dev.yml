@@ -21,7 +21,7 @@ spring:
     name: notificationService
   data:
     mongodb:
-       uri: mongodb://localhost:27017/notification_db
+       uri: mongodb://root:root@localhost:27004/notification_db?authSource=admin
        database: notification_db
   jpa:
     hibernate:

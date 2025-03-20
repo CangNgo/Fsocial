@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
                             .avatar(profileResponse.getAvatar())
                             .userId(comment.getUserId())
                             .reply(comment.isReply())
-                            .creat_datetime(comment.getCreatDatetime())
+                            .created_datetime(comment.getCreatDatetime())
                             .build();
                 })
                 .collect(Collectors.toList());

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PostResponse {
     String id;
+    String originPostId;
     String userId;
     Content content;
     Integer countLikes;

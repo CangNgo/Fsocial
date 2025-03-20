@@ -76,6 +76,7 @@ public class PostServiceImpl implements PostService {
         boolean likePost = postRepository.existsByIdAndLikes(post.getId(),userId);
         return PostResponse.builder()
                 .id(post.getId())
+                .originPostId(post.getOriginPostId())
                 .content(post.getContent())
                 .countLikes(getCountLikes(post.getId()))
                 .countComments(getCountComment(post.getId()))

@@ -13,11 +13,12 @@ import java.time.LocalDateTime;
 @Builder
 public class ReplyCommentResponse {
     String id;
+    String commentId;
     String userId;
     Content content;
     Integer countLikes;
     String firstName;
     String lastName;
     String avatar;
-    LocalDateTime creat_datetime;
+    LocalDateTime created_datetime;
 }

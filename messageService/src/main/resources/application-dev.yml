@@ -1,12 +1,12 @@
 database:
-  name: my-mongo
-  password: datgo123
+  name:
+  password:
 spring:
   application:
     name: messageService
   data:
     mongodb:
-      uri: mongodb://localhost:27017/message_db
+      uri: mongodb://root:root@localhost:27004/message?authSource=admin
       database: message_db
   jpa:
     hibernate:

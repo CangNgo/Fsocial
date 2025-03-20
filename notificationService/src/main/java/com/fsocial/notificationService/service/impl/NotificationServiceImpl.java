@@ -119,7 +119,7 @@ public class NotificationServiceImpl implements NotificationService {
                 .receiverId(request.getReceiverId())
                 .build());
 
-        sendNotificationToUser(notificationMapper.toDto(notification));
+        sendNotificationToUser(mapNotificationToResponse(notification));
     }
 
     private void sendNotificationToUser(NotificationResponse notification) {

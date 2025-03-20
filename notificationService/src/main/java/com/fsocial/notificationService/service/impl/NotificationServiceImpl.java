@@ -90,6 +90,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private NotificationResponse mapNotificationToResponse(Notification notification) {
         NotificationResponse response = notificationMapper.toDto(notification);
+        response.setRead(notification.isRead());
         ProfileNameResponse profile = getProfileFromCacheOrApi(notification.getReceiverId());
         if (profile != null) {
             response.setFirstName(profile.getFirstName());

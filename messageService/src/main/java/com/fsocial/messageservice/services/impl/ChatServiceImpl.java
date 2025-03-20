@@ -60,9 +60,14 @@ public class ChatServiceImpl implements ChatService {
         String cacheKey = MESSAGE_QUEUE_KEY_PREFIX + request.getConversationId();
         stringRedisTemplate.opsForList().rightPush(cacheKey, convertToJson(request));
 
-        // 10s
-        long FLUSH_DELAY = 10_000;
-        delayQueue.offer(new DelayedMessage(request.getConversationId(), FLUSH_DELAY));
+        long size = stringRedisTemplate.opsForList().size(cacheKey);
+        int BATCH_SIZE = 5;
+        if (size >= BATCH_SIZE) {
+            flushMessagesToDB(request.getConversationId());
+        } else {
+            long FLUSH_DELAY = 10_000; // 10 giây
+            delayQueue.offer(new DelayedMessage(request.getConversationId(), FLUSH_DELAY));
+        }
 
         return MessageResponse.builder()
                 .content(request.getContent())

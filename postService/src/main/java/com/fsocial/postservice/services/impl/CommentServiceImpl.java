@@ -1,8 +1,10 @@
 package com.fsocial.postservice.services.impl;
 
+import com.fsocial.event.NotificationRequest;
 import com.fsocial.postservice.dto.comment.CommentUpdateDTORequest;
 import com.fsocial.postservice.entity.Post;
 //import com.fsocial.postservice.enums.MessageNotice;
+import com.fsocial.postservice.enums.TopicKafka;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.repository.CommentRepository;
@@ -64,7 +66,13 @@ public class CommentServiceImpl implements CommentService {
         // Send request to notification
         String ownerId = post.getUserId();
         String userId = request.getUserId();
-//        kafkaService.sendNotification(ownerId, userId, MessageNotice.NOTIFICATION_COMMENT);
+        kafkaService.sendNotification(NotificationRequest.builder()
+                .ownerId(ownerId)
+                .receiverId(userId)
+                .topic(TopicKafka.TOPIC_COMMENT.getTopic())
+                .postId(postId)
+                .commentId(savedComment.getId())
+                .build());
 
         return savedComment;
     }

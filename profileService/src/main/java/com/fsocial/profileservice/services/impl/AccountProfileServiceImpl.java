@@ -4,6 +4,7 @@ import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
 import com.fsocial.profileservice.dto.response.*;
 import com.fsocial.profileservice.entity.AccountProfile;
+import com.fsocial.profileservice.enums.ProfileVisibility;
 import com.fsocial.profileservice.exception.AppException;
 import com.fsocial.profileservice.enums.ErrorCode;
 import com.fsocial.profileservice.mapper.AccountProfileMapper;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -85,5 +87,20 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     private AccountProfile findProfileByUserId(String userId) {
         return accountProfileRepository.findByUserId(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
+    }
+
+    @Override
+    public void updateProfileVisibility(String userId, boolean visibility) {
+        Optional<AccountProfile> optionalProfile = accountProfileRepository.findByUserId(userId);
+
+        if (optionalProfile.isPresent()) {
+            AccountProfile profile = optionalProfile.get();
+
+            // Cập nhật profileVisibility với giá trị boolean
+            profile.setProfileVisibility(visibility);
+            accountProfileRepository.save(profile);
+        } else {
+            throw new RuntimeException("Profile not found for user: " + userId);
+        }
     }
 }

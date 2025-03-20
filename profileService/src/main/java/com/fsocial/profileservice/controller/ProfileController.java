@@ -2,14 +2,14 @@ package com.fsocial.profileservice.controller;
 
 import com.fsocial.profileservice.dto.ApiResponse;
 import com.fsocial.profileservice.dto.response.FindProfileResponse;
+import com.fsocial.profileservice.services.AccountProfileService;
 import com.fsocial.profileservice.services.ProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class ProfileController {
 
     ProfileService profileService;
+    private final AccountProfileService accountProfileService;
 
     @GetMapping("/find")
     public ApiResponse<List<FindProfileResponse>> findByName(@RequestParam("find_name") String findName) {
@@ -41,4 +42,5 @@ public class ProfileController {
                 .message("Tìm kiếm user thành công")
                 .build();
     }
+
 }

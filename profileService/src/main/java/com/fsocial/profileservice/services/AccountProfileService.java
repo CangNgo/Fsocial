@@ -3,6 +3,7 @@ package com.fsocial.profileservice.services;
 import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
 import com.fsocial.profileservice.dto.response.*;
+import com.fsocial.profileservice.enums.ProfileVisibility;
 
 public interface AccountProfileService {
     ProfileResponse createAccountProfile(ProfileRegisterRequest request);
@@ -11,4 +12,5 @@ public interface AccountProfileService {
     ProfileNameResponse getProfileNameByUserId(String userId);
     ProfilePageResponse getProfilePageByUserId(String userId);
     ProfilePageOtherResponse getProfilePageOther(String ownerId, String userId);
+    void updateProfileVisibility(String userId, boolean visibility);
 }

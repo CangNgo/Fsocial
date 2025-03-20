@@ -1,6 +1,9 @@
 package com.fsocial.profileservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fsocial.profileservice.enums.ProfileVisibility;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicUpdate;
@@ -55,4 +58,7 @@ public class AccountProfile {
 
     @Property("updated_at")
     LocalDate updatedAt;
+
+    @Property("profile_visibility")
+    private boolean profileVisibility = true;
 }

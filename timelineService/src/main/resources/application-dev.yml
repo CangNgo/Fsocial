@@ -24,8 +24,8 @@ spring:
     name: timelineService
   data:
     mongodb:
-      uri: mongodb://root:root@localhost:27002/primary_database?authSource=admin
-      auto-index-creation: true
+      uri: mongodb://localhost:27017/post_db
+      database: post_db
   jpa:
     hibernate:
       ddl-auto: update

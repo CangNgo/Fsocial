@@ -97,6 +97,29 @@ public class ComplainServiceImpl implements ComplaintService {
         return result;
     }
 
+    @Override
+    public List<ComplaintStatisticsDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate) {
+        List<ComplaintStatisticsDTO> complaintStatisticsDTOS = complaintRepository.countByDate(startDate, endDate);
+        List<ComplaintStatisticsDTO> result = new ArrayList<>();
+        Map<String, Integer> mapComplaint = new HashMap<>();
+
+//        for (ComplaintStatisticsDTO complaintStatisticsDTO : complaintStatisticsDTOS) {
+//            String hour = complaintStatisticsDTO.getHour();
+//            Integer count = complaintStatisticsDTO.getCount();
+//            mapComplaint.put(hour, count);
+//        }
+
+//        for ( int hour = 0; hour < 24; hour++ ) {
+//            if (mapComplaint.containsKey(String.valueOf(hour))){
+//                result.add(new ComplaintStatisticsDTO(String.valueOf(hour), mapComplaint.get(String.valueOf(hour))));
+//            }
+//            result.add(new ComplaintStatisticsDTO(String.valueOf(hour), 0));
+//
+//        };
+
+        return complaintStatisticsDTOS;
+    }
+
     private ComplaintDTOResponse mapToComplainResponse(Complaint complaint) throws AppCheckedException {
         ProfileResponse profileResponse = getProfile(complaint.getUserId());
         TermOfServices term = termOfServicesRepository.findById(complaint.getTermOfServiceId()).orElseThrow(

@@ -13,4 +13,5 @@ public interface ComplaintService {
     List<ComplaintDTOResponse> getComplaints();
     ComplaintDTOResponse getComplaintById(String complaintId) throws AppCheckedException;
     List<ComplaintStatisticsDTO> countStatisticsComplainToday(LocalDateTime startDate, LocalDateTime endDate);
+    List<ComplaintStatisticsDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate);
 }

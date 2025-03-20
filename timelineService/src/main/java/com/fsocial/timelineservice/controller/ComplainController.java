@@ -67,7 +67,7 @@ public class ComplainController {
         LocalDateTime endDate= end.atTime(23, 59, 59);
 
         return ResponseEntity.ok().body(Response.builder()
-                .data(complaintService.countStatisticsComplainToday(startDate, endDate))
+                .data(complaintService.countStatisticsComplainLongDay(startDate, endDate))
                 .message("Lấy toàn bộ danh sách báo cáo thành công")
                 .build());
     }

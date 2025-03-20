@@ -32,13 +32,12 @@ public class PostController {
 //             posts = postService.getPosts();
 //        }else {
 //        }
-            posts = postService.getPostsByUserId(userId);
+        posts = postService.getPostsByUserId(userId);
         return ResponseEntity.ok(Response.builder()
                 .message("Lấy bài đăng thành công")
                 .dateTime(LocalDateTime.now())
                 .data(posts)
                 .build());
-
     }
 
     @GetMapping("/find")

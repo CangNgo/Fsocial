@@ -25,25 +25,9 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Slf4j
 public class AccountProfileController {
     AccountProfileService accountProfileService;
     ProfileService profileService;
-
-    @PostMapping("/internal/create")
-    public ProfileResponse createAccountProfile(@RequestBody @Valid ProfileRegisterRequest request) {
-        return accountProfileService.createAccountProfile(request);
-    }
-
-    @GetMapping("/internal/{userId}")
-    public ProfileNameResponse getProfileByUserId(@PathVariable String userId) {
-        return accountProfileService.getProfileNameByUserId(userId);
-    }
-
-    @GetMapping("/internal/message/{userId}")
-    public ProfileResponse getAccountProfileFromAnotherService(@PathVariable String userId) {
-        return accountProfileService.getAccountProfileByUserId(userId);
-    }
 
     @GetMapping("/external/{userIdByPost}")
     public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String useridByPost) {

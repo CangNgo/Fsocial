@@ -15,7 +15,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,9 +23,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -52,6 +49,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public void markAsRead(String notificationId) {
+        if (notificationId == null) throw new AppException(ErrorCode.NOT_NULL);
+
         notificationRepository.findById(notificationId).ifPresentOrElse(notification -> {
             notification.setRead(true);
             notificationRepository.save(notification);
@@ -67,8 +66,21 @@ public class NotificationServiceImpl implements NotificationService {
                 .map(this::mapNotificationToResponse).toList();
     }
 
+    @Override
+    @Transactional
+    public void deleteNotification(String notificationId) {
+        if (notificationId == null) throw new AppException(ErrorCode.NOT_NULL);
+
+        if (!notificationRepository.existsById(notificationId)) {
+            log.warn("Không tìm thấy thông báo với id: {}", notificationId);
+            throw new AppException(ErrorCode.NOT_FOUND);
+        }
+        notificationRepository.deleteById(notificationId);
+        log.info("Đã xoá thông báo với id: {}", notificationId);
+    }
+
     private ProfileNameResponse getProfileFromCacheOrApi(String userId) {
-        if (userId == null) throw new AppException(ErrorCode.NOT_FOUND);
+        if (userId == null) throw new AppException(ErrorCode.NOT_NULL);
 
         String cacheKey = PROFILE_CACHE_PREFIX + userId;
 
@@ -83,6 +95,7 @@ public class NotificationServiceImpl implements NotificationService {
             }
         } catch (Exception e) {
             log.error("Lỗi khi tìm thông tin hồ sơ cho userId = {}: {}", userId, e.getMessage());
+            throw new AppException(ErrorCode.NOT_FOUND);
         }
 
         return null;
@@ -90,6 +103,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private NotificationResponse mapNotificationToResponse(Notification notification) {
         NotificationResponse response = notificationMapper.toDto(notification);
+        response.setRead(notification.isRead());
         ProfileNameResponse profile = getProfileFromCacheOrApi(notification.getReceiverId());
         if (profile != null) {
             response.setFirstName(profile.getFirstName());

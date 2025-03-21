@@ -36,4 +36,10 @@ public class NotificationController {
         notificationService.markAsRead(notificationId);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
+
+    @DeleteMapping("/{notificationId}")
+    public ApiResponse<Void> deleteNotification(@PathVariable String notificationId) {
+        notificationService.deleteNotification(notificationId);
+        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
+    }
 }

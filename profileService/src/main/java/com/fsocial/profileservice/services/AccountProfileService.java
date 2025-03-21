@@ -12,5 +12,5 @@ public interface AccountProfileService {
     ProfileNameResponse getProfileNameByUserId(String userId);
     ProfilePageResponse getProfilePageByUserId(String userId);
     ProfilePageOtherResponse getProfilePageOther(String ownerId, String userId);
-    void updateProfileVisibility(String userId, boolean visibility);
+    UpdatePrivacyResponse updateProfileVisibility(String userId);
 }

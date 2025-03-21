@@ -12,8 +12,8 @@ public interface AccountProfileMapper {
 
     ProfileResponse toProfileResponse(AccountProfile accountProfile);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void toAccountProfile(ProfileUpdateRequest request, @MappingTarget AccountProfile accountProfile);
+//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//    void toAccountProfile(ProfileUpdateRequest request, @MappingTarget AccountProfile accountProfile);
 
     ProfileUpdateResponse toProfileUpdateResponse(AccountProfile accountProfile);
     ProfilePageResponse toProfilePageResponse(AccountProfile entity);

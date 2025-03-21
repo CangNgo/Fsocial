@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.DelayQueue;
 
@@ -74,6 +75,7 @@ public class ChatServiceImpl implements ChatService {
                 .conversationId(request.getConversationId())
                 .receiverId(request.getReceiverId())
                 .isRead(false)
+                .createAt(LocalDateTime.now())
                 .build();
     }
 

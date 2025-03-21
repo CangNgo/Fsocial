@@ -11,4 +11,5 @@ public interface NotificationService {
     Notification createNotification(NoticeRequest request);
     void markAsRead(String notificationId);
     List<NotificationResponse> getNotificationsByUser(String userId, int page, int size);
+    void deleteNotification(String notificationId);
 }

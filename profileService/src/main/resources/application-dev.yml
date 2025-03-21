@@ -52,6 +52,7 @@ logging:
 app:
   services:
     account: http://localhost:8081/account
+    post: http://localhost:8083/post
 
 redis:
   host: localhost   # Địa chỉ Redis server

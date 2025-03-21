@@ -1,4 +1,4 @@
-package com.fsocial.postservice.enums;
+package com.fsocial.profileservice.enums;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 public enum TopicKafka {
     TOPIC_LIKE("notice-like"),
     TOPIC_COMMENT("notice-comment"),
-    TOPIC_LIKE_COMMENT("notice-like-comment")
+    TOPIC_FOLLOW("notice-follow")
     ;
     final String topic;
 

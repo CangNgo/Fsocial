@@ -3,7 +3,6 @@ package com.fsocial.profileservice.services;
 import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
 import com.fsocial.profileservice.dto.response.*;
-import com.fsocial.profileservice.enums.ProfileVisibility;
 
 public interface AccountProfileService {
     ProfileResponse createAccountProfile(ProfileRegisterRequest request);

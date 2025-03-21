@@ -33,11 +33,11 @@ public class MessageController {
         return ApiResponse.buildApiResponse(messages, ResponseStatus.SUCCESS);
     }
 
-    @PostMapping
-    public ApiResponse<MessageResponse> sendMessage(@RequestBody @Valid MessageRequest request) {
-        MessageResponse response = messageService.saveChatMessage(request);
-        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
-    }
+//    @PostMapping
+//    public ApiResponse<MessageResponse> sendMessage(@RequestBody @Valid MessageRequest request) {
+//        MessageResponse response = messageService.saveChatMessage(request);
+//        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+//    }
 
     @DeleteMapping("/{messageId}")
     public ApiResponse<Void> deleteMessage(@PathVariable String messageId) {

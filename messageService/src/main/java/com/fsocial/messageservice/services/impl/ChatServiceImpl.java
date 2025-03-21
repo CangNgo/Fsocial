@@ -17,8 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.DelayQueue;
 
 @Service
@@ -60,13 +59,12 @@ public class ChatServiceImpl implements ChatService {
 
         String cacheKey = MESSAGE_QUEUE_KEY_PREFIX + request.getConversationId();
         stringRedisTemplate.opsForList().rightPush(cacheKey, convertToJson(request));
-
-        long size = stringRedisTemplate.opsForList().size(cacheKey);
+        long size = Optional.ofNullable(stringRedisTemplate.opsForList().size(cacheKey)).orElse(0L);
         int BATCH_SIZE = 5;
         if (size >= BATCH_SIZE) {
             flushMessagesToDB(request.getConversationId());
         } else {
-            long FLUSH_DELAY = 10_000; // 10 giây
+            long FLUSH_DELAY = 3_000; // 3 giây
             delayQueue.offer(new DelayedMessage(request.getConversationId(), FLUSH_DELAY));
         }
 
@@ -75,7 +73,7 @@ public class ChatServiceImpl implements ChatService {
                 .conversationId(request.getConversationId())
                 .receiverId(request.getReceiverId())
                 .isRead(false)
-                .createAt(LocalDateTime.now())
+                .createAt(request.getCreateAt())
                 .build();
     }
 
@@ -101,11 +99,11 @@ public class ChatServiceImpl implements ChatService {
         }
     }
 
-    private String convertToJson(MessageRequest messageRequest) {
+    private <T> String convertToJson(T object) {
         try {
-            return objectMapper.writeValueAsString(messageRequest);
+            return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Lỗi khi chuyển đổi MessageRequest thành JSON", e);
+            throw new RuntimeException("Lỗi khi chuyển đổi thành JSON", e);
         }
     }
 }

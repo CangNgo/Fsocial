@@ -41,7 +41,6 @@ import java.util.*;
 @Slf4j
 public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
-
     UploadMedia uploadMedia;
     KafkaService kafkaService;
     PostRepository postRepository;
@@ -113,11 +112,9 @@ public class CommentServiceImpl implements CommentService {
         boolean existed = commentRepository.existsByIdAndLikes(commentId, userId);
         if (!existed) {
             this.addLikeComment(commentId, userId);
-//            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
             return true;
         } else {
             this.removeLikeComment(commentId, userId);
-//            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
             return false;
         }
     }

@@ -3,6 +3,8 @@ package com.fsocial.messageservice.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,4 +14,5 @@ public class MessageRequest {
     String receiverId;
     String content;
     String conversationId;
+    LocalDateTime createAt = LocalDateTime.now();
 }

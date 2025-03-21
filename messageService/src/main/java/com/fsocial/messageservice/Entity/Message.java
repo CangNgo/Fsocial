@@ -1,6 +1,5 @@
 package com.fsocial.messageservice.Entity;
 
-import com.fsocial.messageservice.enums.MessageType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +13,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -31,8 +31,6 @@ public class Message {
 
     @Indexed
     String conversationId; // Tối ưu hóa truy vấn lấy tin nhắn theo cuộc trò chuyện
-
-    MessageType type;
 
     @Indexed
     String receiverId; // Hỗ trợ tìm kiếm tin nhắn theo người nhận

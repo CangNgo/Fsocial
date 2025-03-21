@@ -69,15 +69,15 @@ public class MessageServiceImpl implements MessageService {
                 .toList();
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public MessageResponse saveChatMessage(MessageRequest request) {
-        cacheService.validateUser(request.getReceiverId());
-        cacheService.ensureConversationExists(request.getConversationId());
-
-        Message message = messageMapper.toEntity(request);
-        return messageMapper.toMessageResponse(messageRepository.save(message));
-    }
+//    @Override
+//    @Transactional(rollbackFor = Exception.class)
+//    public MessageResponse saveChatMessage(MessageRequest request) {
+//        cacheService.validateUser(request.getReceiverId());
+//        cacheService.ensureConversationExists(request.getConversationId());
+//
+//        Message message = messageMapper.toEntity(request);
+//        return messageMapper.toMessageResponse(messageRepository.save(message));
+//    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

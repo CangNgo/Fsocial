@@ -1,15 +1,11 @@
 package com.fsocial.accountservice.services;
 
 import com.fsocial.accountservice.dto.request.account.AccountLoginRequest;
-import com.fsocial.accountservice.dto.request.auth.TokenRequest;
-import com.fsocial.accountservice.dto.response.AuthenticationResponse;
-import com.fsocial.accountservice.dto.response.IntrospectResponse;
-import com.nimbusds.jose.JOSEException;
-
-import java.text.ParseException;
+import com.fsocial.accountservice.dto.response.auth.AuthenticationResponse;
+import com.fsocial.accountservice.dto.response.auth.IntrospectResponse;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface AuthenticationService {
-    AuthenticationResponse login(AccountLoginRequest request);
-    IntrospectResponse introspectValid(TokenRequest request);
-    void logout(TokenRequest token)  throws JOSEException, ParseException;
+    AuthenticationResponse login(AccountLoginRequest request, String userAgent, HttpServletRequest httpRequest);
+    IntrospectResponse introspect(String token);
 }

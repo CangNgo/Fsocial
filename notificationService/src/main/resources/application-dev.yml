@@ -1,0 +1,67 @@
+app:
+  services:
+    profile: http://localhost:8085/profile
+openapi:
+  service:
+    api-docs: api-service
+    server: http://localhost:8080
+    title: API Service
+    version: 1.0.0
+spring:
+  kafka:
+    bootstrap-servers: localhost:9094
+    consumer:
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+  application:
+    name: notificationService
+  data:
+    mongodb:
+       uri: mongodb://localhost:27017/notification_db
+       database: notification_db
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+redis:
+  host: localhost   # Địa chỉ Redis server
+  port: 6379        # Cổng mặc định Redis
+  lettuce:
+    pool:
+      max-active: 10   # Số lượng kết nối tối đa
+      max-idle: 5      # Số kết nối tối đa có thể rỗng
+      min-idle: 1      # Số kết nối tối thiểu có thể rỗng
+  timeout: 2000ms     # Thời gian chờ kết nối Redis
+
+server:
+  servlet:
+    context-path: /notification
+    session:
+      timeout: 3m
+  port: 8087
+
+logging:
+  level:
+    org:
+      springframework=DEBUG:
+      springframework:
+        security: DEBUG
+        security.web.access.ExceptionTranslationFilter: DEBUG
+        security.access.intercept.AbstractSecurityInterceptor: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        engine:
+          transaction:
+            internal:
+              TransactionImpl: DEBUG
+        event:
+          internal:
+            AbstractFlushingEventListener: DEBUG

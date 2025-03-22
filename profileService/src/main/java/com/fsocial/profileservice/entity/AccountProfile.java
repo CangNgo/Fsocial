@@ -13,8 +13,7 @@ import org.springframework.data.neo4j.core.support.UUIDStringGenerator;
 import java.time.LocalDate;
 
 @Node("account_profile")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -52,8 +51,9 @@ public class AccountProfile {
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate dob;
 
-    LocalDate createdAt = LocalDate.now();
-
     @Property("updated_at")
     LocalDate updatedAt;
+
+    LocalDate createdAt = LocalDate.now();
+    boolean isPublic = true;
 }

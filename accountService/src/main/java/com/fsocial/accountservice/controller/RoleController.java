@@ -4,10 +4,11 @@ import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.role.RoleCreationRequest;
 import com.fsocial.accountservice.dto.response.role.RoleResponse;
 import com.fsocial.accountservice.enums.ErrorCode;
-import com.fsocial.accountservice.services.impl.RoleServiceImpl;
+import com.fsocial.accountservice.services.RoleService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,9 @@ import java.util.Set;
 @RequestMapping("/role")
 public class RoleController {
 
-    RoleServiceImpl roleService;
+    RoleService roleService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ApiResponse<RoleResponse> createRole(@RequestBody RoleCreationRequest request) {
         return ApiResponse.<RoleResponse>builder()
@@ -30,6 +32,7 @@ public class RoleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ApiResponse<List<RoleResponse>> getAllRole() {
         return ApiResponse.<List<RoleResponse>>builder()
@@ -41,6 +44,7 @@ public class RoleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{roleId}")
     public ApiResponse<RoleResponse> updateRole(
             @PathVariable String roleId,
@@ -56,6 +60,7 @@ public class RoleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{roleId}")
     public ApiResponse<Void> deleteRole(@PathVariable String roleId) {
         roleService.deleteRole(roleId);

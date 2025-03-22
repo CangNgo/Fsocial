@@ -4,6 +4,8 @@ import com.fsocial.timelineservice.entity.Content;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,6 +17,11 @@ public class PostResponse {
     Content content;
     Integer countLikes;
     Integer countComments;
-    String userName;
+    String lastName;
+    String firstName;
     String avatar;
+    LocalDateTime createDatetime;
+    boolean isShare;
+    boolean isLike;
+    boolean status;
 }

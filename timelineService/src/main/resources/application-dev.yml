@@ -1,14 +1,31 @@
 app:
   services:
-    profile: http://localhost:8085/profile/internal
-
+    profile: http://localhost:8085/profile
+    account: http://localhost:8081/account
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  version: 1.0.0
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+openapi:
+  service:
+    api-docs: post-service
+    server: http://localhost:8086
+    serverName: TimeLine service
+    title: Post Service API
+    version: 1.0.0
+    description: API for managing timeline
 spring:
   application:
     name: timelineService
   data:
     mongodb:
-      uri: mongodb://root:root@localhost:27002/primary_database?authSource=admin
-      auto-index-creation: true
+      uri: mongodb://localhost:27017/post_db
+      database: post_db
   jpa:
     hibernate:
       ddl-auto: update
@@ -27,10 +44,13 @@ server:
     context-path: /timeline
     session:
       timeout: 3m
+    register-default-servlet: false
   port: 8086
-
 logging:
   level:
+    com.cangngo: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.web.cors: TRACE
     org:
       springframework=DEBUG:
       springframework:
@@ -50,3 +70,10 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: full

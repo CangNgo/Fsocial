@@ -1,9 +1,11 @@
 package com.fsocial.profileservice.dto.request;
 
+import com.fsocial.profileservice.validation.constrain.NotNullOrBlank;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -13,17 +15,11 @@ import java.time.LocalDate;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProfileUpdateRequest {
-    @NotBlank
-    @NotNull
     String firstName;
-
-    @NotBlank
-    @NotNull
     String lastName;
-
     LocalDate dob;
     String bio;
-    String avatar;
     String address;
-    LocalDate updatedAt = LocalDate.now();
+    MultipartFile avatar;
+    MultipartFile banner;
 }

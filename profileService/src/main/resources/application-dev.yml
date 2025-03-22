@@ -18,6 +18,11 @@ spring:
       matching-strategy: ant_path_matcher
   main:
     allow-circular-references: true
+  kafka:
+    bootstrap-servers: localhost:9094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 server:
   servlet:
@@ -48,3 +53,18 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
+
+app:
+  services:
+    account: http://localhost:8081/account
+    post: http://localhost:8083/post
+
+redis:
+  host: localhost   # Địa chỉ Redis server
+  port: 6379        # Cổng mặc định Redis
+  lettuce:
+    pool:
+      max-active: 10   # Số lượng kết nối tối đa
+      max-idle: 5      # Số kết nối tối đa có thể rỗng
+      min-idle: 1      # Số kết nối tối thiểu có thể rỗng
+  timeout: 2000ms     # Thời gian chờ kết nối Redis

@@ -1,16 +1,41 @@
 app:
   services:
     profile: http://localhost:8085/profile
+    account: http://localhost:8081/account
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  version: 1.0.0
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+openapi:
+  service:
+    api-docs: post-service
+    server: http://localhost:8083
+    serverName: Post service
+    title: Post Service API
+    version: 1.0.0
+    description: API for managing posts
 spring:
   application:
-    name: postService
+    name: post_service
   data:
     mongodb:
-       uri: mongodb://root:root@localhost:27001/primary_database?authSource=admin
-       auto-index-creation: true
-  jpa:
-    hibernate:
-      ddl-auto: update
+       uri: mongodb://localhost:27017/post_db
+       database: post_db
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+      enabled: true
+  kafka:
+    bootstrap-servers: localhost:9094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 server:
   servlet:
@@ -21,22 +46,11 @@ server:
 
 logging:
   level:
-    org:
-      springframework=DEBUG:
-      springframework:
-        security: DEBUG
-        security.web.access.ExceptionTranslationFilter: DEBUG
-        security.access.intercept.AbstractSecurityInterceptor: DEBUG
-      hibernate:
-        SQL: DEBUG
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
-        engine:
-          transaction:
-            internal:
-              TransactionImpl: DEBUG
-        event:
-          internal:
-            AbstractFlushingEventListener: DEBUG
+    org.springframework: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.web.access.ExceptionTranslationFilter: DEBUG
+    org.springframework.security.access.intercept.AbstractSecurityInterceptor: DEBUG
+    org.hibernate: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.engine.transaction.internal.TransactionImpl: DEBUG
+    org.hibernate.event.internal.AbstractFlushingEventListener: DEBUG

@@ -1,41 +1,75 @@
 package com.fsocial.profileservice.controller;
 
 import com.fsocial.profileservice.dto.ApiResponse;
-import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
-import com.fsocial.profileservice.dto.response.ProfileResponse;
-import com.fsocial.profileservice.dto.response.ProfileUpdateResponse;
-import com.fsocial.profileservice.services.impl.AccountProfileServiceImpl;
-import jakarta.validation.Valid;
+import com.fsocial.profileservice.dto.response.*;
+import com.fsocial.profileservice.enums.ResponseStatus;
+import com.fsocial.profileservice.exception.AppCheckedException;
+import com.fsocial.profileservice.services.AccountProfileService;
+import com.fsocial.profileservice.services.ProfileService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class AccountProfileController {
-    AccountProfileServiceImpl accountProfileService;
+    AccountProfileService accountProfileService;
+    ProfileService profileService;
 
-    @PostMapping("/internal/create")
-    public ProfileResponse createAccountProfile(@RequestBody @Valid ProfileRegisterRequest request) {
-        return accountProfileService.createAccountProfile(request);
+    @GetMapping("/external/{userIdByPost}")
+    public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String useridByPost) {
+        return accountProfileService.getAccountProfileByUserId(useridByPost);
     }
 
-    @GetMapping("/internal/{userId}")
-    public ProfileResponse getAccountProfile(@PathVariable String userId) {
-        return accountProfileService.getAccountProfile(userId);
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping
+    public ApiResponse<ProfileResponse> getAccountProfile() {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        ProfileResponse response = accountProfileService.getAccountProfileByUserId(userId);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
-    @PutMapping("/internal/{profileId}")
-    public ApiResponse<ProfileUpdateResponse> updateProfile(@PathVariable String profileId,
-                                                            @RequestBody @Valid ProfileUpdateRequest request) {
-        return ApiResponse.<ProfileUpdateResponse>builder()
-                .message("Update profile success.")
-                .data(
-                        accountProfileService.updateProfile(profileId, request)
-                )
-                .build();
+    @PreAuthorize("hasRole('USER')")
+    @PutMapping(value = "/update")
+    public ApiResponse<ProfileUpdateResponse> updateProfile(ProfileUpdateRequest request) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        ProfileUpdateResponse response = accountProfileService.updateProfile(userId, request);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/profile-page")
+    public ApiResponse<ProfilePageResponse> getProfilePage() {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        ProfilePageResponse response = accountProfileService.getProfilePageByUserId(userId);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/profile-page/{userId}/other")
+    public ApiResponse<ProfilePageOtherResponse> getProfilePageOther(@PathVariable String userId) {
+        String ownerId = SecurityContextHolder.getContext().getAuthentication().getName();
+        ProfilePageOtherResponse response = accountProfileService.getProfilePageOther(ownerId, userId);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @GetMapping("/{profileId}")
+    public ApiResponse<ProfileAdminResponse> getProfileAdmin(@PathVariable String profileId) throws AppCheckedException {
+        ProfileAdminResponse response  = profileService.getProfileAdmin(profileId);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/update-visibility/{userId}")
+    public ApiResponse<UpdatePrivacyResponse> updateProfileVisibility() {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ApiResponse.buildApiResponse(accountProfileService.updateProfileVisibility(userId), ResponseStatus.SUCCESS);
     }
 }

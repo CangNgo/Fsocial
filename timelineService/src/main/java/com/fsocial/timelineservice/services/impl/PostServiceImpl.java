@@ -1,27 +1,21 @@
 package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.timelineservice.Repository.CommentRepository;
-import com.fsocial.timelineservice.Repository.PostRepository;
-import com.fsocial.timelineservice.Repository.httpClient.ProfileClient;
-import com.fsocial.timelineservice.dto.ApiResponse;
-import com.fsocial.timelineservice.dto.post.PostDTO;
 import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
-import com.fsocial.timelineservice.dto.profile.ProfileServiceResponse;
 import com.fsocial.timelineservice.entity.Post;
+import com.fsocial.timelineservice.enums.StatusCode;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.exception.AppUnCheckedException;
-import com.fsocial.timelineservice.exception.StatusCode;
-import com.fsocial.timelineservice.mapper.PostMapper;
+import com.fsocial.timelineservice.repository.CommentRepository;
+import com.fsocial.timelineservice.repository.PostRepository;
+import com.fsocial.timelineservice.repository.httpClient.ProfileClient;
 import com.fsocial.timelineservice.services.PostService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,38 +30,113 @@ public class PostServiceImpl implements PostService {
     CommentRepository commentRepository;
 
     @Override
-    public List<PostResponse> getPosts() throws AppCheckedException {
+    public List<PostResponse> getPosts() throws AppUnCheckedException {
         return postRepository.findAll().stream()
                 .map(post -> {
-                    ProfileResponse profile = null;
-                    Integer countComment = null;
+                    try {
+                        return this.mapToPostResponse(post);
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PostResponse> getPostsByUserId(String userId) throws AppUnCheckedException {
+        return postRepository.findAll().stream()
+                .map(post -> {
+                    try {
+                        return this.mapToPostByUserIdResponse(post,userId);
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e.getMessage());
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+    private PostResponse mapToPostResponse(Post post) throws AppCheckedException {
+        ProfileResponse profile = getProfile(post.getUserId());
+        return PostResponse.builder()
+                .id(post.getId())
+                .content(post.getContent())
+                .countLikes(getCountLikes(post.getId()))
+                .countComments(getCountComment(post.getId()))
+                .userId(post.getUserId())
+                .lastName(profile.getLastName())
+                .firstName(profile.getFirstName())
+                .avatar(profile.getAvatar())
+                .createDatetime(post.getCreateDatetime())
+                .isLike(false)
+                .build();
+    }
+
+    private PostResponse mapToPostByUserIdResponse(Post post, String userId) throws AppCheckedException {
+        ProfileResponse profile = getProfile(post.getUserId());
+        boolean likePost = postRepository.existsByIdAndLikes(post.getId(),userId);
+        return PostResponse.builder()
+                .id(post.getId())
+                .content(post.getContent())
+                .countLikes(getCountLikes(post.getId()))
+                .countComments(getCountComment(post.getId()))
+                .userId(post.getUserId())
+                .lastName(profile.getLastName())
+                .firstName(profile.getFirstName())
+                .avatar(profile.getAvatar())
+                .createDatetime(post.getCreateDatetime())
+                .isLike(likePost)
+                .isShare(post.getIsShare())
+                .status(post.getStatus())
+                .build();
+    }
+
+    @Override
+    public ProfileResponse getProfile(String userId) throws AppCheckedException {
+        try {
+            return profileClient.getProfileResponseByUserId(userId);
+        } catch (Exception e) {
+            throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, StatusCode.USER_NOT_FOUND);
+        }
+    }
+
+    @Override
+    public List<PostResponse> findByText(String text) {
+        return postRepository.findByContentTextContainingIgnoreCase(text).stream()
+                .map(post -> {
+                    ProfileResponse profile;
                     try {
                         profile = getProfile(post.getUserId());
-                        countComment = commentRepository.countCommentsByPostId(post.getId());
                     } catch (AppCheckedException e) {
                         throw new RuntimeException(e);
                     }
+                    Integer countComment = commentRepository.countCommentsByPostId(post.getId());
+
                     return PostResponse.builder()
                             .id(post.getId())
                             .content(post.getContent())
                             .countLikes(post.getCountLikes())
                             .countComments(countComment)
                             .userId(post.getUserId())
-                            .userName(profile.getFirstName() + " " + profile.getLastName())
+                            .lastName(profile.getLastName())
+                            .firstName(profile.getFirstName())
                             .avatar(profile.getAvatar())
+                            .createDatetime(post.getCreateDatetime())
                             .build();
                 })
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ProfileResponse getProfile(String userId) throws AppCheckedException {
-        try {
-            return profileClient.getProfile(userId);
-        } catch (Exception e) {
-            throw new AppCheckedException(e.getMessage(), StatusCode.USER_NOT_FOUND);
-        }
+    public PostResponse getPostById(String postId, String userId) throws AppCheckedException {
+        Post postResponse = postRepository.findById(postId).orElseThrow(() -> new AppCheckedException("Không tìm thấy thông tin bài viết", StatusCode.POST_NOT_FOUND));
+        return mapToPostByUserIdResponse(postResponse, userId);
     }
 
+    private int getCountLikes (String postId){
+        return postRepository.countLikeByPost(postId);
+    }
+    private int getCountComment (String postId){
+        return commentRepository.countCommentsByPostId(postId);
+    }
 
 }

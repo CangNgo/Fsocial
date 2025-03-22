@@ -4,6 +4,8 @@ import com.fsocial.timelineservice.entity.Content;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,8 +16,9 @@ public class CommentResponse {
     String userId;
     Content content;
     Integer countLikes;
-    Integer countReplyComments;
-    String userName;
+    String firstName;
+    String lastName;
     String avatar;
+    LocalDateTime creat_datetime;
     boolean reply;
 }

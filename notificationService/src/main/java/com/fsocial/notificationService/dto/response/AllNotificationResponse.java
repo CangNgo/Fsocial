@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,15 +13,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class NotificationResponse {
-    String id;
-    String ownerId;
-    boolean isRead;
-    String type;
-    LocalDateTime createdAt;
-    String postId;
-    String commentId;
-    String firstName;
-    String lastName;
-    String avatar;
+public class AllNotificationResponse {
+    List<NotificationResponse> notifications;
+    int unreadCount;
 }

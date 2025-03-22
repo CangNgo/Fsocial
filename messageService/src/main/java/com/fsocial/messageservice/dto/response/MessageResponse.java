@@ -12,6 +12,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 public class MessageResponse {
+    String messageId;
     String conversationId;
     String receiverId;
     String content;

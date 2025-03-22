@@ -35,11 +35,12 @@ public class Message {
     @Indexed
     String receiverId; // Hỗ trợ tìm kiếm tin nhắn theo người nhận
 
-    String content;
-
     @Indexed(direction = IndexDirection.DESCENDING)
     LocalDateTime createAt = LocalDateTime.now(); // Tăng tốc sắp xếp tin nhắn mới nhất
 
     @Indexed
     boolean isRead = false; // Tăng tốc truy vấn tin nhắn chưa đọc
+
+    String content;
+    String reaction;
 }

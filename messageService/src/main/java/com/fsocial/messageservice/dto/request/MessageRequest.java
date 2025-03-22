@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 public class MessageRequest {
+    String messageId;
     String receiverId;
     String content;
     String conversationId;

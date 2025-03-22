@@ -2,6 +2,7 @@ package com.fsocial.notificationService.service.impl;
 
 import com.fsocial.event.NotificationRequest;
 import com.fsocial.notificationService.dto.request.NoticeRequest;
+import com.fsocial.notificationService.dto.response.AllNotificationResponse;
 import com.fsocial.notificationService.dto.response.NotificationResponse;
 import com.fsocial.notificationService.dto.response.ProfileNameResponse;
 import com.fsocial.notificationService.entity.Notification;
@@ -63,11 +64,28 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void markAllAsRead(String userId) {
+        if (userId == null) throw new AppException(ErrorCode.NOT_NULL);
+
+        notificationRepository.markAllAsReadByUserId(userId);
+        log.info("Tất cả thông báo của userId={} đã được đánh dấu là đã đọc", userId);
+    }
+
+    @Override
     @Transactional(readOnly = true)
-    public List<NotificationResponse> getNotificationsByUser(String userId, int page, int size) {
+    public AllNotificationResponse getNotificationsByUser(String userId, int page, int size) {
+        if (userId == null) throw new AppException(ErrorCode.NOT_NULL);
+
         Pageable pageable = PageRequest.of(page, size);
-        return notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable)
+        List<NotificationResponse> notificationResponse = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable)
                 .map(this::mapNotificationToResponse).toList();
+        long numberNotificationUnread = notificationRepository.countUnreadNotificationsByOwnerId(userId);
+
+        return AllNotificationResponse.builder()
+                .notifications(notificationResponse)
+                .unreadCount((int) numberNotificationUnread)
+                .build();
     }
 
     @Override

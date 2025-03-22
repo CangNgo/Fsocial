@@ -98,7 +98,7 @@ public class MessageServiceImpl implements MessageService {
     @Transactional(rollbackFor = Exception.class)
     public void markMessagesAsRead(String conversationId, String userId) {
         messageRepository.updateMessagesAsRead(conversationId, userId);
-        log.info("Đã đánh dấu tin nhắn là đã đọc trong cuộc trò chuyện {}", conversationId);
+        log.info("Đã đánh dấu tin nhắn là đã đọc trong cuộc trò chuyện {} của userId {}", conversationId, userId);
     }
 
     @Override

@@ -131,7 +131,7 @@ public class ComplainServiceImpl implements ComplaintService {
                 .complaintType(complaint.getComplaintType())
                 .readding(complaint.isReadding())
                 .termOfService(term.getName())
-                .dateTime(complaint.getDateTime())
+                .createDatetime(complaint.getCreateDatetime())
                 .firstName(profileResponse.getFirstName())
                 .lastName(profileResponse.getLastName())
                 .userId(complaint.getUserId())

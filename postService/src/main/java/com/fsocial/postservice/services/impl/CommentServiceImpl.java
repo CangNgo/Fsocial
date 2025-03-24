@@ -60,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
         Comment commentRequest = buildComment(request, mediaUrls);
         commentRequest.setCreatedAt(LocalDateTime.now());
         commentRequest.setLikes(new ArrayList<>());
-        commentRequest.setCreatDatetime(LocalDateTime.now());
+        commentRequest.setCreateDatetime(LocalDateTime.now());
         Comment savedComment = commentRepository.save(commentRequest);
 
         // Send request to notification

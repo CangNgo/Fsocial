@@ -19,7 +19,7 @@
         <module name="relationshipService" />
         <module name="notificationService" />
       </profile>
-      <profile name="Annotation profile for accountService" enabled="true">
+      <profile name="Annotation profile for profileService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

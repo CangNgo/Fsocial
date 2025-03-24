@@ -19,6 +19,6 @@ public class PostByUserIdResponse {
     Integer countComments;
     String displayName;
     String avatar;
-    LocalDateTime createdAt;
+    LocalDateTime createDatetime;
     boolean isLike;
 }

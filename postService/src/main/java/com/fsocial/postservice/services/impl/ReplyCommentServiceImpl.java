@@ -74,7 +74,7 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
                 .text(request.getText())
                 .HTMLText(request.getHTMLText())
                 .build());
-        replyComment.setCreated_datetime(LocalDateTime.now());
+        replyComment.setCreateDatetime(LocalDateTime.now());
 
         //cập nhật trạng thái thành true
         Comment comment = commentRepository.findById(request.getCommentId()).orElseThrow(

@@ -24,7 +24,7 @@ public class Post extends AbstractEntity<String> {
     Content content;
     @Field("likes")
     List<String> likes = new ArrayList<>();
-    @Field("create_datetime")
+    @Field("created_datetime")
     LocalDateTime createDatetime = LocalDateTime.now();
     //share
     @Field("origin_post")

@@ -3,12 +3,12 @@ package com.fsocial.timelineservice.services.impl;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTOResponse;
 import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
+import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsLongDayDTO;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Complaint;
 import com.fsocial.timelineservice.entity.TermOfServices;
 import com.fsocial.timelineservice.enums.StatusCode;
 import com.fsocial.timelineservice.exception.AppCheckedException;
-import com.fsocial.timelineservice.exception.AppUnCheckedException;
 import com.fsocial.timelineservice.mapper.ComplantMapper;
 import com.fsocial.timelineservice.repository.ComplaintRepository;
 import com.fsocial.timelineservice.repository.TermOfServicesRepository;
@@ -19,7 +19,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.common.metrics.Stat;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -98,8 +97,8 @@ public class ComplainServiceImpl implements ComplaintService {
     }
 
     @Override
-    public List<ComplaintStatisticsDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate) {
-        List<ComplaintStatisticsDTO> complaintStatisticsDTOS = complaintRepository.countByDate(startDate, endDate);
+    public List<ComplaintStatisticsLongDayDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate) {
+        List<ComplaintStatisticsLongDayDTO> complaintStatisticsDTOS = complaintRepository.countByDate(startDate, endDate);
         List<ComplaintStatisticsDTO> result = new ArrayList<>();
         Map<String, Integer> mapComplaint = new HashMap<>();
 
@@ -130,7 +129,7 @@ public class ComplainServiceImpl implements ComplaintService {
                 .postId(complaint.getPostId())
                 .profileId(profileResponse.getId())
                 .complaintType(complaint.getComplaintType())
-                .reading(complaint.isReading())
+                .readding(complaint.isReadding())
                 .termOfService(term.getName())
                 .dateTime(complaint.getDateTime())
                 .firstName(profileResponse.getFirstName())

@@ -19,5 +19,5 @@ public class Complaint extends  AbstractEntity<String>{
     String complaintType;
     String termOfServiceId;
     LocalDateTime dateTime = LocalDateTime.now();
-    boolean reading;
+    boolean readding;
 }

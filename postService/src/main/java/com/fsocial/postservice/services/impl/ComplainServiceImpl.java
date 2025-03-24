@@ -42,7 +42,7 @@ public class ComplainServiceImpl implements ComplaintService {
     @Override
     public ComplaintDTO readComplaint(String complaintId) throws AppCheckedException {
         Complaint complaint = complaintRepository.findById(complaintId).orElseThrow(()-> new AppCheckedException("Không tìm thấy khiếu nại", StatusCode.COMPLAIN_NOT_FOUND));
-        complaint.setReading(true);
+        complaint.setReadding(true);
 
         return complantMapper.toComplaintDTO(complaintRepository.save(complaint));
     }

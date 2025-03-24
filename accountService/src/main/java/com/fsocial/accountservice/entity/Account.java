@@ -24,6 +24,10 @@ public class Account extends AbstractEntity<String> {
     @JoinColumn(name = "role")
     Role role;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "token")
+    Token token;
+
     String email;
 
     boolean status = true;

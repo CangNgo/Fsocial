@@ -3,6 +3,7 @@ package com.fsocial.timelineservice.services;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTOResponse;
 import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
+import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsLongDayDTO;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 
 import java.time.LocalDateTime;
@@ -13,5 +14,5 @@ public interface ComplaintService {
     List<ComplaintDTOResponse> getComplaints();
     ComplaintDTOResponse getComplaintById(String complaintId) throws AppCheckedException;
     List<ComplaintStatisticsDTO> countStatisticsComplainToday(LocalDateTime startDate, LocalDateTime endDate);
-    List<ComplaintStatisticsDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate);
+    List<ComplaintStatisticsLongDayDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate);
 }

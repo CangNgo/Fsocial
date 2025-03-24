@@ -28,7 +28,7 @@ public enum StatusCode {
     UNAUTHENTICATED(468, "Tài khoản chưa được xác thực."),
     PROFILE_NOT_FOUND(400, "Profile not found"),
     TERMOFSERVICE_NOT_FOUND(410, "Termofservice not found"),
-
+    COMPLAIN_NOT_FOUND(307,"Complain Not Found"),
     ;
     private final int code;
     private final String message;

@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.services.impl;
 
+import com.fsocial.accountservice.config.JwtConfig;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
@@ -7,7 +8,9 @@ import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
 import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 import com.fsocial.accountservice.entity.Account;
+import com.fsocial.accountservice.entity.RefreshToken;
 import com.fsocial.accountservice.entity.Role;
+import com.fsocial.accountservice.entity.Token;
 import com.fsocial.accountservice.enums.ErrorCode;
 import com.fsocial.accountservice.enums.RedisKeyType;
 import com.fsocial.accountservice.enums.ResponseStatus;
@@ -15,10 +18,17 @@ import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.mapper.AccountMapper;
 import com.fsocial.accountservice.mapper.ProfileMapper;
 import com.fsocial.accountservice.repository.AccountRepository;
+import com.fsocial.accountservice.repository.RefreshTokenRepository;
 import com.fsocial.accountservice.repository.RoleRepository;
+import com.fsocial.accountservice.repository.TokenRepository;
 import com.fsocial.accountservice.repository.httpclient.ProfileClient;
 import com.fsocial.accountservice.services.AccountService;
+import com.fsocial.accountservice.services.BanService;
 import com.fsocial.accountservice.services.OtpService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,6 +37,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -43,6 +54,11 @@ public class AccountServiceImpl implements AccountService {
     PasswordEncoder passwordEncoder;
     ProfileClient profileClient;
     OtpService otpService;
+    BanService banService;
+    TokenRepository tokenRepository;
+    RefreshTokenRepository refreshTokenRepository;
+    HttpServletRequest httpServletRequest;
+    JwtConfig jwtConfig;
 
     static String DEFAULT_ROLE = "USER";
 
@@ -137,6 +153,24 @@ public class AccountServiceImpl implements AccountService {
         return res;
     }
 
+    @Override
+    @Transactional
+    public String banUser(String userId) {
+
+        //lấy thông tin từ token
+
+        Account banAccount = accountRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
+        Optional<Token> tokenAccount = tokenRepository.findByAccount(banAccount);
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUsernameAndExpiryDate_Max(banAccount.getUsername());
+        //ban account
+        banAccount.setStatus(false);
+        accountRepository.save(banAccount);
+        //ban token
+        tokenAccount.ifPresent(token -> banService.ban(token.getToken()));
+        refreshToken.ifPresent(refresh -> refreshTokenRepository.deleteByToken(refresh.getToken()));
+        return "Ban account: " + banAccount.getUsername() + " successfull";
+    }
 
     private void validateAccountExistence(String username, String email) {
         boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;
@@ -162,5 +196,23 @@ public class AccountServiceImpl implements AccountService {
     private Role getDefaultRole() {
         return roleRepository.findById(DEFAULT_ROLE)
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+    }
+
+    private String getTokenFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+    private String getUserIdFromToken(String token){
+        SecretKey secretKey = Keys.hmacShaKeyFor(jwtConfig.getSignerKey().getBytes());
+        Claims claims = Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+        return claims.getSubject();
     }
 }

@@ -7,6 +7,7 @@ import com.fsocial.accountservice.dto.request.auth.TokenRequest;
 import com.fsocial.accountservice.dto.response.auth.AuthenticationResponse;
 import com.fsocial.accountservice.dto.response.auth.IntrospectResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
+import com.fsocial.accountservice.exception.AppCheckedException;
 import com.fsocial.accountservice.services.AuthenticationService;
 import com.fsocial.accountservice.services.JwtService;
 import com.fsocial.accountservice.services.RefreshTokenService;
@@ -39,7 +40,7 @@ public class AuthenticateController {
     @PostMapping("/login")
     public ApiResponse<AuthenticationResponse> handleLogin(@RequestBody @Valid AccountLoginRequest request,
                                                            @RequestHeader("User-Agent") String userAgent,
-                                                           HttpServletRequest httpRequest) {
+                                                           HttpServletRequest httpRequest) throws AppCheckedException {
         return buildResponse(authenticationService.login(request, userAgent, httpRequest));
     }
 

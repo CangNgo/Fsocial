@@ -21,5 +21,5 @@ public class ComplaintDTO {
     @NotBlank(message = "termOfServiceId không được để trống")
     String termOfServiceId;
     LocalDateTime dateTime = LocalDateTime.now();
-    boolean reading;
+    boolean readding;
 }

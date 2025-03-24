@@ -3,12 +3,12 @@ package com.fsocial.timelineservice.services.impl;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTOResponse;
 import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
+import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsLongDayDTO;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Complaint;
 import com.fsocial.timelineservice.entity.TermOfServices;
 import com.fsocial.timelineservice.enums.StatusCode;
 import com.fsocial.timelineservice.exception.AppCheckedException;
-import com.fsocial.timelineservice.exception.AppUnCheckedException;
 import com.fsocial.timelineservice.mapper.ComplantMapper;
 import com.fsocial.timelineservice.repository.ComplaintRepository;
 import com.fsocial.timelineservice.repository.TermOfServicesRepository;
@@ -19,7 +19,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.common.metrics.Stat;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -65,7 +64,16 @@ public class ComplainServiceImpl implements ComplaintService {
     }
 
     @Override
-    public List<ComplaintStatisticsDTO> countComplaintByToday(LocalDateTime startDate, LocalDateTime endDate) {
+    public ComplaintDTOResponse getComplaintById(String complaintId) throws AppCheckedException {
+
+        Complaint complaint = complaintRepository.findById(complaintId).orElseThrow(() ->
+                new AppCheckedException("Không tìm thấy báo cáo", StatusCode.COMPLAIN_NOT_FOUND));
+
+        return mapToComplainResponse(complaint);
+    }
+
+    @Override
+    public List<ComplaintStatisticsDTO> countStatisticsComplainToday(LocalDateTime startDate, LocalDateTime endDate) {
 
         List<ComplaintStatisticsDTO> complaintStatisticsDTOS = complaintRepository.countByCreatedAtByHours(startDate, endDate);
         List<ComplaintStatisticsDTO> result = new ArrayList<>();
@@ -88,6 +96,29 @@ public class ComplainServiceImpl implements ComplaintService {
         return result;
     }
 
+    @Override
+    public List<ComplaintStatisticsLongDayDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate) {
+        List<ComplaintStatisticsLongDayDTO> complaintStatisticsDTOS = complaintRepository.countByDate(startDate, endDate);
+        List<ComplaintStatisticsDTO> result = new ArrayList<>();
+        Map<String, Integer> mapComplaint = new HashMap<>();
+
+//        for (ComplaintStatisticsDTO complaintStatisticsDTO : complaintStatisticsDTOS) {
+//            String hour = complaintStatisticsDTO.getHour();
+//            Integer count = complaintStatisticsDTO.getCount();
+//            mapComplaint.put(hour, count);
+//        }
+
+//        for ( int hour = 0; hour < 24; hour++ ) {
+//            if (mapComplaint.containsKey(String.valueOf(hour))){
+//                result.add(new ComplaintStatisticsDTO(String.valueOf(hour), mapComplaint.get(String.valueOf(hour))));
+//            }
+//            result.add(new ComplaintStatisticsDTO(String.valueOf(hour), 0));
+//
+//        };
+
+        return complaintStatisticsDTOS;
+    }
+
     private ComplaintDTOResponse mapToComplainResponse(Complaint complaint) throws AppCheckedException {
         ProfileResponse profileResponse = getProfile(complaint.getUserId());
         TermOfServices term = termOfServicesRepository.findById(complaint.getTermOfServiceId()).orElseThrow(
@@ -98,7 +129,7 @@ public class ComplainServiceImpl implements ComplaintService {
                 .postId(complaint.getPostId())
                 .profileId(profileResponse.getId())
                 .complaintType(complaint.getComplaintType())
-                .reading(complaint.isReading())
+                .readding(complaint.isReadding())
                 .termOfService(term.getName())
                 .dateTime(complaint.getDateTime())
                 .firstName(profileResponse.getFirstName())

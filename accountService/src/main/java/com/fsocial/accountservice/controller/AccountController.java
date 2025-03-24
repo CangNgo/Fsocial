@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.controller;
 
+import com.fsocial.accountservice.config.JwtConfig;
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.*;
 import com.fsocial.accountservice.dto.response.AccountResponse;
@@ -9,21 +10,28 @@ import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.services.AccountService;
 import com.fsocial.accountservice.services.OtpService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.SecretKey;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +43,12 @@ import java.util.Map;
 public class AccountController {
     AccountService accountServices;
     OtpService otpService;
+    HttpServletRequest httpServletRequest;
+    JwtConfig jwtConfig;
+
+    @NonFinal
+    @Value("${jwt.signerKey}")
+    String signerKey;
     private final AccountRepository accountRepository;
 
     @PostMapping("/register")
@@ -121,8 +135,8 @@ public class AccountController {
     public ApiResponse<List<AccountStatisticRegiserDTO>> statisticsRegisterStartEnd(@RequestParam("startdate") String startDateRe, @RequestParam("enddate") String endDateRe) {
         LocalDate start = LocalDate.parse(startDateRe);
         LocalDate end = LocalDate.parse(endDateRe);
-        LocalDateTime startDate= start.atStartOfDay();
-        LocalDateTime endDate= end.atTime(23, 59, 59);
+        LocalDateTime startDate = start.atStartOfDay();
+        LocalDateTime endDate = end.atTime(23, 59, 59);
 
         log.info("Bắt đầu ngày: ", startDate);
         log.info("Kết thúc ngày: ", endDate);
@@ -133,4 +147,26 @@ public class AccountController {
                 .message("Kiểm tra userId có tồn tại hay không thành công")
                 .build();
     }
+
+    @PostMapping("/ban")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ApiResponse<Object> banAccount(@RequestParam("user_id") String userId) {
+        String banUser = accountServices.banUser(userId);
+//        String sub = jwt.getBody().toString();
+        return ApiResponse.<Object>builder()
+                .data(banUser)
+                .message("Ban tài khoản thành công")
+                .build();
+    }
+
+    public String getScopeFromContext() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getAuthorities().stream()
+                .map(Object::toString)
+                .filter(auths -> auths.startsWith("SUB_"))
+                .map(auths -> auths.substring(3))
+                .findFirst()
+                .orElse("No scope found");
+    }
+
 }

@@ -19,4 +19,5 @@ public interface AccountService {
     void changePassword(String userId, String odlPassword, String newPassword);
     boolean existsById(String id);
     List<AccountStatisticRegiserDTO> countByCreatedAtByHours(LocalDateTime startDay, LocalDateTime endDay);
+    String banUser(String userId);
 }

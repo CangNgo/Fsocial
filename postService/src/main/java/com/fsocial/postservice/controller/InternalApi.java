@@ -24,8 +24,8 @@ public class InternalApi {
     UploadMedia uploadImage;
 
     @PostMapping("/upload-file")
-    public String uploadFile(@RequestParam("fileUpload") MultipartFile[] file) throws AppCheckedException {
-        String[] urlFile = uploadImage.uploadMedia(file);
+    public String uploadFile(@RequestParam("fileUpload") MultipartFile file) throws AppCheckedException {
+        String[] urlFile = uploadImage.uploadMedia(new MultipartFile[]{file});
         return urlFile[0];
     }
 

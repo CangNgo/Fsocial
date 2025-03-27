@@ -4,6 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="05c8928f-0a0b-47a4-aa47-af0c95db2fc4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/ExtraPropertiesClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/MessageRecallResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/util/RedissonLock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/enums/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/Entity/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/request/ActionsRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/request/ActionsRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/request/MessageRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/request/MessageRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/ActionsResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/ActionsResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/MessageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/dto/response/MessageResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/enums/TypesAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/enums/TypesAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/mapper/MessageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/mapper/MessageMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/CacheServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/CacheServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/ChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/services/impl/ChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/InternalApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/InternalApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/CommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfileUpdateResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/enums/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/enums/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/httpClient/PostClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/httpClient/PostClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/AccountProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,8 +43,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -62,40 +92,12 @@
     "Application.PostServiceApplication.executor": "Run",
     "Application.ProfileServiceApplication.executor": "Run",
     "Application.TimeLineServiceApplication.executor": "Run",
-    "Docker.docker-compose.yml.message: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.redis: Compose Deployment.executor": "Run",
-    "Maven.accountService [clean].executor": "Run",
-    "Maven.accountService [install].executor": "Run",
-    "Maven.apigateway [clean].executor": "Run",
-    "Maven.apigateway [package].executor": "Run",
     "Maven.messageService [clean].executor": "Run",
-    "Maven.notificationService [clean].executor": "Run",
-    "Maven.postService [clean].executor": "Run",
     "Maven.profileService [clean].executor": "Run",
-    "Maven.timeLineService [clean].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.AccountServiceApplication.executor": "Run",
-    "Spring Boot.ApigatewayApplication.executor": "Run",
-    "Spring Boot.MessageServiceApplication.executor": "Run",
-    "Spring Boot.PostServiceApplication.executor": "Run",
-    "Spring Boot.ProcessorServiceApplication.executor": "Run",
-    "Spring Boot.ProfileServiceApplication.executor": "Run",
-    "Spring Boot.TimeLineServiceApplication.executor": "Run",
+    "git-widget-placeholder": "update/phase3",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/leduckhai/Documents/LearningMaterial/FSocial/Fsocial/profileService/src/main/java/com/fsocial",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "vue.rearranger.settings.migration": "true"
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors"
   }
 }]]></component>
   <component name="ReactorSettings">
@@ -121,19 +123,22 @@
     <option name="configurationTypes">
       <set>
         <option value="Application" />
-        <option value="KtorApplicationConfigurationType" />
-        <option value="MicronautRunConfigurationType" />
-        <option value="QuarkusRunConfigurationType" />
-        <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.MessageServiceApplication">
-    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml">
-        <settings />
-      </deployment>
-      <method v="2" />
+  <component name="RunManager" selected="Application.NotificationServiceApplication">
+    <configuration name="AccountServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.fsocial.accountservice.AccountServiceApplication" />
+      <module name="accountService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fsocial.accountservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="MessageServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.fsocial.messageservice.MessageServiceApplication" />
@@ -154,19 +159,6 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.fsocial.notificationService.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PostServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.fsocial.postservice.PostServiceApplication" />
-      <module name="postService" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.fsocial.postservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -200,234 +192,46 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="accountService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.accountservice.AccountServiceApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.fsocial.accountservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ApigatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="apigateway" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.cangngo.apigateway.ApigatewayApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MessageServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="messageService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.messageservice.MessageServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MessageServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="messageService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.messageservice.MessageServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NotificationServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="notificationService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.notificationService.NotificationServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PostServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="postService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.postservice.PostServiceApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.fsocial.postservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProcessorServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="processorService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.processorservice.ProcessorServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ProfileServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="profileService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.profileservice.ProfileServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TimeLineServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="timeLineService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.timelineservice.TimeLineServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
+      <item itemvalue="Application.AccountServiceApplication" />
       <item itemvalue="Application.MessageServiceApplication" />
-      <item itemvalue="Application.TimeLineServiceApplication" />
       <item itemvalue="Application.NotificationServiceApplication" />
-      <item itemvalue="Application.PostServiceApplication" />
       <item itemvalue="Application.ProfileServiceApplication" />
+      <item itemvalue="Application.TimeLineServiceApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MessageServiceApplication" />
-        <item itemvalue="Application.TimeLineServiceApplication" />
         <item itemvalue="Application.ProfileServiceApplication" />
-        <item itemvalue="Application.PostServiceApplication" />
         <item itemvalue="Application.NotificationServiceApplication" />
+        <item itemvalue="Application.AccountServiceApplication" />
+        <item itemvalue="Application.TimeLineServiceApplication" />
+        <item itemvalue="Application.MessageServiceApplication" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="" />
-      <created>1739554449320</created>
+      <changelist id="05c8928f-0a0b-47a4-aa47-af0c95db2fc4" name="Changes" comment="" />
+      <created>1742959117399</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1739554449320</updated>
-      <workItem from="1739554450436" duration="146000" />
-      <workItem from="1739638722584" duration="1454000" />
-      <workItem from="1739640689683" duration="4404000" />
-      <workItem from="1739692775572" duration="63000" />
-      <workItem from="1739693277035" duration="1841000" />
-      <workItem from="1739719153637" duration="18000" />
-      <workItem from="1739719656208" duration="10160000" />
-      <workItem from="1739894558109" duration="2823000" />
-      <workItem from="1740128517041" duration="2368000" />
-      <workItem from="1740148156196" duration="1475000" />
-      <workItem from="1740162269553" duration="180000" />
-      <workItem from="1740411181774" duration="11000" />
-      <workItem from="1740471865498" duration="3442000" />
-      <workItem from="1740556260860" duration="10897000" />
-      <workItem from="1741196839706" duration="1812000" />
-      <workItem from="1741211129815" duration="9602000" />
-      <workItem from="1741257621336" duration="10230000" />
-      <workItem from="1741291577463" duration="7269000" />
-      <workItem from="1741319377660" duration="10672000" />
-      <workItem from="1741357235639" duration="3829000" />
-      <workItem from="1741422699224" duration="862000" />
-      <workItem from="1741618544938" duration="797000" />
-      <workItem from="1741621852455" duration="603000" />
-      <workItem from="1741789477238" duration="6615000" />
-      <workItem from="1741845650622" duration="12648000" />
+      <updated>1742959117399</updated>
     </task>
-    <task id="LOCAL-00001" summary="update notification service">
-      <option name="closed" value="true" />
-      <created>1742294230785</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1742294230785</updated>
-    </task>
-    <task id="LOCAL-00002" summary="update code">
-      <option name="closed" value="true" />
-      <created>1742484525167</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1742484525167</updated>
-    </task>
-    <task id="LOCAL-00003" summary="update code">
-      <option name="closed" value="true" />
-      <created>1742485108397</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1742485108397</updated>
-    </task>
-    <task id="LOCAL-00004" summary="update code">
-      <option name="closed" value="true" />
-      <created>1742573990272</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1742573990272</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="RECENT_FILTERS">
-      <map>
-        <entry key="Branch">
-          <value>
-            <list>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="develop" />
-                </option>
-              </RecentGroup>
-              <RecentGroup>
-                <option name="FILTER_VALUES">
-                  <option value="profile/update-API-edit-info" />
-                </option>
-              </RecentGroup>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="update notification service and message service" />
-    <MESSAGE value="update notification service" />
-    <MESSAGE value="update code" />
-    <option name="LAST_COMMIT_MESSAGE" value="update code" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
+          <properties>
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.NoClassDefFoundError" package="java.lang" />
-          <option name="timeStamp" value="4" />
-        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

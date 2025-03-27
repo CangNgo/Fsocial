@@ -65,13 +65,16 @@ public class CommentServiceImpl implements CommentService {
         // Send request to notification
         String ownerId = post.getUserId();
         String userId = request.getUserId();
-        kafkaService.sendNotification(NotificationRequest.builder()
-                .ownerId(ownerId)
-                .receiverId(userId)
-                .topic(TopicKafka.TOPIC_COMMENT.getTopic())
-                .postId(postId)
-                .commentId(savedComment.getId())
-                .build());
+
+        if (!Objects.equals(ownerId, userId)) {
+            kafkaService.sendNotification(NotificationRequest.builder()
+                    .ownerId(ownerId)
+                    .receiverId(userId)
+                    .topic(TopicKafka.TOPIC_COMMENT.getTopic())
+                    .postId(postId)
+                    .commentId(savedComment.getId())
+                    .build());
+        }
 
         return savedComment;
     }

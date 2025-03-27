@@ -3,12 +3,13 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for apigateway" enabled="true">
+      <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="apigateway" />
       </profile>
+      <profile name="Annotation profile for RelationshipService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,6 +19,10 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
+        <module name="relationshipService" />
+        <module name="notificationService" />
+      </profile>
+      <profile name="Annotation profile for messageService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -28,11 +33,11 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.6.3/mapstruct-1.6.3.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
         </processorPath>
-        <module name="processorService" />
         <module name="profileService" />
+        <module name="postService" />
         <module name="accountService" />
-        <module name="timeLineService" />
         <module name="messageService" />
+        <module name="timeLineService" />
       </profile>
     </annotationProcessing>
   </component>
@@ -41,6 +46,7 @@
       <module name="accountService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="apigateway" options="-parameters" />
       <module name="messageService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="notificationService" options="-parameters" />
       <module name="postService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="processorService" options="-parameters -Amapstruct.defaultComponentModel=spring" />
       <module name="profileService" options="-parameters -Amapstruct.defaultComponentModel=spring" />

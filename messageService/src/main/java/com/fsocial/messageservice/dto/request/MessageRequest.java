@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,8 +13,9 @@ import java.time.LocalDateTime;
 @Builder
 public class MessageRequest {
     String messageId;
+    String conversationId;
     String receiverId;
     String content;
-    String conversationId;
+    List<String> images;
     LocalDateTime createAt = LocalDateTime.now();
 }

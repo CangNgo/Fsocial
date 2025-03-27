@@ -31,10 +31,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -113,14 +110,14 @@ public class PostServiceImpl implements PostService {
 
                 // Gửi thông báo đến người dùng
                 Post post = postRepository.findById(postId).orElseThrow();
+                if (Objects.equals(post.getUserId(), userId)) return true;
+
                 kafkaService.sendNotification(NotificationRequest.builder()
                         .ownerId(post.getUserId())
                         .receiverId(userId)
                         .topic(TopicKafka.TOPIC_LIKE.getTopic())
                         .postId(postId)
                         .build());
-
-                log.info("Đã gửi thông báo LIKE đến Antony");
 
                 return true;
             } else {

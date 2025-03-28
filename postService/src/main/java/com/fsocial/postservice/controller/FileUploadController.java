@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-public class FileUploadController {
+public class FileUploadController {;
     UploadMedia uploadImage;
 
     @PostMapping

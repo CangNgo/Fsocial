@@ -10,9 +10,12 @@ import com.fsocial.timelineservice.repository.CommentRepository;
 import com.fsocial.timelineservice.repository.PostRepository;
 import com.fsocial.timelineservice.repository.httpClient.ProfileClient;
 import com.fsocial.timelineservice.services.PostService;
+import com.fsocial.timelineservice.services.RedisService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,25 +32,30 @@ public class PostServiceImpl implements PostService {
 
     CommentRepository commentRepository;
 
-    @Override
-    public List<PostResponse> getPosts() throws AppUnCheckedException {
-        return postRepository.findAll().stream()
-                .map(post -> {
-                    try {
-                        return this.mapToPostResponse(post);
-                    } catch (AppCheckedException e) {
-                        throw new RuntimeException(e.getMessage());
-                    }
-                })
-                .collect(Collectors.toList());
-    }
+    RedisService redisService;
+
+//    @Override
+//    public List<PostResponse> getPosts() throws AppUnCheckedException {
+//        List<String> viewed = getListViewed(userId);
+//        return postRepository.findByIdNotInOrOrderByCreateDatetimeDesc(viewed, pageable).stream()
+//                .map(post -> {
+//                    try {
+//                        return this.mapToPostResponse(post);
+//                    } catch (AppCheckedException e) {
+//                        throw new RuntimeException(e.getMessage());
+//                    }
+//                })
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public List<PostResponse> getPostsByUserId(String userId) throws AppUnCheckedException {
-        return postRepository.findAll().stream()
+        Pageable pageable = PageRequest.of(0, 10);
+        List<String> viewed = getListViewed(userId);
+        return postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable).stream()
                 .map(post -> {
                     try {
-                        return this.mapToPostByUserIdResponse(post,userId);
+                        return this.mapToPostByUserIdResponse(post, userId);
                     } catch (AppCheckedException e) {
                         throw new RuntimeException(e.getMessage());
                     }
@@ -73,7 +81,9 @@ public class PostServiceImpl implements PostService {
 
     private PostResponse mapToPostByUserIdResponse(Post post, String userId) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
-        boolean likePost = postRepository.existsByIdAndLikes(post.getId(),userId);
+        boolean likePost = postRepository.existsByIdAndLikes(post.getId(), userId);
+        //thêm vào danh sách những video đã xem
+        this.addViewed(userId, post.getId());
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())
@@ -110,7 +120,7 @@ public class PostServiceImpl implements PostService {
                         throw new RuntimeException(e);
                     }
                     Integer countComment = commentRepository.countCommentsByPostId(post.getId());
-
+                    boolean likePost = postRepository.existsByIdAndLikes(post.getId(), post.getUserId());
                     return PostResponse.builder()
                             .id(post.getId())
                             .content(post.getContent())
@@ -121,6 +131,9 @@ public class PostServiceImpl implements PostService {
                             .firstName(profile.getFirstName())
                             .avatar(profile.getAvatar())
                             .createDatetime(post.getCreateDatetime())
+                            .isLike(likePost)
+                            .isShare(post.isShare())
+                            .status(post.isStatus())
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -132,11 +145,19 @@ public class PostServiceImpl implements PostService {
         return mapToPostByUserIdResponse(postResponse, userId);
     }
 
-    private int getCountLikes (String postId){
+    private int getCountLikes(String postId) {
         return postRepository.countLikeByPost(postId);
     }
-    private int getCountComment (String postId){
+
+    private int getCountComment(String postId) {
         return commentRepository.countCommentsByPostId(postId);
     }
 
+    private void addViewed(String userId, String postId) {
+        redisService.viewed(userId, postId);
+    }
+
+    private List<String> getListViewed(String userId) {
+        return redisService.getViewed(userId);
+    }
 }

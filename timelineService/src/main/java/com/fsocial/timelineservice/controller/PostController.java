@@ -4,14 +4,12 @@ import com.fsocial.timelineservice.dto.Response;
 import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.services.PostService;
+import com.fsocial.timelineservice.services.RedisService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -61,4 +59,14 @@ public class PostController {
                 .data(postService.getPostById(postId,userId))
                 .build());
     }
+
+//    @GetMapping("/redis/get_viewed/{user_id}")
+//    public ResponseEntity<Response> getViewedPost(@PathVariable("user_id") String userId)  {
+//
+//        return ResponseEntity.ok(Response.builder()
+//                .message("Lấy danh sach bai viet da xem")
+//                .dateTime(LocalDateTime.now())
+//                .data(postService.getListViewed(userId))
+//                .build());
+//    }
 }

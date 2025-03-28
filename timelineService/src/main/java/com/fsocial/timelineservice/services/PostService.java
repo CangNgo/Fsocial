@@ -7,7 +7,7 @@ import com.fsocial.timelineservice.exception.AppCheckedException;
 import java.util.List;
 
 public interface PostService {
-    List<PostResponse> getPosts() throws AppCheckedException;
+//    List<PostResponse> getPosts() throws AppCheckedException;
     List<PostResponse> getPostsByUserId(String userId) throws AppCheckedException;
     ProfileResponse getProfile(String id) throws AppCheckedException;
     List<PostResponse> findByText (String text) throws AppCheckedException;

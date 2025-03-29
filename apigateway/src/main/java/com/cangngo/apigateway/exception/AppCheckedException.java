@@ -19,5 +19,4 @@ public class AppCheckedException extends Exception {
         super(message);
         this.status = status;
     }
-
 }

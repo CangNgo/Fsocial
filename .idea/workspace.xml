@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/dto/Response.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/enums/StatusCode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/exception/AppCheckedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/exception/AppUnCheckedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/exception/AppCheckedException.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/exception/AppCheckedException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,11 +93,11 @@
       <recent name="C:\workspace\Fsocial\Fsocial_be\messageService\src\main\java\com\fsocial\messageservice\Config" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.cangngo.apigateway.exception" />
       <recent name="com.cangngo.apigateway.dto" />
       <recent name="com.cangngo.apigateway.enums" />
       <recent name="com.fsocial.timelineservice.dto.complaint" />
       <recent name="com.fsocial.postservice.dto.replyComment" />
-      <recent name="com.fsocial.postservice.dto.comment" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -321,7 +320,7 @@
       <workItem from="1743181226226" duration="723000" />
       <workItem from="1743217396224" duration="5497000" />
       <workItem from="1743226529687" duration="368000" />
-      <workItem from="1743237296043" duration="392000" />
+      <workItem from="1743237296043" duration="2037000" />
     </task>
     <servers />
   </component>
@@ -437,5 +436,9 @@
         <watch expression="termOfServiceId không được để trống" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -22,6 +22,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.util.AntPathMatcher;
@@ -65,12 +66,18 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 //        System.out.println("Token: " + tokenrequest);
         boolean isBan = banService.isBan(tokenrequest.substring(7));
         if (isBan){
-            try {
-                throw new AppCheckedException("Tài khoản đã bị cấm", StatusCode.BANNED);
-            } catch (AppCheckedException e) {
-                throw new RuntimeException(e);
-            }
+                throw new RuntimeException("Tài khoản đã bị cấm");
+        }else{
+            System.out.println("account không bị ban");
         }
+        //kiểm tra nếu tồn tại trong backList thì chặn request
+
+//        Set<String> keys = redisTemplate.keys("*");
+//
+//        for (String key : keys) {
+//            Object type = redisTemplate.opsForValue().get(key);
+//            System.out.println("Key: " + key + ", Type: " + type);
+//        }
 
         String token = authHeaders.getFirst().replace("Bearer ", "");
         return accountService.apiResponseMono(token).flatMap(introspectResponse -> {
@@ -113,12 +120,11 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     }
 
     Mono<Void> banned(ServerHttpResponse response) {
-        ApiResponse<?> apiResponse = ApiResponse.builder()
+        ResponseEntity apiResponse = ResponseEntity.badRequest().body(ApiResponse.builder()
                 .statusCode(ErrorCode.ACCOUNT_BANNED.getCode())
                 .message(ErrorCode.ACCOUNT_BANNED.getMessage())
                 .dateTime(LocalDateTime.now())
-                .build();
-
+                .build()) ;
         String body;
         try {
             body = objectMapper.writeValueAsString(apiResponse);

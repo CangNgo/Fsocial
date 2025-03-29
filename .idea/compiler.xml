@@ -22,7 +22,7 @@
         <module name="relationshipService" />
         <module name="notificationService" />
       </profile>
-      <profile name="Annotation profile for postService" enabled="true">
+      <profile name="Annotation profile for processorService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

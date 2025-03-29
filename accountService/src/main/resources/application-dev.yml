@@ -48,14 +48,17 @@ spring:
             enable: true
 
 redis:
-  host: localhost   # Địa chỉ Redis server
-  port: 6379        # Cổng mặc định Redis
+  host: replica_redis
+  port: 6379
+  database: 0
+  timeout: 10s
   lettuce:
     pool:
-      max-active: 10   # Số lượng kết nối tối đa
-      max-idle: 5      # Số kết nối tối đa có thể rỗng
-      min-idle: 1      # Số kết nối tối thiểu có thể rỗng
-  timeout: 2000ms     # Thời gian chờ kết nối Redis
+      max-active: 8
+      max-idle: 8
+      min-idle: 0
+      max-wait: 500ms
+    shutdown-timeout: 200ms   # Thời gian chờ kết nối Redis
 
 
 server:

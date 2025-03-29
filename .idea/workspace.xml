@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/processorService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/resources/application-dev.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +67,7 @@
     "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "tui-branch",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/workspace/Fsocial/Fsocial_be/processorService/src/main/java/com/fsocial/processorservice/entity",
@@ -337,7 +341,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/TermOfServiceImpl.java</url>
           <line>23</line>
-          <properties class="com.fsocial.timelineservice.services.impl.TermOfServiceImpl">
+          <properties class="com.fsocial.timelineservice.services.impl.TermOfServiceImpl" method="getTermOfServices">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -346,7 +350,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/CommentServiceImpl.java</url>
           <line>64</line>
-          <properties class="com.fsocial.timelineservice.services.impl.CommentServiceImpl">
+          <properties class="com.fsocial.timelineservice.services.impl.CommentServiceImpl" method="getCountLikesComment">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -364,7 +368,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ComplainServiceImpl.java</url>
           <line>75</line>
-          <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl">
+          <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl" method="countStatisticsComplainToday">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -382,7 +386,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/ReplyCommentController.java</url>
           <line>31</line>
-          <properties class="com.fsocial.postservice.controller.ReplyCommentController">
+          <properties class="com.fsocial.postservice.controller.ReplyCommentController" method="likeReplyComment">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -391,7 +395,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/ReplyCommentServiceImpl.java</url>
           <line>105</line>
-          <properties class="com.fsocial.postservice.services.impl.ReplyCommentServiceImpl">
+          <properties class="com.fsocial.postservice.services.impl.ReplyCommentServiceImpl" method="likeReplyComment">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -400,7 +404,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/ComplainServiceImpl.java</url>
           <line>35</line>
-          <properties class="com.fsocial.postservice.services.impl.ComplainServiceImpl">
+          <properties class="com.fsocial.postservice.services.impl.ComplainServiceImpl" method="addComplaint">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -409,7 +413,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/ComplainController.java</url>
           <line>27</line>
-          <properties class="com.fsocial.postservice.controller.ComplainController">
+          <properties class="com.fsocial.postservice.controller.ComplainController" method="addComplaint">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -418,7 +422,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ComplainServiceImpl.java</url>
           <line>99</line>
-          <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl">
+          <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl" method="countStatisticsComplainLongDay">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -427,7 +431,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/TermOfServiceController.java</url>
           <line>21</line>
-          <properties class="com.fsocial.postservice.controller.TermOfServiceController">
+          <properties class="com.fsocial.postservice.controller.TermOfServiceController" method="addTermOfSerivce">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -436,7 +440,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
           <line>156</line>
-          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl">
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="banUser">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>

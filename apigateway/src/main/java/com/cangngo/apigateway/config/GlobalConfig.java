@@ -2,6 +2,8 @@ package com.cangngo.apigateway.config;
 
 import com.cangngo.apigateway.dto.ApiResponse;
 import com.cangngo.apigateway.enums.ErrorCode;
+import com.cangngo.apigateway.enums.StatusCode;
+import com.cangngo.apigateway.exception.AppCheckedException;
 import com.cangngo.apigateway.service.AccountService;
 import com.cangngo.apigateway.service.BanService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -63,18 +65,12 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 //        System.out.println("Token: " + tokenrequest);
         boolean isBan = banService.isBan(tokenrequest.substring(7));
         if (isBan){
-            return banned(exchange.getResponse());
-        }else{
-            System.out.println("account không bị ban");
+            try {
+                throw new AppCheckedException("Tài khoản đã bị cấm", StatusCode.BANNED);
+            } catch (AppCheckedException e) {
+                throw new RuntimeException(e);
+            }
         }
-        //kiểm tra nếu tồn tại trong backList thì chặn request
-
-//        Set<String> keys = redisTemplate.keys("*");
-//
-//        for (String key : keys) {
-//            Object type = redisTemplate.opsForValue().get(key);
-//            System.out.println("Key: " + key + ", Type: " + type);
-//        }
 
         String token = authHeaders.getFirst().replace("Bearer ", "");
         return accountService.apiResponseMono(token).flatMap(introspectResponse -> {

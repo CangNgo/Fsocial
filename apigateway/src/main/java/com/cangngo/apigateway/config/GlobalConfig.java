@@ -43,7 +43,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     BanService banService;
     RedisTemplate redisTemplate;
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**", "/post/**", "/timeline/**", "/profile/**", "/notification/**", "/message/**"};
+    private String[] PUBLIC_ENDPOINT = {"/account/**","/timeline/**","/post/**","/profile/**",};
 
     @NonFinal
     @Value("${app.api-prefix}")
@@ -55,6 +55,10 @@ public class GlobalConfig implements GlobalFilter, Ordered {
             return chain.filter(exchange);
 
         List<String> authHeaders = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION);
+
+        if (CollectionUtils.isEmpty(authHeaders))
+            return unauthenticated(exchange.getResponse());
+
         String tokenrequest = authHeaders.getFirst();
 //        System.out.println("Token: " + tokenrequest);
         boolean isBan = banService.isBan(tokenrequest.substring(7));
@@ -63,10 +67,6 @@ public class GlobalConfig implements GlobalFilter, Ordered {
         }else{
             System.out.println("account không bị ban");
         }
-
-
-        if (CollectionUtils.isEmpty(authHeaders))
-            return unauthenticated(exchange.getResponse());
         //kiểm tra nếu tồn tại trong backList thì chặn request
 
 //        Set<String> keys = redisTemplate.keys("*");

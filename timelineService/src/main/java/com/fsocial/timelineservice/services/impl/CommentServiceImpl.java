@@ -7,6 +7,7 @@ import com.fsocial.timelineservice.dto.comment.CommentResponse;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.services.CommentService;
+import com.fsocial.timelineservice.services.RedisService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,6 +24,8 @@ public class CommentServiceImpl implements CommentService {
     ProfileClient profileClient;
 
     CommentRepository commentRepository;
+
+    RedisService redisService;
 
     @Override
     public List<CommentResponse> getComments(String postId) {

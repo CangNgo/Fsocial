@@ -51,8 +51,9 @@ public class AccountProfile {
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate dob;
 
-    LocalDate createdAt = LocalDate.now();
-
     @Property("updated_at")
     LocalDate updatedAt;
+
+    LocalDate createdAt = LocalDate.now();
+    boolean isPublic = true;
 }

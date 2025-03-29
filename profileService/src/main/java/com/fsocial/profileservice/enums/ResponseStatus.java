@@ -12,7 +12,8 @@ public enum ResponseStatus {
     OTP_VALID("OTP là hợp lệ."),
     PASSWORD_RESET_SUCCESS("Mật khẩu đã được đặt lại thành công."),
     VALID("Thông tin hợp lệ."),
-    INVALID("Thông tin không hợp lệ.")
+    INVALID("Thông tin không hợp lệ."),
+    FAILURE("Thao tác không thành công.");
     ;
 
     private final int CODE = 200;

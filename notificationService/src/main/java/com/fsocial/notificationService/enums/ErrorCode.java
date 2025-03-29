@@ -11,6 +11,7 @@ public enum ErrorCode {
     HTTPMETHOD_NOT_SUPPORTED(201, "HTTP method not supported", HttpStatus.NOT_IMPLEMENTED),
     NOT_FOUND(404, "Không tìm thấy.", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(468, "Tài khoản chưa được xác thực.", HttpStatus.BAD_REQUEST),
+    NOT_NULL(475, "Tham số không được null.", HttpStatus.BAD_REQUEST)
     ;
     private final int code;
     private final String message;

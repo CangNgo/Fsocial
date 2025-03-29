@@ -3,13 +3,15 @@ package com.fsocial.messageservice.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TypingStatusRequest {
+public class MarkReadResponse {
     String conversationId;
-    String senderId;
-    boolean isTyping;
+    String readerId;
+    LocalDateTime timestamp = LocalDateTime.now();
 }

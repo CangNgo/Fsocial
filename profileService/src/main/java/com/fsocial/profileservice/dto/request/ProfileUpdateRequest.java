@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -16,9 +17,6 @@ import java.time.LocalDate;
 public class ProfileUpdateRequest {
     String firstName;
     String lastName;
-    LocalDate dob;
     String bio;
-    String avatar;
-    String banner;
     String address;
 }

@@ -8,7 +8,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public enum TopicKafka {
     TOPIC_LIKE("notice-like"),
-    TOPIC_COMMENT("notice-comment")
+    TOPIC_COMMENT("notice-comment"),
+    TOPIC_LIKE_COMMENT("notice-like-comment")
     ;
     final String topic;
 

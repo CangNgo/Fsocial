@@ -5,6 +5,7 @@ import com.fsocial.postservice.dto.post.LikePostDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.dto.post.PostShareDTORequest;
+import com.fsocial.postservice.entity.Post;
 import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
@@ -14,11 +15,13 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -100,8 +103,16 @@ public class PostController {
         PostDTO post = postService.sharePost(share);
         return ResponseEntity.ok(Response.builder()
                 .data(post)
-                .statusCode(StatusCode.CREATE_POST_SUCCESS.getCode())
+                .statusCode(StatusCode.OK.getCode())
                 .message("Chia sẽ bài viết thành công")
                 .build());
+    }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Post>> getPostsByUser(@PathVariable String userId, @RequestParam String requesterId) {
+        List<Post> posts = postService.getPostsByUser(userId, requesterId);
+        if (posts.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(posts);
     }
 }

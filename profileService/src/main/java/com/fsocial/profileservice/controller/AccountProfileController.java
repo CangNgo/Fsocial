@@ -1,14 +1,12 @@
 package com.fsocial.profileservice.controller;
 
 import com.fsocial.profileservice.dto.ApiResponse;
-import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
 import com.fsocial.profileservice.dto.response.*;
 import com.fsocial.profileservice.enums.ResponseStatus;
 import com.fsocial.profileservice.exception.AppCheckedException;
 import com.fsocial.profileservice.services.AccountProfileService;
 import com.fsocial.profileservice.services.ProfileService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,8 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,21 +23,6 @@ import java.time.LocalDateTime;
 public class AccountProfileController {
     AccountProfileService accountProfileService;
     ProfileService profileService;
-
-    @PostMapping("/internal/create")
-    public ProfileResponse createAccountProfile(@RequestBody @Valid ProfileRegisterRequest request) {
-        return accountProfileService.createAccountProfile(request);
-    }
-
-    @GetMapping("/internal/{userId}")
-    public ProfileNameResponse getProfileByUserId(@PathVariable String userId) {
-        return accountProfileService.getProfileNameByUserId(userId);
-    }
-
-    @GetMapping("/internal/message/{userId}")
-    public ProfileResponse getAccountProfileFromAnotherService(@PathVariable String userId) {
-        return accountProfileService.getAccountProfileByUserId(userId);
-    }
 
     @GetMapping("/external/{userIdByPost}")
     public ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String useridByPost) {
@@ -53,6 +35,20 @@ public class AccountProfileController {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         ProfileResponse response = accountProfileService.getAccountProfileByUserId(userId);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @PostMapping("/update-avatar")
+    public ApiResponse<Void> updateAvatar(@RequestParam("file") MultipartFile file) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        accountProfileService.updateProfileImage(userId, file, true);
+        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
+    }
+
+    @PostMapping("/update-banner")
+    public ApiResponse<Void> updateBanner(@RequestParam("file") MultipartFile file) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        accountProfileService.updateProfileImage(userId, file, false);
+        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -83,5 +79,12 @@ public class AccountProfileController {
     public ApiResponse<ProfileAdminResponse> getProfileAdmin(@PathVariable String profileId) throws AppCheckedException {
         ProfileAdminResponse response  = profileService.getProfileAdmin(profileId);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/update-visibility/{userId}")
+    public ApiResponse<UpdatePrivacyResponse> updateProfileVisibility() {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ApiResponse.buildApiResponse(accountProfileService.updateProfileVisibility(userId), ResponseStatus.SUCCESS);
     }
 }

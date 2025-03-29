@@ -1,5 +1,6 @@
 package com.fsocial.notificationService.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NotificationResponse {
     String id;
     String ownerId;

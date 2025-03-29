@@ -1,7 +1,9 @@
 package com.fsocial.profileservice.services.impl;
 
+import com.fsocial.event.NotificationRequest;
 import com.fsocial.profileservice.dto.response.UserResponse;
 import com.fsocial.profileservice.enums.ErrorCode;
+import com.fsocial.profileservice.enums.TopicKafka;
 import com.fsocial.profileservice.exception.AppException;
 import com.fsocial.profileservice.mapper.AccountProfileMapper;
 import com.fsocial.profileservice.repository.AccountProfileRepository;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,7 @@ public class FollowServiceImpl implements FollowService {
     AccountProfileMapper accountProfileMapper;
     AccountProfileRepository accountProfileRepository;
     RedisTemplate<String, Boolean> redisTemplate;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     @Override
     @Transactional(rollbackFor = AppException.class)
@@ -41,6 +45,13 @@ public class FollowServiceImpl implements FollowService {
         }
 
         accountProfileRepository.followUser(ownerId, userId);
+
+        // Gửi thông báo
+        sendNotification(NotificationRequest.builder()
+                .ownerId(userId)
+                .receiverId(ownerId)
+                .topic(TopicKafka.TOPIC_FOLLOW.getTopic())
+                .build());
     }
 
     @Override
@@ -105,5 +116,10 @@ public class FollowServiceImpl implements FollowService {
             log.warn("Người dùng không thể tự thao tác trên chính mình.");
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
+    }
+
+    private void sendNotification(NotificationRequest request) {
+        kafkaTemplate.send(request.getTopic(), request);
+        log.info("Gửi thành công.");
     }
 }

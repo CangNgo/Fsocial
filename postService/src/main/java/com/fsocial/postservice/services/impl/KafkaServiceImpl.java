@@ -21,5 +21,4 @@ public class KafkaServiceImpl implements KafkaService {
         kafkaTemplate.send(request.getTopic(), request);
         log.info("Gửi thành công.");
     }
-
 }

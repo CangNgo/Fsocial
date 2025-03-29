@@ -18,6 +18,11 @@ spring:
       matching-strategy: ant_path_matcher
   main:
     allow-circular-references: true
+  kafka:
+    bootstrap-servers: localhost:9094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 server:
   servlet:
@@ -63,6 +68,7 @@ logging:
 app:
   services:
     account: http://localhost:8081/account
+    post: http://localhost:8083/post
 
 redis:
   host: localhost   # Địa chỉ Redis server

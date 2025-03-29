@@ -1,17 +1,19 @@
 package com.fsocial.postservice.services.impl;
 
+import com.fsocial.event.NotificationRequest;
 import com.fsocial.postservice.dto.ContentDTO;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.dto.post.PostShareDTORequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Post;
+import com.fsocial.postservice.enums.TopicKafka;
 import com.fsocial.postservice.exception.AppCheckedException;
+import com.fsocial.postservice.exception.AppUnCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.repository.PostRepository;
-import com.fsocial.postservice.repository.httpClient.Accountclient;
 import com.fsocial.postservice.services.KafkaService;
 import com.fsocial.postservice.services.PostService;
 import com.fsocial.postservice.services.UploadMedia;
@@ -25,11 +27,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -41,9 +43,9 @@ public class PostServiceImpl implements PostService {
     UploadMedia uploadMedia;
     PostMapper postMapper;
     ContentMapper contentMapper;
+    RestTemplate restTemplate;
     KafkaService kafkaService;
-    Accountclient accountclient;
-
+    String profileServiceUrl = "http://localhost:8888/profile";
     @Override
     @Transactional
     public PostDTO createPost(PostDTORequest postRequest) throws AppCheckedException {
@@ -99,16 +101,24 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean toggleLike(String postId, String userId) throws Exception {
-        if (postExists(postId)) {
-            throw new AppCheckedException("Post not found", StatusCode.POST_NOT_FOUND);
-        }
-        if (userExists(userId)) {
-            throw new AppCheckedException("User not found", StatusCode.USER_NOT_FOUND);
-        }
+
         boolean existed = postRepository.existsByIdAndLikes(postId, userId);
+
         try {
             if (!existed) {
                 this.addLike(postId, userId);
+
+                // Gửi thông báo đến người dùng
+                Post post = postRepository.findById(postId).orElseThrow();
+                if (Objects.equals(post.getUserId(), userId)) return true;
+
+                kafkaService.sendNotification(NotificationRequest.builder()
+                        .ownerId(post.getUserId())
+                        .receiverId(userId)
+                        .topic(TopicKafka.TOPIC_LIKE.getTopic())
+                        .postId(postId)
+                        .build());
+
                 return true;
             } else {
                 this.removeLike(postId, userId);
@@ -159,7 +169,9 @@ public class PostServiceImpl implements PostService {
                 .HTMLText(html)
                 .media(media)
                 .build();
-    } private ContentDTO buildContent(String html, String text){
+    }
+
+    private ContentDTO buildContent(String html, String text){
         return ContentDTO.builder()
                 .text(text)
                 .HTMLText(html)
@@ -177,11 +189,25 @@ public class PostServiceImpl implements PostService {
         return  post;
     }
 
-    private boolean postExists(String postId) {
-        return postRepository.existsById(postId);
+    @Override
+    public List<Post> getPostsByUser(String userId, String requesterId) {
+        // Gọi API để kiểm tra trạng thái chế độ riêng tư
+        Boolean isPrivacyEnabled = restTemplate.getForObject(profileServiceUrl + "/update-visibility/" + userId, Boolean.class);
+
+        // Nếu chế độ riêng tư tắt, trả về tất cả bài post của người dùng
+        if (!isPrivacyEnabled) {
+            return postRepository.findByUserId(userId);
+        }
+
+        // Nếu chế độ riêng tư bật, kiểm tra xem người yêu cầu có phải là người theo dõi hay không
+        boolean isFollowing = restTemplate.getForObject(profileServiceUrl + "/is-following/" + requesterId, Boolean.class);
+
+        if (isFollowing) {
+            return postRepository.findByUserId(userId);
+        }
+
+        // Nếu không phải người theo dõi và chế độ riêng tư bật, không cho phép xem bài viết
+        return Collections.emptyList();
     }
 
-    private boolean userExists(String userId) {
-        return accountclient.existsAccountByUserId(userId).getData().containsKey("exists");
-    }
 }

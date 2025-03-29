@@ -18,6 +18,7 @@ public enum ErrorCode {
     CONVERSATION_NOT_EXIST(474, "Cuộc trò chuyện không tồn tại.", HttpStatus.BAD_REQUEST),
     PROFILE_NOT_EXISTED(476, "Hồ sơ thông tin không tồn tại.", HttpStatus.BAD_REQUEST),
     CONVERSATION_EXISTED(473, "Cuộc trò chuyện đã tồn tại.", HttpStatus.BAD_REQUEST),
+    NOT_NULL(475, "Tham số không được null.", HttpStatus.BAD_REQUEST)
     ;
     final int code;
     final String message;

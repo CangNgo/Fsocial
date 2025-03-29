@@ -1,10 +1,6 @@
 package com.fsocial.messageservice.Entity;
 
-import com.fsocial.messageservice.enums.MessageType;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -14,6 +10,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -25,6 +22,7 @@ import java.time.LocalDateTime;
         @CompoundIndex(name = "idx_conversation_isRead", def = "{'conversationId': 1, 'isRead': 1}"),
         @CompoundIndex(name = "idx_receiver_createAt", def = "{'receiver': 1, 'createAt': -1}")
 })
+@Builder
 public class Message {
     @Id
     String id;
@@ -32,16 +30,16 @@ public class Message {
     @Indexed
     String conversationId; // Tối ưu hóa truy vấn lấy tin nhắn theo cuộc trò chuyện
 
-    MessageType type;
-
     @Indexed
     String receiverId; // Hỗ trợ tìm kiếm tin nhắn theo người nhận
-
-    String content;
 
     @Indexed(direction = IndexDirection.DESCENDING)
     LocalDateTime createAt = LocalDateTime.now(); // Tăng tốc sắp xếp tin nhắn mới nhất
 
     @Indexed
     boolean isRead = false; // Tăng tốc truy vấn tin nhắn chưa đọc
+
+    String content;
+    Map<String, String> images;
+    String reaction;
 }

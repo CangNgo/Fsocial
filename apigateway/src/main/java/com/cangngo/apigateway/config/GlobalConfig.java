@@ -44,9 +44,8 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     ObjectMapper objectMapper;
     AntPathMatcher antPathMatcher = new AntPathMatcher();
     BanService banService;
-    RedisTemplate redisTemplate;
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**"};
+    private String[] PUBLIC_ENDPOINT = {"/account/**","/post/**","/timeline/**","/profile/**",};
 
     @NonFinal
     @Value("${app.api-prefix}")

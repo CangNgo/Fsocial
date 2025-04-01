@@ -52,7 +52,10 @@ public class PostServiceImpl implements PostService {
     public List<PostResponse> getPostsByUserId(String userId) throws AppUnCheckedException {
         Pageable pageable = PageRequest.of(0, 10);
         List<String> viewed = getListViewed(userId);
-        return postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable).stream()
+
+        List<Post> resut = postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable);
+
+        return resut.stream()
                 .map(post -> {
                     try {
                         return this.mapToPostByUserIdResponse(post, userId);
@@ -86,6 +89,7 @@ public class PostServiceImpl implements PostService {
         this.addViewed(userId, post.getId());
         return PostResponse.builder()
                 .id(post.getId())
+                .originPostId(post.getOriginPostId())
                 .content(post.getContent())
                 .countLikes(getCountLikes(post.getId()))
                 .countComments(getCountComment(post.getId()))

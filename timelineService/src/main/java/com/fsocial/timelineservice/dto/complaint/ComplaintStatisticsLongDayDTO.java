@@ -3,6 +3,7 @@ package com.fsocial.timelineservice.dto.complaint;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -11,6 +12,6 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ComplaintStatisticsLongDayDTO {
-    String date;
+    LocalDateTime date;
     int count;
 }

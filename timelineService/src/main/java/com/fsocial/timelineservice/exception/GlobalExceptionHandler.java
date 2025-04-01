@@ -15,7 +15,7 @@ import java.util.Objects;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = Exception.class)
+    @ExceptionHandler(value = RuntimeException.class)
     ResponseEntity<Response> handlingRuntimeException(RuntimeException exception) {
 
         return ResponseEntity.badRequest().body(Response.builder()

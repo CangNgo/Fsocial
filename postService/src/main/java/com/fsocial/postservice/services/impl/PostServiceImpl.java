@@ -31,10 +31,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +44,7 @@ public class PostServiceImpl implements PostService {
     PostMapper postMapper;
     ContentMapper contentMapper;
     RestTemplate restTemplate;
+    KafkaService kafkaService;
     String profileServiceUrl = "http://localhost:8888/profile";
     @Override
     @Transactional
@@ -109,6 +107,18 @@ public class PostServiceImpl implements PostService {
         try {
             if (!existed) {
                 this.addLike(postId, userId);
+
+                // Gửi thông báo đến người dùng
+                Post post = postRepository.findById(postId).orElseThrow();
+                if (Objects.equals(post.getUserId(), userId)) return true;
+
+                kafkaService.sendNotification(NotificationRequest.builder()
+                        .ownerId(post.getUserId())
+                        .receiverId(userId)
+                        .topic(TopicKafka.TOPIC_LIKE.getTopic())
+                        .postId(postId)
+                        .build());
+
                 return true;
             } else {
                 this.removeLike(postId, userId);

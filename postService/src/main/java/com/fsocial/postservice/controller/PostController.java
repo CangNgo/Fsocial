@@ -103,7 +103,7 @@ public class PostController {
         PostDTO post = postService.sharePost(share);
         return ResponseEntity.ok(Response.builder()
                 .data(post)
-                .statusCode(StatusCode.CREATE_POST_SUCCESS.getCode())
+                .statusCode(StatusCode.OK.getCode())
                 .message("Chia sẽ bài viết thành công")
                 .build());
     }

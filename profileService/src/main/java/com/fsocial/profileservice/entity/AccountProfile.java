@@ -1,9 +1,6 @@
 package com.fsocial.profileservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fsocial.profileservice.enums.ProfileVisibility;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicUpdate;

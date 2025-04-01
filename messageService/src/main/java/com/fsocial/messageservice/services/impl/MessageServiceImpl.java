@@ -69,15 +69,15 @@ public class MessageServiceImpl implements MessageService {
                 .toList();
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public MessageResponse saveChatMessage(MessageRequest request) {
-        cacheService.validateUser(request.getReceiverId());
-        cacheService.ensureConversationExists(request.getConversationId());
-
-        Message message = messageMapper.toEntity(request);
-        return messageMapper.toMessageResponse(messageRepository.save(message));
-    }
+//    @Override
+//    @Transactional(rollbackFor = Exception.class)
+//    public MessageResponse saveChatMessage(MessageRequest request) {
+//        cacheService.validateUser(request.getReceiverId());
+//        cacheService.ensureConversationExists(request.getConversationId());
+//
+//        Message message = messageMapper.toEntity(request);
+//        return messageMapper.toMessageResponse(messageRepository.save(message));
+//    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -98,7 +98,7 @@ public class MessageServiceImpl implements MessageService {
     @Transactional(rollbackFor = Exception.class)
     public void markMessagesAsRead(String conversationId, String userId) {
         messageRepository.updateMessagesAsRead(conversationId, userId);
-        log.info("Đã đánh dấu tin nhắn là đã đọc trong cuộc trò chuyện {}", conversationId);
+        log.info("Đã đánh dấu tin nhắn là đã đọc trong cuộc trò chuyện {} của userId {}", conversationId, userId);
     }
 
     @Override

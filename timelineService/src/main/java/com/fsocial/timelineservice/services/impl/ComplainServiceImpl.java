@@ -19,13 +19,19 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,8 +62,8 @@ public class ComplainServiceImpl implements ComplaintService {
                 .map(complaint -> {
                     try {
                         return this.mapToComplainResponse(complaint);
-                    }catch (AppCheckedException e) {
-                        throw new RuntimeException(e.getMessage() );
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e.getMessage());
                     }
                 })
                 .collect(Collectors.toList());
@@ -85,13 +91,14 @@ public class ComplainServiceImpl implements ComplaintService {
             mapComplaint.put(hour, count);
         }
 
-        for ( int hour = 0; hour < 24; hour++ ) {
-            if (mapComplaint.containsKey(String.valueOf(hour))){
+        for (int hour = 0; hour < 24; hour++) {
+            if (mapComplaint.containsKey(String.valueOf(hour))) {
                 result.add(new ComplaintStatisticsDTO(String.valueOf(hour), mapComplaint.get(String.valueOf(hour))));
             }
             result.add(new ComplaintStatisticsDTO(String.valueOf(hour), 0));
 
-        };
+        }
+        ;
 
         return result;
     }
@@ -99,30 +106,30 @@ public class ComplainServiceImpl implements ComplaintService {
     @Override
     public List<ComplaintStatisticsLongDayDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate) {
         List<ComplaintStatisticsLongDayDTO> complaintStatisticsDTOS = complaintRepository.countByDate(startDate, endDate);
-        List<ComplaintStatisticsDTO> result = new ArrayList<>();
-        Map<String, Integer> mapComplaint = new HashMap<>();
+        List<ComplaintStatisticsLongDayDTO> result = new ArrayList<>();
+//        Map<String, Integer> mapComplaint = new HashMap<>();
 
-//        for (ComplaintStatisticsDTO complaintStatisticsDTO : complaintStatisticsDTOS) {
-//            String hour = complaintStatisticsDTO.getHour();
-//            Integer count = complaintStatisticsDTO.getCount();
-//            mapComplaint.put(hour, count);
-//        }
+        LocalDateTime start = startDate.truncatedTo(ChronoUnit.DAYS);
+        LocalDateTime end = endDate.plusDays(1).truncatedTo(ChronoUnit.DAYS);
+        while (!start.equals(end)) {
+            for (ComplaintStatisticsLongDayDTO complaint : complaintStatisticsDTOS){
+//                LocalDateTime currentDay = start;
+                if(complaint.getDate().truncatedTo(ChronoUnit.DAYS).equals(start)){
+                    result.add(complaint);
+                }else {
+                    result.add(new ComplaintStatisticsLongDayDTO(start, 0));
+                }
 
-//        for ( int hour = 0; hour < 24; hour++ ) {
-//            if (mapComplaint.containsKey(String.valueOf(hour))){
-//                result.add(new ComplaintStatisticsDTO(String.valueOf(hour), mapComplaint.get(String.valueOf(hour))));
-//            }
-//            result.add(new ComplaintStatisticsDTO(String.valueOf(hour), 0));
-//
-//        };
-
-        return complaintStatisticsDTOS;
+                start = start.plusDays(1);
+            }
+        }
+        return result;
     }
 
     private ComplaintDTOResponse mapToComplainResponse(Complaint complaint) throws AppCheckedException {
         ProfileResponse profileResponse = getProfile(complaint.getUserId());
         TermOfServices term = termOfServicesRepository.findById(complaint.getTermOfServiceId()).orElseThrow(
-                ()-> new AppCheckedException("Không tìm thấy chính sách", StatusCode.TERMOFSERVICE_NOT_FOUND)
+                () -> new AppCheckedException("Không tìm thấy chính sách", StatusCode.TERMOFSERVICE_NOT_FOUND)
         );
         return ComplaintDTOResponse.builder()
                 .id(complaint.getId())

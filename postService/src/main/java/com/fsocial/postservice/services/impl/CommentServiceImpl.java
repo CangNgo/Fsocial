@@ -41,7 +41,6 @@ import java.util.*;
 @Slf4j
 public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
-
     UploadMedia uploadMedia;
     KafkaService kafkaService;
     PostRepository postRepository;
@@ -66,13 +65,16 @@ public class CommentServiceImpl implements CommentService {
         // Send request to notification
         String ownerId = post.getUserId();
         String userId = request.getUserId();
-        kafkaService.sendNotification(NotificationRequest.builder()
-                .ownerId(ownerId)
-                .receiverId(userId)
-                .topic(TopicKafka.TOPIC_COMMENT.getTopic())
-                .postId(postId)
-                .commentId(savedComment.getId())
-                .build());
+
+        if (!Objects.equals(ownerId, userId)) {
+            kafkaService.sendNotification(NotificationRequest.builder()
+                    .ownerId(ownerId)
+                    .receiverId(userId)
+                    .topic(TopicKafka.TOPIC_COMMENT.getTopic())
+                    .postId(postId)
+                    .commentId(savedComment.getId())
+                    .build());
+        }
 
         return savedComment;
     }
@@ -113,11 +115,9 @@ public class CommentServiceImpl implements CommentService {
         boolean existed = commentRepository.existsByIdAndLikes(commentId, userId);
         if (!existed) {
             this.addLikeComment(commentId, userId);
-//            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
             return true;
         } else {
             this.removeLikeComment(commentId, userId);
-//            kafkaService.sendNotification(commentId, userId, MessageNotice.NOTIFICATION_LIKE_COMMENT);
             return false;
         }
     }

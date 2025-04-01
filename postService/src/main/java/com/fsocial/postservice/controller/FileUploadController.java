@@ -1,6 +1,8 @@
 package com.fsocial.postservice.controller;
 
+import com.fsocial.postservice.dto.ApiResponse;
 import com.fsocial.postservice.dto.Response;
+import com.fsocial.postservice.enums.ResponseStatus;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
@@ -14,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/upload_file")
@@ -37,5 +40,11 @@ public class FileUploadController {;
                             .dateTime(LocalDateTime.now())
                     .build());
 
+    }
+
+    @PostMapping("/messages")
+    public ApiResponse<List<String>> uploadImageInMessage(@RequestParam MultipartFile[] images) throws AppCheckedException {
+        String[] urlfile = uploadImage.uploadMedia(images);
+        return ApiResponse.buildApiResponse(Arrays.asList(urlfile), ResponseStatus.SUCCESS);
     }
 }

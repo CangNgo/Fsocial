@@ -1,30 +1,20 @@
 package com.fsocial.profileservice.controller;
 
 import com.fsocial.profileservice.dto.ApiResponse;
-import com.fsocial.profileservice.dto.request.ProfileRegisterRequest;
 import com.fsocial.profileservice.dto.request.ProfileUpdateRequest;
 import com.fsocial.profileservice.dto.response.*;
-import com.fsocial.profileservice.enums.ProfileVisibility;
 import com.fsocial.profileservice.enums.ResponseStatus;
 import com.fsocial.profileservice.exception.AppCheckedException;
 import com.fsocial.profileservice.services.AccountProfileService;
 import com.fsocial.profileservice.services.ProfileService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,9 +37,23 @@ public class AccountProfileController {
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
+    @PostMapping("/update-avatar")
+    public ApiResponse<Void> updateAvatar(@RequestParam("file") MultipartFile file) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        accountProfileService.updateProfileImage(userId, file, true);
+        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
+    }
+
+    @PostMapping("/update-banner")
+    public ApiResponse<Void> updateBanner(@RequestParam("file") MultipartFile file) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        accountProfileService.updateProfileImage(userId, file, false);
+        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
+    }
+
     @PreAuthorize("hasRole('USER')")
-    @PutMapping(value = "/update")
-    public ApiResponse<ProfileUpdateResponse> updateProfile(ProfileUpdateRequest request) {
+    @PutMapping("/update")
+    public ApiResponse<ProfileUpdateResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         ProfileUpdateResponse response = accountProfileService.updateProfile(userId, request);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);

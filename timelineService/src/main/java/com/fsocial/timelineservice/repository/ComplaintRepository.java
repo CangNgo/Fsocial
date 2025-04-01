@@ -23,7 +23,7 @@ public interface ComplaintRepository extends MongoRepository<Complaint, String> 
 
     @Aggregation(pipeline = {
             "{ '$match': { 'dateTime': { '$gte': ?0, '$lte': ?1 } } }",
-            "{ '$group': { '_id': { '$dateToString': { 'date': '$dateTime' } }, 'count': { '$sum': 1 } } }",
+            "{ '$group': { '_id': { '$dateTrunc': { 'date': '$dateTime', 'unit': 'day' } }, 'count': { '$sum': 1 } } }",
             "{ '$project': { 'date': '$_id', 'count': 1, '_id': 0 } }",
             "{ '$sort': { 'date': 1 } }"
     })

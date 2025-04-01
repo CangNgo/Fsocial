@@ -17,9 +17,6 @@ import java.time.LocalDate;
 public class ProfileUpdateRequest {
     String firstName;
     String lastName;
-    LocalDate dob;
     String bio;
     String address;
-    MultipartFile avatar;
-    MultipartFile banner;
 }

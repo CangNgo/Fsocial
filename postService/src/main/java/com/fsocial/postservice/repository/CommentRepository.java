@@ -8,10 +8,11 @@ import org.springframework.data.mongodb.repository.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface CommentRepository extends MongoRepository<Comment, String> {
     List<Comment> findByPostId(String postId);
-
     Integer countByPostId(String postId);
 
     @Aggregation(pipeline = {
@@ -19,10 +20,9 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
             "{'$project': {'totalLikes': {'$size': '$likes'}}}"
     })
     Integer countLikes(String commentId);
-
     boolean existsByIdAndLikes(String id, String userId);
-
     boolean existsById(String id);
 
-
+    @Query(value = "{ '_id': ?0 }", fields = "{ 'postId': 1 }")
+    Optional<String> findPostIdById(String commentId);
 }

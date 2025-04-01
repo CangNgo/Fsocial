@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class PostResponse {
     String id;
     String userId;
+    String originPostId;
     Content content;
     Integer countLikes;
     Integer countComments;

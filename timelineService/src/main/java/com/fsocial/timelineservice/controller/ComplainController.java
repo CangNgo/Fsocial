@@ -51,7 +51,7 @@ public class ComplainController {
 
         return ResponseEntity.ok().body(Response.builder()
                 .data(complaintService.countStatisticsComplainToday(startDate, endDate))
-                .message("Lấy toàn bộ danh sách báo cáo thành công")
+                .message("Lấy toàn bộ danh sách báo cáo trong ngày " + date  + " thành công")
                 .build());
     }
 
@@ -64,7 +64,7 @@ public class ComplainController {
 
         return ResponseEntity.ok().body(Response.builder()
                 .data(complaintService.countStatisticsComplainLongDay(startDate, endDate))
-                .message("Lấy toàn bộ danh sách báo cáo thành công")
+                .message("Lấy toàn bộ danh sách báo cáo từ " + startDate  + " đến "  + endDate + " thành công")
                 .build());
     }
 }

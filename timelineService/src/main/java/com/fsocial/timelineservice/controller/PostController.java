@@ -79,7 +79,7 @@ public class PostController {
 
         return ResponseEntity.ok().body(Response.builder()
                 .data(postService.countStatisticsPostToday(startDate, endDate))
-                .message("Lấy toàn bộ danh sách thống kê số lượng bài viết thành công")
+                .message("Lấy toàn bộ danh sách thống kê số lượng bài viết trong ngày " + date +  "  thành công")
                 .build());
     }
 
@@ -92,7 +92,7 @@ public class PostController {
 
         return ResponseEntity.ok().body(Response.builder()
                 .data(postService.countStatisticsPostLongDay(startDate, endDate))
-                .message("Lấy toàn bộ danh sách thống kê số lượng bài viết thành công")
+                .message("Lấy toàn bộ danh sách thống kê số lượng bài viết từ ngày " +startDate + " đến " + endDate + "  thành công")
                 .build());
     }
 }

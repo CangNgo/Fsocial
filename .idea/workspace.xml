@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -319,7 +318,7 @@
       <workItem from="1743226529687" duration="368000" />
       <workItem from="1743607993968" duration="3728000" />
       <workItem from="1743615565916" duration="1036000" />
-      <workItem from="1743623015297" duration="748000" />
+      <workItem from="1743623015297" duration="1426000" />
     </task>
     <servers />
   </component>

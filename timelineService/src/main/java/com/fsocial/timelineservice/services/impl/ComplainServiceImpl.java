@@ -4,6 +4,8 @@ import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTOResponse;
 import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsLongDayDTO;
+import com.fsocial.timelineservice.dto.post.PostStatisticsDTO;
+import com.fsocial.timelineservice.dto.post.PostStatisticsLongDateDTO;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Complaint;
 import com.fsocial.timelineservice.entity.TermOfServices;
@@ -111,15 +113,24 @@ public class ComplainServiceImpl implements ComplaintService {
 //                LocalDateTime currentDay = start;
                 if(complaint.getDate().truncatedTo(ChronoUnit.DAYS).equals(start)){
                     result.add(complaint);
+
+                    //xóa nếu đã thêm vào result
+                    complaintStatisticsDTOS.remove(complaint);
                 }else {
                     result.add(new ComplaintStatisticsLongDayDTO(start, 0));
                 }
-
-                start = start.plusDays(1);
             }
+
+            //nếu danh sách trả về rỗng
+            if (complaintStatisticsDTOS.isEmpty()){
+                result.add(new ComplaintStatisticsLongDayDTO(start, 0));
+            }
+            start = start.plusDays(1);
         }
         return result;
     }
+
+
 
     private ComplaintDTOResponse mapToComplainResponse(Complaint complaint) throws AppCheckedException {
         ProfileResponse profileResponse = getProfile(complaint.getUserId());

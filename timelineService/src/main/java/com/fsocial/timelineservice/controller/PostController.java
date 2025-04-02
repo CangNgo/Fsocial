@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -68,4 +69,30 @@ public class PostController {
 //                .data(postService.getListViewed(userId))
 //                .build());
 //    }
+
+    //thống kê số lượng bài viết
+    @GetMapping("/statistics_post_today")
+    public ResponseEntity<Response> getPosttStatistics(@RequestParam("date_time" )String dateTime) {
+        LocalDate date = LocalDate.parse(dateTime);
+        LocalDateTime startDate = date.atStartOfDay();
+        LocalDateTime endDate = date.atTime(23, 59, 59);
+
+        return ResponseEntity.ok().body(Response.builder()
+                .data(postService.countStatisticsPostToday(startDate, endDate))
+                .message("Lấy toàn bộ danh sách thống kê số lượng bài viết thành công")
+                .build());
+    }
+
+    @GetMapping("/statistics_post_start_end")
+    public ResponseEntity<Response> getPostStatistics(@RequestParam("startDate" )String startDateRe,@RequestParam("endDate" )String endDateRe ) {
+        LocalDate start = LocalDate.parse(startDateRe);
+        LocalDate end = LocalDate.parse(endDateRe);
+        LocalDateTime startDate= start.atStartOfDay();
+        LocalDateTime endDate= end.atTime(23, 59, 59);
+
+        return ResponseEntity.ok().body(Response.builder()
+                .data(postService.countStatisticsPostLongDay(startDate, endDate))
+                .message("Lấy toàn bộ danh sách thống kê số lượng bài viết thành công")
+                .build());
+    }
 }

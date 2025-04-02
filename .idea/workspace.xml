@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/dto/response/AccountStatisticRegiserLongDateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/post/PostStatisticsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/post/PostStatisticsLongDateDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/repository/AccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/ComplainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/ComplainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/repository/ComplaintRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/repository/ComplaintRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/repository/PostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/repository/PostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/ComplaintService.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/ComplaintService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/PostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/PostService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ComplainServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ComplainServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/PostServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +65,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.AccountServiceApplication.executor": "Debug",
+    "Spring Boot.AccountServiceApplication.executor": "Run",
     "Spring Boot.ApigatewayApplication.executor": "Run",
     "Spring Boot.MessageServiceApplication.executor": "Run",
     "Spring Boot.NotificationServiceApplication.executor": "Run",
@@ -70,7 +73,7 @@
     "Spring Boot.ProcessorServiceApplication.executor": "Run",
     "Spring Boot.ProfileServiceApplication.executor": "Run",
     "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "postservice",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/workspace/Fsocial/Fsocial_be/processorService/src/main/java/com/fsocial/processorservice/entity",
@@ -96,11 +99,11 @@
       <recent name="C:\workspace\Fsocial\Fsocial_be\messageService\src\main\java\com\fsocial\messageservice\Config" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.fsocial.timelineservice.dto.post" />
       <recent name="com.fsocial.accountservice.dto.response" />
       <recent name="com.fsocial.timelineservice.dto.complaint" />
       <recent name="com.fsocial.postservice.dto.replyComment" />
       <recent name="com.fsocial.postservice.dto.comment" />
-      <recent name="com.fsocial.postservice.dto.post" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -324,6 +327,7 @@
       <workItem from="1743217396224" duration="5497000" />
       <workItem from="1743226529687" duration="368000" />
       <workItem from="1743607993968" duration="3728000" />
+      <workItem from="1743615565916" duration="1036000" />
     </task>
     <servers />
   </component>
@@ -371,7 +375,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ComplainServiceImpl.java</url>
-          <line>70</line>
+          <line>72</line>
           <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -424,15 +428,6 @@
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ComplainServiceImpl.java</url>
-          <line>94</line>
-          <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/TermOfServiceController.java</url>
           <line>21</line>
           <properties class="com.fsocial.postservice.controller.TermOfServiceController" method="addTermOfSerivce">
@@ -444,7 +439,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
           <line>181</line>
-          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="banUser">
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -452,7 +447,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java</url>
-          <line>63</line>
+          <line>64</line>
           <properties class="com.fsocial.timelineservice.controller.PostController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -467,6 +462,51 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java</url>
+          <line>74</line>
+          <properties class="com.fsocial.timelineservice.controller.PostController" method="getPosttStatistics">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/PostController.java</url>
+          <line>86</line>
+          <properties class="com.fsocial.timelineservice.controller.PostController" method="getPostStatistics">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/PostServiceImpl.java</url>
+          <line>156</line>
+          <properties class="com.fsocial.timelineservice.services.impl.PostServiceImpl" method="countStatisticsPostToday">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/PostServiceImpl.java</url>
+          <line>181</line>
+          <properties class="com.fsocial.timelineservice.services.impl.PostServiceImpl" method="countStatisticsPostLongDay">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ComplainServiceImpl.java</url>
+          <line>103</line>
+          <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl" method="countStatisticsComplainLongDay">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NoClassDefFoundError" package="java.lang" />

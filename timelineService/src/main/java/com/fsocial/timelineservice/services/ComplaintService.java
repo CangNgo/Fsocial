@@ -4,6 +4,8 @@ import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTOResponse;
 import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsLongDayDTO;
+import com.fsocial.timelineservice.dto.post.PostStatisticsDTO;
+import com.fsocial.timelineservice.dto.post.PostStatisticsLongDateDTO;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 
 import java.time.LocalDateTime;

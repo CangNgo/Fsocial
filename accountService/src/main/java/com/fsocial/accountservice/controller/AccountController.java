@@ -122,13 +122,10 @@ public class AccountController {
         LocalDateTime startDate = date.atStartOfDay();
         LocalDateTime endDate = date.atTime(23, 59, 59);
 
-        log.info("Bắt đầu ngày: ", startDate);
-        log.info("Kết thúc ngày: ", endDate);
-
         List<AccountStatisticRegiserDTO> res = accountServices.countByCreatedAtByHours(startDate, endDate);
         return ApiResponse.<List<AccountStatisticRegiserDTO>>builder()
                 .data(res)
-                .message("Kiểm tra userId có tồn tại hay không thành công")
+                .message("Thống kê số lượng tài khoản được tạo trong ngày " + date)
                 .build();
     }
 
@@ -139,13 +136,10 @@ public class AccountController {
         LocalDateTime startDate = start.atStartOfDay();
         LocalDateTime endDate = end.atTime(23, 59, 59);
 
-
-        log.info("Bắt đầu ngày: ", startDate);
-        log.info("Kết thúc ngày: ", endDate);
         List<AccountStatisticRegiserLongDateDTO> res = accountServices.countByCreatedAtByStartEnd(startDate, endDate);
         return ApiResponse.<List<AccountStatisticRegiserLongDateDTO>>builder()
                 .data(res)
-                .message("Kiểm tra userId có tồn tại hay không thành công")
+                .message("Lấy danh sách thống kê số lượng tài khoản được tạo từ " + startDate + " đến " + endDate)
                 .build();
     }
 

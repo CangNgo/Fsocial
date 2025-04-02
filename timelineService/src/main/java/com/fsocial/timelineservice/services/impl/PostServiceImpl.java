@@ -1,6 +1,10 @@
 package com.fsocial.timelineservice.services.impl;
 
+import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
+import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsLongDayDTO;
 import com.fsocial.timelineservice.dto.post.PostResponse;
+import com.fsocial.timelineservice.dto.post.PostStatisticsDTO;
+import com.fsocial.timelineservice.dto.post.PostStatisticsLongDateDTO;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Post;
 import com.fsocial.timelineservice.enums.StatusCode;
@@ -18,7 +22,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -141,6 +150,58 @@ public class PostServiceImpl implements PostService {
                             .build();
                 })
                 .collect(Collectors.toList());
+    }
+
+    //thống k
+    @Override
+    public List<PostStatisticsDTO> countStatisticsPostToday(LocalDateTime startDate, LocalDateTime endDate) {
+
+        List<PostStatisticsDTO> complaintStatisticsDTOS = postRepository.countByCreatedAtByHours(startDate, endDate);
+        List<PostStatisticsDTO> result = new ArrayList<>();
+        Map<String, Integer> mapComplaint = new HashMap<>();
+
+        for (PostStatisticsDTO complaintStatisticsDTO : complaintStatisticsDTOS) {
+            String hour = complaintStatisticsDTO.getHour();
+            Integer count = complaintStatisticsDTO.getCount();
+            mapComplaint.put(hour, count);
+        }
+
+        for (int hour = 0; hour < 24; hour++) {
+            if (mapComplaint.containsKey(String.valueOf(hour))) {
+                result.add(new PostStatisticsDTO(String.valueOf(hour), mapComplaint.get(String.valueOf(hour))));
+            }
+            result.add(new PostStatisticsDTO(String.valueOf(hour), 0));
+
+        }
+        ;
+
+        return result;
+    }
+
+    @Override
+    public List<PostStatisticsLongDateDTO> countStatisticsPostLongDay(LocalDateTime startDate, LocalDateTime endDate) {
+        List<PostStatisticsLongDateDTO> postStatisticsDTOS = postRepository.countByDate(startDate, endDate);
+        List<PostStatisticsLongDateDTO> result = new ArrayList<>();
+//        Map<String, Integer> mapComplaint = new HashMap<>();
+        LocalDateTime start = startDate.truncatedTo(ChronoUnit.DAYS);
+        LocalDateTime end = endDate.plusDays(1).truncatedTo(ChronoUnit.DAYS);
+        while (!start.equals(end)) {
+            for (PostStatisticsLongDateDTO complaint : postStatisticsDTOS){
+//                LocalDateTime currentDay = start;
+                if(complaint.getDate().truncatedTo(ChronoUnit.DAYS).equals(start)){
+                    result.add(complaint);
+                }else {
+                    result.add(new PostStatisticsLongDateDTO(start, 0));
+                }
+
+            }
+
+            if (postStatisticsDTOS.isEmpty()){
+                result.add(new PostStatisticsLongDateDTO(start, 0));
+            }
+            start = start.plusDays(1);
+        }
+        return result;
     }
 
     @Override

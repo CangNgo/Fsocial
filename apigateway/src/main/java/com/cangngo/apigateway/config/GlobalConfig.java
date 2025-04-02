@@ -43,7 +43,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     BanService banService;
     RedisTemplate redisTemplate;
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**"};
+    private String[] PUBLIC_ENDPOINT = {"/account/**","/post/**","/timeline/**","/profile/**",};
 
     @NonFinal
     @Value("${app.api-prefix}")

@@ -5,6 +5,7 @@ import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
+import com.fsocial.accountservice.dto.response.AccountStatisticRegiserLongDateDTO;
 import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 
 import java.time.LocalDateTime;
@@ -19,5 +20,6 @@ public interface AccountService {
     void changePassword(String userId, String odlPassword, String newPassword);
     boolean existsById(String id);
     List<AccountStatisticRegiserDTO> countByCreatedAtByHours(LocalDateTime startDay, LocalDateTime endDay);
+    List<AccountStatisticRegiserLongDateDTO> countByCreatedAtByStartEnd(LocalDateTime startDay, LocalDateTime endDay);
     String banUser(String userId);
 }

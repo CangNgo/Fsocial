@@ -6,6 +6,7 @@ import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
 import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
+import com.fsocial.accountservice.dto.response.AccountStatisticRegiserLongDateDTO;
 import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 import com.fsocial.accountservice.entity.Account;
 import com.fsocial.accountservice.entity.RefreshToken;
@@ -39,6 +40,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -154,6 +157,56 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public List<AccountStatisticRegiserLongDateDTO> countByCreatedAtByStartEnd(LocalDateTime startDay, LocalDateTime endDay) {
+        List<Object[]> repo = accountRepository.countByCreatedAtByDate(startDay, endDay);
+        List<AccountStatisticRegiserLongDateDTO> res = new ArrayList<>();
+        // Chuyển đổi dữ liệu từ repo thành Map để dễ dàng truy cập
+        Map<Date, Long> dateCountMap = new HashMap<>();
+        for (Object[] dto : repo) {
+            Date date = (Date) dto[0];
+            Long count = ((Number) dto[1]).longValue(); // Đảm bảo chuyển đổi số đúng cách
+            dateCountMap.put(date, count);
+        }
+
+// Tạo Date từ LocalDateTime
+        Date start = convertToDateViaInstant(startDay);
+        Date end = convertToDateViaInstant(endDay);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(start);
+
+// Vòng lặp qua từng ngày
+        while (!calendar.getTime().after(end)) {
+            Date currentDate = calendar.getTime();
+
+            // Sử dụng chỉ phần ngày (không bao gồm giờ, phút, giây)
+            Date dateOnly = removeTime(currentDate);
+
+            // Kiểm tra xem ngày này có trong dữ liệu không
+            if (dateCountMap.containsKey(dateOnly)) {
+                res.add(new AccountStatisticRegiserLongDateDTO(dateOnly, dateCountMap.get(dateOnly)));
+            } else {
+                res.add(new AccountStatisticRegiserLongDateDTO(dateOnly, 0L));
+            }
+
+            // Tăng ngày lên 1
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return res;
+    }
+
+    // Phương thức để loại bỏ thông tin thời gian, chỉ giữ lại ngày
+    private Date removeTime(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    @Override
     @Transactional
     public String banUser(String userId) {
 
@@ -206,7 +259,7 @@ public class AccountServiceImpl implements AccountService {
         return null;
     }
 
-    private String getUserIdFromToken(String token){
+    private String getUserIdFromToken(String token) {
         SecretKey secretKey = Keys.hmacShaKeyFor(jwtConfig.getSignerKey().getBytes());
         Claims claims = Jwts.parser()
                 .verifyWith(secretKey)
@@ -214,5 +267,9 @@ public class AccountServiceImpl implements AccountService {
                 .parseSignedClaims(token)
                 .getPayload();
         return claims.getSubject();
+    }
+
+    public static Date convertToDateViaInstant(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

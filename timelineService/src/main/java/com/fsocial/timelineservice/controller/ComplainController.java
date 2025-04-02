@@ -1,12 +1,9 @@
 package com.fsocial.timelineservice.controller;
 
 import com.fsocial.timelineservice.dto.Response;
-import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
-import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.mapper.ComplantMapper;
 import com.fsocial.timelineservice.services.ComplaintService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

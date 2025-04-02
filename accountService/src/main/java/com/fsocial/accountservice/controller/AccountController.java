@@ -5,6 +5,7 @@ import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.*;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
+import com.fsocial.accountservice.dto.response.AccountStatisticRegiserLongDateDTO;
 import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
 import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.repository.AccountRepository;
@@ -132,17 +133,17 @@ public class AccountController {
     }
 
     @GetMapping("/statistics_register_start_end")
-    public ApiResponse<List<AccountStatisticRegiserDTO>> statisticsRegisterStartEnd(@RequestParam("startdate") String startDateRe, @RequestParam("enddate") String endDateRe) {
+    public ApiResponse<List<AccountStatisticRegiserLongDateDTO>> statisticsRegisterStartEnd(@RequestParam("startDate" )String startDateRe,@RequestParam("endDate" )String endDateRe ) {
         LocalDate start = LocalDate.parse(startDateRe);
         LocalDate end = LocalDate.parse(endDateRe);
         LocalDateTime startDate = start.atStartOfDay();
         LocalDateTime endDate = end.atTime(23, 59, 59);
 
+
         log.info("Bắt đầu ngày: ", startDate);
         log.info("Kết thúc ngày: ", endDate);
-
-        List<AccountStatisticRegiserDTO> res = accountServices.countByCreatedAtByHours(startDate, endDate);
-        return ApiResponse.<List<AccountStatisticRegiserDTO>>builder()
+        List<AccountStatisticRegiserLongDateDTO> res = accountServices.countByCreatedAtByStartEnd(startDate, endDate);
+        return ApiResponse.<List<AccountStatisticRegiserLongDateDTO>>builder()
                 .data(res)
                 .message("Kiểm tra userId có tồn tại hay không thành công")
                 .build();

@@ -7,4 +7,6 @@ public interface RedisService {
     String getData(String key);
     void saveList(String key, String value);
     List<String> getList(String key);
+    void personalization(String userId, String value) ;
+    List<String> getPersonalization(String userId);
 }

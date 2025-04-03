@@ -14,4 +14,5 @@ public interface RedisService {
     List<String> getPersonalization(String userId);
     void viewed(String userId, String value);
     List<String> getViewed(String userId);
+    void cleaerViewed(String userId);
 }

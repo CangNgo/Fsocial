@@ -54,6 +54,11 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public void cleaerViewed(String userId) {
+       redisTemplate.delete("viewed_post_" + userId);
+    }
+
+    @Override
     public List<String> getViewed(String userId) {
         return this.getList("viewed_post_" + userId);
     }

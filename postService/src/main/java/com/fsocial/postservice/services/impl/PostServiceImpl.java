@@ -16,6 +16,7 @@ import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.services.KafkaService;
 import com.fsocial.postservice.services.PostService;
+import com.fsocial.postservice.services.RedisService;
 import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -43,9 +44,12 @@ public class PostServiceImpl implements PostService {
     UploadMedia uploadMedia;
     PostMapper postMapper;
     ContentMapper contentMapper;
+    RedisService redisService;
     RestTemplate restTemplate;
     KafkaService kafkaService;
     String profileServiceUrl = "http://localhost:8888/profile";
+    private final RedisServiceImpl redisServiceImpl;
+
     @Override
     @Transactional
     public PostDTO createPost(PostDTORequest postRequest) throws AppCheckedException {
@@ -159,7 +163,8 @@ public class PostServiceImpl implements PostService {
                 .likes(new ArrayList<>())
                 .createDatetime(LocalDateTime.now())
                 .build();
-
+        //thêm vào persional
+        redisService.personalization(postRequest.getUserId(), post.getUserId());
         return postMapper.toPostDTO(postRepository.save(post));
     }
 

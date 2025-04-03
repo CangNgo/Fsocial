@@ -61,9 +61,16 @@ public class PostServiceImpl implements PostService {
     public List<PostResponse> getPostsByUserId(String userId) throws AppUnCheckedException {
         Pageable pageable = PageRequest.of(0, 10);
         List<String> viewed = getListViewed(userId);
-
+        List<String> personalization = getPersonalization(userId);
+        for (String personal : personalization) {
+            viewed.addFirst(personal);
+        }
         List<Post> resut = postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable);
-
+        if (resut.isEmpty()) {
+            redisService.cleaerViewed(userId);
+            viewed = getListViewed(userId);
+            resut = postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable);
+        }
         return resut.stream()
                 .map(post -> {
                     try {
@@ -224,5 +231,9 @@ public class PostServiceImpl implements PostService {
 
     private List<String> getListViewed(String userId) {
         return redisService.getViewed(userId);
+    }
+
+    private List<String> getPersonalization(String userId){
+        return redisService.getPersonalization(userId);
     }
 }

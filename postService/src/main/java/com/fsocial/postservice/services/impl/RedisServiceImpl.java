@@ -11,12 +11,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true )
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RedisServiceImpl implements RedisService {
-    RedisTemplate<String, String> redisTemplate;
+   RedisTemplate<String, String> redisTemplate;
 
 
-    @Override
+   @Override
     public void saveData(String key, String value) {
         redisTemplate.opsForValue().set(key, value);
     }
@@ -28,12 +28,22 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void saveList(String key, String value) {
-        redisTemplate.opsForList().rightPush(key, value);
+        redisTemplate.opsForList().leftPush(key, value);
     }
 
     @Override
     public List<String> getList(String key) {
         return redisTemplate.opsForList().range(key, 0, -1);
+    }
+
+    @Override
+    public void personalization(String userId, String value) {
+         this.saveList("personalization_" + userId, value);
+    }
+
+    @Override
+    public List<String> getPersonalization(String userId) {
+       return this.getList("personalization_" + userId);
     }
 
 }

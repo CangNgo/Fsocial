@@ -14,6 +14,7 @@ import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.repository.httpClient.Accountclient;
 import com.fsocial.postservice.services.CommentService;
+import com.fsocial.postservice.services.RedisService;
 import com.fsocial.postservice.services.UploadMedia;
 import com.fsocial.postservice.services.KafkaService;
 import lombok.AccessLevel;
@@ -46,6 +47,7 @@ public class CommentServiceImpl implements CommentService {
     PostRepository postRepository;
     MongoTemplate mongoTemplate;
     Accountclient accountclient;
+    RedisService redisService;
 
     @Override
     @Transactional
@@ -75,6 +77,9 @@ public class CommentServiceImpl implements CommentService {
                     .commentId(savedComment.getId())
                     .build());
         }
+
+        //thêm vào personalization
+        redisService.personalization(savedComment.getUserId(), post.getUserId());
 
         return savedComment;
     }

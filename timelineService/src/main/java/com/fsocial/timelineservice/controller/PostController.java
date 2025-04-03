@@ -2,12 +2,15 @@ package com.fsocial.timelineservice.controller;
 
 import com.fsocial.timelineservice.dto.Response;
 import com.fsocial.timelineservice.dto.post.PostResponse;
+import com.fsocial.timelineservice.entity.Post;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.services.PostService;
 import com.fsocial.timelineservice.services.RedisService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,8 @@ public class PostController {
 
     PostService postService;
 
+    Logger logger = LoggerFactory.getLogger(PostController.class);
+
     @GetMapping
     public ResponseEntity<Response> getPosts(@RequestParam(value = "userId") String userId ) throws AppCheckedException {
         List<PostResponse> posts ;
@@ -32,6 +37,7 @@ public class PostController {
 //        }else {
 //        }
         posts = postService.getPostsByUserId(userId);
+        logger.info("Lấy thông tin bài viết thành công");
         return ResponseEntity.ok(Response.builder()
                 .message("Lấy bài đăng thành công")
                 .dateTime(LocalDateTime.now())

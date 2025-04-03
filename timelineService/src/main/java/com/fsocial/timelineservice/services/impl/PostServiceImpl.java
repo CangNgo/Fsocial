@@ -1,7 +1,5 @@
 package com.fsocial.timelineservice.services.impl;
 
-import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
-import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsLongDayDTO;
 import com.fsocial.timelineservice.dto.post.PostResponse;
 import com.fsocial.timelineservice.dto.post.PostStatisticsDTO;
 import com.fsocial.timelineservice.dto.post.PostStatisticsLongDateDTO;
@@ -18,6 +16,8 @@ import com.fsocial.timelineservice.services.RedisService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,6 +42,8 @@ public class PostServiceImpl implements PostService {
     CommentRepository commentRepository;
 
     RedisService redisService;
+
+    static Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
 
 //    @Override
 //    public List<PostResponse> getPosts() throws AppUnCheckedException {
@@ -71,11 +73,14 @@ public class PostServiceImpl implements PostService {
             viewed = getListViewed(userId);
             resut = postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable);
         }
+
+        logger.info("Lấy bài viết thành công");
         return resut.stream()
                 .map(post -> {
                     try {
                         return this.mapToPostByUserIdResponse(post, userId);
                     } catch (AppCheckedException e) {
+                        logger.error("Lỗi khi chuyển đổi dữ liệu post sang postResponse {}", e.getMessage());
                         throw new RuntimeException(e.getMessage());
                     }
                 })
@@ -125,6 +130,7 @@ public class PostServiceImpl implements PostService {
         try {
             return profileClient.getProfileResponseByUserId(userId);
         } catch (Exception e) {
+            logger.error("Lỗi khi lấy thông tin profile người dùng {}", userId);
             throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, StatusCode.USER_NOT_FOUND);
         }
     }
@@ -137,6 +143,7 @@ public class PostServiceImpl implements PostService {
                     try {
                         profile = getProfile(post.getUserId());
                     } catch (AppCheckedException e) {
+                        logger.error("Lỗi khi lấy thông tin người dùng {}", post.getUserId());
                         throw new RuntimeException(e);
                     }
                     Integer countComment = commentRepository.countCommentsByPostId(post.getId());

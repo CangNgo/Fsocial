@@ -2,6 +2,7 @@ package com.fsocial.timelineservice.controller;
 
 import com.fsocial.timelineservice.dto.Response;
 import com.fsocial.timelineservice.dto.post.PostResponse;
+import com.fsocial.timelineservice.dto.post.PostStatisticsDTO;
 import com.fsocial.timelineservice.entity.Post;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.services.PostService;
@@ -46,8 +47,10 @@ public class PostController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Response> findPost(@RequestParam("find_post") String findString) throws AppCheckedException {
-        List<PostResponse> findByText = postService.findByText(findString);
+    public ResponseEntity<Response> findPost(@RequestParam("find_post") String findString,
+                                             @RequestParam("user_id") String userId) throws AppCheckedException {
+        List<PostResponse> findByText = postService.findByText(findString, userId);
+        logger.info("Tìm kiếm bài đăng theo text thành công");
         return ResponseEntity.ok(Response.builder()
                 .message("Lấy bài đăng thành công")
                 .dateTime(LocalDateTime.now())
@@ -58,11 +61,12 @@ public class PostController {
 
     @GetMapping("/getpost_id")
     public ResponseEntity<Response> getPostId(@RequestParam("post_id") String postId,@RequestParam("user_id") String userId) throws AppCheckedException {
-
+        PostResponse result = postService.getPostById(postId,userId);
+        logger.info("Tìm kiếm bài đăng theo id thành công");
         return ResponseEntity.ok(Response.builder()
                 .message("Lấy bài đăng thành công")
                 .dateTime(LocalDateTime.now())
-                .data(postService.getPostById(postId,userId))
+                .data(result)
                 .build());
     }
 
@@ -82,9 +86,10 @@ public class PostController {
         LocalDate date = LocalDate.parse(dateTime);
         LocalDateTime startDate = date.atStartOfDay();
         LocalDateTime endDate = date.atTime(23, 59, 59);
-
+        List<PostStatisticsDTO >result = postService.countStatisticsPostToday(startDate, endDate);
+        logger.info("Lấy thông tin thống kê theo {} thành công", date);
         return ResponseEntity.ok().body(Response.builder()
-                .data(postService.countStatisticsPostToday(startDate, endDate))
+                .data(result)
                 .message("Lấy toàn bộ danh sách thống kê số lượng bài viết trong ngày " + date +  "  thành công")
                 .build());
     }

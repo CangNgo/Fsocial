@@ -105,7 +105,7 @@ public class PostServiceImpl implements PostService {
 
     private PostResponse mapToPostByUserIdResponse(Post post, String userId) throws AppCheckedException {
         ProfileResponse profile = getProfile(post.getUserId());
-        boolean likePost = postRepository.existsByIdAndLikes(post.getId(), userId);
+//        boolean likePost = postRepository.existsByIdAndLikes(post.getId(), userId);
         //thêm vào danh sách những video đã xem
         this.addViewed(userId, post.getId());
         return PostResponse.builder()
@@ -119,7 +119,7 @@ public class PostServiceImpl implements PostService {
                 .firstName(profile.getFirstName())
                 .avatar(profile.getAvatar())
                 .createDatetime(post.getCreateDatetime())
-                .isLike(likePost)
+                .isLike(post.getLikes().contains(userId))
                 .isShare(post.getIsShare())
                 .status(post.getStatus())
                 .build();
@@ -136,7 +136,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostResponse> findByText(String text) {
+    public List<PostResponse> findByText(String text, String userId) {
         return postRepository.findByContentTextContainingIgnoreCase(text).stream()
                 .map(post -> {
                     ProfileResponse profile;
@@ -147,20 +147,19 @@ public class PostServiceImpl implements PostService {
                         throw new RuntimeException(e);
                     }
                     Integer countComment = commentRepository.countCommentsByPostId(post.getId());
-                    boolean likePost = postRepository.existsByIdAndLikes(post.getId(), post.getUserId());
+//                    boolean likePost = postRepository.existsByIdAndLikes(post.getId(), post.getUserId());
                     return PostResponse.builder()
                             .id(post.getId())
                             .content(post.getContent())
-                            .countLikes(post.getCountLikes())
+                            .countLikes(post.getLikes().size())
                             .countComments(countComment)
                             .userId(post.getUserId())
                             .lastName(profile.getLastName())
                             .firstName(profile.getFirstName())
                             .avatar(profile.getAvatar())
                             .createDatetime(post.getCreateDatetime())
-                            .isLike(likePost)
-                            .isShare(post.isShare())
-                            .status(post.isStatus())
+                            .isLike(post.getLikes().contains(userId))
+                            .isShare(post.getIsShare())
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -185,7 +184,6 @@ public class PostServiceImpl implements PostService {
                 result.add(new PostStatisticsDTO(String.valueOf(hour), mapComplaint.get(String.valueOf(hour))));
             }
             result.add(new PostStatisticsDTO(String.valueOf(hour), 0));
-
         }
         ;
 

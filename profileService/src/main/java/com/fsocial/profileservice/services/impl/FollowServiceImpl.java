@@ -47,11 +47,11 @@ public class FollowServiceImpl implements FollowService {
         accountProfileRepository.followUser(ownerId, userId);
 
         // Gửi thông báo
-        sendNotification(NotificationRequest.builder()
-                .ownerId(userId)
-                .receiverId(ownerId)
-                .topic(TopicKafka.TOPIC_FOLLOW.getTopic())
-                .build());
+//        sendNotification(NotificationRequest.builder()
+//                .ownerId(userId)
+//                .receiverId(ownerId)
+//                .topic(TopicKafka.TOPIC_FOLLOW.getTopic())
+//                .build());
     }
 
     @Override
@@ -95,11 +95,16 @@ public class FollowServiceImpl implements FollowService {
                 .toList();
     }
 
-    private void validUserId(String userId) {
-        String redisKey = "user:exists:" + userId;
+    @Override
+    public List<String> getListFollowers(String userId) {
+        return accountProfileRepository.getListFollowingUsers(userId);
+    }
 
-        Boolean exists = redisTemplate.opsForValue().get(redisKey);
-        if (Boolean.TRUE.equals(exists)) return;
+    private void validUserId(String userId) {
+//        String redisKey = "user:exists:" + userId;
+
+//        Boolean exists = redisTemplate.opsForValue().get(redisKey);
+//        if (Boolean.TRUE.equals(exists)) return;
 
         boolean userExists = accountProfileRepository.existsByUserId(userId);
         if (!userExists) {
@@ -108,7 +113,7 @@ public class FollowServiceImpl implements FollowService {
         }
 
         // Lưu vào Redis với thời gian hết hạn là 5 phút
-        redisTemplate.opsForValue().set(redisKey, true, 5, TimeUnit.MINUTES);
+//        redisTemplate.opsForValue().set(redisKey, true, 5, TimeUnit.MINUTES);
     }
 
     private void checkFollowerBeforeFollowOrUnFollow(String userId, String followingId) {

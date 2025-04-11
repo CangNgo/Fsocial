@@ -10,11 +10,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PostService {
-//    List<PostResponse> getPosts() throws AppCheckedException;
+    //    List<PostResponse> getPosts() throws AppCheckedException;
     List<PostResponse> getPostsByUserId(String userId) throws AppCheckedException;
+
     ProfileResponse getProfile(String id) throws AppCheckedException;
-    List<PostResponse> findByText (String text) throws AppCheckedException;
+
+    List<PostResponse> findByText(String text, String userId) throws AppCheckedException;
+
     PostResponse getPostById(String postId, String userId) throws AppCheckedException;
-        List<PostStatisticsDTO> countStatisticsPostToday(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<PostStatisticsDTO> countStatisticsPostToday(LocalDateTime startDate, LocalDateTime endDate);
+
     List<PostStatisticsLongDateDTO> countStatisticsPostLongDay(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<PostResponse> getPostByFollowing(String userId);
 }

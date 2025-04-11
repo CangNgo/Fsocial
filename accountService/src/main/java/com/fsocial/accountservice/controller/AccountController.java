@@ -125,7 +125,7 @@ public class AccountController {
         List<AccountStatisticRegiserDTO> res = accountServices.countByCreatedAtByHours(startDate, endDate);
         return ApiResponse.<List<AccountStatisticRegiserDTO>>builder()
                 .data(res)
-                .message("Thống kê số lượng tài khoản được tạo trong ngày " + date)
+                .message("Thống kê số lượng tài khoản được tạo trong ngày " + date + " thành công")
                 .build();
     }
 
@@ -139,7 +139,7 @@ public class AccountController {
         List<AccountStatisticRegiserLongDateDTO> res = accountServices.countByCreatedAtByStartEnd(startDate, endDate);
         return ApiResponse.<List<AccountStatisticRegiserLongDateDTO>>builder()
                 .data(res)
-                .message("Lấy danh sách thống kê số lượng tài khoản được tạo từ " + startDate + " đến " + endDate)
+                .message("Lấy danh sách thống kê số lượng tài khoản được tạo từ " + startDate + " đến " + endDate + " thành công")
                 .build();
     }
 

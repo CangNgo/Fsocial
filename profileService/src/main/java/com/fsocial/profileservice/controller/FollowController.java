@@ -10,7 +10,9 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -64,5 +66,14 @@ public class FollowController {
     public ApiResponse<List<UserResponse>> getFollowersOfAnotherUser(@PathVariable String userId) {
         List<UserResponse> response = followService.getFollowers(userId);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @GetMapping("/list_following")
+    public ApiResponse<Map<String, List<String>>> getFollowingOfFollower() {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<String> response = followService.getListFollowers(userId);
+        Map<String, List<String>> res = new HashMap<>();
+        res.put("listFollowing", response);
+        return ApiResponse.buildApiResponse(res, ResponseStatus.SUCCESS);
     }
 }

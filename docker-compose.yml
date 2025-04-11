@@ -54,6 +54,19 @@ services:
     environment: # (Tùy chọn) Thêm biến môi trường để cấu hình MongoDB
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
+  notification:
+    image: mongo:6.0 # Chỉ định phiên bản cụ thể
+    container_name: notification
+    restart: always
+    ports:
+      - "27005:27017" # Ánh xạ cổng host:container
+    volumes:
+      - notification_data:/data/db # Sử dụng named volume với tên rõ ràng
+    networks:
+      - app_network
+    environment: # (Tùy chọn) Thêm biến môi trường để cấu hình MongoDB
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
 
   # Redis
   redis:
@@ -116,3 +129,4 @@ volumes:
   zookeeper_data:
   kafka_data:
   message_data:
+  notification_data:

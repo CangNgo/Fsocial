@@ -59,6 +59,21 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public void viewedFollowing(String userId, String postId) {
+         this.saveList("viewed_post_following_" + userId, postId);
+    }
+
+    @Override
+    public List<String> getViewedFollowing(String userId) {
+        return this.getList("viewed_post_following_" + userId);
+    }
+
+    @Override
+    public void clearViewedFollowing(String userId) {
+        redisTemplate.delete("viewed_post_following_" + userId);
+    }
+
+    @Override
     public List<String> getViewed(String userId) {
         return this.getList("viewed_post_" + userId);
     }

@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface PostRepository extends MongoRepository<Post, String> {
     List<PostResponse> findByContentTextContaining(String content);
-    List<PostResponse> findByContentTextContainingIgnoreCase(String content);
+    List<Post> findByContentTextContainingIgnoreCase(String content);
     @Aggregation(pipeline = {
             "{$match: {_id: ?0}}",
             "{ $project: {countLikes : {$size: '$likes'}}}"
@@ -30,6 +30,7 @@ public interface PostRepository extends MongoRepository<Post, String> {
 
     List<Post> findByIdNotInOrUserIdInOrderByCreateDatetimeDesc(List<String> postIdViewed,List<String> userId,  Pageable pageable);
     List<Post> findByIdNotInOrderByCreateDatetimeDesc(List<String> postIdViewed, Pageable pageable);
+    List<Post> findByUserIdAndIdNotInOrderByCreateDatetimeDesc(List<String> userId, List<String> postId, Pageable pageable);
 
     @Aggregation(pipeline = {
             "{ '$match': { 'created_datetime': { '$gte': ?0, '$lte': ?1 } } }",

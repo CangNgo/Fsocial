@@ -46,7 +46,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     RedisTemplate redisTemplate;
     @NonFinal
     private String[] PUBLIC_ENDPOINT = {"/account/**"
-            ,"/post/**","/timeline/**","/profile/**",
+//            ,"/post/**","/timeline/**","/profile/**",
     };
 
     @NonFinal

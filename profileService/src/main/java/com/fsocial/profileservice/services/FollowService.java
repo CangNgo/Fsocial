@@ -10,4 +10,5 @@ public interface FollowService {
     boolean isFollowing(String userId, String follower);
     List<UserResponse> getFollowingUsers(String userId);
     List<UserResponse> getFollowers(String userId);
+    List<String> getListFollowers(String userId);
 }

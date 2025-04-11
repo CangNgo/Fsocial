@@ -67,20 +67,43 @@ public class PostServiceImpl implements PostService {
         for (String personal : personalization) {
             viewed.addFirst(personal);
         }
-        List<Post> resut = postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable);
-        if (resut.isEmpty()) {
+        List<Post> result = postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable);
+        if (result.isEmpty()) {
             redisService.cleaerViewed(userId);
             viewed = getListViewed(userId);
-            resut = postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable);
+            result = postRepository.findByIdNotInOrderByCreateDatetimeDesc(viewed, pageable);
         }
 
         logger.info("Lấy bài viết thành công");
-        return resut.stream()
+        return result.stream()
                 .map(post -> {
                     try {
+                        this.addViewed(userId, post.getId());
                         return this.mapToPostByUserIdResponse(post, userId);
                     } catch (AppCheckedException e) {
                         logger.error("Lỗi khi chuyển đổi dữ liệu post sang postResponse {}", e.getMessage());
+                        throw new RuntimeException(e.getMessage());
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<PostResponse> getPostByFollowing(String userId) {
+        Pageable pageable = PageRequest.of(0, 10);
+        Map<String, List<String>> following = profileClient.listFollowing().getData();
+        List<String> viewed = this.getViewedPostByFollowing(userId);
+
+        List<Post> result = postRepository.findByUserIdAndIdNotInOrderByCreateDatetimeDesc(
+                following.get("listFollowing"), viewed,pageable);
+        return result.stream()
+                .map(post -> {
+                    try {
+                        this.addViewedByFollowing(userId, post.getId());
+                        return this.mapToPostByUserIdResponse(post, userId);
+                    } catch (AppCheckedException e) {
+                        logger.error("Lỗi khi chuyển đổi dữ liệu post sang postResponse trong getPostByFollowing {}", e.getMessage());
                         throw new RuntimeException(e.getMessage());
                     }
                 })
@@ -92,7 +115,7 @@ public class PostServiceImpl implements PostService {
         return PostResponse.builder()
                 .id(post.getId())
                 .content(post.getContent())
-                .countLikes(getCountLikes(post.getId()))
+                .countLikes(post.getLikes().size())
                 .countComments(getCountComment(post.getId()))
                 .userId(post.getUserId())
                 .lastName(profile.getLastName())
@@ -107,12 +130,11 @@ public class PostServiceImpl implements PostService {
         ProfileResponse profile = getProfile(post.getUserId());
 //        boolean likePost = postRepository.existsByIdAndLikes(post.getId(), userId);
         //thêm vào danh sách những video đã xem
-        this.addViewed(userId, post.getId());
         return PostResponse.builder()
                 .id(post.getId())
                 .originPostId(post.getOriginPostId())
                 .content(post.getContent())
-                .countLikes(getCountLikes(post.getId()))
+                .countLikes(post.getLikes().size())
                 .countComments(getCountComment(post.getId()))
                 .userId(post.getUserId())
                 .lastName(profile.getLastName())
@@ -198,17 +220,17 @@ public class PostServiceImpl implements PostService {
         LocalDateTime start = startDate.truncatedTo(ChronoUnit.DAYS);
         LocalDateTime end = endDate.plusDays(1).truncatedTo(ChronoUnit.DAYS);
         while (!start.equals(end)) {
-            for (PostStatisticsLongDateDTO complaint : postStatisticsDTOS){
+            for (PostStatisticsLongDateDTO complaint : postStatisticsDTOS) {
 //                LocalDateTime currentDay = start;
-                if(complaint.getDate().truncatedTo(ChronoUnit.DAYS).equals(start)){
+                if (complaint.getDate().truncatedTo(ChronoUnit.DAYS).equals(start)) {
                     result.add(complaint);
-                }else {
+                } else {
                     result.add(new PostStatisticsLongDateDTO(start, 0));
                 }
 
             }
 
-            if (postStatisticsDTOS.isEmpty()){
+            if (postStatisticsDTOS.isEmpty()) {
                 result.add(new PostStatisticsLongDateDTO(start, 0));
             }
             start = start.plusDays(1);
@@ -238,7 +260,16 @@ public class PostServiceImpl implements PostService {
         return redisService.getViewed(userId);
     }
 
-    private List<String> getPersonalization(String userId){
+    private List<String> getPersonalization(String userId) {
         return redisService.getPersonalization(userId);
     }
+
+    private List<String> getViewedPostByFollowing(String userId) {
+        return redisService.getViewedFollowing(userId);
+    }
+
+    private void addViewedByFollowing(String userId, String postId){
+         redisService.viewedFollowing(userId, postId);
+    }
+
 }

@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
         ErrorCode errorCode = ErrorCode.NOT_FOUND;
         return ResponseEntity.badRequest().body(ApiResponse.builder()
                 .statusCode(errorCode.getCode())
-                .message(errorCode.getMessage())
+                .message(errorCode.getMessage() + " " + exception.getResourcePath())
                 .dateTime(LocalDateTime.now())
                 .build());
     }

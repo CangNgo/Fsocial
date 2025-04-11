@@ -46,6 +46,32 @@ public class PostController {
                 .build());
     }
 
+    @GetMapping("/following")
+    public ResponseEntity<Response> getPostsByFollowing(@RequestParam(value = "userId") String userId ) throws AppCheckedException {
+        List<PostResponse> posts ;
+
+//        if(userId == null) {
+//             posts = postService.getPosts();
+//        }else {
+//        }
+
+        try {
+            posts = postService.getPostByFollowing(userId);
+            logger.info("Lấy thông tin bài viết theo following thành công");
+            return ResponseEntity.ok(Response.builder()
+                    .message("Lấy bài đăng theo following thành công")
+                    .dateTime(LocalDateTime.now())
+                    .data(posts)
+                    .build());
+        }catch (Exception e) {
+            logger.info("Lấy thông tin bài viết theo following thất bại");
+            return ResponseEntity.badRequest().body(Response.builder()
+                    .message("Lấy bài đăng theo following thất b")
+                    .dateTime(LocalDateTime.now())
+                    .build());
+        }
+    }
+
     @GetMapping("/find")
     public ResponseEntity<Response> findPost(@RequestParam("find_post") String findString,
                                              @RequestParam("user_id") String userId) throws AppCheckedException {

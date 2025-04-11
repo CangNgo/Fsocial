@@ -34,6 +34,12 @@ public interface AccountProfileRepository extends Neo4jRepository<AccountProfile
     List<AccountProfile> getFollowingUsers(String userId);
 
     @Query("""
+              MATCH (a:account_profile {user_id: $userId})-[:FOLLOWS]->(b) 
+        RETURN b.user_id
+            """)
+    List<String>  getListFollowingUsers(String userId);
+
+    @Query("""
         MATCH (a)-[:FOLLOWS]->(b:account_profile {user_id: $userId}) 
         RETURN a
     """)

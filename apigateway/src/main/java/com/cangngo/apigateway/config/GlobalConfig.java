@@ -2,8 +2,6 @@ package com.cangngo.apigateway.config;
 
 import com.cangngo.apigateway.dto.ApiResponse;
 import com.cangngo.apigateway.enums.ErrorCode;
-import com.cangngo.apigateway.enums.StatusCode;
-import com.cangngo.apigateway.exception.AppCheckedException;
 import com.cangngo.apigateway.service.AccountService;
 import com.cangngo.apigateway.service.BanService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,7 +44,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     RedisTemplate redisTemplate;
     @NonFinal
     private String[] PUBLIC_ENDPOINT = {"/account/**"
-//            ,"/post/**","/timeline/**","/profile/**",
+            ,"/post/**","/timeline/**","/profile/**",
     };
 
     @NonFinal
@@ -67,11 +65,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 //        System.out.println("Token: " + tokenrequest);
         boolean isBan = banService.isBan(tokenrequest.substring(7));
         if (isBan){
-            try {
-                return banned(exchange.getResponse());
-            } catch (AppCheckedException e) {
-                throw new RuntimeException(e.getMessage());
-            }
+            return banned(exchange.getResponse());
         }else{
             System.out.println("account không bị ban");
         }
@@ -124,8 +118,23 @@ public class GlobalConfig implements GlobalFilter, Ordered {
         );
     }
 
-    Mono<Void> banned(ServerHttpResponse response) throws AppCheckedException {
-        throw  new AppCheckedException("Tài khoản đã bị khóa", StatusCode.BANNED);
+    Mono<Void> banned(ServerHttpResponse response) {
+        ApiResponse<?> apiResponse = ApiResponse.builder()
+                .statusCode(ErrorCode.ACCOUNT_BANNED.getCode())
+                .message(ErrorCode.ACCOUNT_BANNED.getMessage())
+                .dateTime(LocalDateTime.now())
+                .build();
+
+        String body;
+        try {
+            body = objectMapper.writeValueAsString(apiResponse);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        return response.writeWith(
+                Mono.just(response.bufferFactory().wrap(body.getBytes()))
+        );
     }
 
 }

@@ -8,9 +8,11 @@ import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.services.CommentService;
 import com.fsocial.timelineservice.services.RedisService;
+import jakarta.servlet.ServletContext;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
 
     RedisService redisService;
+    ServletContext servletContext;
 
     @Override
     public List<CommentResponse> getComments(String postId) {
@@ -37,7 +40,8 @@ public class CommentServiceImpl implements CommentService {
                     } catch (AppCheckedException e) {
                         throw new RuntimeException(e);
                     }
-
+                    String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+                    System.out.println("userId: " + userId);
                     return CommentResponse.builder()
                             .id(comment.getId())
                             .content(comment.getContent())
@@ -47,6 +51,7 @@ public class CommentServiceImpl implements CommentService {
                             .avatar(profileResponse.getAvatar())
                             .userId(comment.getUserId())
                             .reply(comment.isReply())
+                            .like(comment.getLikes().contains(userId))
                             .createDatetime(comment.getCreateDatetime())
                             .build();
                 })

@@ -15,7 +15,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {
-        return buildResponse(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        return ResponseEntity
+                .badRequest()
+                .body(ApiResponse.builder()
+                        .statusCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode())
+                        .message(exception.getMessage())
+                        .dateTime(LocalDateTime.now())
+                        .build());
     }
 
     @ExceptionHandler(value = AppCheckedException.class)

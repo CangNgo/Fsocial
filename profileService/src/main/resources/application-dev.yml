@@ -40,6 +40,7 @@ redis:
 logging:
   level:
     org.neo4j.driver: ERROR
+    org.springframework.data.redis: DEBUG
     org:
       springframework=DEBUG:
       springframework:

@@ -21,4 +21,5 @@ public class CommentResponse {
     String avatar;
     LocalDateTime createDatetime;
     boolean reply;
+    boolean like;
 }

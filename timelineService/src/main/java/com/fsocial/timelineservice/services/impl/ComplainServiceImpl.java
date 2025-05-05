@@ -3,12 +3,14 @@ package com.fsocial.timelineservice.services.impl;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
 import com.fsocial.timelineservice.dto.complaint.ComplaintDTOResponse;
 import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
+import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsLongDayDTO;
+import com.fsocial.timelineservice.dto.post.PostStatisticsDTO;
+import com.fsocial.timelineservice.dto.post.PostStatisticsLongDateDTO;
 import com.fsocial.timelineservice.dto.profile.ProfileResponse;
 import com.fsocial.timelineservice.entity.Complaint;
 import com.fsocial.timelineservice.entity.TermOfServices;
 import com.fsocial.timelineservice.enums.StatusCode;
 import com.fsocial.timelineservice.exception.AppCheckedException;
-import com.fsocial.timelineservice.exception.AppUnCheckedException;
 import com.fsocial.timelineservice.mapper.ComplantMapper;
 import com.fsocial.timelineservice.repository.ComplaintRepository;
 import com.fsocial.timelineservice.repository.TermOfServicesRepository;
@@ -19,10 +21,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.common.metrics.Stat;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,15 +59,24 @@ public class ComplainServiceImpl implements ComplaintService {
                 .map(complaint -> {
                     try {
                         return this.mapToComplainResponse(complaint);
-                    }catch (AppCheckedException e) {
-                        throw new RuntimeException(e.getMessage() );
+                    } catch (AppCheckedException e) {
+                        throw new RuntimeException(e.getMessage());
                     }
                 })
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ComplaintStatisticsDTO> countComplaintByToday(LocalDateTime startDate, LocalDateTime endDate) {
+    public ComplaintDTOResponse getComplaintById(String complaintId) throws AppCheckedException {
+
+        Complaint complaint = complaintRepository.findById(complaintId).orElseThrow(() ->
+                new AppCheckedException("Không tìm thấy báo cáo", StatusCode.COMPLAIN_NOT_FOUND));
+
+        return mapToComplainResponse(complaint);
+    }
+
+    @Override
+    public List<ComplaintStatisticsDTO> countStatisticsComplainToday(LocalDateTime startDate, LocalDateTime endDate) {
 
         List<ComplaintStatisticsDTO> complaintStatisticsDTOS = complaintRepository.countByCreatedAtByHours(startDate, endDate);
         List<ComplaintStatisticsDTO> result = new ArrayList<>();
@@ -77,30 +88,63 @@ public class ComplainServiceImpl implements ComplaintService {
             mapComplaint.put(hour, count);
         }
 
-        for ( int hour = 0; hour < 24; hour++ ) {
-            if (mapComplaint.containsKey(String.valueOf(hour))){
+        for (int hour = 0; hour < 24; hour++) {
+            if (mapComplaint.containsKey(String.valueOf(hour))) {
                 result.add(new ComplaintStatisticsDTO(String.valueOf(hour), mapComplaint.get(String.valueOf(hour))));
             }
             result.add(new ComplaintStatisticsDTO(String.valueOf(hour), 0));
 
-        };
+        }
+        ;
 
         return result;
     }
 
+    @Override
+    public List<ComplaintStatisticsLongDayDTO> countStatisticsComplainLongDay(LocalDateTime startDate, LocalDateTime endDate) {
+        List<ComplaintStatisticsLongDayDTO> complaintStatisticsDTOS = complaintRepository.countByDate(startDate, endDate);
+        List<ComplaintStatisticsLongDayDTO> result = new ArrayList<>();
+//        Map<String, Integer> mapComplaint = new HashMap<>();
+
+        LocalDateTime start = startDate.truncatedTo(ChronoUnit.DAYS);
+        LocalDateTime end = endDate.plusDays(1).truncatedTo(ChronoUnit.DAYS);
+        while (!start.equals(end)) {
+            for (ComplaintStatisticsLongDayDTO complaint : complaintStatisticsDTOS){
+//                LocalDateTime currentDay = start;
+                if(complaint.getDate().truncatedTo(ChronoUnit.DAYS).equals(start)){
+                    result.add(complaint);
+
+                    //xóa nếu đã thêm vào result
+                    complaintStatisticsDTOS.remove(complaint);
+                }else {
+                    result.add(new ComplaintStatisticsLongDayDTO(start, 0));
+                }
+            }
+
+            //nếu danh sách trả về rỗng
+            if (complaintStatisticsDTOS.isEmpty()){
+                result.add(new ComplaintStatisticsLongDayDTO(start, 0));
+            }
+            start = start.plusDays(1);
+        }
+        return result;
+    }
+
+
+
     private ComplaintDTOResponse mapToComplainResponse(Complaint complaint) throws AppCheckedException {
         ProfileResponse profileResponse = getProfile(complaint.getUserId());
         TermOfServices term = termOfServicesRepository.findById(complaint.getTermOfServiceId()).orElseThrow(
-                ()-> new AppCheckedException("Không tìm thấy chính sách", StatusCode.TERMOFSERVICE_NOT_FOUND)
+                () -> new AppCheckedException("Không tìm thấy chính sách", StatusCode.TERMOFSERVICE_NOT_FOUND)
         );
         return ComplaintDTOResponse.builder()
                 .id(complaint.getId())
                 .postId(complaint.getPostId())
                 .profileId(profileResponse.getId())
                 .complaintType(complaint.getComplaintType())
-                .reading(complaint.isReading())
+                .readding(complaint.isReadding())
                 .termOfService(term.getName())
-                .dateTime(complaint.getDateTime())
+                .createDatetime(complaint.getCreateDatetime())
                 .firstName(profileResponse.getFirstName())
                 .lastName(profileResponse.getLastName())
                 .userId(complaint.getUserId())

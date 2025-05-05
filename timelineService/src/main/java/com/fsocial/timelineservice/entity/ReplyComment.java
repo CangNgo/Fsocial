@@ -30,6 +30,6 @@ public class ReplyComment extends AbstractEntity<String>{
     List<String> likes = new ArrayList<>();
 
     @Field("created_datetime")
-    LocalDateTime created_datetime;
+    LocalDateTime createDatetime;
 
 }

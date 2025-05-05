@@ -3,6 +3,7 @@ package com.fsocial.postservice.entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,7 @@ public class Complaint extends  AbstractEntity<String>{
     String userId;
     String complaintType;
     String termOfServiceId;
-    LocalDateTime dateTime = LocalDateTime.now();
-    boolean reading;
+    @Field("created_datetime")
+    LocalDateTime createDatetime = LocalDateTime.now();
+    boolean readding;
 }

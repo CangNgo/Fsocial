@@ -19,19 +19,14 @@ import java.util.List;
 public class Comment extends AbstractEntity<String> {
     @Field("postId")
     String postId;
-
     @Field("userId")
     String userId;
-
     @Field("content")
     Content content;
-
     @Field("likes")
     List<String> likes = new ArrayList<>();
-
-    @Field("creat_datetime")
-    LocalDateTime creatDatetime = LocalDateTime.now();
-
+    @Field("created_datetime")
+    LocalDateTime createDatetime = LocalDateTime.now();
     @Field("reply")
     Boolean reply;
 }

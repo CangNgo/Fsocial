@@ -1,11 +1,9 @@
 package com.fsocial.timelineservice.controller;
 
 import com.fsocial.timelineservice.dto.Response;
-import com.fsocial.timelineservice.dto.complaint.ComplaintDTO;
-import com.fsocial.timelineservice.dto.complaint.ComplaintStatisticsDTO;
+import com.fsocial.timelineservice.exception.AppCheckedException;
 import com.fsocial.timelineservice.mapper.ComplantMapper;
 import com.fsocial.timelineservice.services.ComplaintService;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,6 +34,15 @@ public class ComplainController {
                 .build());
     }
 
+    @GetMapping("/{complaint_id}")
+    public ResponseEntity<Response> getComplaint(@PathVariable("complaint_id") String complaintId) throws AppCheckedException {
+
+        return ResponseEntity.ok().body(Response.builder()
+                .data(complaintService.getComplaintById(complaintId))
+                .message("Lấy toàn bộ danh sách báo cáo thành công")
+                .build());
+    }
+
     @GetMapping("/statistics_complaint_today")
     public ResponseEntity<Response> getComplaintStatistics(@RequestParam("date_time" )String dateTime) {
         LocalDate date = LocalDate.parse(dateTime);
@@ -44,8 +50,8 @@ public class ComplainController {
         LocalDateTime endDate = date.atTime(23, 59, 59);
 
         return ResponseEntity.ok().body(Response.builder()
-                .data(complaintService.countComplaintByToday(startDate, endDate))
-                .message("Lấy toàn bộ danh sách báo cáo thành công")
+                .data(complaintService.countStatisticsComplainToday(startDate, endDate))
+                .message("Lấy toàn bộ danh sách báo cáo trong ngày " + date  + " thành công")
                 .build());
     }
 
@@ -57,8 +63,8 @@ public class ComplainController {
         LocalDateTime endDate= end.atTime(23, 59, 59);
 
         return ResponseEntity.ok().body(Response.builder()
-                .data(complaintService.countComplaintByToday(startDate, endDate))
-                .message("Lấy toàn bộ danh sách báo cáo thành công")
+                .data(complaintService.countStatisticsComplainLongDay(startDate, endDate))
+                .message("Lấy toàn bộ danh sách báo cáo từ " + startDate  + " đến "  + endDate + " thành công")
                 .build());
     }
 }

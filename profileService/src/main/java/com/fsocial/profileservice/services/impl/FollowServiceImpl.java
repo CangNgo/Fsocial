@@ -95,6 +95,11 @@ public class FollowServiceImpl implements FollowService {
                 .toList();
     }
 
+    @Override
+    public List<String> getListFollowers(String userId) {
+        return accountProfileRepository.getListFollowingUsers(userId);
+    }
+
     private void validUserId(String userId) {
         String redisKey = "user:exists:" + userId;
 

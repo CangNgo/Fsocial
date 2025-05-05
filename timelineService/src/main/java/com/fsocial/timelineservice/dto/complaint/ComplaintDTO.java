@@ -16,6 +16,6 @@ public class ComplaintDTO {
     String userId;
     String complaintType;
     String termOfService;
-    LocalDateTime dateTime ;
-    boolean reading;
+    LocalDateTime createDatetime ;
+    boolean readding;
 }

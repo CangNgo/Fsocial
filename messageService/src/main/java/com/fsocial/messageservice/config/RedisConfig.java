@@ -1,5 +1,8 @@
 package com.fsocial.messageservice.config;
 
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,5 +43,15 @@ public class RedisConfig {
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(new GenericToStringSerializer<>(Boolean.class));
         return template;
+    }
+
+    @Bean
+    public RedissonClient redissonClient() {
+        Config config = new Config();
+        config.useSingleServer()
+                .setAddress("redis://" + HOST_REDIS + ":" + PORT_REDIS)
+                .setConnectionMinimumIdleSize(10)
+                .setConnectionPoolSize(20);
+        return Redisson.create(config);
     }
 }

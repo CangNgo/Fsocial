@@ -1,37 +1,42 @@
 package com.fsocial.processorservice.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.*;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
+@MappedSuperclass
 @Getter
 @Setter
-@Document
-public abstract class AbstractEntity<T extends Serializable> implements Serializable {
-
+@EntityListeners(AuditingEntityListener.class)
+public class AbstractEntity<T extends Serializable> implements Serializable {
     @Id
-    private String id = UUID.randomUUID().toString();
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private T id;
 
     @CreatedBy
-    @Field("created_by")
-    private T createdBy;
+    @Column(name = "created_by")
+    private String createdBy; // Sửa thành String thay vì T
 
     @LastModifiedBy
-    @Field("updated_by")
-    private T updatedBy;
+    @Column(name = "updated_by", insertable = false)
+    private String updatedBy; // Sửa thành String thay vì T
 
-    @CreatedDate
-    @Field("created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @Field("updated_at")
+    @Column(name = "updated_at", insertable = false)
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updatedAt;
-
 }

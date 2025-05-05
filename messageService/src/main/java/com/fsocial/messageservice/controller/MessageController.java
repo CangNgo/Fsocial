@@ -1,10 +1,12 @@
 package com.fsocial.messageservice.controller;
 
 import com.fsocial.messageservice.dto.ApiResponse;
+import com.fsocial.messageservice.dto.request.ActionsRequest;
 import com.fsocial.messageservice.dto.request.MessageRequest;
 import com.fsocial.messageservice.dto.response.MessageListResponse;
 import com.fsocial.messageservice.dto.response.MessageResponse;
 import com.fsocial.messageservice.enums.ResponseStatus;
+import com.fsocial.messageservice.services.ChatService;
 import com.fsocial.messageservice.services.MessageService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -23,6 +25,7 @@ import java.util.List;
 @Slf4j
 public class MessageController {
     MessageService messageService;
+    ChatService chatService;
 
     @GetMapping("/{conversationId}")
     public ApiResponse<MessageListResponse> getMessages(
@@ -33,11 +36,16 @@ public class MessageController {
         return ApiResponse.buildApiResponse(messages, ResponseStatus.SUCCESS);
     }
 
-//    @PostMapping
-//    public ApiResponse<MessageResponse> sendMessage(@RequestBody @Valid MessageRequest request) {
-//        MessageResponse response = messageService.saveChatMessage(request);
-//        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
-//    }
+    @PostMapping
+    public ApiResponse<MessageResponse> sendMessage(@RequestBody @Valid MessageRequest request) {
+        MessageResponse response = chatService.cacheChatMessage(request);
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    @PostMapping("/actions")
+    public ApiResponse<?> handleChatActions(@RequestBody @Valid ActionsRequest request) {
+        return chatService.handleChatActions(request);
+    }
 
     @DeleteMapping("/{messageId}")
     public ApiResponse<Void> deleteMessage(@PathVariable String messageId) {

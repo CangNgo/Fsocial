@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,9 +37,23 @@ public class AccountProfileController {
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
+    @PostMapping("/update-avatar")
+    public ApiResponse<Void> updateAvatar(@RequestParam("file") MultipartFile file) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        accountProfileService.updateProfileImage(userId, file, true);
+        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
+    }
+
+    @PostMapping("/update-banner")
+    public ApiResponse<Void> updateBanner(@RequestParam("file") MultipartFile file) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        accountProfileService.updateProfileImage(userId, file, false);
+        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
+    }
+
     @PreAuthorize("hasRole('USER')")
-    @PutMapping(value = "/update")
-    public ApiResponse<ProfileUpdateResponse> updateProfile(ProfileUpdateRequest request) {
+    @PutMapping("/update")
+    public ApiResponse<ProfileUpdateResponse> updateProfile(@RequestBody ProfileUpdateRequest request) {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         ProfileUpdateResponse response = accountProfileService.updateProfile(userId, request);
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);

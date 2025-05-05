@@ -16,6 +16,7 @@ import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.services.KafkaService;
 import com.fsocial.postservice.services.PostService;
+import com.fsocial.postservice.services.RedisService;
 import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -31,10 +32,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -46,9 +44,12 @@ public class PostServiceImpl implements PostService {
     UploadMedia uploadMedia;
     PostMapper postMapper;
     ContentMapper contentMapper;
+    RedisService redisService;
     RestTemplate restTemplate;
     KafkaService kafkaService;
     String profileServiceUrl = "http://localhost:8888/profile";
+    private final RedisServiceImpl redisServiceImpl;
+
     @Override
     @Transactional
     public PostDTO createPost(PostDTORequest postRequest) throws AppCheckedException {
@@ -113,14 +114,14 @@ public class PostServiceImpl implements PostService {
 
                 // Gửi thông báo đến người dùng
                 Post post = postRepository.findById(postId).orElseThrow();
+                if (Objects.equals(post.getUserId(), userId)) return true;
+
                 kafkaService.sendNotification(NotificationRequest.builder()
                         .ownerId(post.getUserId())
                         .receiverId(userId)
                         .topic(TopicKafka.TOPIC_LIKE.getTopic())
                         .postId(postId)
                         .build());
-
-                log.info("Đã gửi thông báo LIKE đến Antony");
 
                 return true;
             } else {
@@ -162,7 +163,8 @@ public class PostServiceImpl implements PostService {
                 .likes(new ArrayList<>())
                 .createDatetime(LocalDateTime.now())
                 .build();
-
+        //thêm vào persional
+        redisService.personalization(postRequest.getUserId(), post.getUserId());
         return postMapper.toPostDTO(postRepository.save(post));
     }
 

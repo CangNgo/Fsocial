@@ -2,6 +2,10 @@
 spring:
   application:
     name: processorService
+  datasource:
+    url: jdbc:mysql://localhost:3306/accountDB?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
   jpa:
     hibernate:
       ddl-auto: update

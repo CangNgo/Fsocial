@@ -26,6 +26,7 @@ public enum ErrorCode implements CodeEnum{
     INVALID_TOKEN(701, "Token không hợp lệ.", HttpStatus.BAD_REQUEST),
     WRONG_PASSWORD(702, "Mật khẩu không đúng.", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED(703, "Không có quyền truy cập.", HttpStatus.UNAUTHORIZED),
+    ACCOUNT_BANNED(601, "Account banned.", HttpStatus.UNAUTHORIZED),
     ;
     final int code;
     final String message;

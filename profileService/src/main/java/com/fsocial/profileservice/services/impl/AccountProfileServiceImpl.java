@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.lang.reflect.Field;
@@ -59,10 +58,9 @@ public class AccountProfileServiceImpl implements AccountProfileService {
         nonNullFields.forEach((field, value) -> updateField(accountProfile, field, value));
 
         accountProfile.setUpdatedAt(LocalDate.now());
-        accountProfileRepository.save(accountProfile);
         log.info("Cập nhật hồ sơ thành công cho userId: {}", userId);
 
-        return accountProfileMapper.toProfileUpdateResponse(accountProfile);
+        return accountProfileMapper.toProfileUpdateResponse(accountProfileRepository.save(accountProfile));
     }
 
     @Override
@@ -101,6 +99,22 @@ public class AccountProfileServiceImpl implements AccountProfileService {
                 .build();
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateProfileImage(String userId, MultipartFile file, boolean isAvatar) {
+        if (userId == null) throw new AppException(ErrorCode.NOT_NULL);
+
+        AccountProfile profile = findProfileByUserId(userId);
+        String urlImage = postClient.uploadFile(file);
+        if (Boolean.TRUE.equals(isAvatar))
+            profile.setAvatar(urlImage);
+        else
+            profile.setBanner(urlImage);
+
+        accountProfileRepository.save(profile);
+        log.info("Đã cập nhật lại ảnh thành công");
+    }
+
     @Transactional(readOnly = true)
     private AccountProfile findProfileByUserId(String userId) {
         return accountProfileRepository.findByUserId(userId)
@@ -125,20 +139,6 @@ public class AccountProfileServiceImpl implements AccountProfileService {
         try {
             Field entityField = accountProfile.getClass().getDeclaredField(field);
             entityField.setAccessible(true);
-
-            if (("avatar".equals(field) || "banner".equals(field)) && value instanceof MultipartFile file) {
-                if (!file.isEmpty()) {
-                    try {
-                        String response = postClient.uploadFile(new MultipartFile[]{file});
-                        entityField.set(accountProfile, response);
-                    } catch (Exception e) {
-                        log.error("Lỗi khi upload file {}: {}", field, e.getMessage());
-                        throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
-                    }
-                }
-                return;
-            }
-
             entityField.set(accountProfile, value);
         } catch (NoSuchFieldException e) {
             log.error("Không tìm thấy field {} trong AccountProfile", field);

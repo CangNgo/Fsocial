@@ -19,6 +19,7 @@ public class CommentResponse {
     String firstName;
     String lastName;
     String avatar;
-    LocalDateTime creat_datetime;
+    LocalDateTime createDatetime;
     boolean reply;
+    boolean like;
 }

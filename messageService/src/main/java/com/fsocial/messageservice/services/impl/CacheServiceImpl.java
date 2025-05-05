@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -21,40 +22,54 @@ import java.util.concurrent.TimeUnit;
 public class CacheServiceImpl implements CacheService {
     AccountClient accountClient;
     RedisTemplate<String, Boolean> booleanRedisTemplate;
+    RedisTemplate<String, String> stringRedisTemplate;
     ConversationRepository conversationRepository;
+
+
+    private static final long CACHE_EXPIRATION = 5; // 5 minutes
 
     @Override
     public void validateUser(String userId) {
+        Objects.requireNonNull(userId, ErrorCode.NOT_NULL.getMessage());
+
         String cacheKey = "user:" + userId;
         Boolean isCached = booleanRedisTemplate.opsForValue().get(cacheKey);
 
-        if (Boolean.TRUE.equals(isCached)) {
-            booleanRedisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
-            return;
-        }
+        if (isCached(cacheKey)) return;
 
         if (!accountClient.validUserId(userId)) {
             log.error("Xác thực thất bại: userId {}", userId);
             throw new AppException(ErrorCode.ACCOUNT_NOT_EXISTED);
         }
 
-        booleanRedisTemplate.opsForValue().set(cacheKey, true, 5, TimeUnit.MINUTES);
+        cacheValue(cacheKey);
     }
 
     @Override
     public void ensureConversationExists(String conversationId) {
+        Objects.requireNonNull(conversationId, ErrorCode.NOT_NULL.getMessage());
+
         String cacheKey = "conversation:" + conversationId;
 
-        if (Boolean.TRUE.equals(booleanRedisTemplate.opsForValue().get(cacheKey))) {
-            booleanRedisTemplate.expire(cacheKey, 5, TimeUnit.MINUTES);
-            return;
-        }
+        if (isCached(cacheKey)) return;
 
         if (!conversationRepository.existsById(conversationId)) {
             log.warn("Không tìm thấy cuộc trò chuyện: {}", conversationId);
             throw new AppException(ErrorCode.CONVERSATION_NOT_EXIST);
         }
 
-        booleanRedisTemplate.opsForValue().set(cacheKey, true, 5, TimeUnit.MINUTES);
+        cacheValue(cacheKey);
+    }
+
+    private boolean isCached(String key) {
+        if (Boolean.TRUE.equals(booleanRedisTemplate.opsForValue().get(key))) {
+            booleanRedisTemplate.expire(key, CACHE_EXPIRATION, TimeUnit.MINUTES);
+            return true;
+        }
+        return false;
+    }
+
+    private void cacheValue(String key) {
+        booleanRedisTemplate.opsForValue().set(key, true, CACHE_EXPIRATION, TimeUnit.MINUTES);
     }
 }

@@ -7,6 +7,7 @@ import com.fsocial.messageservice.dto.ApiResponse;
 import com.fsocial.messageservice.dto.request.ActionsRequest;
 import com.fsocial.messageservice.dto.request.MessageRequest;
 import com.fsocial.messageservice.dto.response.ActionsResponse;
+import com.fsocial.messageservice.dto.response.MessageRecallResponse;
 import com.fsocial.messageservice.dto.response.MessageResponse;
 import com.fsocial.messageservice.enums.ErrorCode;
 import com.fsocial.messageservice.enums.ResponseStatus;
@@ -17,6 +18,7 @@ import com.fsocial.messageservice.repository.MessageRepository;
 import com.fsocial.messageservice.services.CacheService;
 import com.fsocial.messageservice.services.ChatService;
 import com.fsocial.messageservice.services.MessageService;
+import com.fsocial.messageservice.util.RedissonLock;
 import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.DelayQueue;
-import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -42,8 +45,11 @@ public class ChatServiceImpl implements ChatService {
     DelayQueue<DelayedMessage> delayQueue = new DelayQueue<>();
     CacheService cacheService;
     MessageService messageService;
+    RedissonLock redissonLock;
 
-    String MESSAGE_QUEUE_KEY_PREFIX = "chat:messages:";
+    static final String MESSAGE_QUEUE_KEY_PREFIX = "chat:messages:";
+    static final int BATCH_SIZE = 5; // limited 5 message in Redis
+    static final long FLUSH_DELAY = 3000L; // 3 seconds
 
     @PostConstruct
     private void startFlushWorker() {
@@ -68,28 +74,24 @@ public class ChatServiceImpl implements ChatService {
         cacheService.validateUser(request.getReceiverId());
         cacheService.ensureConversationExists(request.getConversationId());
 
-        String cacheKey = MESSAGE_QUEUE_KEY_PREFIX + request.getConversationId();
-        String messageId = new ObjectId().toHexString();
-        request.setMessageId(messageId);
+        MessageResponse response = messageMapper.toMessageResponse(request);
+        response.setImages(createImageMap(request.getImages()));
+        response.setRead(false);
+        response.setMessageId(new ObjectId().toHexString());
 
-        stringRedisTemplate.opsForList().rightPush(cacheKey, convertToJson(request));
-        long size = Optional.ofNullable(stringRedisTemplate.opsForList().size(cacheKey)).orElse(0L);
-        int BATCH_SIZE = 5;
-        if (size >= BATCH_SIZE) {
+        // Set Object vào Redis
+        String cacheKey = MESSAGE_QUEUE_KEY_PREFIX + request.getConversationId();
+        stringRedisTemplate.opsForList().rightPush(cacheKey, convertObjectToJson(response));
+
+        // Kiểm tra số lượng Message được ở Redis
+        Long size = stringRedisTemplate.opsForList().size(cacheKey);
+        if (size != null && size >= BATCH_SIZE) {
             flushMessagesToDB(request.getConversationId());
         } else {
-            long FLUSH_DELAY = 3_000; // 3 giây
             delayQueue.offer(new DelayedMessage(request.getConversationId(), FLUSH_DELAY));
         }
 
-        return MessageResponse.builder()
-                .messageId(messageId)
-                .content(request.getContent())
-                .conversationId(request.getConversationId())
-                .receiverId(request.getReceiverId())
-                .isRead(false)
-                .createAt(request.getCreateAt())
-                .build();
+        return response;
     }
 
     @Override
@@ -102,11 +104,66 @@ public class ChatServiceImpl implements ChatService {
                 messageService.markMessagesAsRead(request.getConversationId(), request.getSenderId());
                 yield ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
             }
+            case REACTION -> processReactionMessage(request);
             default -> {
                 log.error("Loại hành động không hợp lệ.");
                 throw new AppException(ErrorCode.NOT_FOUND);
             }
         };
+    }
+
+    private Map<String, String> createImageMap(List<String> images) {
+        if (images == null || images.isEmpty()) return Collections.emptyMap();
+
+        return IntStream.range(0, images.size())
+                .boxed()
+                .collect(Collectors.toMap(i -> "image:" + (i + 1),
+                        images::get, (a, b) -> b,
+                        LinkedHashMap::new));
+    }
+
+    private ApiResponse<ActionsResponse> processReactionMessage(ActionsRequest request) {
+        Message message = validActionForMessage(request);
+        String newReaction = getRequiredProperty(request.getAllProperties(), "reaction");
+
+        updateReactionForMessage(message, newReaction);
+
+        ActionsResponse response = ActionsResponse.builder()
+                .type(TypesAction.REACTION)
+                .senderId(request.getSenderId())
+                .conversationId(request.getConversationId())
+                .build();
+        response.setExtraProperties(Map.of(
+                "messageId", getRequiredProperty(request.getAllProperties(), "messageId"),
+                "reaction", message.getReaction()
+        ));
+
+        return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
+    }
+
+    private String getRequiredProperty(Map<String, Object> properties, String key) {
+        return Optional.ofNullable(properties.get(key))
+                .map(Object::toString)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_NULL));
+    }
+
+    private Message validActionForMessage(ActionsRequest request) {
+        Optional.ofNullable(request.getSenderId())
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_NULL));
+
+        String messageId = getRequiredProperty(request.getAllProperties(), "messageId");
+
+        return findMessageWithMessageIdFormUser(messageId);
+    }
+
+    private void updateReactionForMessage(Message message, String newReaction) {
+        if (Objects.equals(newReaction, message.getReaction())) {
+            message.setReaction(null); // Unlike nếu reaction giống nhau
+        } else {
+            message.setReaction(newReaction); // Cập nhật nếu reaction khác nhau
+        }
+        messageRepository.save(message);
+        log.info("Cập nhật reaction thành công: {}", newReaction);
     }
 
     private ApiResponse<ActionsResponse> processTypingAction(ActionsRequest request) {
@@ -115,82 +172,89 @@ public class ChatServiceImpl implements ChatService {
         String conversationId = Optional.ofNullable(request.getConversationId())
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_NULL));
 
-        String TYPING_KEY_PREFIX = "typing:";
-        long TYPING_TIMEOUT = 3; // 3 giây
-
-        String typingKey = TYPING_KEY_PREFIX + conversationId + ":" + senderId;
-
-        // Lưu trạng thái "typing" vào Redis với TTL = 3 giây
-//        booleanRedisTemplate.opsForValue().set(typingKey, "true", TYPING_TIMEOUT, TimeUnit.SECONDS);
-
         ActionsResponse response = ActionsResponse.builder()
                 .type(TypesAction.TYPING)
                 .conversationId(conversationId)
                 .senderId(senderId)
-                .extraProperties(Map.of("typing", true))
                 .build();
+        response.addProperty("typing", true);
 
         return  ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
-    private ApiResponse<?> processRecallAction(ActionsRequest request) {
-        String senderId = Optional.ofNullable(request.getSenderId())
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_NULL));
+    private ApiResponse<MessageRecallResponse> processRecallAction(ActionsRequest request) {
+        Message message = validActionForMessage(request);
+        validateMessageOwnership(message.getReceiverId(), request.getSenderId());
+        message.setContent(null);
+        Message messageRecall = messageRepository.save(message);
 
-        String messageId = Optional.ofNullable(request.getProperty("messageId"))
-                .map(Object::toString)
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_NULL));
-
-        Message message = messageRepository.findById(messageId).orElseThrow(
-                () -> {
-                    log.error("Không tìm thấy Message với id={}", messageId);
-                    return new AppException(ErrorCode.NOT_FOUND);
-                }
-        );
-
-        validateMessageOwnership(message, senderId);
-
-        String CONTENT_RECALL_MESSAGE = "Tin nhắn đã được thu hồi.";
-        message.setContent(CONTENT_RECALL_MESSAGE);
-        messageRepository.save(message);
-
-        return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
+        return ApiResponse.buildApiResponse(MessageRecallResponse.builder()
+                        .messageId(messageRecall.getId())
+                        .senderId(request.getSenderId())
+                .build(),
+                ResponseStatus.SUCCESS);
     }
 
-    private void validateMessageOwnership(Message message, String senderId) {
-        if (!Objects.equals(message.getReceiverId(), senderId)) {
-            log.warn("Người gửi ({}) không có quyền thu hồi tin nhắn id={}.", senderId, message.getId());
+    private Message findMessageWithMessageIdFormUser(String messageId) {
+        return messageRepository.findById(messageId)
+               .orElseThrow(() -> {
+                    log.error("Không tìm thấy tin nhắn với id={}", messageId);
+                    return new AppException(ErrorCode.NOT_FOUND);
+                });
+    }
+
+    private void validateMessageOwnership(String ownerId, String senderId) {
+        if (!Objects.equals(ownerId, senderId)) {
+            log.warn("Người gửi ({}) không có quyền thu hồi tin nhắn.", senderId);
             throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
     }
 
     private void flushMessagesToDB(String conversationId) {
         String cacheKey = MESSAGE_QUEUE_KEY_PREFIX + conversationId;
+        String lockKey = "lock:flushMessages:" + conversationId;
+        if (!redissonLock.acquireLock(lockKey)) {
+            log.info("Thread khác đang thực hiện flushMessages");
+            return;
+        }
 
-        List<String> messageJsonList = stringRedisTemplate.opsForList().range(cacheKey, 0, -1);
-        if (messageJsonList == null || messageJsonList.isEmpty()) return;
-
-        List<Message> messages = messageJsonList.stream()
-                .map(message -> messageMapper.toEntity(convertFromJson(message)))
-                .toList();
-
-        messageRepository.saveAll(messages);
-        stringRedisTemplate.delete(cacheKey);
-    }
-
-    private MessageRequest convertFromJson(String json) {
         try {
-            return objectMapper.readValue(json, MessageRequest.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Lỗi khi chuyển đổi JSON thành MessageRequest", e);
+            List<String> messageJsonList = stringRedisTemplate.opsForList().range(cacheKey, 0, -1);
+            if (messageJsonList == null || messageJsonList.isEmpty()) {
+                log.info("Không có tin nhắn nào để flush cho conversationId={}", conversationId);
+                return;
+            }
+
+            List<Message> messages = messageJsonList.stream()
+                    .map(msg -> messageMapper.toEntity(convertJSONToObject(msg, MessageResponse.class)))
+                    .toList();
+
+            messageRepository.saveAll(messages);
+            stringRedisTemplate.delete(cacheKey);
+
+            log.info("Đã flush {} tin nhắn vào DB cho conversationId={}", messages.size(), conversationId);
+        } catch (Exception e) {
+            log.error("Lỗi khi flush tin nhắn vào DB cho conversationId={}", conversationId);
+        } finally {
+            redissonLock.releaseLock(lockKey);
         }
     }
 
-    private <T> String convertToJson(T object) {
+    private <T> T convertJSONToObject(String json, Class<T> clazz) {
+        try {
+            return objectMapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            log.error("Không thể chuyển đổi JSON sang MessageResponse");
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
+        }
+    }
+
+    private <T> String convertObjectToJson(T object) {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Lỗi khi chuyển đổi thành JSON", e);
+            log.error("Lỗi khi chuyển đổi thành JSON");
+            throw new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION);
         }
     }
 }

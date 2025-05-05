@@ -19,13 +19,42 @@ openapi:
     title: Post Service API
     version: 1.0.0
     description: API for managing timeline
+#langchain:
+#  llm:
+#    gemini:
+#      api-key: AIzaSyDJnWn9t3zi-8EmLXcfz7NTJTwPQIVyCUk
+#      model-name: gemini-pro
+#      temperature: 0.7 # Giá trị mặc định, bạn có thể điều chỉnh
+#      top-p: 0.95 # Giá trị mặc định, bạn có thể điều chỉnh
+#      max-output-tokens: 256 # Giá trị mặc định, bạn có thể điều chỉnh
+#      safety-settings: # Cấu hình cài đặt an toàn (tùy chọn)
+#        - category: HARM_CATEGORY_HARASSMENT
+#          threshold: BLOCK_MEDIUM_AND_ABOVE
+#        - category: HARM_CATEGORY_HATE_SPEECH
+#          threshold: BLOCK_MEDIUM_AND_ABOVE
+#        - category: HARM_CATEGORY_SEXUALLY_EXPLICIT
+#          threshold: BLOCK_MEDIUM_AND_ABOVE
+#        - category: HARM_CATEGORY_DANGEROUS_CONTENT
+#          threshold: BLOCK_MEDIUM_AND_ABOVE
 spring:
   application:
     name: timelineService
   data:
     mongodb:
-      uri: mongodb://localhost:27017/post_db
-      database: post_db
+      uri: mongodb://root:root@localhost:27002/primary_database?authSource=admin
+      auto-index-creation: true
+redis:
+  host: replica_redis
+  port: 6379
+  database: 0
+  timeout: 10s
+  lettuce:
+    pool:
+      max-active: 8
+      max-idle: 8
+      min-idle: 0
+      max-wait: 500ms
+    shutdown-timeout: 200ms
   jpa:
     hibernate:
       ddl-auto: update

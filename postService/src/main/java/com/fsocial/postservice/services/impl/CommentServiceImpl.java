@@ -14,6 +14,7 @@ import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.repository.httpClient.Accountclient;
 import com.fsocial.postservice.services.CommentService;
+import com.fsocial.postservice.services.RedisService;
 import com.fsocial.postservice.services.UploadMedia;
 import com.fsocial.postservice.services.KafkaService;
 import lombok.AccessLevel;
@@ -46,6 +47,7 @@ public class CommentServiceImpl implements CommentService {
     PostRepository postRepository;
     MongoTemplate mongoTemplate;
     Accountclient accountclient;
+    RedisService redisService;
 
     @Override
     @Transactional
@@ -59,19 +61,25 @@ public class CommentServiceImpl implements CommentService {
         Comment commentRequest = buildComment(request, mediaUrls);
         commentRequest.setCreatedAt(LocalDateTime.now());
         commentRequest.setLikes(new ArrayList<>());
-        commentRequest.setCreatDatetime(LocalDateTime.now());
+        commentRequest.setCreateDatetime(LocalDateTime.now());
         Comment savedComment = commentRepository.save(commentRequest);
 
         // Send request to notification
         String ownerId = post.getUserId();
         String userId = request.getUserId();
-        kafkaService.sendNotification(NotificationRequest.builder()
-                .ownerId(ownerId)
-                .receiverId(userId)
-                .topic(TopicKafka.TOPIC_COMMENT.getTopic())
-                .postId(postId)
-                .commentId(savedComment.getId())
-                .build());
+
+        if (!Objects.equals(ownerId, userId)) {
+            kafkaService.sendNotification(NotificationRequest.builder()
+                    .ownerId(ownerId)
+                    .receiverId(userId)
+                    .topic(TopicKafka.TOPIC_COMMENT.getTopic())
+                    .postId(postId)
+                    .commentId(savedComment.getId())
+                    .build());
+        }
+
+        //thêm vào personalization
+        redisService.personalization(savedComment.getUserId(), post.getUserId());
 
         return savedComment;
     }

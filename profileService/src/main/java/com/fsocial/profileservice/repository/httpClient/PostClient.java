@@ -10,5 +10,5 @@ import org.springframework.web.multipart.MultipartFile;
 public interface PostClient {
 
     @PostMapping(value = "/internal/upload-file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    String uploadFile(@RequestPart("fileUpload") MultipartFile[] file);
+    String uploadFile(@RequestPart("fileUpload") MultipartFile file);
 }

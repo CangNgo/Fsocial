@@ -10,10 +10,18 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface MessageMapper {
     @Mapping(source = "messageId", target = "id")
-    Message toEntity(MessageRequest request);
+    @Mapping(target = "images", ignore = true)
+    Message toEntity(MessageRequest messageRequest);
+
+    @Mapping(source = "messageId", target = "id")
+    Message toEntity(MessageResponse messageResponse);
 
     @Mapping(source = "id", target = "messageId")
     MessageResponse toMessageResponse(Message entity);
 
+    @Mapping(target = "images", ignore = true)
+    MessageResponse toMessageResponse(MessageRequest request);
+
     LastMessage toLastMessage(Message entity);
+
 }

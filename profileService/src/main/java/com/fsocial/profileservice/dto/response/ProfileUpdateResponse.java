@@ -17,10 +17,7 @@ import java.time.LocalDate;
 public class ProfileUpdateResponse {
     String firstName;
     String lastName;
-    LocalDate dob;
     String bio;
-    String avatar;
-    String banner;
     String address;
     LocalDate createdAt;
     LocalDate updatedAt;

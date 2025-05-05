@@ -9,20 +9,19 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public enum ErrorCode{
-    UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
-    OK(200, "OK", HttpStatus.OK),
-    UNAUTHENTICATED(468, "Tài khoản chưa được xác thực.", HttpStatus.BAD_REQUEST),
-    NOT_FOUND(404, "Không tìm thấy.", HttpStatus.NOT_FOUND),
-    TOKEN_EXPIRED(700, "Token hết thời hạn.", HttpStatus.BAD_REQUEST),
-    INVALID_TOKEN(701, "Token không hợp lệ.", HttpStatus.BAD_REQUEST)
+    UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error"),
+    OK(200, "OK"),
+    UNAUTHENTICATED(468, "Tài khoản chưa được xác thực."),
+    NOT_FOUND(404, "Không tìm thấy."),
+    TOKEN_EXPIRED(700, "Token hết thời hạn."),
+    INVALID_TOKEN(701, "Token không hợp lệ."),
+    ACCOUNT_BANNED(601,"Account Banned")
     ;
     final int code;
     final String message;
-    final HttpStatusCode httpStatusCode;
 
-    ErrorCode(int code, String message, HttpStatusCode statusCode) {
+    ErrorCode(int code, String message) {
         this.code = code;
         this.message = message;
-        this.httpStatusCode = statusCode;
     }
 }

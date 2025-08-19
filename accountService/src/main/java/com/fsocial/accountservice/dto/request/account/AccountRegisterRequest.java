@@ -1,15 +1,21 @@
 package com.fsocial.accountservice.dto.request.account;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fsocial.accountservice.validation.constrain.DobValid;
 import com.fsocial.accountservice.validation.constrain.NameValid;
 import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
 import com.fsocial.accountservice.validation.constrain.PasswordValid;
-import jakarta.validation.constraints.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
@@ -17,7 +23,7 @@ import java.time.LocalDate;
 @Builder
 @Data
 public class AccountRegisterRequest {
-    @Size(min = 6,message = "INVALID_USERNAME")
+    @Size(min = 6, message = "INVALID_USERNAME")
     @NotNullOrBlank(message = "REQUIRED_USERNAME")
     String username;
 

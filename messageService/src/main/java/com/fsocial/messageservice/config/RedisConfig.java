@@ -11,17 +11,19 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
-    @Value("${redis.host}")
+    @Value("${spring.data.redis.host}")
     private String HOST_REDIS;
 
-    @Value("${redis.port}")
+    @Value("${spring.data.redis.port}")
     private int PORT_REDIS;
+
+    @Value("${spring.data.redis.password}")
+    private String PASSWORD_REDIS;
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
@@ -50,6 +52,7 @@ public class RedisConfig {
         Config config = new Config();
         config.useSingleServer()
                 .setAddress("redis://" + HOST_REDIS + ":" + PORT_REDIS)
+                .setPassword(PASSWORD_REDIS)
                 .setConnectionMinimumIdleSize(10)
                 .setConnectionPoolSize(20);
         return Redisson.create(config);

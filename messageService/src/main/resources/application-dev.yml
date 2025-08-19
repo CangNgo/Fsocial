@@ -1,13 +1,29 @@
-database:
-  name: my-mongo
-  password: datgo123
+app:
+  services:
+    profile: ${PROFILE_SERVICE_URL:http://localhost:8085}/profile
+    account: ${ACCOUNT_SERVICE_URL:http://localhost:8081}/account
 spring:
   application:
     name: messageService
   data:
     mongodb:
-      uri: mongodb://localhost:27017/message_db
+      uri: ${MONGODB_MESSAGE_URL:mongodb://admin:adminpassword@localhost:27017/message_db?authSource=admin}
       database: message_db
+    redis:
+      host: ${REDIS_CONTAINER:localhost}  # Vì Redis chạy trên localhost
+      port: ${REDIS_PORT:6379}  # Port từ docker-compose (REDIS_PORT từ .env)
+      password: ${REDIS_PASSWORD:redispassword}
+      database: 0
+      timeout: 2000ms
+      connect-timeout: 2000ms
+      # Cấu hình connection pool cho Spring Data Redis
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 500ms
+        shutdown-timeout: 200ms
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,17 +36,6 @@ spring:
       matching-strategy: ant_path_matcher
   main:
     allow-circular-references: true
-
-redis:
-  host: localhost   # Địa chỉ Redis server
-  port: 6379        # Cổng mặc định Redis
-  lettuce:
-    pool:
-      max-active: 10   # Số lượng kết nối tối đa
-      max-idle: 5      # Số kết nối tối đa có thể rỗng
-      min-idle: 1      # Số kết nối tối thiểu có thể rỗng
-  timeout: 2000ms     # Thời gian chờ kết nối Redis
-
 server:
   servlet:
     context-path: /message
@@ -59,8 +64,3 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
-
-app:
-  services:
-    profile: http://localhost:8085/profile
-    account: http://localhost:8081/account

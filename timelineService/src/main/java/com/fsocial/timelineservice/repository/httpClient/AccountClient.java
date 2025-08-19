@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
-@FeignClient(name = "accountService", url = "${app.services.account}")
+@FeignClient(name = "account-service", url = "${app.services.account}", path = "/account")
 public interface AccountClient {
     @GetMapping(value = "/exists", produces = MediaType.APPLICATION_JSON_VALUE)
     ApiResponse<Map<String, Boolean>> existsAccountByUserId(@RequestParam String userId);

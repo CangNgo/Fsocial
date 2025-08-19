@@ -1,10 +1,8 @@
 package com.fsocial.messageservice.controller;
 
 import com.fsocial.messageservice.dto.ApiResponse;
-import com.fsocial.messageservice.dto.request.MarkReadRequest;
-import com.fsocial.messageservice.dto.request.MarkReadResponse;
-import com.fsocial.messageservice.dto.request.MessageRequest;
 import com.fsocial.messageservice.dto.request.ActionsRequest;
+import com.fsocial.messageservice.dto.request.MessageRequest;
 import com.fsocial.messageservice.dto.response.MessageResponse;
 import com.fsocial.messageservice.services.ChatService;
 import com.fsocial.messageservice.services.MessageService;
@@ -12,9 +10,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.handler.annotation.*;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController

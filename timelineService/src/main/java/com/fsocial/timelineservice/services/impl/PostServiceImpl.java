@@ -24,10 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,9 +79,10 @@ public class PostServiceImpl implements PostService {
                         return this.mapToPostByUserIdResponse(post, userId);
                     } catch (AppCheckedException e) {
                         logger.error("Lỗi khi chuyển đổi dữ liệu post sang postResponse {}", e.getMessage());
-                        throw new RuntimeException(e.getMessage());
+                        return null;
                     }
                 })
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
@@ -104,9 +102,10 @@ public class PostServiceImpl implements PostService {
                         return this.mapToPostByUserIdResponse(post, userId);
                     } catch (AppCheckedException e) {
                         logger.error("Lỗi khi chuyển đổi dữ liệu post sang postResponse trong getPostByFollowing {}", e.getMessage());
-                        throw new RuntimeException(e.getMessage());
+                        return null;
                     }
                 })
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
@@ -130,6 +129,7 @@ public class PostServiceImpl implements PostService {
         ProfileResponse profile = getProfile(post.getUserId());
 //        boolean likePost = postRepository.existsByIdAndLikes(post.getId(), userId);
         //thêm vào danh sách những video đã xem
+        if (profile == null) return null;
         return PostResponse.builder()
                 .id(post.getId())
                 .originPostId(post.getOriginPostId())
@@ -153,7 +153,7 @@ public class PostServiceImpl implements PostService {
             return profileClient.getProfileResponseByUserId(userId);
         } catch (Exception e) {
             logger.error("Lỗi khi lấy thông tin profile người dùng {}", userId);
-            throw new AppCheckedException("Không tìm thấy thông tin người dùng: " + userId, StatusCode.USER_NOT_FOUND);
+            return null;
         }
     }
 

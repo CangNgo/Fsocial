@@ -1,4 +1,3 @@
-
 db:
   port: 3306
   name:
@@ -58,4 +57,3 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
-

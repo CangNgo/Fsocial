@@ -1,0 +1,879 @@
+2025-08-15 00:00:03.774 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:07.779 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:00:07.780 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:00:08.875 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:13.980 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:17.787 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:00:17.787 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:00:19.077 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:24.174 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:27.796 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:00:27.796 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:00:29.312 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:34.378 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:37.798 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:00:37.798 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:00:39.473 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:44.576 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:47.802 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:00:47.802 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:00:49.674 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:54.780 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:00:57.806 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:00:57.806 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:00:59.888 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:04.985 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:07.815 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:01:07.815 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:01:10.076 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:15.185 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:17.822 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+2025-08-15 00:01:17.822 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:01:20.284 [redisson-netty-4-13] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:25.388 [redisson-netty-4-14] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:27.833 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:01:27.833 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:01:30.487 [redisson-netty-4-15] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:35.584 [redisson-netty-4-16] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:37.841 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:01:37.841 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:01:40.673 [redisson-netty-4-17] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:45.776 [redisson-netty-4-18] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:47.851 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:01:47.851 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:01:50.876 [redisson-netty-4-19] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:55.982 [redisson-netty-4-20] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:01:57.857 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:01:57.857 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:02:01.080 [redisson-netty-4-21] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:06.181 [redisson-netty-4-22] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:07.861 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:02:07.861 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:02:11.275 [redisson-netty-4-23] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:16.386 [redisson-netty-4-24] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:17.871 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:02:17.871 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:02:21.474 [redisson-netty-4-25] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:26.579 [redisson-netty-4-26] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:27.872 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:02:27.872 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:02:31.680 [redisson-netty-4-27] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:36.787 [redisson-netty-4-28] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:37.874 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:02:37.874 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:02:41.875 [redisson-netty-4-29] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:46.981 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:47.883 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:02:47.883 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:02:52.080 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:57.181 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:02:57.891 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:02:57.891 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:03:02.281 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:07.373 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:07.895 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:03:07.895 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:03:12.478 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:17.585 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:17.905 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:03:17.905 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:03:22.673 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:27.777 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:27.912 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:03:27.912 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:03:32.888 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:37.923 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:03:37.923 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:03:37.976 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:43.087 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:47.933 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:03:47.933 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:03:48.184 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:53.280 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:03:53.363 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[.[localhost].[/message] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-15 00:03:53.364 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-08-15 00:03:53.365 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2025-08-15 00:03:53.367 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2025-08-15 00:03:53.367 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2025-08-15 00:03:53.368 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@40ea839f
+2025-08-15 00:03:53.368 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@3b4941a0
+2025-08-15 00:03:53.369 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-08-15 00:03:53.370 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+2025-08-15 00:03:53.398 [http-nio-8082-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:03:53.409 [http-nio-8082-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:03:53.409 [http-nio-8082-exec-1] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:03:53.413 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:03:53.416 [http-nio-8082-exec-1] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:03:53.434 [http-nio-8082-exec-1] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:03:53.452 [http-nio-8082-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:03:53.481 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:03:53.501 [http-nio-8082-exec-1] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=708df864-ce32-81d9-c6cf-3d52e56f6845, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:03:53.521 [clientInboundChannel-2] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=708df864-ce32-81d9-c6cf-3d52e56f6845
+2025-08-15 00:03:53.531 [clientInboundChannel-5] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=708df864-ce32-81d9-c6cf-3d52e56f6845
+2025-08-15 00:03:57.943 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:03:57.943 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:03:58.382 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:03.488 [redisson-netty-4-13] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:07.954 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:04:07.954 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:04:08.577 [redisson-netty-4-14] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:13.677 [redisson-netty-4-15] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:17.962 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.3 ms, state=CONNECTED}]
+2025-08-15 00:04:17.962 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:04:18.781 [redisson-netty-4-16] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:21.085 [http-nio-8082-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:04:21.148 [http-nio-8082-exec-3] DEBUG o.s.s.o.s.r.a.JwtAuthenticationProvider - Authenticated token
+2025-08-15 00:04:21.149 [http-nio-8082-exec-3] DEBUG o.s.s.o.s.r.w.a.BearerTokenAuthenticationFilter - Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@2944e5cd, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_USER]]
+2025-08-15 00:04:21.149 [http-nio-8082-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:04:21.149 [http-nio-8082-exec-3] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:04:21.149 [http-nio-8082-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1", parameters={}
+2025-08-15 00:04:21.150 [http-nio-8082-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fsocial.messageservice.controller.ConversationController#getUserConversations(String)
+2025-08-15 00:04:21.199 [http-nio-8082-exec-3] DEBUG o.s.d.m.r.query.MongoQueryCreator - Created query Query: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}}, Fields: {}, Sort: {}
+2025-08-15 00:04:21.212 [http-nio-8082-exec-3] DEBUG o.s.data.mongodb.core.MongoTemplate - find using query: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}} fields: Document{{}} sort: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}} for class: class com.fsocial.messageservice.Entity.Conversation in collection: conversation
+2025-08-15 00:04:21.242 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.cluster - Server selection started for operation with ID 159. Selector: ReadPreferenceServerSelector{readPreference=primary}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.3 ms, state=CONNECTED}]
+2025-08-15 00:04:21.245 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.cluster - Server selection succeeded for operation with ID 159. Selected server: localhost:27017. Selector: ReadPreferenceServerSelector{readPreference=primary}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.3 ms, state=CONNECTED}]
+2025-08-15 00:04:21.246 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.connection - Checkout started for connection to localhost:27017
+2025-08-15 00:04:21.250 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.connection - Connection created: address=localhost:27017, driver-generated ID=3
+2025-08-15 00:04:21.376 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.connection - Connection ready: address=localhost:27017, driver-generated ID=3, established in=125 ms
+2025-08-15 00:04:21.377 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.connection - Connection checked out: address=localhost:27017, driver-generated ID=3, duration=131 ms
+2025-08-15 00:04:21.397 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.protocol.command - Command "find" started on database "message_db" using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 83 and the operation ID is 159. Command: {"find": "conversation", "filter": {"participants": {"$in": ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}}, "$db": "message_db", "lsid": {"id": {"$binary": {"base64": "PqTzXS7gTKqGgwVb1mCu1w==", "subType": "04"}}}}
+2025-08-15 00:04:21.407 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.protocol.command - Command "find" succeeded on database "message_db" in 10.9005 ms using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 83 and the operation ID is 159. Command reply: {"cursor": {"id": 0, "ns": "message_db.conversation", "firstBatch": []}, "ok": 1.0}
+2025-08-15 00:04:21.409 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.operation - Received batch of 0 documents with cursorId 0 from server localhost:27017
+2025-08-15 00:04:21.412 [http-nio-8082-exec-3] DEBUG org.mongodb.driver.connection - Connection checked in: address=localhost:27017, driver-generated ID=3
+2025-08-15 00:04:21.473 [http-nio-8082-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2025-08-15 00:04:21.476 [http-nio-8082-exec-3] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [ApiResponse(statusCode=200, message=Thao tác thành công., dateTime=2025-08-15T00:04:21.416015500, da (truncated)...]
+2025-08-15 00:04:21.497 [http-nio-8082-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-15 00:04:23.875 [redisson-netty-4-17] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:27.971 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.1 ms, state=CONNECTED}]
+2025-08-15 00:04:27.971 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:04:28.979 [redisson-netty-4-18] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:34.086 [redisson-netty-4-19] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:37.973 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.2 ms, state=CONNECTED}]
+2025-08-15 00:04:37.973 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:04:39.174 [redisson-netty-4-20] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:44.287 [redisson-netty-4-21] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:47.980 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.1 ms, state=CONNECTED}]
+2025-08-15 00:04:47.980 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:04:49.387 [redisson-netty-4-22] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:54.477 [redisson-netty-4-23] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:04:57.991 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.0 ms, state=CONNECTED}]
+2025-08-15 00:04:57.991 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:04:59.583 [redisson-netty-4-24] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:04.684 [redisson-netty-4-25] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:08.001 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.9 ms, state=CONNECTED}]
+2025-08-15 00:05:08.001 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:05:09.775 [redisson-netty-4-26] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:14.873 [redisson-netty-4-27] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:18.010 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:05:18.010 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:05:19.973 [redisson-netty-4-28] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:25.073 [redisson-netty-4-29] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:28.020 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:05:28.020 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:05:30.177 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:35.274 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:35.932 [http-nio-8082-exec-5] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=708df864-ce32-81d9-c6cf-3d52e56f6845, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:05:35.932 [http-nio-8082-exec-5] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 708df864-ce32-81d9-c6cf-3d52e56f6845
+2025-08-15 00:05:35.933 [clientInboundChannel-8] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=708df864-ce32-81d9-c6cf-3d52e56f6845
+2025-08-15 00:05:35.934 [clientOutboundChannel-2] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true}, simpSessionId=708df864-ce32-81d9-c6cf-3d52e56f6845}], simpSessionId=708df864-ce32-81d9-c6cf-3d52e56f6845}]
+2025-08-15 00:05:37.903 [http-nio-8082-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:05:37.903 [http-nio-8082-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:05:37.903 [http-nio-8082-exec-6] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:05:37.903 [http-nio-8082-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:05:37.904 [http-nio-8082-exec-6] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:05:37.904 [http-nio-8082-exec-6] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:05:37.905 [http-nio-8082-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:05:37.907 [http-nio-8082-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:05:37.911 [http-nio-8082-exec-6] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=41c6122b-6dee-830e-f993-b6e39ee816f5, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:05:37.936 [clientInboundChannel-11] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=41c6122b-6dee-830e-f993-b6e39ee816f5
+2025-08-15 00:05:37.956 [clientInboundChannel-14] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=41c6122b-6dee-830e-f993-b6e39ee816f5
+2025-08-15 00:05:38.030 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:05:38.030 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:05:40.374 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:45.475 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:48.040 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.1 ms, state=CONNECTED}]
+2025-08-15 00:05:48.040 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:05:50.582 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:55.680 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:05:58.050 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.1 ms, state=CONNECTED}]
+2025-08-15 00:05:58.050 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:06:00.287 [http-nio-8082-exec-9] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=41c6122b-6dee-830e-f993-b6e39ee816f5, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:06:00.287 [http-nio-8082-exec-9] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 41c6122b-6dee-830e-f993-b6e39ee816f5
+2025-08-15 00:06:00.288 [clientInboundChannel-17] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=41c6122b-6dee-830e-f993-b6e39ee816f5
+2025-08-15 00:06:00.328 [clientOutboundChannel-4] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true}, simpSessionId=41c6122b-6dee-830e-f993-b6e39ee816f5}], simpSessionId=41c6122b-6dee-830e-f993-b6e39ee816f5}]
+2025-08-15 00:06:00.775 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:02.708 [http-nio-8082-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:06:02.709 [http-nio-8082-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:06:02.710 [http-nio-8082-exec-10] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:06:02.710 [http-nio-8082-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:06:02.711 [http-nio-8082-exec-10] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:06:02.711 [http-nio-8082-exec-10] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:06:02.713 [http-nio-8082-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:06:02.715 [http-nio-8082-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:06:02.718 [http-nio-8082-exec-10] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=086a59a4-63a2-0f6d-b9de-cfb45fd25fe6, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:06:02.741 [clientInboundChannel-20] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=086a59a4-63a2-0f6d-b9de-cfb45fd25fe6
+2025-08-15 00:06:02.763 [clientInboundChannel-23] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=086a59a4-63a2-0f6d-b9de-cfb45fd25fe6
+2025-08-15 00:06:05.888 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:08.060 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.0 ms, state=CONNECTED}]
+2025-08-15 00:06:08.060 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:06:10.976 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:15.082 [http-nio-8082-exec-3] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=086a59a4-63a2-0f6d-b9de-cfb45fd25fe6, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:06:15.082 [http-nio-8082-exec-3] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 086a59a4-63a2-0f6d-b9de-cfb45fd25fe6
+2025-08-15 00:06:15.082 [clientInboundChannel-26] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=086a59a4-63a2-0f6d-b9de-cfb45fd25fe6
+2025-08-15 00:06:15.083 [clientOutboundChannel-6] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true}, simpSessionId=086a59a4-63a2-0f6d-b9de-cfb45fd25fe6}], simpSessionId=086a59a4-63a2-0f6d-b9de-cfb45fd25fe6}]
+2025-08-15 00:06:16.082 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:16.962 [http-nio-8082-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:06:16.962 [http-nio-8082-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:06:16.962 [http-nio-8082-exec-4] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:06:16.963 [http-nio-8082-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:06:16.963 [http-nio-8082-exec-4] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:06:16.963 [http-nio-8082-exec-4] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:06:16.964 [http-nio-8082-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:06:16.964 [http-nio-8082-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:06:16.970 [http-nio-8082-exec-4] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=578ce558-1efd-8552-b107-300467937f7e, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:06:17.013 [clientInboundChannel-29] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=578ce558-1efd-8552-b107-300467937f7e
+2025-08-15 00:06:17.027 [clientInboundChannel-7] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=578ce558-1efd-8552-b107-300467937f7e
+2025-08-15 00:06:18.068 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.9 ms, state=CONNECTED}]
+2025-08-15 00:06:18.068 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:06:21.173 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:26.274 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:28.074 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.9 ms, state=CONNECTED}]
+2025-08-15 00:06:28.074 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:06:31.373 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:36.474 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:38.080 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:06:38.080 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:06:41.575 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:46.675 [redisson-netty-4-13] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:48.087 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:06:48.087 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:06:51.773 [redisson-netty-4-14] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:56.876 [redisson-netty-4-15] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:06:58.096 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:06:58.097 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:07:01.974 [redisson-netty-4-16] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:07.078 [redisson-netty-4-17] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:08.105 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:07:08.105 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:07:12.174 [redisson-netty-4-18] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:17.273 [redisson-netty-4-19] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:18.114 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:07:18.114 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:07:22.376 [redisson-netty-4-20] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:27.480 [redisson-netty-4-21] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:28.119 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:07:28.119 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:07:32.578 [redisson-netty-4-22] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:37.674 [redisson-netty-4-23] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:38.128 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:07:38.128 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:07:42.773 [redisson-netty-4-24] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:47.878 [redisson-netty-4-25] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:48.135 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:07:48.135 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:07:52.977 [redisson-netty-4-26] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:58.076 [redisson-netty-4-27] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:07:58.141 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:07:58.141 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:08:03.177 [redisson-netty-4-28] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:08.143 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:08:08.143 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:08:08.273 [redisson-netty-4-29] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:13.373 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:18.151 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:08:18.151 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:08:18.484 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:23.581 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:28.160 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:08:28.160 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:08:28.673 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:33.773 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:38.170 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:08:38.170 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:08:38.874 [http-nio-8082-exec-7] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=578ce558-1efd-8552-b107-300467937f7e, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:08:38.875 [http-nio-8082-exec-7] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 578ce558-1efd-8552-b107-300467937f7e
+2025-08-15 00:08:38.875 [clientInboundChannel-32] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=578ce558-1efd-8552-b107-300467937f7e
+2025-08-15 00:08:38.876 [clientOutboundChannel-8] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true}, simpSessionId=578ce558-1efd-8552-b107-300467937f7e}], simpSessionId=578ce558-1efd-8552-b107-300467937f7e}]
+2025-08-15 00:08:38.878 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:40.556 [http-nio-8082-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:08:40.556 [http-nio-8082-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:08:40.556 [http-nio-8082-exec-8] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:08:40.557 [http-nio-8082-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:08:40.557 [http-nio-8082-exec-8] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:08:40.557 [http-nio-8082-exec-8] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:08:40.558 [http-nio-8082-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:08:40.559 [http-nio-8082-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:08:40.561 [http-nio-8082-exec-8] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=ce5e5311-11e0-3278-700a-89b5ca9ef765, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:08:40.614 [clientInboundChannel-35] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=ce5e5311-11e0-3278-700a-89b5ca9ef765
+2025-08-15 00:08:40.636 [clientInboundChannel-38] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=ce5e5311-11e0-3278-700a-89b5ca9ef765
+2025-08-15 00:08:43.975 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:48.179 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:08:48.179 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:08:49.083 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:54.181 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:08:58.184 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:08:58.184 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:08:59.289 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:04.374 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:08.188 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:09:08.188 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:09:09.476 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:14.580 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:18.195 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:09:18.195 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:09:19.675 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:24.787 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:28.205 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:09:28.205 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:09:29.880 [redisson-netty-4-13] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:34.983 [redisson-netty-4-14] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:38.210 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:09:38.210 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:09:40.088 [redisson-netty-4-15] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:45.186 [redisson-netty-4-16] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:48.212 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:09:48.212 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:09:50.285 [redisson-netty-4-17] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:55.373 [redisson-netty-4-18] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:09:58.222 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:09:58.222 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:10:00.480 [redisson-netty-4-19] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:05.586 [redisson-netty-4-20] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:08.232 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:10:08.232 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:10:10.674 [redisson-netty-4-21] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:15.779 [redisson-netty-4-22] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:18.241 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:10:18.241 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:10:20.873 [redisson-netty-4-23] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:25.973 [redisson-netty-4-24] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:28.250 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:10:28.250 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:10:31.076 [redisson-netty-4-25] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:36.180 [redisson-netty-4-26] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:38.259 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:10:38.259 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:10:41.275 [redisson-netty-4-27] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:46.374 [redisson-netty-4-28] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:48.269 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:10:48.269 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:10:51.475 [redisson-netty-4-29] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:56.575 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:10:58.278 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:10:58.278 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:11:01.685 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:06.773 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:08.286 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:11:08.286 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:11:11.873 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:16.980 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:18.291 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:11:18.291 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:11:22.077 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:27.174 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:28.301 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:11:28.301 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:11:32.274 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:37.376 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:38.306 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:11:38.306 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:11:42.474 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:47.579 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:48.316 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:11:48.316 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:11:52.677 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:57.775 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:11:58.326 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:11:58.326 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:12:02.875 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:07.979 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:08.333 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:12:08.333 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:12:13.075 [redisson-netty-4-13] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:18.174 [redisson-netty-4-14] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:18.338 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:12:18.338 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:12:23.273 [redisson-netty-4-15] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:28.341 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:12:28.341 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:12:28.379 [redisson-netty-4-16] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:33.483 [redisson-netty-4-17] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:38.347 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:12:38.347 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:12:38.573 [redisson-netty-4-18] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:43.680 [redisson-netty-4-19] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:48.357 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:12:48.357 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:12:48.774 [redisson-netty-4-20] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:53.879 [redisson-netty-4-21] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:12:58.368 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:12:58.368 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:12:58.978 [redisson-netty-4-22] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:04.082 [redisson-netty-4-23] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:08.368 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:13:08.368 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:13:09.176 [redisson-netty-4-24] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:14.273 [redisson-netty-4-25] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:18.372 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:13:18.373 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:13:19.373 [redisson-netty-4-26] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:24.473 [redisson-netty-4-27] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:28.383 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:13:28.383 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:13:29.587 [redisson-netty-4-28] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:34.675 [redisson-netty-4-29] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:38.387 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:13:38.387 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:13:39.776 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:44.873 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:48.400 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:13:48.401 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:13:49.976 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:55.076 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:13:58.403 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:13:58.403 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:14:00.174 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:05.278 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:08.408 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:14:08.408 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:14:10.377 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:15.474 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:18.418 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:14:18.418 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:14:20.573 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:25.673 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:28.423 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:14:28.423 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:14:30.776 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:35.873 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:38.432 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:14:38.432 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:14:40.979 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:46.079 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:46.834 [http-nio-8082-exec-1] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=ce5e5311-11e0-3278-700a-89b5ca9ef765, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:14:46.835 [http-nio-8082-exec-1] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session ce5e5311-11e0-3278-700a-89b5ca9ef765
+2025-08-15 00:14:46.835 [clientInboundChannel-41] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=ce5e5311-11e0-3278-700a-89b5ca9ef765
+2025-08-15 00:14:46.836 [clientOutboundChannel-10] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true}, simpSessionId=ce5e5311-11e0-3278-700a-89b5ca9ef765}], simpSessionId=ce5e5311-11e0-3278-700a-89b5ca9ef765}]
+2025-08-15 00:14:48.406 [http-nio-8082-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:14:48.406 [http-nio-8082-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:14:48.406 [http-nio-8082-exec-2] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:14:48.407 [http-nio-8082-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:14:48.407 [http-nio-8082-exec-2] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:14:48.407 [http-nio-8082-exec-2] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:14:48.408 [http-nio-8082-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:14:48.409 [http-nio-8082-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:14:48.413 [http-nio-8082-exec-2] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=54214446-a7c4-2ca2-4bba-c60a84640972, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:14:48.447 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:14:48.447 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:14:48.449 [clientInboundChannel-44] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=54214446-a7c4-2ca2-4bba-c60a84640972
+2025-08-15 00:14:48.457 [clientInboundChannel-47] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=54214446-a7c4-2ca2-4bba-c60a84640972
+2025-08-15 00:14:51.176 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:56.275 [redisson-netty-4-13] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:14:58.451 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:14:58.451 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:15:01.379 [redisson-netty-4-14] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:06.476 [redisson-netty-4-15] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:08.454 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:15:08.454 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:15:11.579 [redisson-netty-4-16] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:16.673 [redisson-netty-4-17] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:18.456 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:15:18.456 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:15:21.783 [redisson-netty-4-18] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:26.873 [redisson-netty-4-19] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:28.462 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:15:28.462 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:15:31.980 [redisson-netty-4-20] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:37.078 [redisson-netty-4-21] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:38.472 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:15:38.472 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:15:42.179 [redisson-netty-4-22] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:47.274 [redisson-netty-4-23] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:48.472 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+2025-08-15 00:15:48.472 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:15:52.376 [redisson-netty-4-24] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:57.474 [redisson-netty-4-25] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:15:58.481 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+2025-08-15 00:15:58.482 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:16:02.573 [redisson-netty-4-26] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:07.674 [redisson-netty-4-27] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:08.491 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+2025-08-15 00:16:08.492 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:16:12.774 [redisson-netty-4-28] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:17.881 [redisson-netty-4-29] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:18.500 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+2025-08-15 00:16:18.500 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:16:22.983 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:28.077 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:28.510 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+2025-08-15 00:16:28.510 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:16:33.173 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:38.276 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:38.518 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+2025-08-15 00:16:38.518 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:16:43.379 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:48.474 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:48.519 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:16:48.519 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:16:53.578 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:16:58.521 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:16:58.521 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:16:58.679 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:03.775 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:08.525 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:17:08.525 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:17:08.873 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:13.980 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:18.087 [http-nio-8082-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:17:18.089 [http-nio-8082-exec-5] DEBUG o.s.s.o.s.r.a.JwtAuthenticationProvider - Authenticated token
+2025-08-15 00:17:18.089 [http-nio-8082-exec-5] DEBUG o.s.s.o.s.r.w.a.BearerTokenAuthenticationFilter - Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@33f2c090, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_USER]]
+2025-08-15 00:17:18.090 [http-nio-8082-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:17:18.090 [http-nio-8082-exec-5] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:17:18.090 [http-nio-8082-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1", parameters={}
+2025-08-15 00:17:18.090 [http-nio-8082-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fsocial.messageservice.controller.ConversationController#getUserConversations(String)
+2025-08-15 00:17:18.097 [http-nio-8082-exec-5] DEBUG o.s.d.m.r.query.MongoQueryCreator - Created query Query: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}}, Fields: {}, Sort: {}
+2025-08-15 00:17:18.099 [http-nio-8082-exec-5] DEBUG o.s.data.mongodb.core.MongoTemplate - find using query: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}} fields: Document{{}} sort: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}} for class: class com.fsocial.messageservice.Entity.Conversation in collection: conversation
+2025-08-15 00:17:18.100 [http-nio-8082-exec-5] DEBUG org.mongodb.driver.cluster - Server selection started for operation with ID 314. Selector: ReadPreferenceServerSelector{readPreference=primary}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:17:18.100 [http-nio-8082-exec-5] DEBUG org.mongodb.driver.cluster - Server selection succeeded for operation with ID 314. Selected server: localhost:27017. Selector: ReadPreferenceServerSelector{readPreference=primary}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:17:18.100 [http-nio-8082-exec-5] DEBUG org.mongodb.driver.connection - Checkout started for connection to localhost:27017
+2025-08-15 00:17:18.101 [http-nio-8082-exec-5] DEBUG org.mongodb.driver.connection - Connection checked out: address=localhost:27017, driver-generated ID=3, duration=0 ms
+2025-08-15 00:17:18.102 [http-nio-8082-exec-5] DEBUG org.mongodb.driver.protocol.command - Command "find" started on database "message_db" using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 161 and the operation ID is 314. Command: {"find": "conversation", "filter": {"participants": {"$in": ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}}, "$db": "message_db", "lsid": {"id": {"$binary": {"base64": "PqTzXS7gTKqGgwVb1mCu1w==", "subType": "04"}}}}
+2025-08-15 00:17:18.104 [http-nio-8082-exec-5] DEBUG org.mongodb.driver.protocol.command - Command "find" succeeded on database "message_db" in 2.3413 ms using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 161 and the operation ID is 314. Command reply: {"cursor": {"id": 0, "ns": "message_db.conversation", "firstBatch": []}, "ok": 1.0}
+2025-08-15 00:17:18.104 [http-nio-8082-exec-5] DEBUG org.mongodb.driver.operation - Received batch of 0 documents with cursorId 0 from server localhost:27017
+2025-08-15 00:17:18.104 [http-nio-8082-exec-5] DEBUG org.mongodb.driver.connection - Connection checked in: address=localhost:27017, driver-generated ID=3
+2025-08-15 00:17:18.105 [http-nio-8082-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2025-08-15 00:17:18.105 [http-nio-8082-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [ApiResponse(statusCode=200, message=Thao tác thành công., dateTime=2025-08-15T00:17:18.104753300, da (truncated)...]
+2025-08-15 00:17:18.106 [http-nio-8082-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-15 00:17:18.535 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:17:18.535 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:17:19.074 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:24.181 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:28.541 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:17:28.541 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:17:29.275 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:34.373 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:36.645 [http-nio-8082-exec-6] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=54214446-a7c4-2ca2-4bba-c60a84640972, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:17:36.645 [http-nio-8082-exec-6] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 54214446-a7c4-2ca2-4bba-c60a84640972
+2025-08-15 00:17:36.646 [clientInboundChannel-50] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=54214446-a7c4-2ca2-4bba-c60a84640972
+2025-08-15 00:17:36.646 [clientOutboundChannel-12] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true}, simpSessionId=54214446-a7c4-2ca2-4bba-c60a84640972}], simpSessionId=54214446-a7c4-2ca2-4bba-c60a84640972}]
+2025-08-15 00:17:38.112 [http-nio-8082-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:17:38.113 [http-nio-8082-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:17:38.113 [http-nio-8082-exec-7] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:17:38.113 [http-nio-8082-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:17:38.113 [http-nio-8082-exec-7] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:17:38.113 [http-nio-8082-exec-7] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:17:38.114 [http-nio-8082-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:17:38.117 [http-nio-8082-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:17:38.120 [http-nio-8082-exec-7] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=a352d8a7-74fc-a147-80d0-91fcd0ae6754, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:17:38.143 [clientInboundChannel-53] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=a352d8a7-74fc-a147-80d0-91fcd0ae6754
+2025-08-15 00:17:38.150 [clientInboundChannel-56] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=a352d8a7-74fc-a147-80d0-91fcd0ae6754
+2025-08-15 00:17:38.546 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.5 ms, state=CONNECTED}]
+2025-08-15 00:17:38.546 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:17:39.473 [redisson-netty-4-13] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:44.578 [redisson-netty-4-14] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:47.860 [http-nio-8082-exec-10] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=a352d8a7-74fc-a147-80d0-91fcd0ae6754, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:17:47.860 [http-nio-8082-exec-10] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session a352d8a7-74fc-a147-80d0-91fcd0ae6754
+2025-08-15 00:17:47.861 [clientInboundChannel-59] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=a352d8a7-74fc-a147-80d0-91fcd0ae6754
+2025-08-15 00:17:47.861 [clientOutboundChannel-14] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true}, simpSessionId=a352d8a7-74fc-a147-80d0-91fcd0ae6754}], simpSessionId=a352d8a7-74fc-a147-80d0-91fcd0ae6754}]
+2025-08-15 00:17:48.560 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.5 ms, state=CONNECTED}]
+2025-08-15 00:17:48.560 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:17:49.354 [http-nio-8082-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:17:49.355 [http-nio-8082-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:17:49.355 [http-nio-8082-exec-1] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:17:49.355 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:17:49.355 [http-nio-8082-exec-1] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:17:49.355 [http-nio-8082-exec-1] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:17:49.358 [http-nio-8082-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:17:49.359 [http-nio-8082-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:17:49.362 [http-nio-8082-exec-1] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=0ae57d27-ad40-bd9f-9e38-73e7ba00102e, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:17:49.398 [clientInboundChannel-62] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=0ae57d27-ad40-bd9f-9e38-73e7ba00102e
+2025-08-15 00:17:49.414 [clientInboundChannel-65] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=0ae57d27-ad40-bd9f-9e38-73e7ba00102e
+2025-08-15 00:17:49.674 [redisson-netty-4-15] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:54.774 [redisson-netty-4-16] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:17:58.562 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.3 ms, state=CONNECTED}]
+2025-08-15 00:17:58.562 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:17:59.873 [redisson-netty-4-17] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:04.973 [redisson-netty-4-18] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:08.571 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.1 ms, state=CONNECTED}]
+2025-08-15 00:18:08.571 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:18:10.081 [redisson-netty-4-19] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:15.177 [redisson-netty-4-20] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:16.337 [http-nio-8082-exec-4] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=0ae57d27-ad40-bd9f-9e38-73e7ba00102e, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:18:16.337 [http-nio-8082-exec-4] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 0ae57d27-ad40-bd9f-9e38-73e7ba00102e
+2025-08-15 00:18:16.338 [clientInboundChannel-68] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=0ae57d27-ad40-bd9f-9e38-73e7ba00102e
+2025-08-15 00:18:16.339 [clientOutboundChannel-16] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true}, simpSessionId=0ae57d27-ad40-bd9f-9e38-73e7ba00102e}], simpSessionId=0ae57d27-ad40-bd9f-9e38-73e7ba00102e}]
+2025-08-15 00:18:17.902 [http-nio-8082-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /ws
+2025-08-15 00:18:17.903 [http-nio-8082-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /ws
+2025-08-15 00:18:17.903 [http-nio-8082-exec-5] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/ws
+2025-08-15 00:18:17.903 [http-nio-8082-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/ws", parameters={}
+2025-08-15 00:18:17.903 [http-nio-8082-exec-5] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.server.support.WebSocketHttpRequestHandler@38cc82d4
+2025-08-15 00:18:17.903 [http-nio-8082-exec-5] DEBUG o.s.w.s.s.s.WebSocketHttpRequestHandler - GET /message/ws
+2025-08-15 00:18:17.904 [http-nio-8082-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-08-15 00:18:17.904 [http-nio-8082-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2025-08-15 00:18:17.905 [http-nio-8082-exec-5] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New StandardWebSocketSession[id=6e7be651-da44-ffe1-243f-b5c1f3c94207, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:18:17.939 [clientInboundChannel-71] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=6e7be651-da44-ffe1-243f-b5c1f3c94207
+2025-08-15 00:18:17.949 [clientInboundChannel-51] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /queue/private-95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1 id=sub-0 session=6e7be651-da44-ffe1-243f-b5c1f3c94207
+2025-08-15 00:18:18.581 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.2 ms, state=CONNECTED}]
+2025-08-15 00:18:18.581 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:18:20.274 [redisson-netty-4-21] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:25.373 [redisson-netty-4-22] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:28.590 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.3 ms, state=CONNECTED}]
+2025-08-15 00:18:28.590 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:18:30.474 [redisson-netty-4-23] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:35.574 [redisson-netty-4-24] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:38.595 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.1 ms, state=CONNECTED}]
+2025-08-15 00:18:38.595 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:18:40.675 [redisson-netty-4-25] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:45.773 [redisson-netty-4-26] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:48.602 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=2.0 ms, state=CONNECTED}]
+2025-08-15 00:18:48.602 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:18:50.878 [redisson-netty-4-27] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:55.981 [redisson-netty-4-28] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:18:58.612 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.9 ms, state=CONNECTED}]
+2025-08-15 00:18:58.612 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:19:01.073 [redisson-netty-4-29] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:05.376 [http-nio-8082-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:19:05.376 [http-nio-8082-exec-9] DEBUG o.s.s.o.s.r.a.JwtAuthenticationProvider - Authenticated token
+2025-08-15 00:19:05.376 [http-nio-8082-exec-9] DEBUG o.s.s.o.s.r.w.a.BearerTokenAuthenticationFilter - Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@3adf5cfd, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_USER]]
+2025-08-15 00:19:05.377 [http-nio-8082-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:19:05.377 [http-nio-8082-exec-9] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:19:05.377 [http-nio-8082-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1", parameters={}
+2025-08-15 00:19:05.377 [http-nio-8082-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fsocial.messageservice.controller.ConversationController#getUserConversations(String)
+2025-08-15 00:19:05.377 [http-nio-8082-exec-9] DEBUG o.s.d.m.r.query.MongoQueryCreator - Created query Query: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}}, Fields: {}, Sort: {}
+2025-08-15 00:19:05.379 [http-nio-8082-exec-9] DEBUG o.s.data.mongodb.core.MongoTemplate - find using query: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}} fields: Document{{}} sort: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}} for class: class com.fsocial.messageservice.Entity.Conversation in collection: conversation
+2025-08-15 00:19:05.379 [http-nio-8082-exec-9] DEBUG org.mongodb.driver.cluster - Server selection started for operation with ID 337. Selector: ReadPreferenceServerSelector{readPreference=primary}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.9 ms, state=CONNECTED}]
+2025-08-15 00:19:05.379 [http-nio-8082-exec-9] DEBUG org.mongodb.driver.cluster - Server selection succeeded for operation with ID 337. Selected server: localhost:27017. Selector: ReadPreferenceServerSelector{readPreference=primary}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.9 ms, state=CONNECTED}]
+2025-08-15 00:19:05.379 [http-nio-8082-exec-9] DEBUG org.mongodb.driver.connection - Checkout started for connection to localhost:27017
+2025-08-15 00:19:05.379 [http-nio-8082-exec-9] DEBUG org.mongodb.driver.connection - Connection checked out: address=localhost:27017, driver-generated ID=3, duration=0 ms
+2025-08-15 00:19:05.380 [http-nio-8082-exec-9] DEBUG org.mongodb.driver.protocol.command - Command "find" started on database "message_db" using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 173 and the operation ID is 337. Command: {"find": "conversation", "filter": {"participants": {"$in": ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}}, "$db": "message_db", "lsid": {"id": {"$binary": {"base64": "PqTzXS7gTKqGgwVb1mCu1w==", "subType": "04"}}}}
+2025-08-15 00:19:05.382 [http-nio-8082-exec-9] DEBUG org.mongodb.driver.protocol.command - Command "find" succeeded on database "message_db" in 2.2285 ms using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 173 and the operation ID is 337. Command reply: {"cursor": {"id": 0, "ns": "message_db.conversation", "firstBatch": []}, "ok": 1.0}
+2025-08-15 00:19:05.382 [http-nio-8082-exec-9] DEBUG org.mongodb.driver.operation - Received batch of 0 documents with cursorId 0 from server localhost:27017
+2025-08-15 00:19:05.382 [http-nio-8082-exec-9] DEBUG org.mongodb.driver.connection - Connection checked in: address=localhost:27017, driver-generated ID=3
+2025-08-15 00:19:05.383 [http-nio-8082-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2025-08-15 00:19:05.383 [http-nio-8082-exec-9] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [ApiResponse(statusCode=200, message=Thao tác thành công., dateTime=2025-08-15T00:19:05.382649400, da (truncated)...]
+2025-08-15 00:19:05.384 [http-nio-8082-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-15 00:19:06.181 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:08.621 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:19:08.621 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:19:11.276 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:16.374 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:18.626 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:19:18.626 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:19:21.477 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:26.578 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:27.967 [http-nio-8082-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:19:27.968 [http-nio-8082-exec-10] DEBUG o.s.s.o.s.r.a.JwtAuthenticationProvider - Authenticated token
+2025-08-15 00:19:27.968 [http-nio-8082-exec-10] DEBUG o.s.s.o.s.r.w.a.BearerTokenAuthenticationFilter - Set SecurityContextHolder to JwtAuthenticationToken [Principal=org.springframework.security.oauth2.jwt.Jwt@3adf5cfd, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_USER]]
+2025-08-15 00:19:27.968 [http-nio-8082-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:19:27.968 [http-nio-8082-exec-10] INFO  c.f.messageservice.config.AppConfig - Request URI: /message/conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1
+2025-08-15 00:19:27.968 [http-nio-8082-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/message/conversations/user/95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1", parameters={}
+2025-08-15 00:19:27.968 [http-nio-8082-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.fsocial.messageservice.controller.ConversationController#getUserConversations(String)
+2025-08-15 00:19:27.969 [http-nio-8082-exec-10] DEBUG o.s.d.m.r.query.MongoQueryCreator - Created query Query: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}}, Fields: {}, Sort: {}
+2025-08-15 00:19:27.969 [http-nio-8082-exec-10] DEBUG o.s.data.mongodb.core.MongoTemplate - find using query: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}} fields: Document{{}} sort: { "participants" : { "$in" : ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}} for class: class com.fsocial.messageservice.Entity.Conversation in collection: conversation
+2025-08-15 00:19:27.970 [http-nio-8082-exec-10] DEBUG org.mongodb.driver.cluster - Server selection started for operation with ID 342. Selector: ReadPreferenceServerSelector{readPreference=primary}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:19:27.970 [http-nio-8082-exec-10] DEBUG org.mongodb.driver.cluster - Server selection succeeded for operation with ID 342. Selected server: localhost:27017. Selector: ReadPreferenceServerSelector{readPreference=primary}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:19:27.970 [http-nio-8082-exec-10] DEBUG org.mongodb.driver.connection - Checkout started for connection to localhost:27017
+2025-08-15 00:19:27.970 [http-nio-8082-exec-10] DEBUG org.mongodb.driver.connection - Connection checked out: address=localhost:27017, driver-generated ID=3, duration=0 ms
+2025-08-15 00:19:27.971 [http-nio-8082-exec-10] DEBUG org.mongodb.driver.protocol.command - Command "find" started on database "message_db" using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 176 and the operation ID is 342. Command: {"find": "conversation", "filter": {"participants": {"$in": ["95bdb4a9-8e5c-40c6-b2c3-2c9bd2b451c1"]}}, "$db": "message_db", "lsid": {"id": {"$binary": {"base64": "PqTzXS7gTKqGgwVb1mCu1w==", "subType": "04"}}}}
+2025-08-15 00:19:27.972 [http-nio-8082-exec-10] DEBUG org.mongodb.driver.protocol.command - Command "find" succeeded on database "message_db" in 1.5538 ms using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 176 and the operation ID is 342. Command reply: {"cursor": {"id": 0, "ns": "message_db.conversation", "firstBatch": []}, "ok": 1.0}
+2025-08-15 00:19:27.972 [http-nio-8082-exec-10] DEBUG org.mongodb.driver.operation - Received batch of 0 documents with cursorId 0 from server localhost:27017
+2025-08-15 00:19:27.972 [http-nio-8082-exec-10] DEBUG org.mongodb.driver.connection - Connection checked in: address=localhost:27017, driver-generated ID=3
+2025-08-15 00:19:27.972 [http-nio-8082-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/yaml]
+2025-08-15 00:19:27.973 [http-nio-8082-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Writing [ApiResponse(statusCode=200, message=Thao tác thành công., dateTime=2025-08-15T00:19:27.972959800, da (truncated)...]
+2025-08-15 00:19:27.974 [http-nio-8082-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2025-08-15 00:19:28.632 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:19:28.633 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:19:31.674 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:36.775 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:38.637 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:19:38.637 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:19:41.874 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:46.973 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:48.643 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:19:48.643 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:19:52.082 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:57.176 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:19:58.647 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:19:58.647 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:20:02.274 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:07.375 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:08.656 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:20:08.656 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:20:12.475 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:17.575 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:18.666 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:20:18.666 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:20:22.680 [redisson-netty-4-13] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:27.773 [redisson-netty-4-14] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:28.676 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:20:28.676 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:20:32.873 [redisson-netty-4-15] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:37.974 [redisson-netty-4-16] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:38.684 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.8 ms, state=CONNECTED}]
+2025-08-15 00:20:38.685 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:20:43.078 [redisson-netty-4-17] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:48.178 [redisson-netty-4-18] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:48.695 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.7 ms, state=CONNECTED}]
+2025-08-15 00:20:48.695 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:20:53.280 [redisson-netty-4-19] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:58.377 [redisson-netty-4-20] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:20:58.701 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:20:58.701 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:21:03.473 [redisson-netty-4-21] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:08.575 [redisson-netty-4-22] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:08.711 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:21:08.711 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:21:13.682 [redisson-netty-4-23] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:18.714 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:21:18.714 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:21:18.774 [redisson-netty-4-24] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:23.875 [redisson-netty-4-25] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:28.724 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:21:28.724 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:21:28.981 [redisson-netty-4-26] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:34.080 [redisson-netty-4-27] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:38.724 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+2025-08-15 00:21:38.724 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:21:39.182 [redisson-netty-4-28] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:44.273 [redisson-netty-4-29] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:48.734 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:21:48.734 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:21:49.373 [redisson-netty-4-30] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:54.482 [redisson-netty-4-31] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:21:58.738 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:21:58.738 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:21:59.577 [redisson-netty-4-1] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:04.674 [redisson-netty-4-32] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:08.742 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:22:08.743 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:22:09.773 [redisson-netty-4-2] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:14.878 [redisson-netty-4-3] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:18.752 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.4 ms, state=CONNECTED}]
+2025-08-15 00:22:18.753 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:22:19.974 [redisson-netty-4-4] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:25.079 [redisson-netty-4-5] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:28.762 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:22:28.762 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:22:29.594 [MessageBroker-1] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 9 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(9)-CONNECTED(9)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 78], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 17], sockJsScheduler[pool size = 2, active threads = 1, queued tasks = 0, completed tasks = 1]
+2025-08-15 00:22:30.173 [redisson-netty-4-6] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:35.274 [redisson-netty-4-7] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:38.762 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:22:38.762 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:22:40.373 [redisson-netty-4-8] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:45.482 [redisson-netty-4-9] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:48.768 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:22:48.768 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:22:50.581 [redisson-netty-4-10] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:55.677 [redisson-netty-4-11] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:22:58.778 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Updating cluster description to  {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:22:58.778 [cluster-ClusterId{value='689e140fe5fc4908591fefb5', description='null'}-localhost:27017] DEBUG org.mongodb.driver.cluster - Checking status of localhost:27017
+2025-08-15 00:23:00.776 [redisson-netty-4-12] DEBUG org.redisson.connection.DNSMonitor - localhost resolved to [redis://127.0.0.1:6379]
+2025-08-15 00:23:04.623 [SpringApplicationShutdownHook] DEBUG o.s.b.a.ApplicationAvailabilityBean - Application availability state ReadinessState changed from ACCEPTING_TRAFFIC to REFUSING_TRAFFIC
+2025-08-15 00:23:04.626 [SpringApplicationShutdownHook] DEBUG o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5de65da3, started on Thu Aug 14 23:51:24 ICT 2025
+2025-08-15 00:23:04.636 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 2147483647
+2025-08-15 00:23:04.638 [SpringApplicationShutdownHook] DEBUG o.s.d.r.l.RedisMessageListenerContainer - Stopped RedisMessageListenerContainer
+2025-08-15 00:23:04.638 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'redisKeyValueAdapter' completed its stop procedure
+2025-08-15 00:23:04.638 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 2147482623
+2025-08-15 00:23:04.645 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-08-15 00:23:04.664 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-08-15 00:23:04.664 [tomcat-shutdown] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'webServerGracefulShutdown' completed its stop procedure
+2025-08-15 00:23:04.664 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 2147481599
+2025-08-15 00:23:04.672 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'webServerStartStop' completed its stop procedure
+2025-08-15 00:23:04.672 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase 0
+2025-08-15 00:23:04.677 [SpringApplicationShutdownHook] DEBUG io.lettuce.core.AbstractRedisClient - Initiate shutdown (100, 100, MILLISECONDS)
+2025-08-15 00:23:04.693 [SpringApplicationShutdownHook] DEBUG i.l.c.r.DefaultClientResources - Initiate shutdown (100, 100, MILLISECONDS)
+2025-08-15 00:23:04.701 [SpringApplicationShutdownHook] DEBUG i.l.c.r.DefaultEventLoopGroupProvider - Initiate shutdown (100, 100, MILLISECONDS)
+2025-08-15 00:23:04.809 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'redisConnectionFactory' completed its stop procedure
+2025-08-15 00:23:04.809 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'stompWebSocketHandlerMapping' completed its stop procedure
+2025-08-15 00:23:04.809 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2025-08-15 00:23:04.809 [SpringApplicationShutdownHook] DEBUG o.s.w.s.a.NativeWebSocketSession - Closing StandardWebSocketSession[id=6e7be651-da44-ffe1-243f-b5c1f3c94207, uri=ws://localhost:8082/message/ws]
+2025-08-15 00:23:04.810 [SpringApplicationShutdownHook] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - Transport error in StandardWebSocketSession[id=6e7be651-da44-ffe1-243f-b5c1f3c94207, uri=ws://localhost:8082/message/ws]
+java.io.IOException: java.nio.channels.ClosedChannelException
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlockInternal(WsRemoteEndpointImplBase.java:326)
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlock(WsRemoteEndpointImplBase.java:266)
+	at org.apache.tomcat.websocket.WsSession.sendCloseMessage(WsSession.java:792)
+	at org.apache.tomcat.websocket.WsSession.doClose(WsSession.java:589)
+	at org.apache.tomcat.websocket.WsSession.doClose(WsSession.java:556)
+	at org.apache.tomcat.websocket.WsSession.close(WsSession.java:544)
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketSession.closeInternal(StandardWebSocketSession.java:237)
+	at org.springframework.web.socket.adapter.AbstractWebSocketSession.close(AbstractWebSocketSession.java:144)
+	at org.springframework.web.socket.handler.WebSocketSessionDecorator.close(WebSocketSessionDecorator.java:164)
+	at org.springframework.web.socket.handler.ConcurrentWebSocketSessionDecorator.close(ConcurrentWebSocketSessionDecorator.java:271)
+	at org.springframework.web.socket.messaging.SubProtocolWebSocketHandler.stop(SubProtocolWebSocketHandler.java:308)
+	at org.springframework.web.socket.messaging.SubProtocolWebSocketHandler.stop(SubProtocolWebSocketHandler.java:321)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStop(DefaultLifecycleProcessor.java:384)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.stop(DefaultLifecycleProcessor.java:526)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.stopBeans(DefaultLifecycleProcessor.java:353)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onClose(DefaultLifecycleProcessor.java:253)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1172)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:174)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1126)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+Caused by: java.nio.channels.ClosedChannelException: null
+	at org.apache.tomcat.util.net.NioChannel$1.write(NioChannel.java:273)
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper$NioOperationState.run(NioEndpoint.java:1632)
+	at org.apache.tomcat.util.net.SocketWrapperBase$OperationState.start(SocketWrapperBase.java:1051)
+	at org.apache.tomcat.util.net.SocketWrapperBase.vectoredOperation(SocketWrapperBase.java:1440)
+	at org.apache.tomcat.util.net.SocketWrapperBase.write(SocketWrapperBase.java:1366)
+	at org.apache.tomcat.util.net.SocketWrapperBase.write(SocketWrapperBase.java:1337)
+	at org.apache.tomcat.websocket.server.WsRemoteEndpointImplServer.doWrite(WsRemoteEndpointImplServer.java:171)
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.writeMessagePart(WsRemoteEndpointImplBase.java:521)
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlockInternal(WsRemoteEndpointImplBase.java:313)
+	... 23 common frames omitted
+2025-08-15 00:23:04.810 [SpringApplicationShutdownHook] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - StandardWebSocketSession[id=6e7be651-da44-ffe1-243f-b5c1f3c94207, uri=ws://localhost:8082/message/ws] closed with CloseStatus[code=1001, reason=null]
+2025-08-15 00:23:04.810 [SpringApplicationShutdownHook] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 6e7be651-da44-ffe1-243f-b5c1f3c94207
+2025-08-15 00:23:04.811 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'subProtocolWebSocketHandler' completed its stop procedure
+2025-08-15 00:23:04.811 [clientInboundChannel-74] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=6e7be651-da44-ffe1-243f-b5c1f3c94207
+2025-08-15 00:23:04.811 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'clientInboundChannelExecutor' completed its stop procedure
+2025-08-15 00:23:04.811 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'clientOutboundChannelExecutor' completed its stop procedure
+2025-08-15 00:23:04.811 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'brokerChannelExecutor' completed its stop procedure
+2025-08-15 00:23:04.811 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2025-08-15 00:23:04.811 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'simpAnnotationMethodMessageHandler' completed its stop procedure
+2025-08-15 00:23:04.811 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2025-08-15 00:23:04.811 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1d84dc1b]]
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1d84dc1b]
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1d84dc1b]
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'simpleBrokerMessageHandler' completed its stop procedure
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'userDestinationMessageHandler' completed its stop procedure
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Successfully stopped bean 'refreshScopeLifecycle'
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Stopping beans in phase -2147483647
+2025-08-15 00:23:04.812 [SpringApplicationShutdownHook] DEBUG o.s.c.s.DefaultLifecycleProcessor - Bean 'springBootLoggingLifecycle' completed its stop procedure
+2025-08-15 00:23:04.814 [SpringApplicationShutdownHook] DEBUG i.l.c.r.DefaultClientResources - Initiate shutdown (0, 2, SECONDS)
+2025-08-15 00:23:04.814 [SpringApplicationShutdownHook] DEBUG i.l.c.r.DefaultEventLoopGroupProvider - Initiate shutdown (0, 2, SECONDS)
+2025-08-15 00:23:04.816 [SpringApplicationShutdownHook] DEBUG o.s.b.f.s.DisposableBeanAdapter - Custom destroy method 'shutdown' on bean with name 'lettuceClientResources' completed asynchronously
+2025-08-15 00:23:04.818 [SpringApplicationShutdownHook] DEBUG o.s.s.c.ThreadPoolTaskScheduler - Shutting down ExecutorService 'messageBrokerTaskScheduler'
+2025-08-15 00:23:04.818 [SpringApplicationShutdownHook] DEBUG o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'brokerChannelExecutor'
+2025-08-15 00:23:04.818 [SpringApplicationShutdownHook] DEBUG o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'clientOutboundChannelExecutor'
+2025-08-15 00:23:04.818 [SpringApplicationShutdownHook] DEBUG o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'clientInboundChannelExecutor'
+2025-08-15 00:23:04.834 [redisson-netty-4-11] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-11
+2025-08-15 00:23:04.834 [redisson-netty-4-9] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-9
+2025-08-15 00:23:04.834 [redisson-netty-4-21] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-21
+2025-08-15 00:23:04.834 [redisson-netty-4-19] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-19
+2025-08-15 00:23:04.834 [redisson-netty-4-3] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-3
+2025-08-15 00:23:04.834 [redisson-netty-4-13] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-13
+2025-08-15 00:23:04.834 [redisson-netty-4-15] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-15
+2025-08-15 00:23:04.834 [redisson-netty-4-17] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-17
+2025-08-15 00:23:04.834 [redisson-netty-4-7] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-7
+2025-08-15 00:23:04.834 [redisson-netty-4-4] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-4
+2025-08-15 00:23:04.834 [redisson-netty-4-23] DEBUG io.netty.buffer.PoolThreadCache - Freed 16 thread-local buffer(s) from thread: redisson-netty-4-23
+2025-08-15 00:23:04.834 [SpringApplicationShutdownHook] DEBUG o.s.b.f.s.DisposableBeanAdapter - Custom destroy method 'shutdown' on bean with name 'redissonClient' completed
+2025-08-15 00:23:04.835 [SpringApplicationShutdownHook] DEBUG o.s.c.a.AnnotationConfigApplicationContext - Closing FeignClientFactory-profileService, started on Thu Aug 14 23:51:28 ICT 2025, parent: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5de65da3
+2025-08-15 00:23:04.835 [SpringApplicationShutdownHook] DEBUG o.s.c.a.AnnotationConfigApplicationContext - Closing FeignClientFactory-accountService, started on Thu Aug 14 23:51:28 ICT 2025, parent: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5de65da3
+2025-08-15 00:23:04.837 [SpringApplicationShutdownHook] DEBUG o.s.j.e.a.AnnotationMBeanExporter - Unregistering JMX-exposed beans on shutdown
+2025-08-15 00:23:04.837 [SpringApplicationShutdownHook] DEBUG o.s.j.e.a.AnnotationMBeanExporter - Unregistering JMX-exposed beans
+2025-08-15 00:23:04.839 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.cluster - Server selection started for operation with ID 1. Selector: ReadPreferenceServerSelector{readPreference=ReadPreference{name=primaryPreferred, hedgeOptions=null}}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:23:04.839 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.cluster - Server selection succeeded for operation with ID 1. Selected server: localhost:27017. Selector: ReadPreferenceServerSelector{readPreference=ReadPreference{name=primaryPreferred, hedgeOptions=null}}, topology description: {type=STANDALONE, servers=[{address=localhost:27017, type=STANDALONE, roundTripTime=1.5 ms, state=CONNECTED}]
+2025-08-15 00:23:04.839 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.connection - Checkout started for connection to localhost:27017
+2025-08-15 00:23:04.839 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.connection - Connection checked out: address=localhost:27017, driver-generated ID=3, duration=0 ms
+2025-08-15 00:23:04.840 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.protocol.command - Command "endSessions" started on database "admin" using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 199 and the operation ID is 1. Command: {"endSessions": [{"id": {"$binary": {"base64": "PqTzXS7gTKqGgwVb1mCu1w==", "subType": "04"}}}], "$db": "admin", "$readPreference": {"mode": "primaryPreferred"}}
+2025-08-15 00:23:04.841 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.protocol.command - Command "endSessions" succeeded on database "admin" in 1.5049 ms using a connection with driver-generated ID 3 and server-generated ID 1021 to localhost:27017. The request ID is 199 and the operation ID is 1. Command reply: {"ok": 1.0}
+2025-08-15 00:23:04.841 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.connection - Connection checked in: address=localhost:27017, driver-generated ID=3
+2025-08-15 00:23:04.844 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.connection - Connection closed: address=localhost:27017, driver-generated ID=3. Reason: Connection pool was closed.
+2025-08-15 00:23:04.845 [SpringApplicationShutdownHook] DEBUG org.mongodb.driver.connection - Connection pool closed for localhost:27017

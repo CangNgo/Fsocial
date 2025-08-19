@@ -1,9 +1,29 @@
+app:
+  services:
+    account: ${ACCOUNT_SERVICE_URL:http://localhost:8081}/account
+    post: ${POST_SERVICE_URL:http://localhost:8083}/post
 spring:
+  data:
+    redis:
+      host: ${REDIS_CONTAINER:localhost}  # Vì Redis chạy trên localhost
+      port: ${REDIS_PORT:6379}  # Port từ docker-compose (REDIS_PORT từ .env)
+      password: ${REDIS_PASSWORD:redispassword}
+      database: 0
+      timeout: 2000ms
+      connect-timeout: 2000ms
+      # Cấu hình connection pool cho Spring Data Redis
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 500ms
+        shutdown-timeout: 200ms
   neo4j:
-    uri: bolt://localhost:7687
+    uri: ${NEO4J_URL:bolt://localhost:7474}
     authentication:
       username: neo4j
-      password: root1234
+      password: ${NEO4J_PASSWORD:neo4jpassword}
   application:
     name: profileService
   jpa:
@@ -25,18 +45,6 @@ server:
     session:
       timeout: 3m
   port: 8085
-redis:
-  host: replica_redis
-  port: 6379
-  database: 0
-  timeout: 10s
-  lettuce:
-    pool:
-      max-active: 8
-      max-idle: 8
-      min-idle: 0
-      max-wait: 500ms
-    shutdown-timeout: 200ms
 logging:
   level:
     org.neo4j.driver: ERROR
@@ -60,9 +68,4 @@ logging:
         event:
           internal:
             AbstractFlushingEventListener: DEBUG
-
-app:
-  services:
-    account: http://localhost:8081/account
-    post: http://localhost:8083/post
   # Thời gian chờ kết nối Redis

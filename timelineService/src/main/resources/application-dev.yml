@@ -1,7 +1,7 @@
 app:
   services:
-    profile: http://localhost:8085/profile
-    account: http://localhost:8081/account
+    profile: ${PROFILE_SERVICE_URL:http://localhost:8085}/profile
+    account: ${ACCOUNT_SERVICE_URL:http://localhost:8081}
 springdoc:
   api-docs:
     path: /api-docs
@@ -41,20 +41,24 @@ spring:
     name: timelineService
   data:
     mongodb:
-      uri: mongodb://root:root@localhost:27002/primary_database?authSource=admin
+      uri: ${MONGODB_POST_URL:mongodb://admin:adminpassword@localhost:27017/post_db?authSource=admin}
       auto-index-creation: true
-redis:
-  host: replica_redis
-  port: 6379
-  database: 0
-  timeout: 10s
-  lettuce:
-    pool:
-      max-active: 8
-      max-idle: 8
-      min-idle: 0
-      max-wait: 500ms
-    shutdown-timeout: 200ms
+    redis:
+      host: ${REDIS_CONTAINER:localhost}  # Vì Redis chạy trên localhost
+      port: ${REDIS_PORT:6379}  # Port từ docker-compose (REDIS_PORT từ .env)
+      password: ${REDIS_PASSWORD:redispassword}
+      database: 0
+      timeout: 2000ms
+      connect-timeout: 2000ms
+      # Cấu hình connection pool cho Spring Data Redis
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 500ms
+        shutdown-timeout: 200ms
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -75,11 +79,9 @@ server:
       timeout: 3m
     register-default-servlet: false
   port: 8086
+
 logging:
   level:
-    com.cangngo: DEBUG
-    org.springframework.web: DEBUG
-    org.springframework.web.cors: TRACE
     org:
       springframework=DEBUG:
       springframework:

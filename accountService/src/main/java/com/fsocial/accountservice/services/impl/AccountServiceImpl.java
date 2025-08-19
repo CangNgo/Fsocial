@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void persistAccount(AccountRegisterRequest request) {
-        validateAccountExistence(request.getUsername(), request.getEmail());
+//        validateAccountExistence(request.getUsername(), request.getEmail());
         Account account = saveAccount(request);
         createProfile(account, request);
         otpService.deleteOtp(request.getEmail(), RedisKeyType.REGISTER.getRedisKeyPrefix());

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.cangngo</groupId>
 	<artifactId>apigateway</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>apigateway</name>
 	<description>apigateway</description>
 	<url/>
@@ -58,12 +58,6 @@
             <version>2.8.5</version>
             <scope>compile</scope>
         </dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-resolver-dns-native-macos</artifactId>
-			<version>4.1.100.Final</version> <!-- Hoặc phiên bản mới nhất -->
-			<classifier>osx-aarch_64</classifier> <!-- Nếu dùng Apple Silicon -->
-		</dependency>
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

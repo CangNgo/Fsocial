@@ -33,10 +33,6 @@ public class PostController {
     public ResponseEntity<Response> getPosts(@RequestParam(value = "userId") String userId ) throws AppCheckedException {
         List<PostResponse> posts ;
 
-//        if(userId == null) {
-//             posts = postService.getPosts();
-//        }else {
-//        }
         posts = postService.getPostsByUserId(userId);
         logger.info("Lấy thông tin bài viết thành công");
         return ResponseEntity.ok(Response.builder()

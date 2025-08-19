@@ -39,6 +39,11 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     @Transactional(rollbackFor = Exception.class)
     public ProfileResponse createAccountProfile(ProfileRegisterRequest request) {
         AccountProfile accountProfile = accountProfileMapper.toAccountProfile(request);
+        accountProfile.setBanner("");
+        accountProfile.setBio("");
+        accountProfile.setAvatar("");
+        accountProfile.setAddress("");
+        accountProfile.setUpdatedAt(LocalDate.now());
         accountProfileRepository.save(accountProfile);
         log.info("Tạo thành công hồ sơ cho người dùng: {}", accountProfile.getUserId());
         return accountProfileMapper.toProfileResponse(accountProfile);

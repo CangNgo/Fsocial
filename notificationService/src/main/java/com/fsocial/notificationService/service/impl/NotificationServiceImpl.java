@@ -32,7 +32,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor()
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {

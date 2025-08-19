@@ -1,15 +1,15 @@
 app:
   services:
-    profile: http://localhost:8085/profile
-openapi:
-  service:
-    api-docs: api-service
-    server: http://localhost:8080
-    title: API Service
-    version: 1.0.0
+    profile: ${PROFILE_SERVICE_URL:http://localhost:8085}/profile
+#openapi:
+#  service:
+#    api-docs: api-service
+#    server: http://localhost:8080
+#    title: API Service
+#    version: 1.0.0
 spring:
   kafka:
-    bootstrap-servers: localhost:9094
+    bootstrap-servers: ${KAFKA_URL:localhost:9092}
     consumer:
       group-id: notification-group
       auto-offset-reset: earliest
@@ -21,21 +21,26 @@ spring:
     name: notificationService
   data:
     mongodb:
-       uri: mongodb://localhost:27017/notification_db
-       database: notification_db
+      uri: ${MONGODB_NOTIFICATION_URL:mongodb://admin:adminpassword@notification_mongo:27018/notification_db?authSource=admin}
+      database: notification_db
+    redis:
+      host: ${REDIS_CONTAINER:localhost}  # Vì Redis chạy trên localhost
+      port: ${REDIS_PORT:29092}  # Port từ docker-compose (REDIS_PORT từ .env)
+      password: ${REDIS_PASSWORD:redispassword}
+      database: 0
+      timeout: 2000ms
+      connect-timeout: 2000ms
+      # Cấu hình connection pool cho Spring Data Redis
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 500ms
+        shutdown-timeout: 200ms
   jpa:
     hibernate:
       ddl-auto: update
-
-redis:
-  host: localhost   # Địa chỉ Redis server
-  port: 6379        # Cổng mặc định Redis
-  lettuce:
-    pool:
-      max-active: 10   # Số lượng kết nối tối đa
-      max-idle: 5      # Số kết nối tối đa có thể rỗng
-      min-idle: 1      # Số kết nối tối thiểu có thể rỗng
-  timeout: 2000ms     # Thời gian chờ kết nối Redis
 
 server:
   servlet:

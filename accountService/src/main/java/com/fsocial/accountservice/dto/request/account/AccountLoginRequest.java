@@ -2,8 +2,13 @@ package com.fsocial.accountservice.dto.request.account;
 
 import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
 import com.fsocial.accountservice.validation.constrain.PasswordValid;
+
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)

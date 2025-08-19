@@ -2,7 +2,7 @@
 <configuration>
     <!-- Định nghĩa các biến -->
     <property name="LOG_PATH" value="logs" /> <!-- Di chuyển lên 1 cấp từ src/main/resources đến timelineService/logs -->
-    <property name="LOG_FILE_NAME" value="timelineService" /> <!-- Đặt tên file log theo service -->
+    <property name="LOG_FILE_NAME" value="postservice" /> <!-- Đặt tên file log theo service -->
     <property name="LOG_PATTERN"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
 

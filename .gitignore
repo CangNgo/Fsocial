@@ -19,10 +19,14 @@ target/
 *.iml
 *.ipr
 .idea/**/*
-
+.idea
+*.env
 ### Ignore application configuration ###
-application.yml
-application-*.yml
+*/application.yml
+*/application-*.yml
+/accountService/src/main/resources/application-pro.yml
+/accountService/src/main/resources/application-dev.yml
+accountService/production.env
 
 ### NetBeans ###
 /nbproject/private/

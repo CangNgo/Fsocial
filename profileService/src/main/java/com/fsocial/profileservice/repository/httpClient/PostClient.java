@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-@FeignClient(name = "postService", url = "${app.services.post}")
+@FeignClient(name = "postService", url = "${app.services.post}", path = "/post")
 public interface PostClient {
 
     @PostMapping(value = "/internal/upload-file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

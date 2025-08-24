@@ -258,6 +258,8 @@ services:
     restart: unless-stopped
     image: ${NOTIFICATION_SERVICE}
     environment:
+      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+      - SPRING_APPLICATION_ACTIVE=pro
       - MONGODB_NOTIFICATION_URL=${MONGODB_NOTIFICATION_URL}
       - REDIS_CONTAINER=${REDIS_CONTAINER}
       - REDIS_URL=${REDIS_URL}
@@ -349,9 +351,7 @@ services:
     restart: unless-stopped
     image: ${RELATIONSHIP_SERVICE}
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - NEO4J_URL=${NEO4J_URL}
-      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+      - MONGODB_POST_URL=${MONGODB_POST_URL}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_CONTAINER=${REDIS_CONTAINER}
       - REDIS_PORT=${REDIS_PORT}
@@ -379,6 +379,7 @@ services:
     restart: unless-stopped
     image: ${TIMELINE_SERVICE}
     environment:
+      - MONGODB_POST_URL=${MONGODB_POST_URL}
       - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
       - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
       - MYSQL_URL=${MYSQL_URL}
@@ -433,6 +434,7 @@ services:
     image: ${API_GATEWAY}
     restart: unless-stopped
     environment:
+      - SPRING_APPLICATION_ACTIVE=pro
       - GATEWAY_PORT=${GATEWAY_PORT}
       - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
       - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}

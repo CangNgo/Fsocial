@@ -44,8 +44,10 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     BanService banService;
     RedisTemplate redisTemplate;
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**"
-            ,"/post/**","/timeline/**","/profile/**",
+    private String[] PUBLIC_ENDPOINT = {
+            "/account/login", "/account/refresh-token", "/account/logout","/account/registry", "/account/send-otp", "/account/verfy-otp"
+            , "/account/check-duplicate", "/account/", "/profile//internal/create"
+//            "/account/**" ,"/post/**","/timeline/**","/profile/**",
     };
 
     @NonFinal
@@ -67,12 +69,10 @@ public class GlobalConfig implements GlobalFilter, Ordered {
             return unauthenticated(exchange.getResponse());
 
         String tokenrequest = authHeaders.getFirst();
-//        System.out.println("Token: " + tokenrequest);
+        System.out.println("Token: " + tokenrequest);
         boolean isBan = banService.isBan(tokenrequest.substring(7));
         if (isBan){
             return banned(exchange.getResponse());
-        }else{
-            System.out.println("account không bị ban");
         }
         //kiểm tra nếu tồn tại trong backList thì chặn request
 
@@ -100,6 +100,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 
     private boolean isPublicEndpoint(ServerHttpRequest request) {
         String path = request.getURI().getPath().replaceFirst(apiPrefix, "");
+        System.out.println("path khi request: " + path);
         return Arrays.stream(PUBLIC_ENDPOINT).anyMatch(endPoint -> antPathMatcher.match(endPoint, path));
     }
 

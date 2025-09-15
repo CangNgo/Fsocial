@@ -16,7 +16,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -31,17 +34,19 @@ import java.util.Map;
 @Tag(name ="Post controller")
 public class PostController {
     PostService postService;
+    Logger logger = LoggerFactory.getLogger(PostController.class);
 
+    @PostAuthorize("hasAnyRole('ROLE_USER')")
     @PostMapping
     public ResponseEntity<Response> createPost(@Valid PostDTORequest request) throws AppCheckedException {
-        //If text and media is null -> return
+        //Bai viet phai co noi dung hoac hinh anh
         if ((request.getText() == null || request.getText().isEmpty())
                 && (request.getMedia() == null || request.getMedia().length == 0)) {
             throw new AppCheckedException("Bài viết phải có nội dung, hình ảnh hoặc video", StatusCode.NOT_CONTENT);
         }
 
         PostDTO post = postService.createPost(request);
-
+        logger.info("Đăng bài viết thành công");
         return ResponseEntity.ok(Response.builder()
                 .data(post)
                 .statusCode(StatusCode.CREATE_POST_SUCCESS.getCode())

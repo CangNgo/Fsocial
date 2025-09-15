@@ -1,132 +1,700 @@
+version: "3.8"
+
 services:
-  # MongoDB Replica Set
-  mongo1:
-    image: mongo
-    container_name: fsocial_primary
-    restart: always
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: ${MYSQL_CONTAINER}
+    restart: unless-stopped
     environment:
-      - MONGO_INITDB_REPLICASET=rs0
-    command: mongod --replSet "rs0"
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
-      - "27001:27017"
+      - "${MYSQL_PORT}:3306"
     volumes:
-      - fsocial_primary:/data/db
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:
       - app_network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
 
-  mongo2:
-    image: mongo
-    container_name: fsocial_secondary_1
-    restart: always
+  # MongoDB for Message Service
+  message_mongo:
+    image: mongo:6.0
+    container_name: message_mongo
+    restart: unless-stopped
     environment:
-      - MONGO_INITDB_REPLICASET=rs0
-    command: mongod --replSet "rs0"
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
     ports:
-      - "27002:27017"
+      - "${MESSAGE_MONGO_PORT}:27017"
     volumes:
-      - fsocial_secondary_1:/data/db
+      - message_data:/data/db
     networks:
       - app_network
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      timeout: 20s
+      retries: 10
 
-  mongo3:
-    image: mongo
-    container_name: fsocial_secondary_2
-    restart: always
+  # MongoDB for Notification Service
+  notification_mongo:
+    image: mongo:6.0
+    container_name: notification_mongo
+    restart: unless-stopped
     environment:
-      - MONGO_INITDB_REPLICASET=rs0
-    command: mongod --replSet "rs0"
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
     ports:
-      - "27003:27017"
+      - "${NOTIFICATION_MONGO_PORT}:27017"
     volumes:
-      - fsocial_secondary_2:/data/db
+      - notification_data:/data/db
     networks:
       - app_network
-  message:
-    image: mongo:6.0 # Chỉ định phiên bản cụ thể
-    container_name: message
-    restart: always
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      timeout: 20s
+      retries: 10
+
+  # MongoDB for post service
+  post_mongo:
+    image: mongo:6.0
+    container_name: post_mongo
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
     ports:
-      - "27004:27017" # Ánh xạ cổng host:container
+      - "${POST_MONGO_PORT}:27017"
     volumes:
-      - message_data:/data/db # Sử dụng named volume với tên rõ ràng
+      - post_data:/data/db
     networks:
       - app_network
-    environment: # (Tùy chọn) Thêm biến môi trường để cấu hình MongoDB
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-  notification:
-    image: mongo:6.0 # Chỉ định phiên bản cụ thể
-    container_name: notification
-    restart: always
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      timeout: 20s
+
+  # Neo4J Graph Database
+  neo4j:
+    image: neo4j:5.15
+    container_name: ${NEO4J_CONTAINER}
+    restart: unless-stopped
+    environment:
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD}
+      - NEO4J_dbms_default__database=${NEO4J_DATABASE}
+      - NEO4J_dbms_memory_heap_initial__size=512m
+      - NEO4J_dbms_memory_heap_max__size=2G
+      - NEO4J_dbms_memory_pagecache_size=1G
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_dbms_security_procedures_allowlist=apoc.*
+      - NEO4J_dbms_connector_bolt_listen__address=0.0.0.0:7687
+      - NEO4J_dbms_connector_http_listen__address=0.0.0.0:7474
     ports:
-      - "27005:27017" # Ánh xạ cổng host:container
+      - "${NEO4J_PORT}:7474" # HTTP
+      - "${NEO4J_BOLT_PORT}:7687" # Bolt
     volumes:
-      - notification_data:/data/db # Sử dụng named volume với tên rõ ràng
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:7474/browser/",
+        ]
+      timeout: 20s
+      retries: 10
     networks:
       - app_network
-    environment: # (Tùy chọn) Thêm biến môi trường để cấu hình MongoDB
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
 
   # Redis
   redis:
-    image: redis:latest
-    container_name: replica_redis
-    restart: always
+    image: redis:7.2-alpine
+    container_name: ${REDIS_CONTAINER}
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD}
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:6379"
     volumes:
       - redis_data:/data
     networks:
       - app_network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      timeout: 20s
+      retries: 10
 
-  # ZooKeeper for Kafka
+  # Zookeeper
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.3.0
-    container_name: zookeeper
-    restart: always
+    image: confluentinc/cp-zookeeper:7.3.2
+    container_name: ${ZOOKEEPER_CONTAINER}
+    restart: unless-stopped
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "2181:2181"
+    networks:
+      - app_network
     volumes:
       - zookeeper_data:/var/lib/zookeeper/data
+      - zookeeper_logs:/var/lib/zookeeper/log
+    healthcheck:
+      test: [ "CMD-SHELL", "echo ruok | nc localhost 2181 | grep imok" ]
+      timeout: 20s
+      retries: 10
+
+  # Kafka
+  kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    container_name: ${KAFKA_CONTAINER}
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    ports:
+      - "${KAFKA_PORT}:9092"
+      - "${KAFKA_EXTERNAL_PORT}:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: ${ZOOKEEPER_CONTAINER}:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA_CONTAINER}:29092,PLAINTEXT_HOST://localhost:${KAFKA_PORT}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+    networks:
+      - app_network
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    healthcheck:
+      test:
+        [ "CMD-SHELL", "kafka-topics --bootstrap-server localhost:9092 --list" ]
+      timeout: 20s
+      retries: 10
+
+  # Account Service
+#  accountservice:
+#    build:
+#      context: accountService
+#      dockerfile: Dockerfile
+#    container_name: ${ACCOUNT_SERVICE}
+#    restart: unless-stopped
+#    image: ${ACCOUNT_SERVICE}
+#    environment:
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - EMAIL_APP=${EMAIL_APP}
+#      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+#      - EMAIL_PORT=${EMAIL_PORT}
+#      - MYSQL_URL=${MYSQL_URL}
+#      - MYSQL_USER=${MYSQL_USER}
+#      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - JWT_SECRET=${JWT_SECRET}
+#      - JWT_EXPIRATION=${JWT_EXPIRATION}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${ACCOUNT_PORT}:${ACCOUNT_PORT}"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Message Service
+#  messageservice:
+#    build:
+#      context: messageService
+#      dockerfile: Dockerfile
+#    container_name: ${MESSAGE_SERVICE}
+#    restart: unless-stopped
+#    image: ${MESSAGE_SERVICE}
+#    environment:
+#      - MONGODB_MESSAGE_URL=${MONGODB_MESSAGE_URL}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_URL=${REDIS_URL}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#    ports:
+#      - "${MESSAGE_PORT}:${MESSAGE_PORT}"
+#    depends_on:
+#      message_mongo:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Notification Service
+#  notificationservice:
+#    build:
+#      context: notificationService
+#      dockerfile: Dockerfile
+#    container_name: ${NOTIFICATION_SERVICE}
+#    restart: unless-stopped
+#    image: ${NOTIFICATION_SERVICE}
+#    environment:
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - SPRING_APPLICATION_ACTIVE=pro
+#      - MONGODB_NOTIFICATION_URL=${MONGODB_NOTIFICATION_URL}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_URL=${REDIS_URL}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${NOTIFICATION_PORT}:${NOTIFICATION_PORT}"
+#    depends_on:
+#      notification_mongo:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Post Service
+#  postservice:
+#    build:
+#      context: postService
+#      dockerfile: Dockerfile
+#    container_name: ${POST_SERVICE}
+#    restart: unless-stopped
+#    image: ${POST_SERVICE}
+#    environment:
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - MONGODB_POST_URL=${MONGODB_POST_URL}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_URL=${REDIS_URL}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${POST_PORT}:${POST_PORT}"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Profile Service
+#  profileservice:
+#    build:
+#      context: profileService
+#      dockerfile: Dockerfile
+#    container_name: ${PROFILE_SERVICE}
+#    restart: unless-stopped
+#    image: ${PROFILE_SERVICE}
+#    environment:
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#      - POST_SERVICE_URL=${POST_SERVICE_URL}
+#      - NEO4J_URL=${NEO4J_URL}
+#      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${PROFILE_PORT}:${PROFILE_PORT}"
+#    depends_on:
+#      neo4j:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Relationship Service
+#  relationshipservice:
+#    build:
+#      context: relationshipService
+#      dockerfile: Dockerfile
+#    container_name: ${RELATIONSHIP_SERVICE}
+#    restart: unless-stopped
+#    image: ${RELATIONSHIP_SERVICE}
+#    environment:
+#      - MONGODB_POST_URL=${MONGODB_POST_URL}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${RELATIONSHIP_PORT}:${RELATIONSHIP_PORT}"
+#    depends_on:
+#      neo4j:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Timeline Service
+#  timelineservice:
+#    build:
+#      context: timelineService
+#      dockerfile: Dockerfile
+#    container_name: ${TIMELINE_SERVICE}
+#    restart: unless-stopped
+#    image: ${TIMELINE_SERVICE}
+#    environment:
+#      - MONGODB_POST_URL=${MONGODB_POST_URL}
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${TIMELINE_PORT}:${TIMELINE_PORT}"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  #  # Processor Service
+##  processorservice:
+##    build:
+##      context: processorService
+##      dockerfile: Dockerfile
+##    container_name: ${PROCESSOR_SERVICE}
+##    restart: unless-stopped
+##    environment:
+##      - SPRING_PROFILES_ACTIVE=prod
+##      - KAFKA_URL=${KAFKA_URL}
+##      - REDIS_PASSWORD=${REDIS_PASSWORD}
+##      - REDIS_CONTAINER=${REDIS_CONTAINER}
+##      - REDIS_PORT=${REDIS_PORT}
+##    ports:
+##      - "${PROCESSOR_PORT}:${PROCESSOR_PORT}"
+##    depends_on:
+##      kafka:
+##        condition: service_healthy
+##      redis:
+##        condition: service_healthy
+##    networks:
+##      - app_network
+#  # API Gateway
+#  apigateway:
+#    build:
+#      context: apigateway
+#      dockerfile: Dockerfile
+#    container_name: ${API_GATEWAY}
+#    image: ${API_GATEWAY}
+#    restart: unless-stopped
+#    environment:
+#      - GATEWAY_PORT=${GATEWAY_PORT}
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - RELATIONSHIP_SERVICE_URL=${RELATIONSHIP_SERVICE_URL}
+#      - POST_SERVICE_URL=${POST_SERVICE_URL}
+#      - MESSAGE_SERVICE_URL=${MESSAGE_SERVICE_URL}
+#      - NOTIFICATION_SERVICE_URL=${NOTIFICATION_SERVICE_URL}
+#      - TIMELINE_SERVICE_URL=${TIMELINE_SERVICE_URL}
+#      - PROCESSOR_SERVICE_URL=${PROCESSOR_SERVICE_URL}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - JWT_SECRET=${JWT_SECRET}
+#      - JWT_EXPIRATION=${JWT_EXPIRATION}
+#    ports:
+#      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
+#    depends_on:
+#      - redis
+#    networks:
+#      - app_network
+
+
+#product
+  accountservice:
+    container_name: ${ACCOUNT_SERVICE}
+    restart: unless-stopped
+    image: cangngo/${ACCOUNT_SERVICE}:0.0.2
+    environment:
+      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+      - EMAIL_APP=${EMAIL_APP}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - MYSQL_URL=${MYSQL_URL}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CONTAINER=${REDIS_CONTAINER}
+      - REDIS_PORT=${REDIS_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+      - KAFKA_URL=${KAFKA_URL}
+    ports:
+      - "${ACCOUNT_PORT}:${ACCOUNT_PORT}"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
     networks:
       - app_network
 
-#  # Kafka Broker
-#  kafka:
-#    image: confluentinc/cp-kafka:7.3.0
-#    container_name: kafka
-#    restart: always
-#    depends_on:
-#      - zookeeper
-#    ports:
-#      - "9094:9094"
-#    environment:
-#      KAFKA_BROKER_ID: 1
-#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9094
-#      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9094
-#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-#      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-#    volumes:
-#      - kafka_data:/var/lib/kafka/data
-#    networks:
-#      - app_network
+  # Message Service
+  messageservice:
+    container_name: ${MESSAGE_SERVICE}
+    restart: unless-stopped
+    image: cangngo/${MESSAGE_SERVICE}:0.0.2
+    environment:
+      - MONGODB_MESSAGE_URL=${MONGODB_MESSAGE_URL}
+      - REDIS_CONTAINER=${REDIS_CONTAINER}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PORT=${REDIS_PORT}
+      - KAFKA_URL=${KAFKA_URL}
+      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+    ports:
+      - "${MESSAGE_PORT}:${MESSAGE_PORT}"
+    depends_on:
+      message_mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  # Notification Service
+  notificationservice:
+    container_name: ${NOTIFICATION_SERVICE}
+    restart: unless-stopped
+    image: cangngo/${NOTIFICATION_SERVICE}:0.0.2
+    environment:
+      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+      - SPRING_APPLICATION_ACTIVE=pro
+      - MONGODB_NOTIFICATION_URL=${MONGODB_NOTIFICATION_URL}
+      - REDIS_CONTAINER=${REDIS_CONTAINER}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PORT=${REDIS_PORT}
+      - KAFKA_URL=${KAFKA_URL}
+    ports:
+      - "${NOTIFICATION_PORT}:${NOTIFICATION_PORT}"
+    depends_on:
+      notification_mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  # Post Service
+  postservice:
+    container_name: ${POST_SERVICE}
+    restart: unless-stopped
+    image: cangngo/${POST_SERVICE}:0.0.2
+    environment:
+      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+      - MONGODB_POST_URL=${MONGODB_POST_URL}
+      - REDIS_CONTAINER=${REDIS_CONTAINER}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - KAFKA_URL=${KAFKA_URL}
+    ports:
+      - "${POST_PORT}:${POST_PORT}"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  # Profile Service
+  profileservice:
+    container_name: ${PROFILE_SERVICE}
+    restart: unless-stopped
+    image: cangngo/${PROFILE_SERVICE}:0.0.2
+    environment:
+      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+      - POST_SERVICE_URL=${POST_SERVICE_URL}
+      - NEO4J_URL=${NEO4J_URL}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CONTAINER=${REDIS_CONTAINER}
+      - REDIS_PORT=${REDIS_PORT}
+      - KAFKA_URL=${KAFKA_URL}
+    ports:
+      - "${PROFILE_PORT}:${PROFILE_PORT}"
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  # Relationship Service
+  relationshipservice:
+    container_name: ${RELATIONSHIP_SERVICE}
+    restart: unless-stopped
+    image: cangngo/${RELATIONSHIP_SERVICE}:0.0.2
+    environment:
+      - MONGODB_POST_URL=${MONGODB_POST_URL}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CONTAINER=${REDIS_CONTAINER}
+      - REDIS_PORT=${REDIS_PORT}
+      - KAFKA_URL=${KAFKA_URL}
+    ports:
+      - "${RELATIONSHIP_PORT}:${RELATIONSHIP_PORT}"
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  # Timeline Service
+  timelineservice:
+    container_name: ${TIMELINE_SERVICE}
+    restart: unless-stopped
+    image: cangngo/${TIMELINE_SERVICE}:0.0.2
+    environment:
+      - MONGODB_POST_URL=${MONGODB_POST_URL}
+      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_CONTAINER=${REDIS_CONTAINER}
+      - REDIS_PORT=${REDIS_PORT}
+      - KAFKA_URL=${KAFKA_URL}
+    ports:
+      - "${TIMELINE_PORT}:${TIMELINE_PORT}"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - app_network
+
+  #  # Processor Service
+  #  processorservice:
+  #    container_name: ${PROCESSOR_SERVICE}
+  #    restart: unless-stopped
+  #    environment:
+  #      - SPRING_PROFILES_ACTIVE=prod
+  #      - KAFKA_URL=${KAFKA_URL}
+  #      - REDIS_PASSWORD=${REDIS_PASSWORD}
+  #      - REDIS_CONTAINER=${REDIS_CONTAINER}
+  #      - REDIS_PORT=${REDIS_PORT}
+  #    ports:
+  #      - "${PROCESSOR_PORT}:${PROCESSOR_PORT}"
+  #    depends_on:
+  #      kafka:
+  #        condition: service_healthy
+  #      redis:
+  #        condition: service_healthy
+  #    networks:
+  #      - app_network
+  # API Gateway
+  apigateway:
+    container_name: ${API_GATEWAY}
+    image: cangngo/${API_GATEWAY}:0.0.2
+    restart: unless-stopped
+    environment:
+      - GATEWAY_PORT=${GATEWAY_PORT}
+      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+      - RELATIONSHIP_SERVICE_URL=${RELATIONSHIP_SERVICE_URL}
+      - POST_SERVICE_URL=${POST_SERVICE_URL}
+      - MESSAGE_SERVICE_URL=${MESSAGE_SERVICE_URL}
+      - NOTIFICATION_SERVICE_URL=${NOTIFICATION_SERVICE_URL}
+      - TIMELINE_SERVICE_URL=${TIMELINE_SERVICE_URL}
+      - PROCESSOR_SERVICE_URL=${PROCESSOR_SERVICE_URL}
+      - REDIS_CONTAINER=${REDIS_CONTAINER}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PORT=${REDIS_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+    ports:
+      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
+    depends_on:
+      - redis
+    networks:
+      - app_network
 
 networks:
   app_network:
     driver: bridge
+    name: fsocial_network
 
 volumes:
-  fsocial_primary:
-  fsocial_secondary_1:
-  fsocial_secondary_2:
-  redis_data:
-  zookeeper_data:
-  kafka_data:
+  mysql_data:
+    driver: local
   message_data:
+    driver: local
   notification_data:
+    driver: local
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+  neo4j_import:
+    driver: local
+  neo4j_plugins:
+    driver: local
+  redis_data:
+    driver: local
+  zookeeper_data:
+    driver: local
+  zookeeper_logs:
+    driver: local
+  kafka_data:
+    driver: local
+  post_data:
+    driver: local

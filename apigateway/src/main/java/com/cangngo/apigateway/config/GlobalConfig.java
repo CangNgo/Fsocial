@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -43,8 +44,10 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     BanService banService;
     RedisTemplate redisTemplate;
     @NonFinal
-    private String[] PUBLIC_ENDPOINT = {"/account/**"
-            ,"/post/**","/timeline/**","/profile/**",
+    private String[] PUBLIC_ENDPOINT = {
+            "/account/login", "/account/refresh-token", "/account/logout","/account/registry", "/account/send-otp", "/account/verfy-otp"
+            , "/account/check-duplicate", "/account/", "/profile//internal/create"
+//            "/account/**" ,"/post/**","/timeline/**","/profile/**",
     };
 
     @NonFinal
@@ -53,6 +56,10 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        // Bypass kiểm tra auth cho preflight để tránh chặn CORS
+        if (HttpMethod.OPTIONS.equals(exchange.getRequest().getMethod())) {
+            return chain.filter(exchange);
+        }
         if (isPublicEndpoint(exchange.getRequest()))
             return chain.filter(exchange);
 
@@ -62,12 +69,10 @@ public class GlobalConfig implements GlobalFilter, Ordered {
             return unauthenticated(exchange.getResponse());
 
         String tokenrequest = authHeaders.getFirst();
-//        System.out.println("Token: " + tokenrequest);
+        System.out.println("Token: " + tokenrequest);
         boolean isBan = banService.isBan(tokenrequest.substring(7));
         if (isBan){
             return banned(exchange.getResponse());
-        }else{
-            System.out.println("account không bị ban");
         }
         //kiểm tra nếu tồn tại trong backList thì chặn request
 
@@ -95,6 +100,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 
     private boolean isPublicEndpoint(ServerHttpRequest request) {
         String path = request.getURI().getPath().replaceFirst(apiPrefix, "");
+        System.out.println("path khi request: " + path);
         return Arrays.stream(PUBLIC_ENDPOINT).anyMatch(endPoint -> antPathMatcher.match(endPoint, path));
     }
 

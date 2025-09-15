@@ -47,11 +47,11 @@ public class FollowServiceImpl implements FollowService {
         accountProfileRepository.followUser(ownerId, userId);
 
         // Gửi thông báo
-        sendNotification(NotificationRequest.builder()
-                .ownerId(userId)
-                .receiverId(ownerId)
-                .topic(TopicKafka.TOPIC_FOLLOW.getTopic())
-                .build());
+//        sendNotification(NotificationRequest.builder()
+//                .ownerId(userId)
+//                .receiverId(ownerId)
+//                .topic(TopicKafka.TOPIC_FOLLOW.getTopic())
+//                .build());
     }
 
     @Override

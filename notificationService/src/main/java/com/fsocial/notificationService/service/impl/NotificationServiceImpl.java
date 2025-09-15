@@ -32,7 +32,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor()
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
@@ -54,19 +54,23 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public void markAsRead(String notificationId) {
-        if (notificationId == null) throw new AppException(ErrorCode.NOT_NULL);
+        if (notificationId == null)
+            throw new AppException(ErrorCode.NOT_NULL);
 
         notificationRepository.findById(notificationId).ifPresentOrElse(notification -> {
             notification.setRead(true);
             notificationRepository.save(notification);
             log.info("Thông báo đã được đánh dấu là đã đọc: Id={}", notificationId);
-        }, () -> { throw new AppException(ErrorCode.NOT_FOUND); });
+        }, () -> {
+            throw new AppException(ErrorCode.NOT_FOUND);
+        });
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void markAllAsRead(String userId) {
-        if (userId == null) throw new AppException(ErrorCode.NOT_NULL);
+        if (userId == null)
+            throw new AppException(ErrorCode.NOT_NULL);
 
         notificationRepository.markAllAsReadByUserId(userId);
         log.info("Tất cả thông báo của userId={} đã được đánh dấu là đã đọc", userId);
@@ -75,10 +79,12 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional(readOnly = true)
     public AllNotificationResponse getNotificationsByUser(String userId, int page, int size) {
-        if (userId == null) throw new AppException(ErrorCode.NOT_NULL);
+        if (userId == null)
+            throw new AppException(ErrorCode.NOT_NULL);
 
         Pageable pageable = PageRequest.of(page, size);
-        List<NotificationResponse> notificationResponse = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable)
+        List<NotificationResponse> notificationResponse = notificationRepository
+                .findByOwnerIdOrderByCreatedAtDesc(userId, pageable)
                 .map(this::mapNotificationToResponse).toList();
         long numberNotificationUnread = notificationRepository.countUnreadNotificationsByOwnerId(userId);
 
@@ -91,7 +97,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public void deleteNotification(String notificationId) {
-        if (notificationId == null) throw new AppException(ErrorCode.NOT_NULL);
+        if (notificationId == null)
+            throw new AppException(ErrorCode.NOT_NULL);
 
         if (!notificationRepository.existsById(notificationId)) {
             log.warn("Không tìm thấy thông báo với id: {}", notificationId);
@@ -136,10 +143,12 @@ public class NotificationServiceImpl implements NotificationService {
 
     @KafkaListener(topics = "#{T(com.fsocial.notificationService.enums.TopicKafka).getAllTopics()}")
     private void handleKafkaNotification(NotificationRequest request,
-                                         @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
-        if (!isValidRequest(request)) return;
+            @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+        if (!isValidRequest(request))
+            return;
 
-        Optional<ProfileNameResponse> profileOpt = Optional.ofNullable(getProfileFromCacheOrApi(request.getReceiverId()));
+        Optional<ProfileNameResponse> profileOpt = Optional
+                .ofNullable(getProfileFromCacheOrApi(request.getReceiverId()));
         if (profileOpt.isEmpty()) {
             log.warn("Lỗi khi tìm thông tin hồ sơ cho userId = {}", request.getReceiverId());
             return;

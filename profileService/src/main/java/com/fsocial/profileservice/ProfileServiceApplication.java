@@ -9,7 +9,7 @@ import org.springframework.data.neo4j.config.EnableNeo4jAuditing;
 @EnableFeignClients
 @EnableNeo4jAuditing
 public class ProfileServiceApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(ProfileServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ProfileServiceApplication.class, args);
+    }
 }

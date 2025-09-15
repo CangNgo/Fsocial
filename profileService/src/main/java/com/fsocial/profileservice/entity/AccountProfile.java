@@ -32,19 +32,19 @@ public class AccountProfile {
     @Property("last_name")
     String lastName;
 
-    @Property
+    @Property("bio")
     String bio;
 
-    @Property
+    @Property("avatar")
     String avatar;
 
-    @Property
+    @Property("banner")
     String banner;
 
-    @Property
+    @Property("gender")
     int gender;
 
-    @Property
+    @Property("address")
     String address;
 
     @Property("created_at")

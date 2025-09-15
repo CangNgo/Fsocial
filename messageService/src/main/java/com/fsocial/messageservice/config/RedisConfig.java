@@ -11,28 +11,37 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfig {
-    @Value("${redis.host}")
-    private String HOST_REDIS;
 
-    @Value("${redis.port}")
-    private int PORT_REDIS;
+    @Value("${spring.data.redis.host}")
+    private String host;
+
+    @Value("${spring.data.redis.port}")
+    private int port;
+
+    @Value("${spring.data.redis.password:}")
+    private String password;
 
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(new RedisStandaloneConfiguration(HOST_REDIS, PORT_REDIS));
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration(host, port);
+        if (password != null && !password.isEmpty()) {
+            config.setPassword(password);
+        }
+        return new LettuceConnectionFactory(config);
     }
 
     @Bean
     @Primary
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<Object, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(redisConnectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new StringRedisSerializer());
         return template;
     }
 
@@ -45,13 +54,17 @@ public class RedisConfig {
         return template;
     }
 
-    @Bean
+    @Bean(destroyMethod = "shutdown")
     public RedissonClient redissonClient() {
         Config config = new Config();
-        config.useSingleServer()
-                .setAddress("redis://" + HOST_REDIS + ":" + PORT_REDIS)
-                .setConnectionMinimumIdleSize(10)
-                .setConnectionPoolSize(20);
+        if (password != null && !password.isEmpty()) {
+            config.useSingleServer()
+                    .setAddress("redis://" + host + ":" + port)
+                    .setPassword(password);
+        } else {
+            config.useSingleServer()
+                    .setAddress("redis://" + host + ":" + port);
+        }
         return Redisson.create(config);
     }
 }

@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.fsocial</groupId>
     <artifactId>accountService</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>accountService</name>
     <description>accountService</description>
     <url/>
@@ -142,6 +142,12 @@
             <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
             <version>0.12.6</version>
             <scope>runtime</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>java-dotenv</artifactId>
+            <version>5.2.2</version>
         </dependency>
     </dependencies>
     <dependencyManagement>

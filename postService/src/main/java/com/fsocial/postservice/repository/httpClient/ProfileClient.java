@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
 
-@FeignClient(name = "profile-service", url = "${app.services.profile}")
+@FeignClient(name = "profile-service", url = "${app.services.profile}",path = "/profile")
 public interface ProfileClient {
     @GetMapping(value = "/userId",produces = MediaType.APPLICATION_JSON_VALUE)
     Optional<ProfileDTO> getProfile(@PathVariable String userId);

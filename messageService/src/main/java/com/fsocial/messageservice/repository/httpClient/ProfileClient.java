@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "profileService", url = "${app.services.profile}")
+@FeignClient(name = "profileService", url = "${app.services.profile}", path = "/profile")
 public interface ProfileClient {
     @GetMapping(value = "/internal/message/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ProfileResponse getAccountProfileFromAnotherService(@PathVariable String userId);

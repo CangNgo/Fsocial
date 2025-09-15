@@ -6,19 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/accountservice-2025-04-03.0.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/accountservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/accountservice.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/apigateway-2025-04-03.0.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/apigateway.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/apigateway.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/postservice-2025-04-03.0.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/postservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/postservice.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/profileservice-2025-04-03.0.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/profileservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/profileservice.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/timelineService-2025-04-03.0.log.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/timelineService.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/timelineService.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/comment/CommentResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/dto/comment/CommentResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/CommentServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +16,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Python Script" />
+        <option value="Dockerfile" />
         <option value="Class" />
       </list>
     </option>
@@ -36,6 +25,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;TRIBUI106&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/CangNgo/Fsocial.git&quot;,
+    &quot;accountId&quot;: &quot;f1c9bef5-16ac-46fd-9c9a-e4e194b36e43&quot;
+  }
+}</component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
@@ -51,66 +52,121 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker-compose.yml.message: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.redis: Compose Deployment.executor": "Run",
-    "Maven.accountService [clean].executor": "Run",
-    "Maven.accountService [install].executor": "Run",
-    "Maven.apigateway [clean].executor": "Run",
-    "Maven.apigateway [package].executor": "Run",
-    "Maven.postService [clean].executor": "Run",
-    "Maven.processorService [clean].executor": "Run",
-    "Maven.profileService [clean].executor": "Run",
-    "Maven.timeLineService [clean].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.AccountServiceApplication.executor": "Run",
-    "Spring Boot.ApigatewayApplication.executor": "Run",
-    "Spring Boot.MessageServiceApplication.executor": "Run",
-    "Spring Boot.NotificationServiceApplication.executor": "Run",
-    "Spring Boot.PostServiceApplication.executor": "Run",
-    "Spring Boot.ProcessorServiceApplication.executor": "Run",
-    "Spring Boot.ProfileServiceApplication.executor": "Run",
-    "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "git-widget-placeholder": "postservice",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/workspace/Fsocial",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Docker.apigateway/Dockerfile build.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.apigateway/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose-pro.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.accountservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.apigateway: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka-1: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka-ui: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.message: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.message_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.messageservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.mysql: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.neo4j: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.notification_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.notificationservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.post_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.postservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.profileservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.redis: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.relationshipservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.timelineservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.zookeeper: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProfileServiceApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [site].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.postService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.postService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.processorService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.processorService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.relationshipService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.relationshipService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Shell Script.removeContainer.sh.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.AccountServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ApigatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MessageServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.NotificationServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PostServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ProcessorServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ProfileServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RelationshipServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TimeLineServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;ToolWindow.Run.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;postservice&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/acer/OneDrive/Workspace/DSA&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.31839082&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.24548736&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\workspace\Fsocial\Fsocial_be\processorService\src\main\java\com\fsocial\processorservice\entity" />
-      <recent name="C:\workspace\Fsocial\Fsocial_be\apigateway\src\main\java\com\cangngo\apigateway" />
-      <recent name="C:\workspace\Fsocial\Fsocial_be\profileService\src\main\java\com\fsocial\profileservice\config" />
-      <recent name="C:\workspace\Fsocial\Fsocial_be\notificationService\src\main\java\com\fsocial\notificationService\config" />
-      <recent name="C:\workspace\Fsocial\Fsocial_be\messageService\src\main\java\com\fsocial\messageservice\Config" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\timelineService\src\main\resources" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\relationshipService\src\main" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\profileService\src\main\resources" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\processorService\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\workspace\Fsocial\Fsocial_be\accountService" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be\apigateway" />
+      <recent name="C:\workspace\Fsocial\Fsocial_be" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.fsocial.postservice.services.impl" />
-      <recent name="com.fsocial.postservice.services" />
-      <recent name="com.fsocial.timelineservice.dto.post" />
-      <recent name="com.fsocial.accountservice.dto.response" />
-      <recent name="com.fsocial.timelineservice.dto.complaint" />
+      <recent name="com.fsocial.messageservice.config" />
+      <recent name="com.fsocial.timelineservice.config" />
+      <recent name="com.fsocial.relationshipService.config" />
+      <recent name="com.fsocial.postservice.config" />
+      <recent name="com.fsocial.accountservice.config" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -123,8 +179,43 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.MessageServiceApplication">
-    <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+  <component name="RunManager" selected="Shell Script.removeContainer.sh">
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.fsocial.accountservice.AccountServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="removeContainer.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/removeContainer.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="powershell.exe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="accountService" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.accountservice.AccountServiceApplication" />
@@ -215,31 +306,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="SPRING_BOOT_MAIN_CLASS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="docker-compose-pro.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
-        <settings />
+        <settings>
+          <option name="sourceFilePath" value="docker-compose-pro.yml" />
+        </settings>
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml.message: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
-          <option name="services">
-            <list>
-              <option value="message" />
-            </list>
-          </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
         </settings>
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml.redis: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose.yml.apigateway: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="services">
             <list>
-              <option value="redis" />
+              <option value="apigateway" />
             </list>
           </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
@@ -248,32 +342,29 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.docker-compose.yml.message: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml.redis: Compose Deployment" />
+      <item itemvalue="Shell Script.removeContainer.sh" />
       <item itemvalue="Spring Boot.AccountServiceApplication" />
-      <item itemvalue="Spring Boot.RelationshipServiceApplication" />
-      <item itemvalue="Spring Boot.PostServiceApplication" />
+      <item itemvalue="Spring Boot.ApigatewayApplication" />
       <item itemvalue="Spring Boot.MessageServiceApplication" />
       <item itemvalue="Spring Boot.NotificationServiceApplication" />
-      <item itemvalue="Spring Boot.TimeLineServiceApplication" />
+      <item itemvalue="Spring Boot.PostServiceApplication" />
       <item itemvalue="Spring Boot.ProcessorServiceApplication" />
       <item itemvalue="Spring Boot.ProfileServiceApplication" />
-      <item itemvalue="Spring Boot.ApigatewayApplication" />
+      <item itemvalue="Spring Boot.RelationshipServiceApplication" />
+      <item itemvalue="Spring Boot.TimeLineServiceApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose.yml.message: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml.redis: Compose Deployment" />
-        <item itemvalue="Spring Boot.PostServiceApplication" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
+        <item itemvalue="Shell Script.removeContainer.sh" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
       </set>
     </attachedChunks>
   </component>
@@ -345,12 +436,123 @@
       <workItem from="1745332242186" duration="1473000" />
       <workItem from="1745646920381" duration="12000" />
       <workItem from="1746348161151" duration="2780000" />
-      <workItem from="1746368493368" duration="3194000" />
+      <workItem from="1746368493368" duration="11957000" />
+      <workItem from="1746409363058" duration="597000" />
+      <workItem from="1747331024221" duration="28000" />
+      <workItem from="1747662420150" duration="697000" />
+      <workItem from="1747729523693" duration="742000" />
+      <workItem from="1747751979740" duration="602000" />
+      <workItem from="1751098989281" duration="25000" />
+      <workItem from="1751252132354" duration="1050000" />
+      <workItem from="1751255832927" duration="450000" />
+      <workItem from="1752337745440" duration="5263000" />
+      <workItem from="1752400658358" duration="424000" />
+      <workItem from="1752401097182" duration="13570000" />
+      <workItem from="1752432146270" duration="283000" />
+      <workItem from="1752432443569" duration="3207000" />
+      <workItem from="1752468431048" duration="13440000" />
+      <workItem from="1752496946337" duration="2387000" />
+      <workItem from="1752499607648" duration="2108000" />
+      <workItem from="1752503438053" duration="4585000" />
+      <workItem from="1752592667160" duration="5749000" />
+      <workItem from="1752598582816" duration="7675000" />
+      <workItem from="1752672024211" duration="1190000" />
+      <workItem from="1752676588904" duration="501000" />
+      <workItem from="1752690446133" duration="2496000" />
+      <workItem from="1752764174500" duration="17000" />
+      <workItem from="1752768058628" duration="1074000" />
+      <workItem from="1752907492767" duration="5246000" />
+      <workItem from="1752955837254" duration="630000" />
+      <workItem from="1752998892442" duration="5046000" />
+      <workItem from="1753009082555" duration="3978000" />
+      <workItem from="1753126945814" duration="4623000" />
+      <workItem from="1753265609814" duration="3380000" />
+      <workItem from="1753281776613" duration="4878000" />
+      <workItem from="1753367363007" duration="693000" />
+      <workItem from="1753497009549" duration="3709000" />
+      <workItem from="1753982093739" duration="851000" />
+      <workItem from="1754241368653" duration="3288000" />
+      <workItem from="1754491751924" duration="3688000" />
+      <workItem from="1754498193870" duration="4575000" />
+      <workItem from="1754503571418" duration="103000" />
+      <workItem from="1754503695177" duration="6000" />
+      <workItem from="1754504132846" duration="211000" />
+      <workItem from="1754505106031" duration="336000" />
+      <workItem from="1754543026219" duration="175000" />
+      <workItem from="1754544006821" duration="611000" />
+      <workItem from="1754566769713" duration="8471000" />
+      <workItem from="1754585094227" duration="2175000" />
+      <workItem from="1754588951377" duration="1782000" />
+      <workItem from="1754629369292" duration="832000" />
+      <workItem from="1754677980077" duration="1094000" />
+      <workItem from="1754706029489" duration="12763000" />
+      <workItem from="1754746469720" duration="92000" />
+      <workItem from="1754750875926" duration="3008000" />
+      <workItem from="1754764198077" duration="675000" />
+      <workItem from="1754765307547" duration="665000" />
+      <workItem from="1754803333114" duration="7915000" />
+      <workItem from="1755180756495" duration="11577000" />
+      <workItem from="1755193031073" duration="3106000" />
+      <workItem from="1755196471017" duration="283000" />
+      <workItem from="1755234268363" duration="1637000" />
+      <workItem from="1755279754719" duration="2418000" />
+      <workItem from="1755310325652" duration="1928000" />
+      <workItem from="1755316957428" duration="1555000" />
+      <workItem from="1755346241129" duration="609000" />
+      <workItem from="1755407048242" duration="3606000" />
+      <workItem from="1755430112926" duration="1967000" />
+      <workItem from="1755494675476" duration="2209000" />
+      <workItem from="1755509530711" duration="13624000" />
+      <workItem from="1755535012755" duration="947000" />
+      <workItem from="1755536757391" duration="1489000" />
+      <workItem from="1755539239705" duration="3469000" />
+      <workItem from="1755575245071" duration="12025000" />
+      <workItem from="1755599150867" duration="8897000" />
+      <workItem from="1755700439926" duration="13693000" />
+      <workItem from="1755752862641" duration="5304000" />
+      <workItem from="1755792782940" duration="1847000" />
+      <workItem from="1755872569019" duration="6769000" />
+      <workItem from="1755923680040" duration="20000" />
+      <workItem from="1755928849637" duration="14000" />
+      <workItem from="1755929280516" duration="1609000" />
+      <workItem from="1755968243045" duration="5663000" />
+      <workItem from="1755978628824" duration="5854000" />
+      <workItem from="1756030605218" duration="15721000" />
+      <workItem from="1756062780177" duration="3902000" />
+      <workItem from="1756100122805" duration="7208000" />
+      <workItem from="1756108471479" duration="117000" />
+      <workItem from="1756148626177" duration="2129000" />
+      <workItem from="1756396496479" duration="67000" />
+      <workItem from="1756396650381" duration="742000" />
+      <workItem from="1757599583004" duration="1333000" />
+      <workItem from="1757729295153" duration="49000" />
+      <workItem from="1757955603482" duration="2015000" />
+      <workItem from="1757960088482" duration="5000" />
+      <workItem from="1757960508742" duration="2000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.kafka:kafka_2.13" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:io.projectreactor:reactor-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.cloud:spring-cloud-context" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-websocket" />
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:io.reactivex.rxjava3:rxjava" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-messaging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -384,7 +586,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/PostController.java</url>
-          <line>90</line>
+          <line>95</line>
           <properties class="com.fsocial.postservice.controller.PostController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -509,42 +711,119 @@
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/RedisConfig.java</url>
+          <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java</url>
+          <line>62</line>
+          <properties class="com.fsocial.accountservice.controller.AccountController" method="persistAccount">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
+          <line>69</line>
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="persistAccount">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
+          <line>234</line>
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="saveAccount">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
+          <line>242</line>
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="createProfile">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/APIProfileInternal.java</url>
           <line>22</line>
-          <properties class="com.fsocial.profileservice.config.RedisConfig" method="redisConnectionFactory">
+          <properties class="com.fsocial.profileservice.controller.APIProfileInternal" method="createAccountProfile">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="48" />
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/RedisConfig.java</url>
-          <line>28</line>
-          <properties class="com.fsocial.profileservice.config.RedisConfig" method="redisTemplate">
+          <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java</url>
+          <line>39</line>
+          <properties class="com.fsocial.profileservice.services.impl.AccountProfileServiceImpl" method="createAccountProfile">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="49" />
+          <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/RedisConfig.java</url>
-          <line>35</line>
-          <properties class="com.fsocial.profileservice.config.RedisConfig" method="booleanRedisTemplate">
+          <url>file://$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/NotificationController.java</url>
+          <line>26</line>
+          <properties class="com.fsocial.notificationService.controller.NotificationController" method="getNotifications">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="50" />
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/service/impl/NotificationServiceImpl.java</url>
+          <line>80</line>
+          <properties class="com.fsocial.notificationService.service.impl.NotificationServiceImpl" method="getNotificationsByUser">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/NotificationController.java</url>
+          <line>36</line>
+          <properties class="com.fsocial.notificationService.controller.NotificationController" method="markAsRead">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/NotificationController.java</url>
+          <line>49</line>
+          <properties class="com.fsocial.notificationService.controller.NotificationController" method="deleteNotification">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/FollowController.java</url>
+          <line>24</line>
+          <properties class="com.fsocial.profileservice.controller.FollowController" method="followUser">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="64" />
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.NoClassDefFoundError" package="java.lang" />
           <option name="timeStamp" value="4" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="termOfServiceId không được để trống" />
-        <watch expression="endDate" />
+        <watch expression="endDate" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>

@@ -4,7 +4,6 @@ import com.fsocial.notificationService.dto.request.NoticeRequest;
 import com.fsocial.notificationService.dto.response.NotificationResponse;
 import com.fsocial.notificationService.entity.Notification;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface NotificationMapper {

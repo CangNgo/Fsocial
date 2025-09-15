@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.fsocial</groupId>
 	<artifactId>relationshipService</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>RelationshipService</name>
 	<description>Service handles the Follow feature</description>
 	<url/>

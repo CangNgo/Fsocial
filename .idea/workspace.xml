@@ -62,98 +62,98 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "Docker.apigateway/Dockerfile build.executor": "Run",
-    "Docker.apigateway/Dockerfile.executor": "Run",
-    "Docker.docker-compose-pro.yml: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.accountservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.apigateway: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.kafka-1: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.kafka-ui: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.kafka: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.message: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.message_mongo: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.messageservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.mysql: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.neo4j: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.notification_mongo: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.notificationservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.post_mongo: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.postservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.profileservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.redis: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.relationshipservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.timelineservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.zookeeper: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
-    "JUnit.ProfileServiceApplicationTests.executor": "Run",
-    "Maven.accountService [clean].executor": "Run",
-    "Maven.accountService [compile].executor": "Run",
-    "Maven.accountService [deploy].executor": "Run",
-    "Maven.accountService [install].executor": "Run",
-    "Maven.accountService [package].executor": "Run",
-    "Maven.accountService [site].executor": "Run",
-    "Maven.accountService [verify].executor": "Run",
-    "Maven.apigateway [clean].executor": "Run",
-    "Maven.apigateway [compile].executor": "Run",
-    "Maven.apigateway [package].executor": "Run",
-    "Maven.apigateway [validate].executor": "Run",
-    "Maven.messageService [clean].executor": "Run",
-    "Maven.messageService [compile].executor": "Run",
-    "Maven.messageService [package].executor": "Run",
-    "Maven.notificationService [clean].executor": "Run",
-    "Maven.notificationService [compile].executor": "Run",
-    "Maven.notificationService [install].executor": "Run",
-    "Maven.notificationService [package].executor": "Run",
-    "Maven.postService [clean].executor": "Run",
-    "Maven.postService [package].executor": "Run",
-    "Maven.processorService [clean].executor": "Run",
-    "Maven.processorService [package].executor": "Run",
-    "Maven.profileService [clean].executor": "Run",
-    "Maven.profileService [compile].executor": "Run",
-    "Maven.profileService [package].executor": "Run",
-    "Maven.relationshipService [clean].executor": "Run",
-    "Maven.relationshipService [package].executor": "Run",
-    "Maven.timeLineService [clean].executor": "Run",
-    "Maven.timeLineService [compile].executor": "Run",
-    "Maven.timeLineService [package].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Shell Script.removeContainer.sh.executor": "Run",
-    "Spring Boot.AccountServiceApplication.executor": "Run",
-    "Spring Boot.ApigatewayApplication.executor": "Run",
-    "Spring Boot.MessageServiceApplication.executor": "Run",
-    "Spring Boot.NotificationServiceApplication.executor": "Run",
-    "Spring Boot.PostServiceApplication.executor": "Run",
-    "Spring Boot.ProcessorServiceApplication.executor": "Run",
-    "Spring Boot.ProfileServiceApplication.executor": "Run",
-    "Spring Boot.RelationshipServiceApplication.executor": "Run",
-    "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "ToolWindow.Run.ShowToolbar": "false",
-    "git-widget-placeholder": "postservice",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/acer/OneDrive/Workspace/DSA",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.31839082",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "settings.editor.splitter.proportion": "0.24548736",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Docker.apigateway/Dockerfile build.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.apigateway/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose-pro.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.accountservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.apigateway: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka-1: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka-ui: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.message: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.message_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.messageservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.mysql: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.neo4j: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.notification_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.notificationservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.post_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.postservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.profileservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.redis: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.relationshipservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.timelineservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.zookeeper: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProfileServiceApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [site].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.postService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.postService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.processorService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.processorService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.relationshipService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.relationshipService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Shell Script.removeContainer.sh.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.AccountServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ApigatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MessageServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.NotificationServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PostServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ProcessorServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ProfileServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RelationshipServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TimeLineServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;ToolWindow.Run.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;postservice&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/acer/OneDrive/Workspace/DSA&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.31839082&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.24548736&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -188,7 +188,19 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose-pro.yml: Compose Deployment">
+  <component name="RunManager" selected="Shell Script.removeContainer.sh">
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -309,18 +321,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
-      <deployment type="docker-compose.yml">
-        <settings />
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile">
-        <settings />
-      </deployment>
-      <method v="2" />
-    </configuration>
     <configuration name="docker-compose-pro.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
@@ -351,9 +351,6 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.docker-compose-pro.yml: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml.apigateway: Compose Deployment" />
       <item itemvalue="Shell Script.removeContainer.sh" />
       <item itemvalue="Spring Boot.ApigatewayApplication" />
       <item itemvalue="Spring Boot.MessageServiceApplication" />
@@ -367,10 +364,7 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose-pro.yml: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
-        <item itemvalue="Docker.docker-compose.yml.apigateway: Compose Deployment" />
         <item itemvalue="Shell Script.removeContainer.sh" />
       </list>
     </recent_temporary>

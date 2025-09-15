@@ -19,8 +19,6 @@ target/
 *.iml
 *.ipr
 .idea/**/*
-.idea
-*.env
 ### Ignore application configuration ###
 */application.yml
 */application-*.yml

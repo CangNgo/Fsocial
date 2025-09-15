@@ -183,13 +183,267 @@ services:
       retries: 10
 
   # Account Service
+#  accountservice:
+#    build:
+#      context: accountService
+#      dockerfile: Dockerfile
+#    container_name: ${ACCOUNT_SERVICE}
+#    restart: unless-stopped
+#    image: ${ACCOUNT_SERVICE}
+#    environment:
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - EMAIL_APP=${EMAIL_APP}
+#      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+#      - EMAIL_PORT=${EMAIL_PORT}
+#      - MYSQL_URL=${MYSQL_URL}
+#      - MYSQL_USER=${MYSQL_USER}
+#      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - JWT_SECRET=${JWT_SECRET}
+#      - JWT_EXPIRATION=${JWT_EXPIRATION}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${ACCOUNT_PORT}:${ACCOUNT_PORT}"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Message Service
+#  messageservice:
+#    build:
+#      context: messageService
+#      dockerfile: Dockerfile
+#    container_name: ${MESSAGE_SERVICE}
+#    restart: unless-stopped
+#    image: ${MESSAGE_SERVICE}
+#    environment:
+#      - MONGODB_MESSAGE_URL=${MONGODB_MESSAGE_URL}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_URL=${REDIS_URL}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#    ports:
+#      - "${MESSAGE_PORT}:${MESSAGE_PORT}"
+#    depends_on:
+#      message_mongo:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Notification Service
+#  notificationservice:
+#    build:
+#      context: notificationService
+#      dockerfile: Dockerfile
+#    container_name: ${NOTIFICATION_SERVICE}
+#    restart: unless-stopped
+#    image: ${NOTIFICATION_SERVICE}
+#    environment:
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - SPRING_APPLICATION_ACTIVE=pro
+#      - MONGODB_NOTIFICATION_URL=${MONGODB_NOTIFICATION_URL}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_URL=${REDIS_URL}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${NOTIFICATION_PORT}:${NOTIFICATION_PORT}"
+#    depends_on:
+#      notification_mongo:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Post Service
+#  postservice:
+#    build:
+#      context: postService
+#      dockerfile: Dockerfile
+#    container_name: ${POST_SERVICE}
+#    restart: unless-stopped
+#    image: ${POST_SERVICE}
+#    environment:
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - MONGODB_POST_URL=${MONGODB_POST_URL}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_URL=${REDIS_URL}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${POST_PORT}:${POST_PORT}"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Profile Service
+#  profileservice:
+#    build:
+#      context: profileService
+#      dockerfile: Dockerfile
+#    container_name: ${PROFILE_SERVICE}
+#    restart: unless-stopped
+#    image: ${PROFILE_SERVICE}
+#    environment:
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#      - POST_SERVICE_URL=${POST_SERVICE_URL}
+#      - NEO4J_URL=${NEO4J_URL}
+#      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${PROFILE_PORT}:${PROFILE_PORT}"
+#    depends_on:
+#      neo4j:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Relationship Service
+#  relationshipservice:
+#    build:
+#      context: relationshipService
+#      dockerfile: Dockerfile
+#    container_name: ${RELATIONSHIP_SERVICE}
+#    restart: unless-stopped
+#    image: ${RELATIONSHIP_SERVICE}
+#    environment:
+#      - MONGODB_POST_URL=${MONGODB_POST_URL}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${RELATIONSHIP_PORT}:${RELATIONSHIP_PORT}"
+#    depends_on:
+#      neo4j:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  # Timeline Service
+#  timelineservice:
+#    build:
+#      context: timelineService
+#      dockerfile: Dockerfile
+#    container_name: ${TIMELINE_SERVICE}
+#    restart: unless-stopped
+#    image: ${TIMELINE_SERVICE}
+#    environment:
+#      - MONGODB_POST_URL=${MONGODB_POST_URL}
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - KAFKA_URL=${KAFKA_URL}
+#    ports:
+#      - "${TIMELINE_PORT}:${TIMELINE_PORT}"
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+#      redis:
+#        condition: service_healthy
+#      kafka:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#
+#  #  # Processor Service
+##  processorservice:
+##    build:
+##      context: processorService
+##      dockerfile: Dockerfile
+##    container_name: ${PROCESSOR_SERVICE}
+##    restart: unless-stopped
+##    environment:
+##      - SPRING_PROFILES_ACTIVE=prod
+##      - KAFKA_URL=${KAFKA_URL}
+##      - REDIS_PASSWORD=${REDIS_PASSWORD}
+##      - REDIS_CONTAINER=${REDIS_CONTAINER}
+##      - REDIS_PORT=${REDIS_PORT}
+##    ports:
+##      - "${PROCESSOR_PORT}:${PROCESSOR_PORT}"
+##    depends_on:
+##      kafka:
+##        condition: service_healthy
+##      redis:
+##        condition: service_healthy
+##    networks:
+##      - app_network
+#  # API Gateway
+#  apigateway:
+#    build:
+#      context: apigateway
+#      dockerfile: Dockerfile
+#    container_name: ${API_GATEWAY}
+#    image: ${API_GATEWAY}
+#    restart: unless-stopped
+#    environment:
+#      - GATEWAY_PORT=${GATEWAY_PORT}
+#      - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
+#      - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
+#      - RELATIONSHIP_SERVICE_URL=${RELATIONSHIP_SERVICE_URL}
+#      - POST_SERVICE_URL=${POST_SERVICE_URL}
+#      - MESSAGE_SERVICE_URL=${MESSAGE_SERVICE_URL}
+#      - NOTIFICATION_SERVICE_URL=${NOTIFICATION_SERVICE_URL}
+#      - TIMELINE_SERVICE_URL=${TIMELINE_SERVICE_URL}
+#      - PROCESSOR_SERVICE_URL=${PROCESSOR_SERVICE_URL}
+#      - REDIS_CONTAINER=${REDIS_CONTAINER}
+#      - REDIS_PASSWORD=${REDIS_PASSWORD}
+#      - REDIS_PORT=${REDIS_PORT}
+#      - JWT_SECRET=${JWT_SECRET}
+#      - JWT_EXPIRATION=${JWT_EXPIRATION}
+#    ports:
+#      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
+#    depends_on:
+#      - redis
+#    networks:
+#      - app_network
+
+
+#product
   accountservice:
-    build:
-      context: accountService
-      dockerfile: Dockerfile
     container_name: ${ACCOUNT_SERVICE}
     restart: unless-stopped
-    image: ${ACCOUNT_SERVICE}
+    image: cangngo/${ACCOUNT_SERVICE}:0.0.2
     environment:
       - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
       - EMAIL_APP=${EMAIL_APP}
@@ -214,18 +468,13 @@ services:
       kafka:
         condition: service_healthy
     networks:
-      app_network:
-        aliases:
-            - ${ACCOUNT_SERVICE}
+      - app_network
 
   # Message Service
   messageservice:
-    build:
-      context: messageService
-      dockerfile: Dockerfile
     container_name: ${MESSAGE_SERVICE}
     restart: unless-stopped
-    image: ${MESSAGE_SERVICE}
+    image: cangngo/${MESSAGE_SERVICE}:0.0.2
     environment:
       - MONGODB_MESSAGE_URL=${MONGODB_MESSAGE_URL}
       - REDIS_CONTAINER=${REDIS_CONTAINER}
@@ -245,18 +494,13 @@ services:
       kafka:
         condition: service_healthy
     networks:
-      app_network:
-        aliases:
-            - ${MESSAGE_SERVICE}
+      - app_network
 
   # Notification Service
   notificationservice:
-    build:
-      context: notificationService
-      dockerfile: Dockerfile
     container_name: ${NOTIFICATION_SERVICE}
     restart: unless-stopped
-    image: ${NOTIFICATION_SERVICE}
+    image: cangngo/${NOTIFICATION_SERVICE}:0.0.2
     environment:
       - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
       - SPRING_APPLICATION_ACTIVE=pro
@@ -276,18 +520,13 @@ services:
       kafka:
         condition: service_healthy
     networks:
-      app_network:
-        aliases:
-            - ${NOTIFICATION_SERVICE}
+      - app_network
 
   # Post Service
   postservice:
-    build:
-      context: postService
-      dockerfile: Dockerfile
     container_name: ${POST_SERVICE}
     restart: unless-stopped
-    image: ${POST_SERVICE}
+    image: cangngo/${POST_SERVICE}:0.0.2
     environment:
       - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
       - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
@@ -307,18 +546,13 @@ services:
       kafka:
         condition: service_healthy
     networks:
-      app_network:
-        aliases:
-            - ${POST_SERVICE}
+      - app_network
 
   # Profile Service
   profileservice:
-    build:
-      context: profileService
-      dockerfile: Dockerfile
     container_name: ${PROFILE_SERVICE}
     restart: unless-stopped
-    image: ${PROFILE_SERVICE}
+    image: cangngo/${PROFILE_SERVICE}:0.0.2
     environment:
       - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
       - POST_SERVICE_URL=${POST_SERVICE_URL}
@@ -338,18 +572,13 @@ services:
       kafka:
         condition: service_healthy
     networks:
-      app_network:
-        aliases:
-            - ${PROFILE_SERVICE}
+      - app_network
 
   # Relationship Service
   relationshipservice:
-    build:
-      context: relationshipService
-      dockerfile: Dockerfile
     container_name: ${RELATIONSHIP_SERVICE}
     restart: unless-stopped
-    image: ${RELATIONSHIP_SERVICE}
+    image: cangngo/${RELATIONSHIP_SERVICE}:0.0.2
     environment:
       - MONGODB_POST_URL=${MONGODB_POST_URL}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
@@ -366,25 +595,17 @@ services:
       kafka:
         condition: service_healthy
     networks:
-      app_network:
-        aliases:
-            - ${RELATIONSHIP_SERVICE}
+      - app_network
 
   # Timeline Service
   timelineservice:
-    build:
-      context: timelineService
-      dockerfile: Dockerfile
     container_name: ${TIMELINE_SERVICE}
     restart: unless-stopped
-    image: ${TIMELINE_SERVICE}
+    image: cangngo/${TIMELINE_SERVICE}:0.0.2
     environment:
       - MONGODB_POST_URL=${MONGODB_POST_URL}
       - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
       - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
-      - MYSQL_URL=${MYSQL_URL}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_CONTAINER=${REDIS_CONTAINER}
       - REDIS_PORT=${REDIS_PORT}
@@ -399,42 +620,33 @@ services:
       kafka:
         condition: service_healthy
     networks:
-      app_network:
-        aliases:
-            - ${TIMELINE_SERVICE}
+      - app_network
 
   #  # Processor Service
-#  processorservice:
-#    build:
-#      context: processorService
-#      dockerfile: Dockerfile
-#    container_name: ${PROCESSOR_SERVICE}
-#    restart: unless-stopped
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=prod
-#      - KAFKA_URL=${KAFKA_URL}
-#      - REDIS_PASSWORD=${REDIS_PASSWORD}
-#      - REDIS_CONTAINER=${REDIS_CONTAINER}
-#      - REDIS_PORT=${REDIS_PORT}
-#    ports:
-#      - "${PROCESSOR_PORT}:${PROCESSOR_PORT}"
-#    depends_on:
-#      kafka:
-#        condition: service_healthy
-#      redis:
-#        condition: service_healthy
-#    networks:
-#      - app_network
+  #  processorservice:
+  #    container_name: ${PROCESSOR_SERVICE}
+  #    restart: unless-stopped
+  #    environment:
+  #      - SPRING_PROFILES_ACTIVE=prod
+  #      - KAFKA_URL=${KAFKA_URL}
+  #      - REDIS_PASSWORD=${REDIS_PASSWORD}
+  #      - REDIS_CONTAINER=${REDIS_CONTAINER}
+  #      - REDIS_PORT=${REDIS_PORT}
+  #    ports:
+  #      - "${PROCESSOR_PORT}:${PROCESSOR_PORT}"
+  #    depends_on:
+  #      kafka:
+  #        condition: service_healthy
+  #      redis:
+  #        condition: service_healthy
+  #    networks:
+  #      - app_network
   # API Gateway
   apigateway:
-    build:
-      context: apigateway
-      dockerfile: Dockerfile
     container_name: ${API_GATEWAY}
-    image: ${API_GATEWAY}
+    image: cangngo/${API_GATEWAY}:0.0.2
     restart: unless-stopped
     environment:
-      - SPRING_APPLICATION_ACTIVE=pro
       - GATEWAY_PORT=${GATEWAY_PORT}
       - ACCOUNT_SERVICE_URL=${ACCOUNT_SERVICE_URL}
       - PROFILE_SERVICE_URL=${PROFILE_SERVICE_URL}
@@ -454,9 +666,8 @@ services:
     depends_on:
       - redis
     networks:
-      app_network:
-        aliases:
-          - ${API_GATEWAY}
+      - app_network
+
 networks:
   app_network:
     driver: bridge
@@ -487,4 +698,3 @@ volumes:
     driver: local
   post_data:
     driver: local
-

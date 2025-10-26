@@ -2,13 +2,16 @@ package com.fsocial.postservice.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.fsocial.postservice.dto.Attachments.AttachmentDTO;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
+import com.fsocial.postservice.services.AttachmentsService;
 import com.fsocial.postservice.services.UploadMedia;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,12 +30,14 @@ import java.util.UUID;
 @Slf4j
 public class UploadMediaImpl implements UploadMedia {
     Cloudinary cloudinary;
+    AttachmentsService attachmentsService;
     private static final int BUFFER_SIZE = 8192; // Tăng buffer size để upload nhanh hơn
     private static final String[] SUPPORTED_IMAGE_TYPES = {"jpg", "jpeg", "png", "gif"};
     private static final String[] SUPPORTED_VIDEO_TYPES = {"mp4", "mov", "avi", "wmv"};
 
     @Override
     public String[] uploadMedia(MultipartFile[] files) throws AppCheckedException {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         if (files == null || files.length == 0) {
             throw new AppCheckedException("No files provided", StatusCode.FILE_NOT_FOUND);
         }
@@ -60,7 +65,17 @@ public class UploadMediaImpl implements UploadMedia {
                 uploadParams.put("invalidate", true);
 
                 Map uploadResult = cloudinary.uploader().upload(tempFile, uploadParams);
+
                 mediaUrls[i] = (String) uploadResult.get("secure_url");
+                //save attachments
+                attachmentsService.save(AttachmentDTO.builder()
+                                .publicId(uploadResult.get("public_id").toString())
+                                .size(uploadResult.get("bytes").toString())
+                                .resourceType(uploadResult.get("resource_type").toString())
+                                .fileType(uploadResult.get("format").toString())
+                                .ownerId(userId)
+                                .url(uploadResult.get("secure_url").toString())
+                        .build());
 
             } catch (Exception e) {
                 log.error("Error uploading file: {}", e.getMessage());

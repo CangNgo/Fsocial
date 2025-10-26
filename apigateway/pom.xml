@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.cangngo</groupId>
 	<artifactId>apigateway</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>apigateway</name>
 	<description>apigateway</description>
 	<url/>
@@ -33,6 +33,12 @@
 		<lombok.version>1.18.30</lombok.version>
 	</properties>
 	<dependencies>
+        <!-- SpringDoc OpenAPI for Spring Cloud Gateway (WebFlux) -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <version>2.8.5</version>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
@@ -47,27 +53,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-common</artifactId>
-            <version>2.8.5</version>
-            <scope>compile</scope>
-        </dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-resolver-dns-native-macos</artifactId>
-			<version>4.1.100.Final</version> <!-- Hoặc phiên bản mới nhất -->
-			<classifier>osx-aarch_64</classifier> <!-- Nếu dùng Apple Silicon -->
-		</dependency>
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.8.5</version> <!-- Sử dụng phiên bản mới nhất tại thời điểm hiện tại -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

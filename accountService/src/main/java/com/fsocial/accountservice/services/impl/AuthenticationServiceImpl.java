@@ -48,6 +48,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String ipAddress = httpRequest.getRemoteAddr();
         String accessToken = jwtService.generateToken(account.getUsername());
 //        Lưu token vào db
+
+        System.out.println("user login" + account.getUsername());
         Optional<Token> token = tokenRepository.findByAccount(account);
         Token entity;
         if (token.isPresent()) {
@@ -59,7 +61,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         entity.setAccount(account);
         tokenRepository.save(entity);
 
-        String refreshToken = refreshTokenService.createRefreshToken(request.getUsername(), userAgent, ipAddress).getToken();
+        String refreshToken = refreshTokenService.createRefreshToken(account.getUsername(), userAgent, ipAddress).getToken();
 
 
         log.info("Người dùng {} đăng nhập thành công từ IP: {}", request.getUsername(), ipAddress);

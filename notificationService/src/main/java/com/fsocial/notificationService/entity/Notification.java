@@ -1,28 +1,26 @@
 package com.fsocial.notificationService.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fsocial.notificationService.enums.ChannelType;
+import com.fsocial.notificationService.enums.NotifyTo;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
-
 @Document(collection = "notifications")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Notification {
-    @Id
-    String id;
+public class Notification extends AbstractEntity<String> {
+    String title;
+    String message;
+    String deeplink;
+    NotifyTo notifyTo;
+    ChannelType channel;
+    String[] email;
     String ownerId;
     boolean isRead;
     String type;
-    LocalDateTime createdAt = LocalDateTime.now();
-    String postId;
-    String commentId;
-    String receiverId;
+    String[] receiverId;
 }

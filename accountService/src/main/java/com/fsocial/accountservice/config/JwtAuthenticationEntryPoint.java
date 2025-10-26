@@ -1,21 +1,24 @@
 package com.fsocial.accountservice.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.enums.ErrorCode;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fsocial.accountservice.dto.ApiResponse;
+import com.fsocial.accountservice.enums.ErrorCode;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException authException) throws IOException, ServletException {
         ErrorCode errorCode = ErrorCode.UNAUTHENTICATED;
 
         response.setStatus(errorCode.getCode());
@@ -32,4 +35,3 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.resetBuffer();
     }
 }
-

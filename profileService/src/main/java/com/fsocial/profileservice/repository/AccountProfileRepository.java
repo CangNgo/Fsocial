@@ -15,8 +15,8 @@ public interface AccountProfileRepository extends Neo4jRepository<AccountProfile
     boolean existsByUserId(String userId);
 
     @Query("""
-        MATCH (a:account_profile {user_id: $followerId}), 
-              (b:account_profile {user_id: $followingId}) 
+        MATCH (a:account_profile {user_id: $followerId})
+        MATCH (b:account_profile {user_id: $followingId})
         MERGE (a)-[:FOLLOWS]->(b)
     """)
     void followUser(String followerId, String followingId);

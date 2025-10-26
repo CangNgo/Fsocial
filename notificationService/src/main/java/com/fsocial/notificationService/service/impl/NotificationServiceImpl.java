@@ -1,13 +1,14 @@
 package com.fsocial.notificationService.service.impl;
 
-import com.fsocial.event.NotificationRequest;
 import com.fsocial.notificationService.dto.request.NoticeRequest;
 import com.fsocial.notificationService.dto.response.AllNotificationResponse;
 import com.fsocial.notificationService.dto.response.NotificationResponse;
 import com.fsocial.notificationService.dto.response.ProfileNameResponse;
 import com.fsocial.notificationService.entity.Notification;
+import com.fsocial.notificationService.enums.ChannelType;
 import com.fsocial.notificationService.enums.ErrorCode;
-import com.fsocial.notificationService.enums.TopicKafka;
+import com.fsocial.notificationService.enums.NotifyTo;
+import com.fsocial.notificationService.exception.AppCheckedException;
 import com.fsocial.notificationService.exception.AppException;
 import com.fsocial.notificationService.mapper.NotificationMapper;
 import com.fsocial.notificationService.repository.NotificationRepository;
@@ -20,9 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +30,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor()
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
@@ -47,26 +45,38 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional
-    public Notification createNotification(NoticeRequest request) {
-        return notificationRepository.save(notificationMapper.toEntity(request));
+    public NotificationResponse createNotification(NoticeRequest request) throws AppCheckedException {
+
+        if (request.getChannel() != ChannelType.INBOX) {
+            throw new AppCheckedException("Not implement type noitify", ErrorCode.NOT_FOUND);
+        }
+
+        if (request.getNotifyTo() != NotifyTo.USER) {
+            throw new AppCheckedException("Not implement notify to", ErrorCode.NOT_FOUND);
+        }
+        return notificationMapper.toDto(notificationRepository.save(notificationMapper.toEntity(request)));
     }
 
     @Override
     @Transactional
     public void markAsRead(String notificationId) {
-        if (notificationId == null) throw new AppException(ErrorCode.NOT_NULL);
+        if (notificationId == null)
+            throw new AppException(ErrorCode.NOT_NULL);
 
         notificationRepository.findById(notificationId).ifPresentOrElse(notification -> {
             notification.setRead(true);
             notificationRepository.save(notification);
             log.info("Thông báo đã được đánh dấu là đã đọc: Id={}", notificationId);
-        }, () -> { throw new AppException(ErrorCode.NOT_FOUND); });
+        }, () -> {
+            throw new AppException(ErrorCode.NOT_FOUND);
+        });
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void markAllAsRead(String userId) {
-        if (userId == null) throw new AppException(ErrorCode.NOT_NULL);
+        if (userId == null)
+            throw new AppException(ErrorCode.NOT_NULL);
 
         notificationRepository.markAllAsReadByUserId(userId);
         log.info("Tất cả thông báo của userId={} đã được đánh dấu là đã đọc", userId);
@@ -75,10 +85,12 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional(readOnly = true)
     public AllNotificationResponse getNotificationsByUser(String userId, int page, int size) {
-        if (userId == null) throw new AppException(ErrorCode.NOT_NULL);
+        if (userId == null)
+            throw new AppException(ErrorCode.NOT_NULL);
 
         Pageable pageable = PageRequest.of(page, size);
-        List<NotificationResponse> notificationResponse = notificationRepository.findByOwnerIdOrderByCreatedAtDesc(userId, pageable)
+        List<NotificationResponse> notificationResponse = notificationRepository
+                .findByOwnerIdOrderByCreatedAtDesc(userId, pageable)
                 .map(this::mapNotificationToResponse).toList();
         long numberNotificationUnread = notificationRepository.countUnreadNotificationsByOwnerId(userId);
 
@@ -91,7 +103,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public void deleteNotification(String notificationId) {
-        if (notificationId == null) throw new AppException(ErrorCode.NOT_NULL);
+        if (notificationId == null)
+            throw new AppException(ErrorCode.NOT_NULL);
 
         if (!notificationRepository.existsById(notificationId)) {
             log.warn("Không tìm thấy thông báo với id: {}", notificationId);
@@ -99,6 +112,12 @@ public class NotificationServiceImpl implements NotificationService {
         }
         notificationRepository.deleteById(notificationId);
         log.info("Đã xoá thông báo với id: {}", notificationId);
+    }
+
+    @Override
+    public List<NotificationResponse> getNotificationByOwnerIdAndChannel_Inbox(String ownerId, ChannelType channel, int page, int limit) {
+        Pageable pageable = PageRequest.of(page, limit);
+        return notificationRepository.getNotificationByOwnerIdAndChannel(ownerId, channel, pageable).toList();
     }
 
     private ProfileNameResponse getProfileFromCacheOrApi(String userId) {
@@ -125,51 +144,7 @@ public class NotificationServiceImpl implements NotificationService {
     private NotificationResponse mapNotificationToResponse(Notification notification) {
         NotificationResponse response = notificationMapper.toDto(notification);
         response.setRead(notification.isRead());
-        ProfileNameResponse profile = getProfileFromCacheOrApi(notification.getReceiverId());
-        if (profile != null) {
-            response.setFirstName(profile.getFirstName());
-            response.setLastName(profile.getLastName());
-            response.setAvatar(profile.getAvatar());
-        }
         return response;
-    }
-
-    @KafkaListener(topics = "#{T(com.fsocial.notificationService.enums.TopicKafka).getAllTopics()}")
-    private void handleKafkaNotification(NotificationRequest request,
-                                         @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
-        if (!isValidRequest(request)) return;
-
-        Optional<ProfileNameResponse> profileOpt = Optional.ofNullable(getProfileFromCacheOrApi(request.getReceiverId()));
-        if (profileOpt.isEmpty()) {
-            log.warn("Lỗi khi tìm thông tin hồ sơ cho userId = {}", request.getReceiverId());
-            return;
-        }
-
-        TopicKafka notificationType = TopicKafka.fromTopic(topic);
-        Notification notification = createNotification(buildNoticeRequest(request, notificationType));
-        sendNotificationToUser(notification);
-    }
-
-    private boolean isValidRequest(NotificationRequest request) {
-        if (request == null || request.getReceiverId() == null) {
-            log.warn("Đã nhận được yêu cầu thông báo không hợp lệ");
-            return false;
-        }
-        return true;
-    }
-
-    private NoticeRequest buildNoticeRequest(NotificationRequest request, TopicKafka notificationType) {
-        NoticeRequest.NoticeRequestBuilder builder = NoticeRequest.builder()
-                .ownerId(request.getOwnerId())
-                .type(notificationType.name())
-                .receiverId(request.getReceiverId());
-
-        if (notificationType != TopicKafka.FOLLOW) {
-            builder.postId(request.getPostId())
-                    .commentId(request.getCommentId());
-        }
-
-        return builder.build();
     }
 
     private void sendNotificationToUser(Notification notification) {

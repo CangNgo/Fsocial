@@ -1,0 +1,4 @@
+2025-10-25 09:47:15.107 ERROR --- [nio-8086-exec-1] c.f.t.exception.GlobalExceptionHandler   : Unable to connect to Redis
+2025-10-25 09:47:44.529 ERROR --- [nio-8086-exec-2] c.f.t.exception.GlobalExceptionHandler   : Unable to connect to Redis
+2025-10-25 09:48:16.676 ERROR --- [nio-8086-exec-3] c.f.t.exception.GlobalExceptionHandler   : Unable to connect to Redis
+2025-10-25 09:48:16.697 ERROR --- [nio-8086-exec-4] c.f.t.exception.GlobalExceptionHandler   : Unable to connect to Redis

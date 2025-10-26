@@ -1,8 +1,32 @@
 package com.fsocial.accountservice.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.fsocial.accountservice.config.JwtConfig;
 import com.fsocial.accountservice.dto.ApiResponse;
-import com.fsocial.accountservice.dto.request.account.*;
+import com.fsocial.accountservice.dto.request.account.AccountRegisterRequest;
+import com.fsocial.accountservice.dto.request.account.ChangePasswordRequest;
+import com.fsocial.accountservice.dto.request.account.DuplicationRequest;
+import com.fsocial.accountservice.dto.request.account.EmailRequest;
+import com.fsocial.accountservice.dto.request.account.OtpRequest;
+import com.fsocial.accountservice.dto.request.account.ResetPasswordRequest;
 import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
 import com.fsocial.accountservice.dto.response.AccountStatisticRegiserLongDateDTO;
@@ -11,10 +35,7 @@ import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.services.AccountService;
 import com.fsocial.accountservice.services.OtpService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -22,20 +43,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-
-import javax.crypto.SecretKey;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -71,7 +78,8 @@ public class AccountController {
     }
 
     @PostMapping("/check-duplication")
-    public ResponseEntity<ApiResponse<DuplicationResponse>> checkDuplication(@RequestBody @Valid DuplicationRequest request) {
+    public ResponseEntity<ApiResponse<DuplicationResponse>> checkDuplication(
+            @RequestBody @Valid DuplicationRequest request) {
         ApiResponse<DuplicationResponse> response = accountServices.checkDuplication(request);
         HttpStatus status = response.getStatusCode() != 200 ? HttpStatus.BAD_REQUEST : HttpStatus.OK;
         return ResponseEntity.status(status).body(response);
@@ -89,7 +97,6 @@ public class AccountController {
         return buildResponse(account, ResponseStatus.SUCCESS);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @PutMapping("/change-password")
     public ApiResponse<Void> changePassword(@RequestBody @Valid ChangePasswordRequest request) {
         var userId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -117,7 +124,8 @@ public class AccountController {
     }
 
     @GetMapping("/statistics_register_today")
-    public ApiResponse<List<AccountStatisticRegiserDTO>> statisticsRegister(@RequestParam("date_time") String dateTime) {
+    public ApiResponse<List<AccountStatisticRegiserDTO>> statisticsRegister(
+            @RequestParam("date_time") String dateTime) {
         LocalDate date = LocalDate.parse(dateTime);
         LocalDateTime startDate = date.atStartOfDay();
         LocalDateTime endDate = date.atTime(23, 59, 59);
@@ -130,7 +138,8 @@ public class AccountController {
     }
 
     @GetMapping("/statistics_register_start_end")
-    public ApiResponse<List<AccountStatisticRegiserLongDateDTO>> statisticsRegisterStartEnd(@RequestParam("startDate" )String startDateRe,@RequestParam("endDate" )String endDateRe ) {
+    public ApiResponse<List<AccountStatisticRegiserLongDateDTO>> statisticsRegisterStartEnd(
+            @RequestParam("startDate") String startDateRe, @RequestParam("endDate") String endDateRe) {
         LocalDate start = LocalDate.parse(startDateRe);
         LocalDate end = LocalDate.parse(endDateRe);
         LocalDateTime startDate = start.atStartOfDay();
@@ -139,15 +148,16 @@ public class AccountController {
         List<AccountStatisticRegiserLongDateDTO> res = accountServices.countByCreatedAtByStartEnd(startDate, endDate);
         return ApiResponse.<List<AccountStatisticRegiserLongDateDTO>>builder()
                 .data(res)
-                .message("Lấy danh sách thống kê số lượng tài khoản được tạo từ " + startDate + " đến " + endDate + " thành công")
+                .message("Lấy danh sách thống kê số lượng tài khoản được tạo từ " + startDate + " đến " + endDate
+                        + " thành công")
                 .build();
     }
 
     @PostMapping("/ban")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    // @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ApiResponse<Object> banAccount(@RequestParam("user_id") String userId) {
         String banUser = accountServices.banUser(userId);
-//        String sub = jwt.getBody().toString();
+        // String sub = jwt.getBody().toString();
         return ApiResponse.<Object>builder()
                 .data(banUser)
                 .message("Ban tài khoản thành công")

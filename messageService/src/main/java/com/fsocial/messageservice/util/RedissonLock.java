@@ -3,11 +3,11 @@ package com.fsocial.messageservice.util;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-@Configuration
+@Component
 @RequiredArgsConstructor
 public class RedissonLock {
     private final RedissonClient redissonClient;
@@ -21,6 +21,7 @@ public class RedissonLock {
         try {
             return rLock.tryLock(timeout, ttl, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             return false;
         }
     }

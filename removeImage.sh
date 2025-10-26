@@ -1,5 +1,5 @@
 docker rmi fsocial-apigateway &
-docker rmi fsocial-accountservice &
+docker rmi cangngo/fsocial-accountservice &
 docker rmi fsocial-timelineservice &
 docker rmi fsocial-relationshipservice &
 docker rmi fsocial-postservice &

@@ -32,7 +32,15 @@ public class AppConfig {
     CustomJwtDecode customJwtDecode;
 
     @NonFinal
-    private final String[] PUBLIC_API = {"/**"};
+    private final String[] PUBLIC_API = {
+        "/**",
+        // Swagger/OpenAPI endpoints
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html",
+        "/swagger-resources/**",
+        "/webjars/**"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

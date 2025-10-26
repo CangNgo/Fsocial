@@ -42,12 +42,17 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     ObjectMapper objectMapper;
     AntPathMatcher antPathMatcher = new AntPathMatcher();
     BanService banService;
-    RedisTemplate redisTemplate;
     @NonFinal
     private String[] PUBLIC_ENDPOINT = {
-            "/account/login", "/account/refresh-token", "/account/logout","/account/registry", "/account/send-otp", "/account/verfy-otp"
-            , "/account/check-duplicate", "/account/", "/profile//internal/create"
-//            "/account/**" ,"/post/**","/timeline/**","/profile/**",
+            "/account/login", "/account/refresh-token", "/account/logout", "/account/register", "/account/send-otp", "/account/verify-otp",
+            "/account/check-duplicate", "/account/check-duplication", "/account/", "/account/change-password", "/account/reset-password", "/profile/internal/create",
+            "/account/check", "/message/check", "/profile/check", "/post/check", "/timeline/check", "/notification/check", "/relationship/check",
+            // OpenAPI & Swagger UI
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/webjars/**"
     };
 
     @NonFinal
@@ -71,7 +76,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
         String tokenrequest = authHeaders.getFirst();
         System.out.println("Token: " + tokenrequest);
         boolean isBan = banService.isBan(tokenrequest.substring(7));
-        if (isBan){
+        if (isBan) {
             return banned(exchange.getResponse());
         }
         //kiểm tra nếu tồn tại trong backList thì chặn request
@@ -99,9 +104,22 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     }
 
     private boolean isPublicEndpoint(ServerHttpRequest request) {
-        String path = request.getURI().getPath().replaceFirst(apiPrefix, "");
-        System.out.println("path khi request: " + path);
-        return Arrays.stream(PUBLIC_ENDPOINT).anyMatch(endPoint -> antPathMatcher.match(endPoint, path));
+        String path = request.getURI().getPath();
+        System.out.println("Original path khi request: " + path);
+        
+        // Check Swagger/OpenAPI paths first (without prefix removal)
+        if (path.startsWith("/swagger-ui") || 
+            path.startsWith("/v3/api-docs") || 
+            path.startsWith("/swagger-resources") || 
+            path.startsWith("/webjars")) {
+            System.out.println("Swagger path detected, allowing: " + path);
+            return true;
+        }
+        
+        // Remove API prefix for other paths
+        String pathWithoutPrefix = path.replaceFirst(apiPrefix, "");
+        System.out.println("path after prefix removal: " + pathWithoutPrefix);
+        return Arrays.stream(PUBLIC_ENDPOINT).anyMatch(endPoint -> antPathMatcher.match(endPoint, pathWithoutPrefix));
     }
 
     Mono<Void> unauthenticated(ServerHttpResponse response) {

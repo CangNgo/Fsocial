@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -20,20 +21,27 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MailUtils {
 
-    JavaMailSender javaMailSender;
+    @Autowired
+    private final JavaMailSender javaMailSender;
 
     @NonFinal
-    @Value("${spring.mail.username}")
+    @Value("${spring.mail.from}")
     String fromEmail;
+
+    @NonFinal
+    @Value("${spring.mail.password}")
+    String apikey;
 
     public void sendOtp(String toEmail, String otpCode) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-
+            System.out.println("Sending email from " + fromEmail);
             helper.setFrom(fromEmail);
             helper.setTo(toEmail);
             helper.setSubject("Your OTP Code");
+
+//            com.sendgrid.SendGrid sg = new SendGrid(apikey);
             helper.setText(buildOtpEmailContent(otpCode), true);
 
             javaMailSender.send(mimeMessage);

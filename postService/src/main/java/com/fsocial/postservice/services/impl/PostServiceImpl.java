@@ -1,20 +1,18 @@
 package com.fsocial.postservice.services.impl;
 
-import com.fsocial.event.NotificationRequest;
 import com.fsocial.postservice.dto.ContentDTO;
+import com.fsocial.postservice.dto.notification.NoticeRequest;
 import com.fsocial.postservice.dto.post.PostDTO;
 import com.fsocial.postservice.dto.post.PostDTORequest;
 import com.fsocial.postservice.dto.post.PostShareDTORequest;
 import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Post;
-import com.fsocial.postservice.enums.TopicKafka;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.exception.AppUnCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.mapper.ContentMapper;
 import com.fsocial.postservice.mapper.PostMapper;
 import com.fsocial.postservice.repository.PostRepository;
-import com.fsocial.postservice.services.KafkaService;
+import com.fsocial.postservice.repository.httpClient.NotificationClient;
 import com.fsocial.postservice.services.PostService;
 import com.fsocial.postservice.services.RedisService;
 import com.fsocial.postservice.services.UploadMedia;
@@ -46,7 +44,8 @@ public class PostServiceImpl implements PostService {
     ContentMapper contentMapper;
     RedisService redisService;
     RestTemplate restTemplate;
-    KafkaService kafkaService;
+    NotificationClient notificationClient;
+//    KafkaService kafkaService;
     String profileServiceUrl = "http://localhost:8888/profile";
     private final RedisServiceImpl redisServiceImpl;
 
@@ -72,7 +71,9 @@ public class PostServiceImpl implements PostService {
                     postRequest.getText(),
                     uripostImage);
             Post post = buildPost(contentDTO, postRequest);
-
+//            this.notificationClient.createNotification(NoticeRequest.builder()
+//                            .title("")
+//                    .build());
             //kết quả trả về
             return postMapper.toPostDTO(postRepository.save(post));
         } catch (RuntimeException e) {
@@ -116,12 +117,12 @@ public class PostServiceImpl implements PostService {
                 Post post = postRepository.findById(postId).orElseThrow();
                 if (Objects.equals(post.getUserId(), userId)) return true;
 
-                kafkaService.sendNotification(NotificationRequest.builder()
-                        .ownerId(post.getUserId())
-                        .receiverId(userId)
-                        .topic(TopicKafka.TOPIC_LIKE.getTopic())
-                        .postId(postId)
-                        .build());
+//                kafkaService.sendNotification(NotificationRequest.builder()
+//                        .ownerId(post.getUserId())
+//                        .receiverId(userId)
+//                        .topic(TopicKafka.TOPIC_LIKE.getTopic())
+//                        .postId(postId)
+//                        .build());
 
                 return true;
             } else {

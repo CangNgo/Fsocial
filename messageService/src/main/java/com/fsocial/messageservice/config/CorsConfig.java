@@ -19,7 +19,9 @@ public class CorsConfig {
                 List.of(
                         "http://localhost:3000",
                         "https://fsocial-fe.vercel.app",
-                        "https://*.vercel.app"
+                        "https://*.vercel.app",
+                        "https://fsocial.online",
+                        "https://www.fsocial.online"
                 )
         );
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));

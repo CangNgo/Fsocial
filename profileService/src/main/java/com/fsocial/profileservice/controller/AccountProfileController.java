@@ -37,14 +37,14 @@ public class AccountProfileController {
         return ApiResponse.buildApiResponse(response, ResponseStatus.SUCCESS);
     }
 
-    @PostMapping("/update-avatar")
+    @PutMapping("/update-avatar")
     public ApiResponse<Void> updateAvatar(@RequestParam("file") MultipartFile file) {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         accountProfileService.updateProfileImage(userId, file, true);
         return ApiResponse.buildApiResponse(null, ResponseStatus.SUCCESS);
     }
 
-    @PostMapping("/update-banner")
+    @PutMapping("/update-banner")
     public ApiResponse<Void> updateBanner(@RequestParam("file") MultipartFile file) {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         accountProfileService.updateProfileImage(userId, file, false);

@@ -1,5 +1,207 @@
 ---
-description:
+description: Spring Boot Microservices Development Rules for FSocial Project
 globs:
-alwaysApply: false
+  - "**/*.java"
+  - "**/*.yml"
+  - "**/*.yaml"
+  - "**/pom.xml"
+alwaysApply: true
 ---
+
+# FSocial Spring Boot Microservices - Development Rules
+
+## 1. Project Structure
+- Microservices: apigateway, accountService, messageService, notificationService, profileService, relationshipService, postService, timelineService
+- Each service follows standard Spring Boot structure: controller → service → repository
+- Use `com.fsocial.<servicename>` or `com.cangngo.<servicename>` package naming
+
+## 2. Entity Guidelines
+- All entities MUST extend `AbstractEntity<String>` when using common fields
+- **NEVER** redeclare fields that exist in `AbstractEntity` (id, createdAt, updatedAt, createdBy, updatedBy)
+- Use `@Document` for MongoDB entities with explicit collection names
+- Use Lombok annotations: `@Getter`, `@Setter`, `@NoArgsConstructor`, `@AllArgsConstructor`, `@FieldDefaults(level = AccessLevel.PRIVATE)`
+- Example:
+  ```java
+  @Document(collection = "notifications")
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @FieldDefaults(level = AccessLevel.PRIVATE)
+  public class Notification extends AbstractEntity<String> {
+      // Only declare specific fields, NOT id or timestamps
+      String title;
+      String message;
+  }
+  ```
+
+## 3. Logging Standards
+- Use `@Slf4j` annotation from Lombok for logging
+- Log levels:
+  - **DEBUG**: Detailed information for debugging (method entry/exit, variable values)
+  - **INFO**: Important business events (user login, order created, etc.)
+  - **ERROR**: Errors that need attention (exceptions, failed operations)
+- Always use parameterized logging: `log.info("User {} logged in", userId)`
+- Log exceptions with context: `log.error("Failed to process order {}: {}", orderId, e.getMessage(), e)`
+- All services use `logback-spring.xml` with colorized console output and separate error logs
+
+## 4. API Documentation (Swagger/OpenAPI)
+- Every service MUST have `OpenAPIConfig.java` in config package
+- Include both Gateway and Local server URLs:
+  ```java
+  Server gatewayServer = new Server()
+      .url("http://localhost:8888/api/v1/{service}")
+      .description("API Gateway Server");
+  Server localServer = new Server()
+      .url("http://localhost:{port}/{service}")
+      .description("Local Development Server");
+  ```
+- Add JWT Bearer authentication scheme
+- Update `AppConfig.java` to allow Swagger endpoints in PUBLIC_API array
+- Add springdoc configuration in `application-dev.yml`
+
+## 5. Security Configuration
+- Use JWT authentication for all services (except apigateway which uses WebFlux)
+- Always define PUBLIC_API endpoints in `AppConfig.java`
+- Include Swagger endpoints in PUBLIC_API:
+  ```java
+  private String[] PUBLIC_API = {
+      // Your public endpoints
+      "/v3/api-docs/**",
+      "/swagger-ui/**",
+      "/swagger-ui.html",
+      "/swagger-resources/**",
+      "/webjars/**"
+  };
+  ```
+- Use `@NonFinal` for PUBLIC_API field in config classes
+- Never expose sensitive endpoints without authentication
+
+## 6. Exception Handling
+- Use custom exceptions: `AppException` (unchecked) and `AppCheckedException` (checked)
+- Define error codes in `ErrorCode` enum
+- Use `GlobalExceptionHandler` with `@RestControllerAdvice`
+- Return consistent API responses using `ApiResponse<T>` wrapper
+- Always provide meaningful error messages
+
+## 7. DTO and Request/Response Pattern
+- Separate DTOs into `request` and `response` packages
+- Use validation annotations: `@NotNull`, `@NotBlank`, `@Valid`, etc.
+- Use MapStruct or custom mappers for entity ↔ DTO conversion
+- Never expose entities directly in API responses
+- Use `ApiResponse<T>` wrapper for all API responses:
+  ```java
+  return ApiResponse.<DataType>builder()
+      .status(ResponseStatus.SUCCESS)
+      .data(data)
+      .build();
+  ```
+
+## 8. Service Layer Best Practices
+- Interface + Implementation pattern: `XxxService` interface → `XxxServiceImpl` implementation
+- Use `@Service` annotation on implementation classes
+- Use `@Transactional` for operations that modify data
+- Inject dependencies via constructor (use Lombok's `@RequiredArgsConstructor`)
+- Keep business logic in service layer, NOT in controllers
+
+## 9. Controller Guidelines
+- Use `@RestController` and `@RequestMapping("/{service}")` at class level
+- Use specific HTTP method annotations: `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping`
+- Extract user ID from JWT: `@AuthenticationPrincipal Jwt jwt` then `jwt.getClaim("sub")`
+- Use `@Valid` for request body validation
+- Use `@Operation` and `@ApiResponse` annotations for Swagger documentation
+- Return `ResponseEntity<ApiResponse<T>>` for consistent responses
+
+## 10. Repository Layer
+- Extend `MongoRepository<Entity, String>` for MongoDB
+- Use query methods with proper naming: `findByUserId`, `existsByEmail`, etc.
+- Create custom repository interfaces for complex queries
+- Use `@Repository` annotation (though optional with Spring Data)
+
+## 11. Configuration Files
+- Use `application.yml` as main config with profiles
+- `application-dev.yml` for development environment (use environment variables with defaults)
+- Example: `${MONGODB_URL:mongodb://localhost:27017/database}`
+- Never commit sensitive data (passwords, API keys) - use environment variables
+- Keep `application-dev.yml` gitignored
+
+## 12. Kafka Integration (for events)
+- Use consistent topic naming: `notice-like`, `notice-comment`, `notice-follow`
+- Create event DTOs in `com.fsocial.event` or `com.fsocial.<service>.dto.event` package
+- Producer: Configure `KafkaTemplate<String, EventDTO>`
+- Consumer: Use `@KafkaListener(topics = "topic-name")`
+- Always log Kafka events: send and receive
+
+## 13. Redis Integration
+- Use for caching profile data, session management, etc.
+- Configure `RedisTemplate` or use Spring Cache annotations
+- Set appropriate TTL for cached data
+- Use consistent key naming patterns
+
+## 14. WebSocket (for real-time features)
+- Configure `WebSocketConfig` with STOMP
+- Use `SimpMessagingTemplate` to send messages
+- Secure WebSocket endpoints with JWT
+- Use topic-based messaging: `/topic/notifications/{userId}`
+
+## 15. Dependency Management
+- Use Spring Boot 3.x with Java 17+
+- springdoc-openapi version: 2.8.5
+- Use `springdoc-openapi-starter-webmvc-ui` for servlet-based services
+- Use `springdoc-openapi-starter-webflux-ui` for reactive services (apigateway)
+- Keep dependencies up to date and consistent across services
+
+## 16. Testing
+- Write unit tests for service layer
+- Use `@SpringBootTest` for integration tests
+- Mock external dependencies using `@MockBean`
+- Test security configurations and JWT validation
+
+## 17. Code Quality
+- Use Lombok to reduce boilerplate code
+- Follow Java naming conventions (camelCase for methods/variables, PascalCase for classes)
+- Keep methods focused and small (max 20-30 lines)
+- Add meaningful comments for complex business logic
+- Use meaningful variable and method names
+
+## 18. Git Commit Guidelines
+- Use meaningful commit messages
+- Format: `[SERVICE] Description` (e.g., `[NotificationService] Fix duplicate ID in Notification entity`)
+- Don't commit `target/`, `logs/`, `.env` files
+- Keep commits atomic and focused
+
+## 19. Common Pitfalls to Avoid
+- ❌ Don't redeclare `id` field when extending `AbstractEntity`
+- ❌ Don't use `System.out.println()` - use proper logging
+- ❌ Don't expose entities directly in controllers - use DTOs
+- ❌ Don't catch exceptions without logging them
+- ❌ Don't hardcode configuration values - use application.yml
+- ❌ Don't forget to add `@Transactional` for data modification operations
+- ❌ Don't forget Swagger endpoints in security configuration
+
+## 20. Development Workflow
+1. Create/update entity (if needed)
+2. Create repository interface
+3. Create DTOs (request/response)
+4. Create service interface and implementation
+5. Create controller with Swagger annotations
+6. Test with Swagger UI
+7. Add logging at appropriate levels
+8. Handle exceptions properly
+9. Update documentation if needed
+
+## 21. Microservices Communication
+- Use Feign clients for synchronous HTTP calls (e.g., `ProfileClient`, `AccountClient`)
+- Use Kafka for asynchronous event-driven communication
+- Define client interfaces in `repository/httpclient` package
+- Handle circuit breaker and retry logic for resilience
+
+## 22. Port Assignments
+- apigateway: 8888
+- accountService: 8081
+- messageService: 8082
+- postService: 8083
+- timelineService: 8084
+- profileService: 8085
+- relationshipService: 8086
+- notificationService: 8087

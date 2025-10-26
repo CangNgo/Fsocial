@@ -79,7 +79,12 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     @Transactional(readOnly = true)
     public ProfilePageResponse getProfilePageByUserId(String userId) {
         List<UserResponse> followers = followService.getFollowers(userId);
-        var response = accountProfileMapper.toProfilePageResponse(findProfileByUserId(userId));
+        AccountProfile accountProfile = findProfileByUserId(userId);
+        ProfilePageResponse response = accountProfileMapper.toProfilePageResponse(accountProfile);
+
+        System.out.println("Profile page "+ response);
+        System.out.println("Profile : " + findProfileByUserId(userId));
+
         response.setFollowers(followers);
         return response;
     }
@@ -111,7 +116,7 @@ public class AccountProfileServiceImpl implements AccountProfileService {
 
         AccountProfile profile = findProfileByUserId(userId);
         String urlImage = postClient.uploadFile(file);
-        if (Boolean.TRUE.equals(isAvatar))
+        if (isAvatar)
             profile.setAvatar(urlImage);
         else
             profile.setBanner(urlImage);
@@ -121,7 +126,7 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     }
 
     @Transactional(readOnly = true)
-    private AccountProfile findProfileByUserId(String userId) {
+    protected AccountProfile findProfileByUserId(String userId) {
         return accountProfileRepository.findByUserId(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_EXISTED));
     }

@@ -1,0 +1,5 @@
+2025-10-26 13:55:59.390 ERROR --- [nio-8083-exec-5] c.f.p.services.impl.UploadMediaImpl      : Error uploading file: Unsupported file type: cropped-image-1761461758992
+2025-10-26 13:58:11.829 ERROR --- [nio-8083-exec-6] c.f.p.services.impl.UploadMediaImpl      : Error uploading file: Unsupported file type: cropped-image-1761461891438
+2025-10-26 13:58:57.066 ERROR --- [nio-8083-exec-7] c.f.p.services.impl.UploadMediaImpl      : Error uploading file: Unsupported file type: cropped-image-1761461936765
+2025-10-26 21:36:40.542 ERROR --- [nio-8083-exec-1] c.f.p.services.impl.UploadMediaImpl      : Error uploading file: Unsupported file type: screenshot_1754674785
+2025-10-26 21:37:32.646 ERROR --- [nio-8083-exec-2] c.f.p.services.impl.UploadMediaImpl      : Error uploading file: Unsupported file type: screenshot_1754674785

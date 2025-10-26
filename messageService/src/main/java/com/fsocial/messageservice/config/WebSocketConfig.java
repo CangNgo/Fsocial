@@ -10,7 +10,13 @@ public class  WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("*");
+                .setAllowedOrigins(
+                        "http://localhost:3000",
+                        "https://fsocial-fe.vercel.app",
+                        "https://*.vercel.app",
+                        "https://fsocial.online",
+                        "https://www.fsocial.online"
+                );
     }
 
     @Override

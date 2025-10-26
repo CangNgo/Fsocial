@@ -11,7 +11,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @Configuration
 public class WebClientConfig {
 
-    @Value("${ACCOUNT_SERVICE_URL:http://fsocial-accountservice:8081}")
+    @Value("${ACCOUNT_SERVICE_URL:http://localhost:8081}")
     private String accountServiceUrl;
 
     @Bean

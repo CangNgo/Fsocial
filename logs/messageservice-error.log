@@ -1,0 +1,1 @@
+2025-10-25 09:47:16.610 ERROR --- [nio-8082-exec-6] c.f.m.s.impl.ConversationServiceImpl     : Lỗi khi gọi ProfileService cho receiverId bb0f7e73-65be-43b6-8e12-5be82424f54b: fsocial-profileservice executing GET http://fsocial-profileservice:8085/profile/internal/message/bb0f7e73-65be-43b6-8e12-5be82424f54b

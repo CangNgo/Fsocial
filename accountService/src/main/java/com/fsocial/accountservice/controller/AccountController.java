@@ -97,7 +97,6 @@ public class AccountController {
         return buildResponse(account, ResponseStatus.SUCCESS);
     }
 
-    @PreAuthorize("hasRole('USER')")
     @PutMapping("/change-password")
     public ApiResponse<Void> changePassword(@RequestBody @Valid ChangePasswordRequest request) {
         var userId = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -1,22 +1,18 @@
 package com.fsocial.postservice.services.impl;
 
-import com.fsocial.event.NotificationRequest;
+import com.fsocial.postservice.dto.comment.CommentDTORequest;
 import com.fsocial.postservice.dto.comment.CommentUpdateDTORequest;
+import com.fsocial.postservice.entity.Comment;
+import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.Post;
-//import com.fsocial.postservice.enums.MessageNotice;
-import com.fsocial.postservice.enums.TopicKafka;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.exception.StatusCode;
 import com.fsocial.postservice.repository.CommentRepository;
-import com.fsocial.postservice.dto.comment.CommentDTORequest;
-import com.fsocial.postservice.entity.Comment;
-import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.repository.PostRepository;
 import com.fsocial.postservice.repository.httpClient.Accountclient;
 import com.fsocial.postservice.services.CommentService;
 import com.fsocial.postservice.services.RedisService;
 import com.fsocial.postservice.services.UploadMedia;
-import com.fsocial.postservice.services.KafkaService;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +40,7 @@ import java.util.*;
 public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
     UploadMedia uploadMedia;
-    KafkaService kafkaService;
+//    KafkaService kafkaService;
     PostRepository postRepository;
     MongoTemplate mongoTemplate;
     Accountclient accountclient;
@@ -68,15 +65,15 @@ public class CommentServiceImpl implements CommentService {
         String ownerId = post.getUserId();
         String userId = request.getUserId();
 
-        if (!Objects.equals(ownerId, userId)) {
-            kafkaService.sendNotification(NotificationRequest.builder()
-                    .ownerId(ownerId)
-                    .receiverId(userId)
-                    .topic(TopicKafka.TOPIC_COMMENT.getTopic())
-                    .postId(postId)
-                    .commentId(savedComment.getId())
-                    .build());
-        }
+//        if (!Objects.equals(ownerId, userId)) {
+//            kafkaService.sendNotification(NotificationRequest.builder()
+//                    .ownerId(ownerId)
+//                    .receiverId(userId)
+//                    .topic(TopicKafka.TOPIC_COMMENT.getTopic())
+//                    .postId(postId)
+//                    .commentId(savedComment.getId())
+//                    .build());
+//        }
 
         //thêm vào personalization
         redisService.personalization(savedComment.getUserId(), post.getUserId());

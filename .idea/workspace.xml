@@ -5,29 +5,204 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3cc6d57b-a175-4d5f-8a54-d6aa74224911" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose-pro.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/resources/logback-spring.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/stopContainer.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/RedisConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/CheckConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/OpenAPIConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/RedissonConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/controller/CheckConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/CheckConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/dto/request/GetNotificationRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/entity/AbstractEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/entity/EmailTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/entity/EmailTemplateField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/enums/ChannelType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/enums/NotifyTo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/repository/EmailTemplateField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/repository/EmailTemplateRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/OpenAPIConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/CheckConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/NotificationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/Attachments/AttachmentDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/notification/NoticeRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/dto/notification/NotificationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/entity/Attachments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/enums/ChannelType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/enums/NotifyTo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/mapper/AttachmentMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/AttachmentsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/repository/httpClient/NotificationClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/AttachmentsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/NotificaitonService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/AttachmentsServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/NotificationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/CheckConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/NotificationResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/enums/ChannelType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/enums/NotifyTo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/repository/httpClient/NotificationClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/controller/CheckConnection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/OpenAPIConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/controller/CheckConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cursor/rules/spring.mdc" beforeDir="false" afterPath="$PROJECT_DIR$/.cursor/rules/spring.mdc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/logs/accountservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/logs/accountservice.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AuthenticationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/util/MailUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/util/MailUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountService/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/accountService/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/logs/apigateway.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/GlobalConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/SwaggerConfig.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/WebClientConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/cangngo/apigateway/config/WebClientConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-pro.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-dev.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dockerTag.sh" beforeDir="false" afterPath="$PROJECT_DIR$/dockerTag.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/accountservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/accountservice.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/mesageservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/mesageservice.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/notificationservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/notificationservice.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/postservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/postservice.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/profileservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/profileservice.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/JwtAuthenticationEntryPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/JwtAuthenticationEntryPoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/accountservice-2025-08-14.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/accountservice-2025-08-15.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/accountservice-2025-08-19.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/accountservice-2025-08-21.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/accountservice-2025-08-23.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/accountservice-2025-08-24.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/accountservice.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/apigateway-2025-08-14.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/apigateway-2025-08-15.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/apigateway.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/mesageservice-2025-08-14.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/mesageservice-2025-08-15.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/mesageservice-2025-08-21.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/mesageservice-2025-08-23.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/mesageservice.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-14.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-15.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-15.1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.10.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.11.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.12.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.2.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.3.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.4.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.5.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.6.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.7.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.8.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-21.9.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-23.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.2.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.3.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.4.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.5.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.6.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.7.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-24.8.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice-2025-08-25.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/notificationservice.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/postservice-2025-08-15.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/postservice-2025-08-19.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/postservice-2025-08-21.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/postservice-2025-08-24.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/postservice-2025-08-25.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/postservice.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/processorservice.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/profileservice-2025-08-14.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/profileservice-2025-08-15.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/profileservice-2025-08-19.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/profileservice-2025-08-21.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/profileservice-2025-08-21.1.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/profileservice-2025-08-23.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/profileservice.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/relationship.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/util/RedissonLock.java" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/java/com/fsocial/messageservice/util/RedissonLock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messageService/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/messageService/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/logs/notificationservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/logs/notificationservice.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/event/NotificationRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/dto/request/NoticeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/dto/request/NoticeRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/dto/response/NotificationResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/dto/response/NotificationResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/entity/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/entity/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/enums/TopicKafka.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/repository/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/repository/NotificationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/service/impl/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/service/impl/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notificationService/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notificationService/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/logs/postservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/postService/logs/postservice.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/event/NotificationRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/config/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/KafkaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/KafkaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/CommentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/CommentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/KafkaServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/UploadMediaImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/UploadMediaImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postService/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/postService/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/logs/processorservice-2025-08-14.0.log.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/logs/processorservice.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/ProcessorServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/config/ChangeStreamConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/dto/Response.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/entity/AbstractEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/entity/Account.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/entity/Permission.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/entity/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/entity/Token.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/exception/AppCheckedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/exception/AppUnCheckedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/exception/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/exception/StatusCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/services/AccountServices.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/java/com/fsocial/processorservice/services/async/PostChangeStreamSynchronizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/NoticeRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/main/resources/logback-spring.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/processorService/src/test/java/com/cangngo/processorservice/ProcessorServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/logs/profileservice.log" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/logs/profileservice.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/event/NotificationRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/AccountProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/request/ProfileUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/dto/response/ProfilePageResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/FollowServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/FollowServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profileService/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/profileService/src/main/resources/logback-spring.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pushimage.sh" beforeDir="false" afterPath="$PROJECT_DIR$/pushimage.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/relationshipService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/relationshipService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/relationshipService/src/main/java/com/fsocial/relationshipService/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/relationshipService/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/relationshipService/src/main/resources/logback-spring.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/removeImage.sh" beforeDir="false" afterPath="$PROJECT_DIR$/removeImage.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stopContainer.sh" beforeDir="false" afterPath="$PROJECT_DIR$/stopContainer.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/CorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/CorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/config/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/timelineService/src/main/resources/logback-spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/timelineService/src/main/resources/logback-spring.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +212,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Python Script" />
         <option value="Dockerfile" />
+        <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -59,111 +235,119 @@
 }</component>
   <component name="ProjectId" id="2t2eA2A2rUOOL6oDssfaAAt1SHI" />
   <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "Docker.apigateway/Dockerfile build.executor": "Run",
-    "Docker.apigateway/Dockerfile.executor": "Run",
-    "Docker.docker-compose-pro.yml: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.accountservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.apigateway: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.kafka-1: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.kafka-ui: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.kafka: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.message: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.message_mongo: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.messageservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.mysql: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.neo4j: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.notification_mongo: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.notificationservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.post_mongo: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.postservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.profileservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.redis: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.relationshipservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.timelineservice: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml.zookeeper: Compose Deployment.executor": "Run",
-    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
-    "JUnit.ProfileServiceApplicationTests.executor": "Run",
-    "Maven.accountService [clean].executor": "Run",
-    "Maven.accountService [compile].executor": "Run",
-    "Maven.accountService [deploy].executor": "Run",
-    "Maven.accountService [install].executor": "Run",
-    "Maven.accountService [package].executor": "Run",
-    "Maven.accountService [site].executor": "Run",
-    "Maven.accountService [verify].executor": "Run",
-    "Maven.apigateway [clean].executor": "Run",
-    "Maven.apigateway [compile].executor": "Run",
-    "Maven.apigateway [package].executor": "Run",
-    "Maven.apigateway [validate].executor": "Run",
-    "Maven.messageService [clean].executor": "Run",
-    "Maven.messageService [compile].executor": "Run",
-    "Maven.messageService [package].executor": "Run",
-    "Maven.notificationService [clean].executor": "Run",
-    "Maven.notificationService [compile].executor": "Run",
-    "Maven.notificationService [install].executor": "Run",
-    "Maven.notificationService [package].executor": "Run",
-    "Maven.postService [clean].executor": "Run",
-    "Maven.postService [package].executor": "Run",
-    "Maven.processorService [clean].executor": "Run",
-    "Maven.processorService [package].executor": "Run",
-    "Maven.profileService [clean].executor": "Run",
-    "Maven.profileService [compile].executor": "Run",
-    "Maven.profileService [package].executor": "Run",
-    "Maven.relationshipService [clean].executor": "Run",
-    "Maven.relationshipService [package].executor": "Run",
-    "Maven.timeLineService [clean].executor": "Run",
-    "Maven.timeLineService [compile].executor": "Run",
-    "Maven.timeLineService [package].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Shell Script.removeContainer.sh.executor": "Run",
-    "Spring Boot.AccountServiceApplication.executor": "Run",
-    "Spring Boot.ApigatewayApplication.executor": "Run",
-    "Spring Boot.MessageServiceApplication.executor": "Run",
-    "Spring Boot.NotificationServiceApplication.executor": "Run",
-    "Spring Boot.PostServiceApplication.executor": "Run",
-    "Spring Boot.ProcessorServiceApplication.executor": "Run",
-    "Spring Boot.ProfileServiceApplication.executor": "Run",
-    "Spring Boot.RelationshipServiceApplication.executor": "Run",
-    "Spring Boot.TimeLineServiceApplication.executor": "Run",
-    "ToolWindow.Run.ShowToolbar": "false",
-    "git-widget-placeholder": "postservice",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/acer/OneDrive/Workspace/DSA",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.31839082",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "settings.editor.splitter.proportion": "0.24548736",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Docker.apigateway/Dockerfile build.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.apigateway/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose-dev.yml.accountservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose-dev.yml.profileservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose-dev.yml.redis: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose-pro.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.accountservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.apigateway: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka-1: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka-ui: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.kafka: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.message: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.message_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.messageservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.mysql: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.neo4j: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.notification_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.notificationservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.post_mongo: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.postservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.profileservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.redis: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.relationshipservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.timelineservice: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml.zookeeper: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ProfileServiceApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [site].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.accountService [verify].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.apigateway [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.messageService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.notificationService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.postService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.postService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.processorService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.processorService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.profileService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.relationshipService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.relationshipService [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.timeLineService [package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Shell Script.removeContainer.sh.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.AccountServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ApigatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.MessageServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.NotificationServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PostServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ProcessorServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ProfileServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.RelationshipServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TimeLineServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;ToolWindow.Run.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;postservice&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/acer/OneDrive/Workspace/Fsocial/Fsocial_be/postService/src/main/java/com/fsocial/postservice/dto/notification&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.31839082&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.24548736&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\acer\OneDrive\Workspace\Fsocial\Fsocial_be\postService\src\main\java\com\fsocial\postservice\dto\notification" />
+      <recent name="C:\Users\acer\OneDrive\Workspace\Fsocial\Fsocial_be\postService\src\main\java\com\fsocial\postservice\enums" />
+      <recent name="C:\Users\acer\OneDrive\Workspace\Fsocial\Fsocial_be\profileService\src\main\java\com\fsocial\profileservice\enums" />
+      <recent name="C:\Users\acer\OneDrive\Workspace\Fsocial\Fsocial_be\apigateway\src\main\java\com\cangngo\apigateway\auth" />
       <recent name="C:\workspace\Fsocial\Fsocial_be" />
-      <recent name="C:\workspace\Fsocial\Fsocial_be\timelineService\src\main\resources" />
-      <recent name="C:\workspace\Fsocial\Fsocial_be\relationshipService\src\main" />
-      <recent name="C:\workspace\Fsocial\Fsocial_be\profileService\src\main\resources" />
-      <recent name="C:\workspace\Fsocial\Fsocial_be\processorService\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\workspace\Fsocial\Fsocial_be\accountService" />
@@ -171,9 +355,9 @@
       <recent name="C:\workspace\Fsocial\Fsocial_be" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.fsocial.messageservice.config" />
+      <recent name="com.fsocial.postservice.repository.httpClient" />
+      <recent name="com.fsocial.notificationService.entity" />
       <recent name="com.fsocial.timelineservice.config" />
-      <recent name="com.fsocial.relationshipService.config" />
       <recent name="com.fsocial.postservice.config" />
       <recent name="com.fsocial.accountservice.config" />
     </key>
@@ -187,8 +371,26 @@
         <option value="SpringBootApplicationConfigurationType" />
       </set>
     </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="SpringBootApplicationConfigurationType">
+          <value>
+            <map>
+              <entry key="AccountServiceApplication" value="STOPPED" />
+              <entry key="ApigatewayApplication" value="STOPPED" />
+              <entry key="MessageServiceApplication" value="STOPPED" />
+              <entry key="NotificationServiceApplication" value="STOPPED" />
+              <entry key="PostServiceApplication" value="STOPPED" />
+              <entry key="ProfileServiceApplication" value="STOPPED" />
+              <entry key="RelationshipServiceApplication" value="STOPPED" />
+              <entry key="TimeLineServiceApplication" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose-pro.yml: Compose Deployment">
+  <component name="RunManager" selected="Docker.docker-compose-dev.yml.accountservice: Compose Deployment">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -196,21 +398,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="removeContainer.sh" type="ShConfigurationType" temporary="true">
-      <option name="SCRIPT_TEXT" value="" />
-      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
-      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/removeContainer.sh" />
-      <option name="SCRIPT_OPTIONS" value="" />
-      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
-      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
-      <option name="INTERPRETER_PATH" value="powershell.exe" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="EXECUTE_IN_TERMINAL" value="true" />
-      <option name="EXECUTE_SCRIPT_FILE" value="true" />
-      <envs />
-      <method v="2" />
     </configuration>
     <configuration name="AccountServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -271,14 +458,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProcessorServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="processorService" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.fsocial.processorservice.ProcessorServiceApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ProfileServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="profileService" />
@@ -321,28 +500,51 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose-pro.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="docker-compose-pro.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="docker-compose.yml.apigateway: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+    <configuration name="docker-compose-dev.yml.accountservice: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="services">
             <list>
-              <option value="apigateway" />
+              <option value="accountservice" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose-dev.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose-dev.yml.profileservice: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="profileservice" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose-dev.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose-dev.yml.redis: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="redis" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose-dev.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.redis: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="redis" />
             </list>
           </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
@@ -351,15 +553,14 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.docker-compose-pro.yml: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose.yml.apigateway: Compose Deployment" />
-      <item itemvalue="Shell Script.removeContainer.sh" />
+      <item itemvalue="Docker.docker-compose-dev.yml.accountservice: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose-dev.yml.redis: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose-dev.yml.profileservice: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.redis: Compose Deployment" />
       <item itemvalue="Spring Boot.ApigatewayApplication" />
       <item itemvalue="Spring Boot.MessageServiceApplication" />
       <item itemvalue="Spring Boot.NotificationServiceApplication" />
       <item itemvalue="Spring Boot.PostServiceApplication" />
-      <item itemvalue="Spring Boot.ProcessorServiceApplication" />
       <item itemvalue="Spring Boot.ProfileServiceApplication" />
       <item itemvalue="Spring Boot.RelationshipServiceApplication" />
       <item itemvalue="Spring Boot.TimeLineServiceApplication" />
@@ -367,19 +568,19 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.docker-compose-pro.yml: Compose Deployment" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Spring Boot.AccountServiceApplication" />
-        <item itemvalue="Docker.docker-compose.yml.apigateway: Compose Deployment" />
-        <item itemvalue="Shell Script.removeContainer.sh" />
+        <item itemvalue="Docker.docker-compose-dev.yml.accountservice: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose-dev.yml.redis: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.redis: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose-dev.yml.profileservice: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -541,7 +742,54 @@
       <workItem from="1756396650381" duration="742000" />
       <workItem from="1757599583004" duration="1333000" />
       <workItem from="1757729295153" duration="49000" />
-      <workItem from="1757955603482" duration="2015000" />
+      <workItem from="1757955603482" duration="4129000" />
+      <workItem from="1758530887480" duration="2000" />
+      <workItem from="1758530905293" duration="743000" />
+      <workItem from="1758562074452" duration="418000" />
+      <workItem from="1758562748945" duration="692000" />
+      <workItem from="1758565476507" duration="360000" />
+      <workItem from="1758609751969" duration="216000" />
+      <workItem from="1758610173329" duration="761000" />
+      <workItem from="1758667950943" duration="1699000" />
+      <workItem from="1758698202481" duration="1875000" />
+      <workItem from="1758702281002" duration="3623000" />
+      <workItem from="1758782372836" duration="2002000" />
+      <workItem from="1758879286586" duration="1298000" />
+      <workItem from="1758990631873" duration="294000" />
+      <workItem from="1759681423027" duration="341000" />
+      <workItem from="1759759539130" duration="927000" />
+      <workItem from="1759766380774" duration="971000" />
+      <workItem from="1759773548053" duration="303000" />
+      <workItem from="1759773928436" duration="885000" />
+      <workItem from="1759830157380" duration="20000" />
+      <workItem from="1759853470664" duration="20000" />
+      <workItem from="1760024854915" duration="1765000" />
+      <workItem from="1760026643138" duration="1383000" />
+      <workItem from="1760156616299" duration="2601000" />
+      <workItem from="1760435045452" duration="1550000" />
+      <workItem from="1760439711369" duration="10395000" />
+      <workItem from="1760544220610" duration="5962000" />
+      <workItem from="1760578205441" duration="9842000" />
+      <workItem from="1760626094360" duration="1852000" />
+      <workItem from="1760689716989" duration="2000" />
+      <workItem from="1760710584488" duration="1338000" />
+      <workItem from="1760711946436" duration="8732000" />
+      <workItem from="1760751619384" duration="2970000" />
+      <workItem from="1760840182917" duration="3506000" />
+      <workItem from="1760887114945" duration="7405000" />
+      <workItem from="1761016307689" duration="5428000" />
+      <workItem from="1761100966161" duration="90000" />
+      <workItem from="1761102866980" duration="4185000" />
+      <workItem from="1761135383489" duration="655000" />
+      <workItem from="1761142007003" duration="3490000" />
+      <workItem from="1761220988165" duration="12047000" />
+      <workItem from="1761303035746" duration="1185000" />
+      <workItem from="1761308178253" duration="8187000" />
+      <workItem from="1761357081877" duration="7180000" />
+      <workItem from="1761367786165" duration="2654000" />
+      <workItem from="1761408700641" duration="3047000" />
+      <workItem from="1761461292370" duration="2111000" />
+      <workItem from="1761488923414" duration="8711000" />
     </task>
     <servers />
   </component>
@@ -571,18 +819,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java</url>
-          <line>95</line>
-          <properties class="com.fsocial.postservice.services.impl.PostServiceImpl">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/TermOfServiceImpl.java</url>
           <line>23</line>
-          <properties class="com.fsocial.timelineservice.services.impl.TermOfServiceImpl" method="getTermOfServices">
+          <properties class="com.fsocial.timelineservice.services.impl.TermOfServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -591,7 +830,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/CommentServiceImpl.java</url>
           <line>69</line>
-          <properties class="com.fsocial.timelineservice.services.impl.CommentServiceImpl" method="getCountLikesComment">
+          <properties class="com.fsocial.timelineservice.services.impl.CommentServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -616,18 +855,9 @@
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/PostServiceImpl.java</url>
-          <line>97</line>
-          <properties class="com.fsocial.postservice.services.impl.PostServiceImpl">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/ReplyCommentController.java</url>
           <line>31</line>
-          <properties class="com.fsocial.postservice.controller.ReplyCommentController" method="likeReplyComment">
+          <properties class="com.fsocial.postservice.controller.ReplyCommentController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -636,7 +866,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/ReplyCommentServiceImpl.java</url>
           <line>105</line>
-          <properties class="com.fsocial.postservice.services.impl.ReplyCommentServiceImpl" method="likeReplyComment">
+          <properties class="com.fsocial.postservice.services.impl.ReplyCommentServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -645,7 +875,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/services/impl/ComplainServiceImpl.java</url>
           <line>35</line>
-          <properties class="com.fsocial.postservice.services.impl.ComplainServiceImpl" method="addComplaint">
+          <properties class="com.fsocial.postservice.services.impl.ComplainServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -654,7 +884,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/ComplainController.java</url>
           <line>27</line>
-          <properties class="com.fsocial.postservice.controller.ComplainController" method="addComplaint">
+          <properties class="com.fsocial.postservice.controller.ComplainController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -663,7 +893,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/postService/src/main/java/com/fsocial/postservice/controller/TermOfServiceController.java</url>
           <line>21</line>
-          <properties class="com.fsocial.postservice.controller.TermOfServiceController" method="addTermOfSerivce">
+          <properties class="com.fsocial.postservice.controller.TermOfServiceController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -681,7 +911,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
           <line>159</line>
-          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="countByCreatedAtByStartEnd">
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -690,7 +920,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/timelineService/src/main/java/com/fsocial/timelineservice/services/impl/ComplainServiceImpl.java</url>
           <line>103</line>
-          <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl" method="countStatisticsComplainLongDay">
+          <properties class="com.fsocial.timelineservice.services.impl.ComplainServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -707,8 +937,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/FollowServiceImpl.java</url>
-          <line>36</line>
-          <properties class="com.fsocial.profileservice.services.impl.FollowServiceImpl" method="followUser">
+          <line>33</line>
+          <properties class="com.fsocial.profileservice.services.impl.FollowServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -716,26 +946,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/FollowServiceImpl.java</url>
-          <line>97</line>
-          <properties class="com.fsocial.profileservice.services.impl.FollowServiceImpl" method="getListFollowers">
+          <line>94</line>
+          <properties class="com.fsocial.profileservice.services.impl.FollowServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java</url>
-          <line>62</line>
-          <properties class="com.fsocial.accountservice.controller.AccountController" method="persistAccount">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
           <line>69</line>
-          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="persistAccount">
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -744,7 +965,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
           <line>234</line>
-          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="saveAccount">
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -753,7 +974,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/services/impl/AccountServiceImpl.java</url>
           <line>242</line>
-          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl" method="createProfile">
+          <properties class="com.fsocial.accountservice.services.impl.AccountServiceImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -762,43 +983,16 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/APIProfileInternal.java</url>
           <line>22</line>
-          <properties class="com.fsocial.profileservice.controller.APIProfileInternal" method="createAccountProfile">
+          <properties class="com.fsocial.profileservice.controller.APIProfileInternal">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/services/impl/AccountProfileServiceImpl.java</url>
-          <line>39</line>
-          <properties class="com.fsocial.profileservice.services.impl.AccountProfileServiceImpl" method="createAccountProfile">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/NotificationController.java</url>
-          <line>26</line>
-          <properties class="com.fsocial.notificationService.controller.NotificationController" method="getNotifications">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="60" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/service/impl/NotificationServiceImpl.java</url>
-          <line>80</line>
-          <properties class="com.fsocial.notificationService.service.impl.NotificationServiceImpl" method="getNotificationsByUser">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="61" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/NotificationController.java</url>
-          <line>36</line>
-          <properties class="com.fsocial.notificationService.controller.NotificationController" method="markAsRead">
+          <line>55</line>
+          <properties class="com.fsocial.notificationService.controller.NotificationController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -806,8 +1000,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/notificationService/src/main/java/com/fsocial/notificationService/controller/NotificationController.java</url>
-          <line>49</line>
-          <properties class="com.fsocial.notificationService.controller.NotificationController" method="deleteNotification">
+          <line>68</line>
+          <properties class="com.fsocial.notificationService.controller.NotificationController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -816,7 +1010,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/profileService/src/main/java/com/fsocial/profileservice/controller/FollowController.java</url>
           <line>24</line>
-          <properties class="com.fsocial.profileservice.controller.FollowController" method="followUser">
+          <properties class="com.fsocial.profileservice.controller.FollowController">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -826,11 +1020,6 @@
           <properties class="java.lang.NoClassDefFoundError" package="java.lang" />
           <option name="timeStamp" value="4" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/accountService/src/main/java/com/fsocial/accountservice/controller/AccountController.java</url>
-          <line>65</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -839,5 +1028,9 @@
         <watch expression="endDate" language="JAVA" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

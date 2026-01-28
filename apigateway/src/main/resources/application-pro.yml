@@ -1,0 +1,62 @@
+
+db:
+  port: 3306
+  name:
+  endpoint:
+  username:
+  password:
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    persist-authorization: true
+
+spring:
+  datasource:
+    url: jdbc:mysql://${db.endpoint}:${db.port}/${db.name}?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${db.username}
+    password: ${db.password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+      database-platform:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  main:
+    allow-circular-references: true
+
+server:
+  servlet:
+    session:
+      timeout: 3m
+  port: 8081
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        security.web.access.ExceptionTranslationFilter: DEBUG
+        security.access.intercept.AbstractSecurityInterceptor: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        engine:
+          transaction:
+            internal:
+              TransactionImpl: DEBUG
+        event:
+          internal:
+            AbstractFlushingEventListener: DEBUG
+

@@ -16,7 +16,6 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,6 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 @Configuration
 @RequiredArgsConstructor
@@ -44,13 +42,20 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     BanService banService;
     @NonFinal
     private String[] PUBLIC_ENDPOINT = {
-            "/account/login", "/account/refresh-token", "/account/logout", "/account/register", "/account/send-otp", "/account/verify-otp",
-            "/account/check-duplicate", "/account/check-duplication", "/account/", "/account/change-password", "/account/reset-password", "/profile/internal/create",
-            "/account/check", "/message/check", "/profile/check", "/post/check", "/timeline/check", "/notification/check", "/relationship/check",
+            "/account/login", "/account/refresh-token", "/account/logout", "/account/register", "/account/send-otp",
+            "/account/verify-otp",
+            "/account/check-duplicate", "/account/check-duplication", "/account/", "/account/change-password",
+            "/account/reset-password", "/profile/internal/create",
+            "/account/check", "/message/check", "/profile/check", "/post/check", "/timeline/check",
+            "/notification/check", "/relationship/check",
             // OpenAPI & Swagger UI
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/v3/api-docs/**",
+            "/account/v3/api-docs/**",
+            "/post/v3/api-docs/**",
+            "/profile/v3/api-docs/**",
+            "/message/v3/api-docs/**",
+            "/notification/v3/api-docs/**",
             "/swagger-resources/**",
             "/webjars/**"
     };
@@ -70,32 +75,63 @@ public class GlobalConfig implements GlobalFilter, Ordered {
 
         List<String> authHeaders = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION);
 
-        if (CollectionUtils.isEmpty(authHeaders))
+        if (CollectionUtils.isEmpty(authHeaders) || authHeaders.getFirst() == null
+                || authHeaders.getFirst().length() < 7) {
+            log.warn("No or invalid Authorization header found for request: {}", exchange.getRequest().getURI());
             return unauthenticated(exchange.getResponse());
+        }
 
         String tokenrequest = authHeaders.getFirst();
-        System.out.println("Token: " + tokenrequest);
-        boolean isBan = banService.isBan(tokenrequest.substring(7));
-        if (isBan) {
-            return banned(exchange.getResponse());
-        }
-        //kiểm tra nếu tồn tại trong backList thì chặn request
 
-//        Set<String> keys = redisTemplate.keys("*");
-//
-//        for (String key : keys) {
-//            Object type = redisTemplate.opsForValue().get(key);
-//            System.out.println("Key: " + key + ", Type: " + type);
-//        }
+        // boolean isBan = banService.isBan(tokenrequest.substring(7));
+        // if (isBan) {
+        //     log.warn("Banned account attempted to access: {}", exchange.getRequest().getURI());
+        //     return banned(exchange.getResponse());
+        // }
 
-        String token = authHeaders.getFirst().replace("Bearer ", "");
+        String token = tokenrequest.replace("Bearer ", "");
+        String authorizationHeader = authHeaders.getFirst(); // Giữ nguyên format "Bearer token"
+
         return accountService.apiResponseMono(token).flatMap(introspectResponse -> {
-                    if (introspectResponse.getData().isValid())
-                        return chain.filter(exchange);
-                    else
-                        return unauthenticated(exchange.getResponse());
-                })
-                .onErrorResume(throwable -> unauthenticated(exchange.getResponse()));
+            if (introspectResponse.getData().isValid()) {
+
+                // Đảm bảo Authorization header được forward đến downstream services
+                ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
+                        .header(HttpHeaders.AUTHORIZATION, authorizationHeader)
+                        .build();
+
+                ServerWebExchange modifiedExchange = exchange.mutate()
+                        .request(modifiedRequest)
+                        .build();
+
+                return chain.filter(modifiedExchange)
+                        .onErrorResume(throwable -> {
+                            // Catch lỗi từ downstream service (notification service, etc.) khi service
+                            String errorMessage = throwable.getMessage();
+                            if (errorMessage != null && (errorMessage.contains("Connection refused") ||
+                                    errorMessage.contains("Connection timed out") ||
+                                    errorMessage.contains("No route to host") ||
+                                    errorMessage.contains("getsockopt") ||
+                                    errorMessage.contains("Connection reset"))) {
+                                log.error("Cannot connect to downstream service: {} - Request: {}",
+                                        errorMessage, exchange.getRequest().getURI());
+                                return badRequest(exchange.getResponse());
+                            }
+                            // Nếu không phải lỗi connection từ downstream service, propagate lỗi
+                            return Mono.error(throwable);
+                        });
+            } else {
+                log.warn("Token validation failed for request: {}", exchange.getRequest().getURI());
+                return unauthenticated(exchange.getResponse());
+            }
+        })
+                .onErrorResume(throwable -> {
+                    // Lỗi khi validate token với AccountService - trả về 401
+                    String errorMessage = throwable.getMessage();
+                    log.error("Error validating token: {} - Request: {}", errorMessage, exchange.getRequest().getURI(),
+                            throwable);
+                    return unauthenticated(exchange.getResponse());
+                });
     }
 
     @Override
@@ -106,20 +142,39 @@ public class GlobalConfig implements GlobalFilter, Ordered {
     private boolean isPublicEndpoint(ServerHttpRequest request) {
         String path = request.getURI().getPath();
         System.out.println("Original path khi request: " + path);
-        
+
         // Check Swagger/OpenAPI paths first (without prefix removal)
-        if (path.startsWith("/swagger-ui") || 
-            path.startsWith("/v3/api-docs") || 
-            path.startsWith("/swagger-resources") || 
-            path.startsWith("/webjars")) {
+        if (path.startsWith("/swagger-ui") ||
+                path.startsWith("/v3/api-docs") ||
+                path.startsWith("/swagger-resources") ||
+                path.startsWith("/webjars")) {
             System.out.println("Swagger path detected, allowing: " + path);
             return true;
         }
-        
+
         // Remove API prefix for other paths
         String pathWithoutPrefix = path.replaceFirst(apiPrefix, "");
         System.out.println("path after prefix removal: " + pathWithoutPrefix);
         return Arrays.stream(PUBLIC_ENDPOINT).anyMatch(endPoint -> antPathMatcher.match(endPoint, pathWithoutPrefix));
+    }
+
+    Mono<Void> badRequest(ServerHttpResponse response) {
+        ApiResponse<?> apiResponse = ApiResponse.builder()
+                .statusCode(ErrorCode.BAD_REQUEST.getCode())
+                .message(ErrorCode.BAD_REQUEST.getMessage())
+                .dateTime(LocalDateTime.now())
+                .build();
+
+        String body;
+        try {
+            body = objectMapper.writeValueAsString(apiResponse);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        response.setStatusCode(HttpStatus.BAD_REQUEST);
+        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        return response.writeWith(
+                Mono.just(response.bufferFactory().wrap(body.getBytes())));
     }
 
     Mono<Void> unauthenticated(ServerHttpResponse response) {
@@ -138,8 +193,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         return response.writeWith(
-                Mono.just(response.bufferFactory().wrap(body.getBytes()))
-        );
+                Mono.just(response.bufferFactory().wrap(body.getBytes())));
     }
 
     Mono<Void> banned(ServerHttpResponse response) {
@@ -157,8 +211,7 @@ public class GlobalConfig implements GlobalFilter, Ordered {
         }
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         return response.writeWith(
-                Mono.just(response.bufferFactory().wrap(body.getBytes()))
-        );
+                Mono.just(response.bufferFactory().wrap(body.getBytes())));
     }
 
 }

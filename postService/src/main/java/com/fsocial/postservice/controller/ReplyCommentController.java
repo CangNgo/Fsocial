@@ -3,11 +3,12 @@ package com.fsocial.postservice.controller;
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.replyComment.LikeReplyCommentDTO;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentRequest;
+import com.fsocial.postservice.dto.replyComment.ReplyCommentResponse;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentUpdateDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.ReplyComment;
 import com.fsocial.postservice.exception.AppCheckedException;
-import com.fsocial.postservice.services.impl.ReplyCommentServiceImpl;
+import com.fsocial.postservice.services.ReplyCommentService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,7 +28,7 @@ import java.util.Map;
 @RequestMapping("/comment/reply")
 public class ReplyCommentController {
 
-    ReplyCommentServiceImpl replyCommentService;
+    ReplyCommentService replyCommentService;
 
     @GetMapping("/like")
     public ResponseEntity<Response> likeReplyComment(@RequestBody @Valid LikeReplyCommentDTO request) throws AppCheckedException {
@@ -41,7 +43,7 @@ public class ReplyCommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Response> replyComment(ReplyCommentRequest request) throws AppCheckedException {
+    public ResponseEntity<Response> replyComment(ReplyCommentRequest request) throws AppCheckedException, IOException {
 
         ReplyComment response = replyCommentService.addReplyComment(request);
 
@@ -66,6 +68,17 @@ public class ReplyCommentController {
         return ResponseEntity.ok().body(Response.builder()
                 .data(update)
                 .message("Update reply comment successfully")
+                .build());
+    }
+
+    // API from timelineService
+    @GetMapping()
+    public ResponseEntity<Response> getReplyCommentByCommentId(@RequestParam("comment_id") String commentId) {
+        return ResponseEntity.ok().body(Response.builder()
+                .data(replyCommentService.getReplyCommentsByCommentId(commentId))
+                .dateTime(LocalDateTime.now())
+                .statusCode(200)
+                .message("Lấy thông tin trả lời bình luận thành công")
                 .build());
     }
 }

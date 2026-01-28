@@ -26,7 +26,7 @@ public class Comment extends AbstractEntity<String> {
     @Field("likes")
     List<String> likes = new ArrayList<>();
     @Field("created_datetime")
-    LocalDateTime createDatetime = LocalDateTime.now();
+    LocalDateTime createDatetime;
     @Field("reply")
     Boolean reply;
 }

@@ -1,12 +1,12 @@
 package com.fsocial.accountservice.controller;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.nimbusds.oauth2.sdk.TokenResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fsocial.accountservice.dto.ApiResponse;
 import com.fsocial.accountservice.dto.request.account.AccountLoginRequest;
@@ -44,7 +44,7 @@ public class AuthenticateController {
 
     @PostMapping("/login")
     public ApiResponse<AuthenticationResponse> handleLogin(@RequestBody @Valid AccountLoginRequest request,
-            @RequestHeader("User-Agent") String userAgent,
+            @RequestHeader(value = "User-Agent", defaultValue = "") String userAgent,
             HttpServletRequest httpRequest) throws AppCheckedException {
         return buildResponse(authenticationService.login(request, userAgent, httpRequest));
     }
@@ -72,6 +72,19 @@ public class AuthenticateController {
                 .message(ResponseStatus.SUCCESS.getMessage())
                 .dateTime(LocalDateTime.now())
                 .data(data)
+                .build();
+    }
+
+    @GetMapping("/get-token")
+    public ApiResponse<Map<String, String>> getToken() {
+        String token = authenticationService.getTokenFromRequest();
+        Map<String, String> map = new HashMap<>();
+        map.put("token", token);
+        return ApiResponse.<Map<String, String>>builder()
+                .statusCode(ResponseStatus.SUCCESS.getCODE())
+                .message("Get token success")
+                .dateTime(LocalDateTime.now())
+                .data(map)
                 .build();
     }
 }

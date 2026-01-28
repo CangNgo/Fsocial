@@ -23,4 +23,7 @@ public class EmailRequest {
 
     @NotNullOrBlank(message = "REQUIRED_TYPE_REQUEST")
     String type;
+
+    @NotNullOrBlank(message = "User name is require")
+    String userName;
 }

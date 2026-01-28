@@ -2,7 +2,9 @@ package com.fsocial.postservice.services.impl;
 
 import com.cloudinary.provisioning.Account;
 import com.fsocial.postservice.dto.Response;
+import com.fsocial.postservice.dto.profile.ProfileResponse;
 import com.fsocial.postservice.dto.replyComment.LikeReplyCommentDTO;
+import com.fsocial.postservice.dto.replyComment.ReplyCommentResponse;
 import com.fsocial.postservice.dto.replyComment.ReplyCommentUpdateDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.entity.Post;
@@ -15,6 +17,7 @@ import com.fsocial.postservice.entity.Content;
 import com.fsocial.postservice.entity.ReplyComment;
 import com.fsocial.postservice.mapper.ReplyCommentMapper;
 import com.fsocial.postservice.repository.httpClient.Accountclient;
+import com.fsocial.postservice.repository.httpClient.ProfileClient;
 import com.fsocial.postservice.services.ReplyCommentService;
 import com.fsocial.postservice.services.UploadMedia;
 import jakarta.validation.Valid;
@@ -34,6 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -50,6 +55,7 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
 
     MongoTemplate mongoTemplate;
     private final CommentRepository commentRepository;
+    ProfileClient profileClient;
 
     @Override
     public ReplyComment addReplyComment(ReplyCommentRequest request) throws AppCheckedException {
@@ -76,14 +82,15 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
                 .build());
         replyComment.setCreateDatetime(LocalDateTime.now());
 
-        //cập nhật trạng thái thành true
+        // cập nhật trạng thái thành true
         Comment comment = commentRepository.findById(request.getCommentId()).orElseThrow(
-                ()-> new AppCheckedException("Không tìm thấy comment ", StatusCode.COMMENT_NOT_FOUND));
+                () -> new AppCheckedException("Không tìm thấy comment ", StatusCode.COMMENT_NOT_FOUND));
         comment.setReply(true);
         commentRepository.save(comment);
         return replyCommentRepository.save(replyComment);
     }
-@Override
+
+    @Override
     public String deleteReplyComment(String idReplyComment) {
         replyCommentRepository.deleteById(idReplyComment);
         return "Xóa replycomment thành công";
@@ -93,16 +100,17 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
     public ReplyComment updateReplyComment(ReplyCommentUpdateDTORequest upateReply) throws AppCheckedException {
         ReplyComment instance = replyCommentRepository.findById(upateReply.getReplyCommentId()).orElseThrow(
                 () -> new AppCheckedException("Reply comment không tồn tại", StatusCode.REPLY_COMMENT_NOT_FOUND));
-       if(userExists(upateReply.getUserId())){
-           throw new AppCheckedException("User không tồn tại", StatusCode.USER_NOT_FOUND);
-       }
-       instance.setContent(Content.builder()
-                       .text(upateReply.getText())
-                       .HTMLText(upateReply.getHTMLText())
-               .build());
-       return replyCommentRepository.save(instance);
+        if (userExists(upateReply.getUserId())) {
+            throw new AppCheckedException("User không tồn tại", StatusCode.USER_NOT_FOUND);
+        }
+        instance.setContent(Content.builder()
+                .text(upateReply.getText())
+                .HTMLText(upateReply.getHTMLText())
+                .build());
+        return replyCommentRepository.save(instance);
     }
 
+    @Override
     public boolean likeReplyComment(LikeReplyCommentDTO request) throws AppCheckedException {
         if (!replyCommentExists(request.getReplyCommentId())) {
             throw new AppCheckedException("Reply comment not found", StatusCode.REPLY_COMMENT_NOT_FOUND);
@@ -116,15 +124,17 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
         try {
             if (!exists) {
                 this.addLike(request.getReplyCommentId(), request.getUserId());
-//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+                // kafkaService.sendNotification(postId, userId,
+                // MessageNotice.NOTIFICATION_LIKE);
                 return true;
             } else {
                 this.removeLike(request.getReplyCommentId(), request.getUserId());
-//                kafkaService.sendNotification(postId, userId, MessageNotice.NOTIFICATION_LIKE);
+                // kafkaService.sendNotification(postId, userId,
+                // MessageNotice.NOTIFICATION_LIKE);
                 return false;
             }
         } catch (RuntimeException e) {
-            throw new RuntimeException("Lỗi khi like reply comment: "+ e.getMessage());
+            throw new RuntimeException("Lỗi khi like reply comment: " + e.getMessage());
         }
 
     }
@@ -147,6 +157,49 @@ public class ReplyCommentServiceImpl implements ReplyCommentService {
 
     private boolean replyCommentExists(String replyComment) {
         return replyCommentRepository.existsById(replyComment);
+    }
+
+    // Methods from timelineService
+    @Override
+    public List<com.fsocial.postservice.dto.replyComment.ReplyCommentResponse> getReplyCommentsByCommentId(
+            String commentId) {
+        return replyCommentRepository.findReplyCommentsByCommentId(commentId).stream()
+                .map(replyComment -> {
+                    com.fsocial.postservice.dto.profile.ProfileResponse profileResponse = null;
+                    try {
+                        profileResponse = profileClient.getProfileResponseByUserId(replyComment.getUserId());
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    return com.fsocial.postservice.dto.replyComment.ReplyCommentResponse.builder()
+                            .id(replyComment.getId())
+                            .commentId(replyComment.getCommentId())
+                            .content(replyComment.getContent())
+                            .countLikes(replyCommentRepository.countLike(replyComment.getId()) != null
+                                    ? replyCommentRepository.countLike(replyComment.getId())
+                                    : 0)
+                            .firstName(profileResponse.getFirstName())
+                            .lastName(profileResponse.getLastName())
+                            .avatar(profileResponse.getAvatar())
+                            .userId(replyComment.getUserId())
+                            .createDatetime(replyComment.getCreateDatetime())
+                            .build();
+                })
+                .collect(java.util.stream.Collectors.toList());
+    }
+    
+    public ProfileResponse getProfile(String userId) throws AppCheckedException {
+
+        try {
+            return profileClient.getProfileResponseByUserId(userId);
+        } catch (Exception e) {
+            throw new AppCheckedException("Không tìm thấy thông tin người dùng", StatusCode.PROFILE_NOT_FOUND);
+        }
+    }
+
+    public int getCountLikesComment(String replyCommentId) {
+        return replyCommentRepository.countLike(replyCommentId);
     }
 
 }

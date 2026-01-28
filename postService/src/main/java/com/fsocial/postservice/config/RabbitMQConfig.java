@@ -1,4 +1,4 @@
-package com.fsocial.postservice.controller;
+package com.fsocial.postservice.config;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -17,7 +17,7 @@ public class RabbitMQConfig {
     @Value("${rabbitmq.queue.post.comment.delete}")
     String queueCommentDelete;
 
-    @Value("${rabbitmq.queue.post.comment.attachments}")
+    @Value("${rabbitmq.queue.post.attachments.delete}")
     String queueCommentAttachments;
 
     @Value("${rabbitmq.exchange.post.delete}")

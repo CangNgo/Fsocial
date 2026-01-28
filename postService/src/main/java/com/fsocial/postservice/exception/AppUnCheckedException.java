@@ -16,4 +16,9 @@ public class AppUnCheckedException extends RuntimeException {
         super(message);
         this.status = status;
     }
+
+    public AppUnCheckedException(StatusCode status) {
+        super(status.getMessage());
+        this.status = status;
+    }
 }

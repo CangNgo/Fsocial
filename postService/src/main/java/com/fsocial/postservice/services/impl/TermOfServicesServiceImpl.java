@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor()
@@ -19,6 +21,14 @@ public class TermOfServicesServiceImpl implements TermOfServicesService {
 
     TermRepository termRepository;
     TermOfServiceMapper termOfServiceMapper;
+
+    @Override
+    public List<TermOfServiceDTO> getTermOfServices() {
+
+        List<TermOfServices> res = termRepository.findAll();
+
+        return termOfServiceMapper.toListDTO(res);
+    }
 
     @Override
     public TermOfServiceDTO addTermOfService(TermOfServiceDTO termOfService) {

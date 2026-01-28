@@ -19,4 +19,9 @@ public class AppCheckedException extends Exception {
         this.status = status;
     }
 
+    public AppCheckedException(StatusCode status) {
+        super(status.getMessage());
+        this.status = status;
+    }
+
 }

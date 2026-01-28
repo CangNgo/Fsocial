@@ -1,9 +1,9 @@
 package com.fsocial.postservice.exception;
 
-import com.cloudinary.api.ApiResponse;
 import com.fsocial.postservice.dto.Response;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,11 +14,24 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = Exception.class)
-    ResponseEntity<Response> handlingRuntimeException(RuntimeException exception) {
+    @ExceptionHandler(value = RedisConnectionFailureException.class)
+    ResponseEntity<Response> handlingRedisConnectionException(RedisConnectionFailureException exception) {
+        log.warn("Redis connection failed: {}", exception.getMessage());
+        // Trả về empty list hoặc default values thay vì throw exception
+        return ResponseEntity.ok().body(Response.builder()
+                .statusCode(StatusCode.OK.getCode())
+                .message("Redis temporarily unavailable, using default values")
+                .dateTime(LocalDateTime.now())
+                .data(null)
+                .build());
+    }
 
+    @ExceptionHandler(value = Exception.class)
+    ResponseEntity<Response> handlingRuntimeException(Exception exception) {
+        log.error("Unhandled exception: {}", exception.getMessage(), exception);
         return ResponseEntity.badRequest().body(Response.builder()
                 .statusCode(StatusCode.UNCATEGORIZED_EXCEPTION.getCode())
                 .message(exception.getMessage())

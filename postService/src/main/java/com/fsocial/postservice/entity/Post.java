@@ -18,8 +18,6 @@ import java.util.List;
 @Document(collection = "post")
 @SuperBuilder
 public class Post extends AbstractEntity<String> {
-    @Field("user_id")
-    String userId;
     @Field("content")
     Content content;
     @Field("likes")
@@ -32,8 +30,10 @@ public class Post extends AbstractEntity<String> {
     @Field("is_share")
     @Builder.Default
     Boolean isShare = false;
-
     @Field("status")
     @Builder.Default
     Boolean status = true;
+    //owner
+    @Field("owner")
+    Owner owner;
 }

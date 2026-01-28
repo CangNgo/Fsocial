@@ -1,5 +1,6 @@
 package com.fsocial.accountservice.dto.request.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fsocial.accountservice.validation.constrain.NotNullOrBlank;
 
 import jakarta.validation.constraints.Email;

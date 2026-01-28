@@ -2,6 +2,7 @@ package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
+import com.fsocial.postservice.dto.comment.CommentResponse;
 import com.fsocial.postservice.dto.comment.CommentUpdateDTORequest;
 import com.fsocial.postservice.dto.comment.LikeCommentDTO;
 import com.fsocial.postservice.entity.Comment;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,8 +35,10 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<Response> createComment(CommentDTORequest request) throws AppCheckedException {
         Comment comment = commentService.addComment(request);
+        CommentResponse commentResponse = commentService.convertToCommentResponse(comment);
+        log.info("Comment created successfully with id: {}", comment.getId());
         return ResponseEntity.ok(Response.builder()
-                .data(comment)
+                .data(commentResponse)
                 .message("Comment created successfully")
                 .build());
     }
@@ -67,5 +71,17 @@ public class CommentController {
                 .data(commentService.deleteComment(id))
                 .build());
 
+    }
+
+    // API from timelineService
+    @GetMapping()
+    public ResponseEntity<Response> getComment(@RequestParam("postId") String postId) {
+        List<CommentResponse> commentByPostId = commentService.getComments(postId);
+        return ResponseEntity.ok(Response.builder()
+                .statusCode(StatusCode.GET_COMMENT_SUCCESS.getCode())
+                .data(commentByPostId)
+                .dateTime(LocalDateTime.now())
+                .message("Comment get by postId successfully")
+                .build());
     }
 }

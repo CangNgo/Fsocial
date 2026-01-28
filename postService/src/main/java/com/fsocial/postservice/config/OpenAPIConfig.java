@@ -33,9 +33,9 @@ public class OpenAPIConfig {
 
         return new OpenAPI()
                 .info(new Info()
-                        .title("Account Service API")
+                        .title("Post Service API")
                         .version("1.0")
-                        .description("API documentation for Account Service - Quản lý tài khoản, authentication và authorization")
+                        .description("API documentation for Post Service - Quản lý bài viết, comment, react, report")
                         .license(new License()
                                 .name("API License")
                                 .url("https://www.fsocial.com")))

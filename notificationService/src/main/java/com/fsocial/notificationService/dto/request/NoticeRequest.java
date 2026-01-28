@@ -24,8 +24,10 @@ public class NoticeRequest {
     @NotBlank(message = "Channel is require")
     ChannelType channel;
     String[] email;
+
     @NotBlank
     String ownerId;
+
     boolean isRead;
     String type;
     String[] receiverId;

@@ -1,6 +1,6 @@
-package com.fsocial.relationshipService.dto.request;
+package com.fsocial.postservice.dto.relationships;
 
-import com.fsocial.relationshipService.validation.constrain.NotNullOrBlank;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,9 +11,9 @@ import lombok.experimental.FieldDefaults;
 @Data
 public class FollowRequest {
 
-    @NotNullOrBlank(message = "REQUIRED_FIELD")
+    @NotBlank(message = "REQUIRED_FIELD")
     String userId;
 
-    @NotNullOrBlank(message = "REQUIRED_FIELD")
+    @NotBlank(message = "REQUIRED_FIELD")
     String targetId;
 }

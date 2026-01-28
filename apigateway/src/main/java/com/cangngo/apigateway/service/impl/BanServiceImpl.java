@@ -15,6 +15,6 @@ public class BanServiceImpl implements BanService {
 
     @Override
     public boolean isBan(String token) {
-        return Boolean.TRUE.equals(redisTemplate.hasKey("banned:" + token));
+        return redisTemplate.hasKey("banned:" + token);
     }
 }

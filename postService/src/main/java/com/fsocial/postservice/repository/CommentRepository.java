@@ -1,10 +1,10 @@
 package com.fsocial.postservice.repository;
 
+import com.fsocial.postservice.dto.comment.CommentDTO;
 import com.fsocial.postservice.entity.Comment;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.mongodb.repository.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +25,16 @@ public interface CommentRepository extends MongoRepository<Comment, String> {
 
     @Query(value = "{ '_id': ?0 }", fields = "{ 'postId': 1 }")
     Optional<String> findPostIdById(String commentId);
+
+    // Methods from timelineService
+    List<Comment> findCommentsByPostId(String postId);
+    Integer countCommentsByPostId(String postId);
+
+    @Aggregation(pipeline = {
+            "{'$match': {'_id': ?0}}",
+            "{'$project': {'totalLikes': {'$size': '$likes'}}}"
+    })
+    Integer countLike(String commentId);
+
+    List<CommentDTO> deleteByPostId(String postId);
 }

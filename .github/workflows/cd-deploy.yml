@@ -1,0 +1,225 @@
+name: CD - Deploy to EC2
+
+on:
+  workflow_run:
+    workflows: ["CI - Build and Push Docker Images"]
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy (e.g., latest, 1.0.0, or commit SHA)'
+        required: false
+        default: 'latest'
+        type: string
+      service:
+        description: 'Specific service to deploy (leave empty for all)'
+        required: false
+        type: choice
+        options:
+          - all
+          - accountService
+          - messageService
+          - notificationService
+          - postService
+          - profileService
+          - apigateway
+          - relationshipService
+          - timelineService
+
+env:
+  DOCKER_REGISTRY: cangngo
+  EC2_DEPLOY_PATH: /home/ec2-user/fsocial
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: |
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') ||
+      github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Determine version to deploy
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="latest"
+          fi
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Deploying version: ${VERSION}"
+
+      - name: Create deployment script
+        run: |
+          cat > deploy.sh << 'EOF'
+          #!/bin/bash
+          set -e
+          
+          VERSION=$1
+          SERVICE=$2
+          DEPLOY_PATH=$3
+          
+          echo "🚀 Starting deployment..."
+          echo "Version: ${VERSION}"
+          echo "Service: ${SERVICE}"
+          echo "Path: ${DEPLOY_PATH}"
+          
+          cd ${DEPLOY_PATH}
+          
+          # Backup current docker-compose.yml
+          if [ -f docker-compose.yml ]; then
+            cp docker-compose.yml docker-compose.yml.backup.$(date +%Y%m%d_%H%M%S)
+            echo "✅ Backup created"
+          fi
+          
+          # Pull latest images
+          echo "📥 Pulling Docker images..."
+          if [ "${SERVICE}" == "all" ]; then
+            docker-compose pull
+          else
+            docker-compose pull ${SERVICE}
+          fi
+          
+          # Health check function
+          health_check() {
+            local service=$1
+            local max_attempts=30
+            local attempt=1
+            local port=$(docker-compose port ${service} 2>/dev/null | cut -d: -f2 || echo "")
+            
+            if [ -z "${port}" ]; then
+              echo "⚠️  Cannot determine port for ${service}, skipping health check"
+              return 0
+            fi
+            
+            echo "🏥 Health checking ${service} on port ${port}..."
+            while [ ${attempt} -le ${max_attempts} ]; do
+              if curl -f -s http://localhost:${port}/actuator/health > /dev/null 2>&1 || \
+                 curl -f -s http://localhost:${port}/health > /dev/null 2>&1 || \
+                 curl -f -s http://localhost:${port}/ > /dev/null 2>&1; then
+                echo "✅ ${service} is healthy!"
+                return 0
+              fi
+              echo "⏳ Attempt ${attempt}/${max_attempts} - waiting for ${service}..."
+              sleep 5
+              attempt=$((attempt + 1))
+            done
+            
+            echo "❌ Health check failed for ${service}"
+            return 1
+          }
+          
+          # Deploy with zero-downtime strategy
+          echo "🔄 Deploying services..."
+          if [ "${SERVICE}" == "all" ]; then
+            # Rolling update: stop old, start new
+            docker-compose up -d --no-deps --remove-orphans
+            
+            # Wait for services to be ready
+            sleep 10
+            
+            # Health check all services
+            for svc in accountservice messageservice notificationservice postservice profileservice apigateway relationshipservice timelineservice; do
+              health_check ${svc} || exit 1
+            done
+          else
+            # Deploy specific service
+            docker-compose up -d --no-deps ${SERVICE}
+            sleep 10
+            health_check ${SERVICE} || exit 1
+          fi
+          
+          # Clean up old images
+          echo "🧹 Cleaning up old images..."
+          docker image prune -f
+          
+          # Show status
+          echo "📊 Service status:"
+          docker-compose ps
+          
+          echo "✅ Deployment completed successfully!"
+          EOF
+          chmod +x deploy.sh
+
+      - name: Copy deployment script to EC2
+        run: |
+          scp -i ~/.ssh/deploy_key deploy.sh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${EC2_DEPLOY_PATH}/deploy.sh
+
+      - name: Deploy to EC2
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+            cd ${EC2_DEPLOY_PATH}
+            
+            # Update docker-compose.yml with new version if needed
+            if [ "${{ steps.version.outputs.version }}" != "latest" ]; then
+              echo "Updating docker-compose.yml with version ${{ steps.version.outputs.version }}"
+              # You can add sed commands here to update image tags
+            fi
+            
+            # Run deployment script
+            ./deploy.sh "${{ steps.version.outputs.version }}" "${{ github.event.inputs.service || 'all' }}" "${EC2_DEPLOY_PATH}"
+          EOF
+
+      - name: Verify deployment
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+            cd ${EC2_DEPLOY_PATH}
+            echo "📋 Container status:"
+            docker-compose ps
+            
+            echo ""
+            echo "📊 Resource usage:"
+            docker stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"
+          EOF
+
+      - name: Notify deployment status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Deployment successful!"
+            # Add Slack/Discord notification here
+          else
+            echo "❌ Deployment failed!"
+            # Add error notification here
+          fi
+
+  rollback:
+    runs-on: ubuntu-latest
+    if: failure() && github.event.workflow_run.event == 'push'
+    needs: deploy
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Rollback deployment
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+            cd ${EC2_DEPLOY_PATH}
+            
+            # Find latest backup
+            BACKUP_FILE=\$(ls -t docker-compose.yml.backup.* 2>/dev/null | head -1)
+            
+            if [ -n "\${BACKUP_FILE}" ]; then
+              echo "🔄 Rolling back to \${BACKUP_FILE}..."
+              cp \${BACKUP_FILE} docker-compose.yml
+              docker-compose up -d
+              echo "✅ Rollback completed"
+            else
+              echo "⚠️  No backup found, cannot rollback"
+            fi
+          EOF
+

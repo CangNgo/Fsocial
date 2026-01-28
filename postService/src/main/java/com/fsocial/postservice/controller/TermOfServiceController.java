@@ -10,6 +10,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -42,6 +44,18 @@ public class TermOfServiceController {
         return ResponseEntity.ok().body(Response.builder()
                 .message("Cập nhật chính sách mới thành công")
                 .data(termOfServicesService.deleteTermOfService(termId))
+                .build());
+    }
+
+
+    @GetMapping
+    public ResponseEntity<Response> getTermOfService() {
+
+        List<TermOfServiceDTO> res =termOfServicesService.getTermOfServices();
+
+        return ResponseEntity.ok().body(Response.builder()
+                .data(res)
+                .message("Lấy toàn bộ danh sách chính sách thành công")
                 .build());
     }
 }

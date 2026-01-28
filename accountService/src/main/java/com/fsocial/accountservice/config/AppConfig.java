@@ -2,6 +2,7 @@ package com.fsocial.accountservice.config;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,28 +34,31 @@ import lombok.extern.slf4j.Slf4j;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class AppConfig {
-
     CustomJwtDecode customJwtDecode;
 
     @NonFinal
     private String[] PUBLIC_API = {
-        "/**",
-        // Swagger/OpenAPI endpoints
-        "/v3/api-docs/**",
-        "/swagger-ui/**",
-        "/swagger-ui.html",
-        "/swagger-resources/**",
-        "/webjars/**"
+            "/**",
+            // Swagger/OpenAPI endpoints
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**",
+            "/webjars/**"
     };
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
+            OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler,
+            OAuth2LoginFailureHandler oAuth2LoginFailureHandler) throws Exception {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author -> author.requestMatchers(PUBLIC_API).permitAll()
                         .anyRequest().authenticated())
                 .logout(AbstractHttpConfigurer::disable);
-
+        httpSecurity.oauth2Login(oauth2 -> oauth2
+                .successHandler(oAuth2LoginSuccessHandler) // BẮT BUỘC: Sử dụng handler để xử lý logic DB và Token
+                .failureHandler(oAuth2LoginFailureHandler)); // Sử dụng failure handler để log chi tiết lỗi
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer
                 .decoder(customJwtDecode)
                 .jwtAuthenticationConverter(authenticationConverter()))

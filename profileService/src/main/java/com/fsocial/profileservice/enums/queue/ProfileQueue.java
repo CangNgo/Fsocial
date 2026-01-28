@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.enums.queue;
+package com.fsocial.profileservice.enums.queue;
 
 import lombok.Getter;
 

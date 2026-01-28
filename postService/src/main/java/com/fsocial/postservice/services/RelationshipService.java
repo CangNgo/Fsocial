@@ -1,4 +1,4 @@
-package com.fsocial.relationshipService.service;
+package com.fsocial.postservice.services;
 
 import java.util.Set;
 

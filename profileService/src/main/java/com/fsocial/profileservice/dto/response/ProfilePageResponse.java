@@ -21,4 +21,6 @@ public class ProfilePageResponse {
     @JsonFormat(pattern = "yyyy-MM-dd")
     LocalDate dob;
     List<UserResponse> followers;
+    String address;
+    boolean isPublic = true;
 }

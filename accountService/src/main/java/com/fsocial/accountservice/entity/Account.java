@@ -31,4 +31,8 @@ public class Account extends AbstractEntity<String> {
     String email;
 
     boolean status = true;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id")
+    Profile profile;
 }

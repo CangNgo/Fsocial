@@ -27,6 +27,10 @@ public enum ErrorCode implements CodeEnum{
     WRONG_PASSWORD(702, "Mật khẩu không đúng.", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED(703, "Không có quyền truy cập.", HttpStatus.UNAUTHORIZED),
     ACCOUNT_BANNED(601, "Account banned.", HttpStatus.UNAUTHORIZED),
+    CREATE_ACCOUNT_FAIL(203, "Create account fail", HttpStatus.BAD_REQUEST),
+
+    //Event
+    PUSH_EVENT_PROFILE(600, "Push event create profile fail", HttpStatus.BAD_REQUEST),
     ;
     final int code;
     final String message;

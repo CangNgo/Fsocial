@@ -7,19 +7,33 @@ import com.fsocial.accountservice.dto.response.AccountResponse;
 import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
 import com.fsocial.accountservice.dto.response.AccountStatisticRegiserLongDateDTO;
 import com.fsocial.accountservice.dto.response.auth.DuplicationResponse;
+import com.fsocial.accountservice.entity.Account;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 public interface AccountService {
     void persistAccount(AccountRegisterRequest request);
+
     AccountResponse getUser(String id);
+
     void resetPassword(String email, String newPassword);
+
     ApiResponse<DuplicationResponse> checkDuplication(DuplicationRequest request);
+
     void changePassword(String userId, String odlPassword, String newPassword);
+
     boolean existsById(String id);
+
     List<AccountStatisticRegiserDTO> countByCreatedAtByHours(LocalDateTime startDay, LocalDateTime endDay);
+
     List<AccountStatisticRegiserLongDateDTO> countByCreatedAtByStartEnd(LocalDateTime startDay, LocalDateTime endDay);
+
     String banUser(String userId);
+
+    Optional<Account> findByEmail(String email);
+
+    // OAuth2 Google Login: Đăng ký user mới
+    Account registerGoogleAccount(AccountRegisterRequest accountRegisterRequest, String googleId);
 }

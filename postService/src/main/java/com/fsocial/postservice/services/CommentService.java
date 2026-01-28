@@ -1,6 +1,8 @@
 package com.fsocial.postservice.services;
 
+import com.fsocial.postservice.dto.comment.CommentDTO;
 import com.fsocial.postservice.dto.comment.CommentDTORequest;
+import com.fsocial.postservice.dto.comment.CommentResponse;
 import com.fsocial.postservice.dto.comment.CommentUpdateDTORequest;
 import com.fsocial.postservice.entity.Comment;
 import com.fsocial.postservice.exception.AppCheckedException;
@@ -18,4 +20,11 @@ public interface CommentService{
     Comment updateComment(CommentUpdateDTORequest comment) throws AppCheckedException;
 
     String deleteComment(String commentID);
+
+    // Methods from timelineService
+    List<CommentResponse> getComments(String postId);
+
+    CommentResponse convertToCommentResponse(Comment comment);
+
+    List<CommentDTO> deleteCommentByPostId(String postId) throws AppCheckedException;
 }

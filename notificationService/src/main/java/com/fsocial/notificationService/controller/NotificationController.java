@@ -37,10 +37,17 @@ public class NotificationController {
         return ApiResponse.buildApiResponse(result, ResponseStatus.SUCCESS);
     }
 
+
+
+
     @PostMapping
     public ApiResponse<NotificationResponse> createNotification(@Valid @RequestBody NoticeRequest notificationRequest) throws AppCheckedException {
         return ApiResponse.buildApiResponse(notificationService.createNotification(notificationRequest), ResponseStatus.SUCCESS);
     }
+
+
+
+
 
     @GetMapping("/{userId}")
     public ApiResponse<AllNotificationResponse> getNotifications(

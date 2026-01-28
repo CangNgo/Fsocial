@@ -45,7 +45,6 @@ public class AccountProfileServiceImpl implements AccountProfileService {
         accountProfile.setAddress("");
         accountProfile.setUpdatedAt(LocalDate.now());
         accountProfileRepository.save(accountProfile);
-        log.info("Tạo thành công hồ sơ cho người dùng: {}", accountProfile.getUserId());
         return accountProfileMapper.toProfileResponse(accountProfile);
     }
 
@@ -63,7 +62,6 @@ public class AccountProfileServiceImpl implements AccountProfileService {
         nonNullFields.forEach((field, value) -> updateField(accountProfile, field, value));
 
         accountProfile.setUpdatedAt(LocalDate.now());
-        log.info("Cập nhật hồ sơ thành công cho userId: {}", userId);
 
         return accountProfileMapper.toProfileUpdateResponse(accountProfileRepository.save(accountProfile));
     }
@@ -80,11 +78,9 @@ public class AccountProfileServiceImpl implements AccountProfileService {
     public ProfilePageResponse getProfilePageByUserId(String userId) {
         List<UserResponse> followers = followService.getFollowers(userId);
         AccountProfile accountProfile = findProfileByUserId(userId);
+        log.info("accountProfile {}", accountProfile);
         ProfilePageResponse response = accountProfileMapper.toProfilePageResponse(accountProfile);
-
-        System.out.println("Profile page "+ response);
-        System.out.println("Profile : " + findProfileByUserId(userId));
-
+        log.info("response {}", response);
         response.setFollowers(followers);
         return response;
     }
@@ -122,7 +118,6 @@ public class AccountProfileServiceImpl implements AccountProfileService {
             profile.setBanner(urlImage);
 
         accountProfileRepository.save(profile);
-        log.info("Đã cập nhật lại ảnh thành công");
     }
 
     @Transactional(readOnly = true)

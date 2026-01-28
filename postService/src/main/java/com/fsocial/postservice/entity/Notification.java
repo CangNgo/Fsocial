@@ -1,4 +1,4 @@
-package com.fsocial.notificationService.entity;
+package com.fsocial.postservice.entity;
 
 import com.fsocial.notificationService.enums.ChannelType;
 import com.fsocial.notificationService.enums.NotifyTo;

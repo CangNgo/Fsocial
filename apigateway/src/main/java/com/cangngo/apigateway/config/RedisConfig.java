@@ -1,7 +1,8 @@
-package com.fsocial.postservice.config;
+package com.cangngo.apigateway.config;
 
 import io.lettuce.core.ClientOptions;
 import io.lettuce.core.SocketOptions;
+import io.lettuce.core.TimeoutOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +21,7 @@ import java.time.Duration;
 @Slf4j
 @Configuration
 public class RedisConfig {
-    @Value("${spring.data.redis.username}")
+    @Value("${spring.data.redis.username:}")
     private String username;
 
     @Value("${spring.data.redis.host}")
@@ -32,7 +33,7 @@ public class RedisConfig {
     @Value("${spring.data.redis.password}")
     private String password;
 
-    @Value("${spring.data.redis.ssl.enabled}")
+    @Value("${spring.data.redis.ssl.enabled:false}")
     private boolean sslEnable;
 
     @Bean
@@ -42,22 +43,35 @@ public class RedisConfig {
         redisConfig.setHostName(host);
         redisConfig.setPort(Integer.parseInt(port));
         redisConfig.setPassword(password);
-        if(username != null && !username.isEmpty()){
+        if(username != null && !username.isEmpty() && !username.equals("default")){
             redisConfig.setUsername(username);
             log.info("Redis username is {}", username);
         }
+        
+        // Improved socket options for better connection handling
         SocketOptions socketOptions = SocketOptions.builder()
-                .connectTimeout(Duration.ofSeconds(10))
+                .connectTimeout(Duration.ofSeconds(15)) // Increased timeout for DNS resolution and connection
                 .keepAlive(true)
+                .tcpNoDelay(true) // Enable TCP_NODELAY for better performance
                 .build();
+        
+        // Timeout options for better error handling
+        TimeoutOptions timeoutOptions = TimeoutOptions.builder()
+                .fixedTimeout(Duration.ofSeconds(10)) // Fixed timeout for commands
+                .build();
+        
+        // Improved client options with better connection handling
         ClientOptions clientOptions = ClientOptions.builder()
                 .socketOptions(socketOptions)
-                .autoReconnect(true)
+                .timeoutOptions(timeoutOptions)
+                .autoReconnect(true) // Enable auto-reconnect
+                .disconnectedBehavior(ClientOptions.DisconnectedBehavior.REJECT_COMMANDS) // Reject commands when disconnected
                 .build();
 
-        LettuceClientConfiguration.LettuceClientConfigurationBuilder clientConfigBuilder =  LettuceClientConfiguration.builder()
-                .commandTimeout(Duration.ofSeconds(5))
-                .clientOptions(clientOptions);
+        LettuceClientConfiguration.LettuceClientConfigurationBuilder clientConfigBuilder = LettuceClientConfiguration.builder()
+                .commandTimeout(Duration.ofSeconds(10)) // Increased command timeout
+                .clientOptions(clientOptions)
+                .shutdownTimeout(Duration.ofSeconds(5)); // Graceful shutdown timeout
 
         if (sslEnable) {
             clientConfigBuilder.useSsl().disablePeerVerification(); // Disable peer verification for cloud Redis
@@ -72,6 +86,9 @@ public class RedisConfig {
         // Không gọi afterPropertiesSet() ở đây để tránh validate connection ngay lập tức
         
         log.info("✅ Redis connection factory created successfully (lazy connection)");
+        log.info("   - Connect timeout: 15s");
+        log.info("   - Command timeout: 10s");
+        log.info("   - Auto-reconnect: enabled");
         return factory;
     }
 

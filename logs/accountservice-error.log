@@ -1,2 +1,315 @@
-2025-10-16 00:45:31.727 ERROR --- [nio-8081-exec-4] c.f.a.exception.GlobalExceptionHandler   : Lỗi ở RuntimeException chưa được xử lý: [400] during [POST] to [http://localhost:8085/profile/internal/create] [ProfileClient#createProfile(ProfileRegisterRequest)]: [{"statusCode":9999,"message":"Could not open a new Neo4j session: Driver execution failed","dateTime":"2025-10-16 00:45:31"}]
-2025-10-16 00:59:16.301 ERROR --- [nio-8081-exec-7] c.f.a.exception.GlobalExceptionHandler   : Lỗi ở RuntimeException chưa được xử lý: [400] during [POST] to [http://localhost:8085/profile/internal/create] [ProfileClient#createProfile(ProfileRegisterRequest)]: [{"statusCode":9999,"message":"Could not open a new Neo4j session: The client is unauthorized due to authentication failure.","dateTime":"2025-10-16 00:59:16"}]
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : === OAuth2 Login Failure ===
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : Request URI: /account/login/oauth2/code/google
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : Query String: state=1BItrO_B_102RnEUSqSBE6hwYXvHMHaoXxpVOyLNwDU%3D&code=4%2F0ATX87lOWBVhVjOgnMp07ArbrP2cti6U3QVdNxfO_XLBJvSTLZc5MuDgONl86HZiRagRhYg&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : Request Method: GET
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : Request Parameters:
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   state = 1BItrO_B_102RnEUSqSBE6hwYXvHMHaoXxpVOyLNwDU=
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   code = 4/0ATX87lOWBVhVjOgnMp07ArbrP2cti6U3QVdNxfO_XLBJvSTLZc5MuDgONl86HZiRagRhYg
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   scope = email profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   authuser = 0
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   prompt = none
+2025-12-27 21:28:29.807 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : Request Headers:
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   host = localhost:8081
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   connection = keep-alive
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   upgrade-insecure-requests = 1
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   user-agent = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   accept = text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-site = cross-site
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-mode = navigate
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-user = ?1
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-dest = document
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua = "Microsoft Edge";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua-mobile = ?0
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua-platform = "Windows"
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   referer = http://localhost:3000/
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   accept-encoding = gzip, deflate, br, zstd
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   accept-language = en-US,en;q=0.9,af;q=0.8
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   :   cookie = JSESSIONID=967B724F20ED311AFE0B271CE57EBE5F
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : Exception Type: OAuth2AuthenticationException
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : Exception Message: [invalid_id_token] An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T15:28:35Z
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error Code: invalid_id_token
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error Description: An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T15:28:35Z
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error URI: null
+2025-12-27 21:28:29.808 ERROR --- [nio-8081-exec-3] c.f.a.config.OAuth2LoginFailureHandler   : Full Stack Trace:
+org.springframework.security.oauth2.core.OAuth2AuthenticationException: [invalid_id_token] An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T15:28:35Z
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.getJwt(OidcAuthorizationCodeAuthenticationProvider.java:251)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.createOidcToken(OidcAuthorizationCodeAuthenticationProvider.java:238)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.authenticate(OidcAuthorizationCodeAuthenticationProvider.java:156)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter.attemptAuthentication(OAuth2LoginAuthenticationFilter.java:196)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:231)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.springframework.security.oauth2.jwt.JwtValidationException: An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T15:28:35Z
+	at org.springframework.security.oauth2.jwt.NimbusJwtDecoder.validateJwt(NimbusJwtDecoder.java:193)
+	at org.springframework.security.oauth2.jwt.NimbusJwtDecoder.decode(NimbusJwtDecoder.java:139)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.getJwt(OidcAuthorizationCodeAuthenticationProvider.java:247)
+	... 65 common frames omitted
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : === OAuth2 Login Failure ===
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : Request URI: /account/login/oauth2/code/google
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : Query String: state=kkEFf52lKCorAmeskITLtkfKxBw-W-dWvU513L-WqYg%3D&code=4%2F0ATX87lPMrEk3NGJ_GAKjIjUqCR5sdNcdmI1862_EXbZq--7pnoPsxJgAcp2pr2m9D0qWLQ&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=0&prompt=none
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : Request Method: GET
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : Request Parameters:
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   state = kkEFf52lKCorAmeskITLtkfKxBw-W-dWvU513L-WqYg=
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   code = 4/0ATX87lPMrEk3NGJ_GAKjIjUqCR5sdNcdmI1862_EXbZq--7pnoPsxJgAcp2pr2m9D0qWLQ
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   scope = email profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   authuser = 0
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   prompt = none
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : Request Headers:
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   host = localhost:8081
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   connection = keep-alive
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   upgrade-insecure-requests = 1
+2025-12-27 21:30:10.865 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   user-agent = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0
+2025-12-27 21:30:10.870 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   accept = text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-site = cross-site
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-mode = navigate
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-user = ?1
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-dest = document
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua = "Microsoft Edge";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua-mobile = ?0
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua-platform = "Windows"
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   referer = http://localhost:3000/
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   accept-encoding = gzip, deflate, br, zstd
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   accept-language = en-US,en;q=0.9,af;q=0.8
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   :   cookie = JSESSIONID=967B724F20ED311AFE0B271CE57EBE5F
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : Exception Type: OAuth2AuthenticationException
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : Exception Message: [invalid_id_token] An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T15:30:17Z
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error Code: invalid_id_token
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error Description: An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T15:30:17Z
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error URI: null
+2025-12-27 21:30:10.871 ERROR --- [nio-8081-exec-7] c.f.a.config.OAuth2LoginFailureHandler   : Full Stack Trace:
+org.springframework.security.oauth2.core.OAuth2AuthenticationException: [invalid_id_token] An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T15:30:17Z
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.getJwt(OidcAuthorizationCodeAuthenticationProvider.java:251)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.createOidcToken(OidcAuthorizationCodeAuthenticationProvider.java:238)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.authenticate(OidcAuthorizationCodeAuthenticationProvider.java:156)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter.attemptAuthentication(OAuth2LoginAuthenticationFilter.java:196)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:231)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.springframework.security.oauth2.jwt.JwtValidationException: An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T15:30:17Z
+	at org.springframework.security.oauth2.jwt.NimbusJwtDecoder.validateJwt(NimbusJwtDecoder.java:193)
+	at org.springframework.security.oauth2.jwt.NimbusJwtDecoder.decode(NimbusJwtDecoder.java:139)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.getJwt(OidcAuthorizationCodeAuthenticationProvider.java:247)
+	... 65 common frames omitted
+2025-12-28 13:05:10.685 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : === OAuth2 Login Failure ===
+2025-12-28 13:05:10.685 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : Request URI: /account/login/oauth2/code/google
+2025-12-28 13:05:10.685 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : Query String: state=Qei1eA_fAVDEOWYX1pF6WGn6fK2n7RN5OkgZOQD0bbQ%3D&code=4%2F0ATX87lNzs1B9sIzXU4PilTlqP75wvIarfsBWrCTsiZnalS6fe0iecQtmtx9MPhxd8pv3tg&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&authuser=0&prompt=none
+2025-12-28 13:05:10.685 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : Request Method: GET
+2025-12-28 13:05:10.685 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : Request Parameters:
+2025-12-28 13:05:10.686 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   state = Qei1eA_fAVDEOWYX1pF6WGn6fK2n7RN5OkgZOQD0bbQ=
+2025-12-28 13:05:10.686 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   code = 4/0ATX87lNzs1B9sIzXU4PilTlqP75wvIarfsBWrCTsiZnalS6fe0iecQtmtx9MPhxd8pv3tg
+2025-12-28 13:05:10.686 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   scope = email profile openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
+2025-12-28 13:05:10.686 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   authuser = 0
+2025-12-28 13:05:10.686 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   prompt = none
+2025-12-28 13:05:10.686 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : Request Headers:
+2025-12-28 13:05:10.687 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   host = localhost:8081
+2025-12-28 13:05:10.687 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   connection = keep-alive
+2025-12-28 13:05:10.687 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   upgrade-insecure-requests = 1
+2025-12-28 13:05:10.687 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   user-agent = Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0
+2025-12-28 13:05:10.687 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   accept = text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+2025-12-28 13:05:10.687 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-site = cross-site
+2025-12-28 13:05:10.687 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-mode = navigate
+2025-12-28 13:05:10.687 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-user = ?1
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   sec-fetch-dest = document
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua = "Microsoft Edge";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua-mobile = ?0
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   sec-ch-ua-platform = "Windows"
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   referer = http://localhost:3000/
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   accept-encoding = gzip, deflate, br, zstd
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   accept-language = en-US,en;q=0.9,af;q=0.8
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   :   cookie = JSESSIONID=84BE10A6697DBA7D6FB50AF1C54DBA11
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : Exception Type: OAuth2AuthenticationException
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : Exception Message: [invalid_id_token] An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T16:05:16Z
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error Code: invalid_id_token
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error Description: An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T16:05:16Z
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : OAuth2 Error URI: null
+2025-12-28 13:05:10.688 ERROR --- [nio-8081-exec-2] c.f.a.config.OAuth2LoginFailureHandler   : Full Stack Trace:
+org.springframework.security.oauth2.core.OAuth2AuthenticationException: [invalid_id_token] An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T16:05:16Z
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.getJwt(OidcAuthorizationCodeAuthenticationProvider.java:251)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.createOidcToken(OidcAuthorizationCodeAuthenticationProvider.java:238)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.authenticate(OidcAuthorizationCodeAuthenticationProvider.java:156)
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:182)
+	at org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter.attemptAuthentication(OAuth2LoginAuthenticationFilter.java:196)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:231)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:221)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:198)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.springframework.security.oauth2.jwt.JwtValidationException: An error occurred while attempting to decode the Jwt: Jwt expired at 2025-12-27T16:05:16Z
+	at org.springframework.security.oauth2.jwt.NimbusJwtDecoder.validateJwt(NimbusJwtDecoder.java:193)
+	at org.springframework.security.oauth2.jwt.NimbusJwtDecoder.decode(NimbusJwtDecoder.java:139)
+	at org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.getJwt(OidcAuthorizationCodeAuthenticationProvider.java:247)
+	... 65 common frames omitted

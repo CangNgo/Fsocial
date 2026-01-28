@@ -1,23 +1,20 @@
 package com.fsocial.accountservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.DynamicUpdate;
 
-@Table(name = "account_profile")
-@Data
+@Entity
+@Table(name = "profile")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@DynamicUpdate
-public class AccountProfile extends AbstractEntity<String> {
+public class Profile extends AbstractEntity<String> {
 
     @OneToOne(fetch = FetchType.LAZY)
-    @Column(name = "user_id")
+    @JoinColumn(name = "user_id")
     Account account;
 
     @Column(name = "first_name")

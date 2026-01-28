@@ -1,0 +1,189 @@
+name: CI - Build and Push Docker Images
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., 1.0.0)'
+        required: false
+        type: string
+
+env:
+  DOCKER_REGISTRY: cangngo
+  REGISTRY_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+
+jobs:
+  # Job để detect services thay đổi (optional - optimize build time)
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      services: ${{ steps.filter.outputs.services }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      
+      - name: Detect changed services
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            accountService:
+              - 'accountService/**'
+            messageService:
+              - 'messageService/**'
+            notificationService:
+              - 'notificationService/**'
+            postService:
+              - 'postService/**'
+            profileService:
+              - 'profileService/**'
+            apigateway:
+              - 'apigateway/**'
+            relationshipService:
+              - 'relationshipService/**'
+            timelineService:
+              - 'timelineService/**'
+
+  # Build và push images
+  build-and-push:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    if: |
+      needs.detect-changes.outputs.services != '[]' || 
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - accountService
+          - messageService
+          - notificationService
+          - postService
+          - profileService
+          - apigateway
+          - relationshipService
+          - timelineService
+        include:
+          - service: accountService
+            image_name: fsocial-accountservice
+          - service: messageService
+            image_name: fsocial-messageservice
+          - service: notificationService
+            image_name: fsocial-notificationservice
+          - service: postService
+            image_name: fsocial-postservice
+          - service: profileService
+            image_name: fsocial-profileservice
+          - service: apigateway
+            image_name: fsocial-apigateway
+          - service: relationshipService
+            image_name: fsocial-relationshipservice
+          - service: timelineService
+            image_name: fsocial-timelineservice
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+            network=host
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract version and metadata
+        id: meta
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ] && [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${GITHUB_SHA::8}"
+          fi
+          
+          # Determine tags
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            TAGS="${{ env.DOCKER_REGISTRY }}/${{ matrix.image_name }}:latest,${{ env.DOCKER_REGISTRY }}/${{ matrix.image_name }}:${VERSION},${{ env.DOCKER_REGISTRY }}/${{ matrix.image_name }}:${GITHUB_SHA::8}"
+          else
+            TAGS="${{ env.DOCKER_REGISTRY }}/${{ matrix.image_name }}:${GITHUB_SHA::8},${{ env.DOCKER_REGISTRY }}/${{ matrix.image_name }}:${GITHUB_REF_NAME}-${GITHUB_SHA::8}"
+          fi
+          
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Tags: ${TAGS}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ matrix.service }}
+          file: ./${{ matrix.service }}/Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          platforms: linux/amd64
+          cache-from: type=registry,ref=${{ env.DOCKER_REGISTRY }}/${{ matrix.image_name }}:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_REGISTRY }}/${{ matrix.image_name }}:buildcache,mode=max
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+
+      - name: Image digest
+        run: echo "Image pushed with tags: ${{ steps.meta.outputs.tags }}"
+
+  # Security scanning (optional but recommended)
+  security-scan:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    strategy:
+      matrix:
+        service:
+          - accountService
+          - messageService
+          - notificationService
+          - postService
+          - profileService
+          - apigateway
+          - relationshipService
+          - timelineService
+        include:
+          - service: accountService
+            image_name: fsocial-accountservice
+          - service: messageService
+            image_name: fsocial-messageservice
+          - service: notificationService
+            image_name: fsocial-notificationservice
+          - service: postService
+            image_name: fsocial-postservice
+          - service: profileService
+            image_name: fsocial-profileservice
+          - service: apigateway
+            image_name: fsocial-apigateway
+          - service: relationshipService
+            image_name: fsocial-relationshipservice
+          - service: timelineService
+            image_name: fsocial-timelineservice
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.DOCKER_REGISTRY }}/${{ matrix.image_name }}:${GITHUB_SHA::8}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+

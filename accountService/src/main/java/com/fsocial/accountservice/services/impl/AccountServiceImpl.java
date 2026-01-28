@@ -18,6 +18,7 @@ import com.fsocial.accountservice.enums.ResponseStatus;
 import com.fsocial.accountservice.exception.AppException;
 import com.fsocial.accountservice.mapper.AccountMapper;
 import com.fsocial.accountservice.mapper.ProfileMapper;
+import com.fsocial.accountservice.publisher.ProfileEventPublisher;
 import com.fsocial.accountservice.repository.AccountRepository;
 import com.fsocial.accountservice.repository.RefreshTokenRepository;
 import com.fsocial.accountservice.repository.RoleRepository;
@@ -41,7 +42,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -62,13 +62,14 @@ public class AccountServiceImpl implements AccountService {
     RefreshTokenRepository refreshTokenRepository;
     HttpServletRequest httpServletRequest;
     JwtConfig jwtConfig;
+    ProfileEventPublisher profileEventPublisher;
 
     static String DEFAULT_ROLE = "USER";
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void persistAccount(AccountRegisterRequest request) {
-//        validateAccountExistence(request.getUsername(), request.getEmail());
+        // validateAccountExistence(request.getUsername(), request.getEmail());
         Account account = saveAccount(request);
         createProfile(account, request);
         otpService.deleteOtp(request.getEmail(), RedisKeyType.REGISTER.getRedisKeyPrefix());
@@ -143,7 +144,7 @@ public class AccountServiceImpl implements AccountService {
 
         // Lưu dữ liệu vào map theo dạng <hour, count>
         for (Object[] row : results) {
-            int hour = ((Number) row[0]).intValue();  // Chuyển Object thành int
+            int hour = ((Number) row[0]).intValue(); // Chuyển Object thành int
             int count = ((Number) row[1]).intValue(); // Chuyển Object thành int
             map.put(hour, count);
         }
@@ -157,7 +158,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountStatisticRegiserLongDateDTO> countByCreatedAtByStartEnd(LocalDateTime startDay, LocalDateTime endDay) {
+    public List<AccountStatisticRegiserLongDateDTO> countByCreatedAtByStartEnd(LocalDateTime startDay,
+            LocalDateTime endDay) {
         List<Object[]> repo = accountRepository.countByCreatedAtByDate(startDay, endDay);
         List<AccountStatisticRegiserLongDateDTO> res = new ArrayList<>();
         // Chuyển đổi dữ liệu từ repo thành Map để dễ dàng truy cập
@@ -168,14 +170,14 @@ public class AccountServiceImpl implements AccountService {
             dateCountMap.put(date, count);
         }
 
-// Tạo Date từ LocalDateTime
+        // Tạo Date từ LocalDateTime
         Date start = convertToDateViaInstant(startDay);
         Date end = convertToDateViaInstant(endDay);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start);
 
-// Vòng lặp qua từng ngày
+        // Vòng lặp qua từng ngày
         while (!calendar.getTime().after(end)) {
             Date currentDate = calendar.getTime();
 
@@ -210,24 +212,31 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public String banUser(String userId) {
 
-        //lấy thông tin từ token
+        // lấy thông tin từ token
 
         Account banAccount = accountRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.ACCOUNT_NOT_EXISTED));
         Optional<Token> tokenAccount = tokenRepository.findByAccount(banAccount);
-        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUsernameAndExpiryDate_Max(banAccount.getUsername());
-        //ban account
+        Optional<RefreshToken> refreshToken = refreshTokenRepository
+                .findByUsernameAndExpiryDate_Max(banAccount.getUsername());
+        // ban account
         banAccount.setStatus(false);
         accountRepository.save(banAccount);
-        //ban token
+        // ban token
         tokenAccount.ifPresent(token -> banService.ban(token.getToken()));
         refreshToken.ifPresent(refresh -> refreshTokenRepository.deleteByToken(refresh.getToken()));
         return "Ban account: " + banAccount.getUsername() + " successfull";
     }
 
+    @Override
+    public Optional<Account> findByEmail(String email) {
+        return accountRepository.findByEmail(email);
+    }
+
     private void validateAccountExistence(String username, String email) {
         boolean accountExisted = accountRepository.countByUsernameOrEmail(username, email) > 0;
-        if (accountExisted) throw new AppException(ErrorCode.ACCOUNT_EXISTED);
+        if (accountExisted)
+            throw new AppException(ErrorCode.ACCOUNT_EXISTED);
 
         otpService.validEmailBeforePersist(email);
     }
@@ -237,13 +246,18 @@ public class AccountServiceImpl implements AccountService {
         account.setCreatedAt(LocalDateTime.now());
         account.setPassword(passwordEncoder.encode(request.getPassword()));
         account.setRole(getDefaultRole());
+
+        System.out.println("Account: " + account);
+
         return accountRepository.save(account);
     }
 
     private void createProfile(Account account, AccountRegisterRequest request) {
         var profileRequest = profileMapper.toProfileRegister(request);
         profileRequest.setUserId(account.getId());
-        profileClient.createProfile(profileRequest);
+
+        // Push event create profile
+        profileEventPublisher.createdProfile(profileRequest);
     }
 
     private Role getDefaultRole() {
@@ -271,5 +285,63 @@ public class AccountServiceImpl implements AccountService {
 
     public static Date convertToDateViaInstant(LocalDateTime localDateTime) {
         return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    @Override
+    @Transactional
+    public Account registerGoogleAccount(AccountRegisterRequest accountRegisterRequest, String googleId) {
+        // Lưu vào database
+        Account account ;
+        try {
+             account = saveAccount(accountRegisterRequest);
+        }catch (Exception e){
+            System.out.println("Lỗi: " + Arrays.toString(e.getStackTrace()));
+            System.out.println("Lỗi: " + e.getMessage());
+            throw new AppException(ErrorCode.CREATE_ACCOUNT_FAIL);
+        }
+
+        // Tạo profile cho user mới
+        try {
+            var profileRequest = profileMapper.toProfileRegister(
+                    AccountRegisterRequest.builder()
+                            .email(account.getEmail())
+                            .username(account.getUsername())
+                            .build());
+            profileRequest.setUserId(account.getId());
+
+            // Tách tên từ Google thành firstName và lastName
+            String[] nameParts = account.getUsername() != null ? account.getUsername().split(" ", 2) : new String[] { "", "" };
+            profileRequest.setFirstName(nameParts.length > 0 ? nameParts[0] : "");
+            profileRequest.setLastName(nameParts.length > 1 ? nameParts[1] : "");
+
+            // push rabbitMQ
+            profileEventPublisher.createdProfile(profileRequest);
+        } catch (Exception e) {
+            log.error("Lỗi khi tạo profile cho Google user: {}", e.getMessage());
+            // Không throw exception để không làm gián đoạn luồng login
+            System.out.println("Lỗi: " + e.getStackTrace());
+            throw new AppException(ErrorCode.PUSH_EVENT_PROFILE);
+        }
+
+        return account;
+    }
+
+    /**
+     * Tạo username từ email
+     * Ví dụ: user@gmail.com -> user
+     * Nếu username đã tồn tại, thêm số random vào cuối
+     */
+    private String generateUsernameFromEmail(String email) {
+        String baseUsername = email.split("@")[0];
+        String username = baseUsername;
+        int counter = 1;
+
+        // Kiểm tra xem username đã tồn tại chưa
+        while (accountRepository.countByUsername(username) > 0) {
+            username = baseUsername + counter;
+            counter++;
+        }
+
+        return username;
     }
 }

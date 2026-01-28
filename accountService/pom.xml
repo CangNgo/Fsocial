@@ -28,11 +28,21 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <spring-cloud.version>2024.0.0</spring-cloud.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.38</lombok.version>
+
+        <!-- Bundle Analysis Properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <max.bundle.size>104857600</max.bundle.size> <!-- 100MB limit for Spring Boot app -->
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.sendgrid</groupId>
             <artifactId>sendgrid-java</artifactId>
@@ -89,7 +99,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -117,6 +126,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
@@ -131,10 +144,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
         <dependency>
@@ -154,12 +163,6 @@
             <version>0.12.6</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.github.cdimascio/java-dotenv -->
-        <dependency>
-            <groupId>io.github.cdimascio</groupId>
-            <artifactId>java-dotenv</artifactId>
-            <version>5.2.2</version>
-        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -175,12 +178,13 @@
 
     <build>
         <plugins>
+            <!-- Existing Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -200,9 +204,13 @@
                     </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-Amapstruct.defaultComponentModel=spring</arg>
+                        <arg>-parameters</arg>
                     </compilerArgs>
+                    <fork>true</fork>
                 </configuration>
             </plugin>
+
+            <!-- Existing Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -215,7 +223,353 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <!-- ============================================ -->
+            <!-- BUNDLE ANALYSIS PLUGINS - START -->
+            <!-- ============================================ -->
+
+            <!-- 1. Maven Dependency Plugin - Core Bundle Analysis -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <!-- Copy all runtime dependencies for size analysis -->
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                            <excludeScope>test</excludeScope>
+                            <excludeScope>provided</excludeScope>
+                        </configuration>
+                    </execution>
+
+                    <!-- Analyze dependencies for unused/undeclared -->
+                    <execution>
+                        <id>analyze-dependencies</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>analyze-only</goal>
+                        </goals>
+                        <configuration>
+                            <failOnWarning>false</failOnWarning>
+                            <ignoreNonCompile>true</ignoreNonCompile>
+                            <outputXML>true</outputXML>
+                        </configuration>
+                    </execution>
+
+                    <!-- Generate full dependency tree -->
+                    <execution>
+                        <id>tree</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>tree</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.directory}/reports/dependency-tree.txt</outputFile>
+                            <verbose>true</verbose>
+                        </configuration>
+                    </execution>
+
+                    <!-- List all dependencies with details -->
+                    <execution>
+                        <id>list</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>list</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.build.directory}/reports/dependency-list.txt</outputFile>
+                            <sort>true</sort>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 2. Maven JAR Plug  in - Add metadata to JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Built-By>FSocial Team</Built-By>
+                            <Build-Time>${maven.build.timestamp}</Build-Time>
+                            <Build-Java-Version>${java.version}</Build-Java-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- 3. Maven Enforcer Plugin - Enforce Bundle Size Limits -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>enforce-bundle-size</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>verify</phase>
+                        <configuration>
+                            <rules>
+                                <!-- Warn if JAR exceeds size limit -->
+                                <requireFilesSize>
+                                    <maxsize>${max.bundle.size}</maxsize>
+                                    <files>
+                                        <file>${project.build.directory}/${project.build.finalName}.jar</file>
+                                    </files>
+                                </requireFilesSize>
+
+                                <!-- Enforce Java version -->
+                                <requireJavaVersion>
+                                    <version>[21,)</version>
+                                </requireJavaVersion>
+
+                                <!-- Enforce Maven version -->
+                                <requireMavenVersion>
+                                    <version>[3.6.0,)</version>
+                                </requireMavenVersion>
+
+                                <!-- Ban duplicate dependencies -->
+                                <banDuplicatePomDependencyVersions/>
+
+                                <!-- Require proper dependency management -->
+                                <dependencyConvergence/>
+                            </rules>
+                            <fail>false</fail> <!-- Set to true to fail build on violation -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 4. Versions Maven Plugin - Check for updates -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.16.2</version>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+
+            <!-- 5. Maven Antrun Plugin - Custom Bundle Size Analysis -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>bundle-size-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo message="================================================================================" />
+                                <echo message="BUNDLE SIZE ANALYSIS REPORT - ${project.name}" />
+                                <echo message="================================================================================" />
+                                <echo message="" />
+
+                                <!-- Main JAR Analysis -->
+                                <echo message="📦 MAIN ARTIFACT:" />
+                                <echo message="   Name: ${project.build.finalName}.jar" />
+                                <length file="${project.build.directory}/${project.build.finalName}.jar" property="jar.size"/>
+                                <echo message="" />
+
+                                <!-- Dependencies Directory Analysis -->
+                                <echo message="📚 DEPENDENCIES ANALYSIS:" />
+                                <echo message="   Location: ${project.build.directory}/dependencies/" />
+
+                                <!-- Calculate total dependencies size -->
+                                <resourcecount property="dep.count">
+                                    <fileset dir="${project.build.directory}/dependencies" includes="*.jar"/>
+                                </resourcecount>
+
+                                <!-- List top 10 largest dependencies -->
+                                <echo message="" />
+                                <echo message="   Top 10 Largest Dependencies:" />
+                                <echo message="   ----------------------------------------------------------------" />
+
+                                <fileset id="dependencies" dir="${project.build.directory}/dependencies" includes="*.jar"/>
+                                <pathconvert pathsep="${line.separator}" property="dep.list" refid="dependencies">
+                                    <mapper type="flatten"/>
+                                </pathconvert>
+
+
+                                <echo message="" />
+                                <echo message="💡 RECOMMENDATIONS:" />
+                                <echo message="   1. Review target/reports/dependency-tree.txt for full dependency hierarchy" />
+                                <echo message="   2. Check target/dependency-analysis.xml for unused dependencies" />
+                                <echo message="   3. Run 'mvn dependency:analyze' for detailed analysis" />
+                                <echo message="   4. Consider excluding unused transitive dependencies" />
+                                <echo message="   5. Review if all Spring Boot starters are necessary" />
+                                <echo message="" />
+                                <echo message="📊 ANALYSIS FILES GENERATED:" />
+                                <echo message="   - target/reports/dependency-tree.txt" />
+                                <echo message="   - target/reports/dependency-list.txt" />
+                                <echo message="   - target/dependency-analysis.xml" />
+                                <echo message="   - target/dependencies/ (all dependency JARs)" />
+                                <echo message="   - target/reports/bundle-analyzer.html (Interactive HTML Report)" />
+                                <echo message="================================================================================" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 6. Maven Exec Plugin - Generate HTML Bundle Analyzer Report -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>generate-html-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.fsocial.accountservice.config.BundleSizeAnalyzer</mainClass>
+                            <classpathScope>compile</classpathScope>
+                            <arguments>
+                                <argument>${project.build.directory}</argument>
+                                <argument>${project.build.directory}/dependencies</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- ============================================ -->
+            <!-- BUNDLE ANALYSIS PLUGINS - END -->
+            <!-- ============================================ -->
         </plugins>
     </build>
+
+    <!-- Profiles for different analysis scenarios -->
+    <profiles>
+        <!-- Development Profile - Skip analysis for faster builds -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <skipTests>true</skipTests>
+                <maven.javadoc.skip>true</maven.javadoc.skip>
+            </properties>
+        </profile>
+
+        <!-- Detailed Analysis Profile - Run comprehensive analysis -->
+        <profile>
+            <id>analyze</id>
+            <build>
+                <plugins>
+
+                    <!-- Copy Dependencies (dùng cho phân tích kích thước) -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.6.1</version>
+                        <executions>
+                            <execution>
+                                <id>copy-deps</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- ⭐ HTML Bundle Analyzer - Generate Interactive HTML Report -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>generate-html-bundle-report</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <configuration>
+                                    <mainClass>com.fsocial.accountservice.config.BundleSizeAnalyzer</mainClass>
+                                    <classpathScope>compile</classpathScope>
+                                    <arguments>
+                                        <argument>${project.build.directory}</argument>
+                                        <argument>${project.build.directory}/dependencies</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Maven Site Plugin - Generate HTML Site Reports -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.12.1</version>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/site</outputDirectory>
+                        </configuration>
+                    </plugin>
+
+                    <!-- Project Info Reports Plugin - Dependency Reports -->
+                    <!-- Note: reportSets only work in <reporting> section, not in <build> -->
+                    <!-- This plugin is kept for reference but reports are generated via mvn site -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-project-info-reports-plugin</artifactId>
+                        <version>3.9.0</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Production Profile - Optimize bundle size -->
+        <profile>
+            <id>production</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </exclude>
+                                <exclude>
+                                    <groupId>org.springframework.boot</groupId>
+                                    <artifactId>spring-boot-devtools</artifactId>
+                                </exclude>
+                            </excludes>
+                            <layers>
+                                <enabled>true</enabled>
+                            </layers>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

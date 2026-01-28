@@ -3,8 +3,6 @@ package com.cangngo.apigateway.enums;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -15,7 +13,9 @@ public enum ErrorCode{
     NOT_FOUND(404, "Không tìm thấy."),
     TOKEN_EXPIRED(700, "Token hết thời hạn."),
     INVALID_TOKEN(701, "Token không hợp lệ."),
-    ACCOUNT_BANNED(601,"Account Banned")
+    ACCOUNT_BANNED(601,"Account Banned"),
+    BAD_REQUEST(400, "Bad Request"),
+    SERVICE_UNAVAILABLE(503, "Service temporarily unavailable")
     ;
     final int code;
     final String message;

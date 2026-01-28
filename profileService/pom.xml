@@ -1,4 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project [
+        <!ELEMENT project (modelVersion|parent|groupId|artifactId|version|name|description|url|licenses|developers|scm|properties|dependencies|build)*>
+        <!ATTLIST project
+                xmlns CDATA #REQUIRED
+                xmlns:xsi CDATA #REQUIRED
+                xsi:schemaLocation CDATA #REQUIRED>
+        <!ELEMENT modelVersion (#PCDATA)>
+        <!ELEMENT parent (groupId|artifactId|version|relativePath)*>
+        <!ELEMENT groupId (#PCDATA)>
+        <!ELEMENT artifactId (#PCDATA)>
+        <!ELEMENT version (#PCDATA)>
+        <!ELEMENT relativePath (#PCDATA)>
+        <!ELEMENT name (#PCDATA)>
+        <!ELEMENT description (#PCDATA)>
+        <!ELEMENT url (#PCDATA)>
+        <!ELEMENT licenses (license)*>
+        <!ELEMENT license (#PCDATA)>
+        <!ELEMENT developers (developer)*>
+        <!ELEMENT developer (#PCDATA)>
+        <!ELEMENT scm (connection|developerConnection|tag|url)*>
+        <!ELEMENT connection (#PCDATA)>
+        <!ELEMENT developerConnection (#PCDATA)>
+        <!ELEMENT tag (#PCDATA)>
+        <!ELEMENT properties (java.version|mapstruct.version|lombok.version|kotlin.version)*>
+        <!ELEMENT java.version (#PCDATA)>
+        <!ELEMENT mapstruct.version (#PCDATA)>
+        <!ELEMENT lombok.version (#PCDATA)>
+        <!ELEMENT kotlin.version (#PCDATA)>
+        <!ELEMENT dependencies (dependency)*>
+        <!ELEMENT dependency (groupId|artifactId|version|scope|optional)*>
+        <!ELEMENT scope (#PCDATA)>
+        <!ELEMENT optional (#PCDATA)>
+        <!ELEMENT build (plugins)*>
+        <!ELEMENT plugins (plugin)*>
+        <!ELEMENT plugin (groupId|artifactId|configuration|version|executions)*>
+        <!ELEMENT configuration (excludes|jvmTarget|source|target|annotationProcessorPaths|compilerArgs)*>
+        <!ELEMENT excludes (exclude)*>
+        <!ELEMENT exclude (groupId|artifactId)*>
+        <!ELEMENT executions (execution)*>
+        <!ELEMENT execution (id|phase|goals)*>
+        <!ELEMENT id (#PCDATA)>
+        <!ELEMENT phase (#PCDATA)>
+        <!ELEMENT goals (goal)*>
+        <!ELEMENT goal (#PCDATA)>
+        <!ELEMENT jvmTarget (#PCDATA)>
+        <!ELEMENT source (#PCDATA)>
+        <!ELEMENT target (#PCDATA)>
+        <!ELEMENT annotationProcessorPaths (path)*>
+        <!ELEMENT path (groupId|artifactId|version)*>
+        <!ELEMENT compilerArgs (arg)*>
+        <!ELEMENT arg (#PCDATA)>
+        ]>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -33,6 +85,10 @@
 		<kotlin.version>2.1.10</kotlin.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>

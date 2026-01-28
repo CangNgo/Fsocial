@@ -1,6 +1,6 @@
-package com.fsocial.relationshipService.repository;
+package com.fsocial.postservice.repository;
 
-import com.fsocial.relationshipService.entity.Relationship;
+import com.fsocial.postservice.entity.Relationship;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

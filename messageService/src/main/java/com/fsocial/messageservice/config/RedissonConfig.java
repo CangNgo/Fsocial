@@ -22,6 +22,9 @@ public class RedissonConfig {
     @Value("${spring.data.redis.database}")
     private int database;
 
+    @Value("${spring.data.redis.username}")
+    private String username;
+
     @Bean
     public RedissonClient redissonClient() {
         Config config = new Config();
@@ -29,6 +32,7 @@ public class RedissonConfig {
         String address = "redis://" + redisHost + ":" + redisPort;
 
         config.useSingleServer()
+                .setUsername(username)
                 .setAddress(address)
                 .setDatabase(database)
                 .setConnectionPoolSize(10)

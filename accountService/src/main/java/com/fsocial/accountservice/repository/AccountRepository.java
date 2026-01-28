@@ -1,20 +1,16 @@
 package com.fsocial.accountservice.repository;
 
-import com.fsocial.accountservice.dto.response.AccountStatisticRegiserDTO;
-import com.fsocial.accountservice.dto.response.AccountStatisticRegiserLongDateDTO;
-import com.fsocial.accountservice.dto.response.DuplicationCheckResult;
-import com.fsocial.accountservice.entity.Account;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.w3c.dom.stylesheets.LinkStyle;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import com.fsocial.accountservice.dto.response.DuplicationCheckResult;
+import com.fsocial.accountservice.entity.Account;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {

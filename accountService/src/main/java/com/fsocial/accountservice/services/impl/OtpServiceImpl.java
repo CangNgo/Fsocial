@@ -37,13 +37,12 @@ public class OtpServiceImpl implements OtpService {
     long durationVerify;
 
     @Override
-    public void sendOtp(String email, String keyPrefix) {
+    public void sendOtp(String email, String userName, String keyPrefix) {
         String otp = generateOtp();
 
         String redisKey = keyPrefix + email;
         redisTemplate.opsForValue().set(redisKey, otp, durationSend, TimeUnit.MINUTES);
-        mailUtils.sendOtp(email, otp);
-        log.info("OTP: {}", otp);
+        mailUtils.sendOtp(email, userName, otp);
     }
 
     @Override
@@ -83,10 +82,9 @@ public class OtpServiceImpl implements OtpService {
 
     @Override
     public void sortTypeForSendOtp(EmailRequest request) {
-        String email = request.getEmail();
         String keyPrefix = checkKeyPrefix(request.getType());
 
-        sendOtp(email, keyPrefix);
+        sendOtp(request.getEmail(), request.getUserName(), keyPrefix);
     }
 
     @Override

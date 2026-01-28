@@ -63,7 +63,7 @@ public class JwtServiceImpl implements JwtService {
         try {
             JWSVerifier verifier = new MACVerifier(getSignerKey());
             SignedJWT signedJWT = SignedJWT.parse(token);
-
+            log.info("JWT verifier: {}", signedJWT);
             return signedJWT.verify(verifier) && !isTokenExpired(signedJWT);
         } catch (JOSEException | ParseException e) {
             log.error("Có lỗi trong quá trình phân tích Token.");
@@ -80,13 +80,12 @@ public class JwtServiceImpl implements JwtService {
     private JWTClaimsSet buildClaimsSet(Account account) {
         String issuerValue = "FSOCIAL - FCODER";
 
+        // Gắn thông tin vào token
         JWTClaimsSet.Builder claimsBuilder = new JWTClaimsSet.Builder()
                 .subject(account.getId())
                 .issuer(issuerValue)
                 .issueTime(new Date())
-                .expirationTime(
-                        new Date(Instant.now().plus(durationTime, ChronoUnit.MINUTES).toEpochMilli())
-                )
+                .expirationTime(new Date(Instant.now().plus(durationTime, ChronoUnit.MINUTES).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", account.getRole() != null ? account.getRole().getName() : "");
 

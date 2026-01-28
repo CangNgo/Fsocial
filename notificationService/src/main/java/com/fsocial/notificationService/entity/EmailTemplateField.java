@@ -12,4 +12,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EmailTemplateField extends AbstractEntity<String>  {
     String name;
+    String description;
 }

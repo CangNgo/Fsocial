@@ -2,6 +2,9 @@ package com.fsocial.postservice.controller;
 
 import com.fsocial.postservice.dto.Response;
 import com.fsocial.postservice.dto.complaint.ComplaintDTO;
+import com.fsocial.postservice.dto.complaint.ComplaintDTOResponse;
+import com.fsocial.postservice.dto.complaint.ComplaintStatisticsDTO;
+import com.fsocial.postservice.dto.complaint.ComplaintStatisticsLongDayDTO;
 import com.fsocial.postservice.exception.AppCheckedException;
 import com.fsocial.postservice.mapper.ComplantMapper;
 import com.fsocial.postservice.services.ComplaintService;
@@ -13,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

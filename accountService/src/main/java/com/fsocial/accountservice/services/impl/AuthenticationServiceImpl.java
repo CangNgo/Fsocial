@@ -34,37 +34,70 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     JwtService jwtService;
     RefreshTokenService refreshTokenService;
     TokenRepository tokenRepository;
+    HttpServletRequest httpServletRequest;
 
     @Override
-    public AuthenticationResponse login(AccountLoginRequest request, String userAgent, HttpServletRequest httpRequest) throws AppCheckedException {
+    public AuthenticationResponse login(AccountLoginRequest request, String userAgent, HttpServletRequest httpRequest)
+            throws AppCheckedException {
 
         Account account = accountRepository.findByUsernameOrEmail(request.getUsername(), request.getUsername())
-                .filter(acc -> acc.getPassword() != null && passwordEncoder.matches(request.getPassword(), acc.getPassword()))
+                .filter(acc -> acc.getPassword() != null
+                        && passwordEncoder.matches(request.getPassword(), acc.getPassword()))
                 .orElseThrow(() -> {
                     log.warn("Sai tên tài khoản hoặc mật khẩu: {}", request.getUsername());
                     return new AppException(ErrorCode.LOGIN_FAILED);
                 });
-        if (!account.isStatus()) throw new AppCheckedException(ErrorCode.ACCOUNT_BANNED);
+        if (!account.isStatus())
+            throw new AppCheckedException(ErrorCode.ACCOUNT_BANNED);
         String ipAddress = httpRequest.getRemoteAddr();
         String accessToken = jwtService.generateToken(account.getUsername());
-//        Lưu token vào db
+        // Lưu token vào db
 
         System.out.println("user login" + account.getUsername());
         Optional<Token> token = tokenRepository.findByAccount(account);
         Token entity;
         if (token.isPresent()) {
-             entity = token.get();
+            entity = token.get();
             entity.setToken(accessToken);
-        }else{
+        } else {
             entity = Token.builder().token(accessToken).build();
         }
         entity.setAccount(account);
         tokenRepository.save(entity);
 
-        String refreshToken = refreshTokenService.createRefreshToken(account.getUsername(), userAgent, ipAddress).getToken();
-
+        String refreshToken = refreshTokenService.createRefreshToken(account.getUsername(), userAgent, ipAddress)
+                .getToken();
 
         log.info("Người dùng {} đăng nhập thành công từ IP: {}", request.getUsername(), ipAddress);
+
+        return AuthenticationResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    @Override
+    public AuthenticationResponse loginGoogle(Account account, String userAgent, HttpServletRequest httpRequest) {
+        String ipAddress = httpRequest.getRemoteAddr();
+        String accessToken = jwtService.generateToken(account.getUsername());
+
+        // Lưu/Update token vào db
+        Optional<Token> token = tokenRepository.findByAccount(account);
+        Token entity;
+        if (token.isPresent()) {
+            entity = token.get();
+            entity.setToken(accessToken);
+        } else {
+            entity = Token.builder().token(accessToken).build();
+        }
+        entity.setAccount(account);
+        tokenRepository.save(entity);
+
+        // Tạo refresh token
+        String refreshToken = refreshTokenService.createRefreshToken(account.getUsername(), userAgent, ipAddress)
+                .getToken();
+
+        log.info("Google User {} đăng nhập thành công từ IP: {}", account.getUsername(), ipAddress);
 
         return AuthenticationResponse.builder()
                 .accessToken(accessToken)
@@ -78,5 +111,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return IntrospectResponse.builder()
                 .valid(valid)
                 .build();
+    }
+
+    @Override
+    public String getTokenFromRequest() {
+        String bearerToken = httpServletRequest.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        } else {
+            return null;
+        }
     }
 }

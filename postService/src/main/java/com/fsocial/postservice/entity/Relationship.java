@@ -1,29 +1,31 @@
-package com.fsocial.relationshipService.entity;
+package com.fsocial.postservice.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Document(collection = "relationships")
-public class Relationship {
-    @Id
-    String targetId;
+public class Relationship extends AbstractEntity<String> {
+    @Field("follower")
     Set<String> listFollower = Set.of();
+    @Field("following")
     Set<String> listFollowing = Set.of();
-    int totalFollower = 0;
-    int totalFollowing = 0;
+    @Field("user_id")
+    String userId;
+    @Field("is_public")
+    Boolean isPublic;
 
-    public Relationship(String targetId) {
-        this.targetId = targetId;
+    public Relationship(String userId){
+        this.userId = userId;
     }
+
 }

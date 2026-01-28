@@ -32,6 +32,9 @@ public class AccountProfile {
     @Property("last_name")
     String lastName;
 
+    @Property("display_name")
+    String displayName;
+
     @Property("bio")
     String bio;
 

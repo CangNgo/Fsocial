@@ -34,6 +34,8 @@ public enum StatusCode {
     TERM_OF_SERVICE_NOT_FOUND(305,"Term of service not found"),
     REPLY_COMMENT_NOT_FOUND(306,"Reply Comment Not Found"),
     COMPLAIN_NOT_FOUND(307,"Complain Not Found"),
+    PROFILE_NOT_FOUND(400, "Profile not found"),
+    NOT_FOUND(404, "Not Found"),
     ;
     private final int code;
     private final String message;

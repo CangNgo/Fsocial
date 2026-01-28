@@ -1,4 +1,4 @@
-package com.fsocial.accountservice.enums.routingkey;
+package com.fsocial.profileservice.enums.routingkey;
 
 import lombok.Getter;
 

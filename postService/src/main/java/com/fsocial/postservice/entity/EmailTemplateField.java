@@ -1,4 +1,4 @@
-package com.fsocial.notificationService.entity;
+package com.fsocial.postservice.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

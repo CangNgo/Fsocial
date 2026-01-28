@@ -1,10 +1,10 @@
-package com.fsocial.relationshipService.service.impl;
+package com.fsocial.postservice.services.impl;
 
-import com.fsocial.relationshipService.entity.Relationship;
-import com.fsocial.relationshipService.enums.ErrorCode;
-import com.fsocial.relationshipService.exception.AppException;
-import com.fsocial.relationshipService.repository.RelationshipRepository;
-import com.fsocial.relationshipService.service.RelationshipService;
+import com.fsocial.postservice.entity.Relationship;
+import com.fsocial.postservice.exception.AppUnCheckedException;
+import com.fsocial.postservice.exception.StatusCode;
+import com.fsocial.postservice.repository.RelationshipRepository;
+import com.fsocial.postservice.services.RelationshipService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -62,25 +62,17 @@ public class RelationshipServiceImpl implements RelationshipService {
 
     private void updateFollowRelation(String userId, String targetId, boolean isFollow) {
         Relationship target = relationshipRepository.findById(targetId)
-                .orElseGet(() -> new Relationship(targetId));
+            .orElseGet(() -> new Relationship(targetId));
 
         Relationship follower = relationshipRepository.findById(userId)
-                .orElseGet(() -> new Relationship(userId));
+            .orElseGet(() -> new Relationship(userId));
 
         if (isFollow) {
-            if (target.getListFollower().add(userId)) {
-                target.setTotalFollower(target.getListFollower().size());
-            }
-            if (follower.getListFollowing().add(targetId)) {
-                follower.setTotalFollowing(follower.getListFollowing().size());
-            }
+            target.getListFollower().add(userId) ;
+            follower.getListFollowing().add(targetId) ;
         } else {
-            if (target.getListFollowing().remove(userId)) {
-                target.setTotalFollowing(target.getListFollowing().size());
-            }
-            if (follower.getListFollower().remove(targetId)) {
-                follower.setTotalFollower(follower.getListFollower().size());
-            }
+           target.getListFollowing().remove(userId);
+           follower.getListFollower().remove(targetId);
         }
         relationshipRepository.save(target);
         relationshipRepository.save(follower);
@@ -97,7 +89,7 @@ public class RelationshipServiceImpl implements RelationshipService {
 
     private Set<String> fetchDataFromDB(String targetId, boolean isFollower) {
         Relationship follower = relationshipRepository.findById(targetId)
-                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+            .orElseThrow(() -> new AppUnCheckedException(StatusCode.NOT_FOUND));
         return isFollower ? follower.getListFollower() : follower.getListFollowing();
     }
 

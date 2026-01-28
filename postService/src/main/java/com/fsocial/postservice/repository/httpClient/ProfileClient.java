@@ -12,4 +12,11 @@ import java.util.Optional;
 public interface ProfileClient {
     @GetMapping(value = "/userId",produces = MediaType.APPLICATION_JSON_VALUE)
     Optional<ProfileDTO> getProfile(@PathVariable String userId);
+
+    // Methods from timelineService
+    @GetMapping(value = "/external/{userIdByPost}", produces = MediaType.APPLICATION_JSON_VALUE)
+    com.fsocial.postservice.dto.profile.ProfileResponse getProfileResponseByUserId(@PathVariable("userIdByPost") String userIdByPost);
+
+    @GetMapping(value = "/follow/list_following", produces = MediaType.APPLICATION_JSON_VALUE)
+    com.fsocial.postservice.dto.ApiResponse<java.util.Map<String, java.util.List<String>>> listFollowing();
 }
